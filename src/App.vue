@@ -1,30 +1,58 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <div>
+    <layout-vue></layout-vue>
+  </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import LayoutVue from "./Layout/Layout.vue";
+import EventBus from './util/appEventBus.js'
+export default {
+  components: {
+    LayoutVue,
+  },
+  data() {
+    return {
+      home: { icon: "pi pi-home", to: "/" },
+      items: [
+        { label: "Computer" },
+        { label: "Notebook" },
+        { label: "Accessories" },
+        { label: "Backpacks" },
+        { label: "Item" },
+      ],
+    };
+  },
+   themeChangeListener: null,
+   mounted() {
+        this.themeChangeListener = (event) => {
+          const elementId = 'theme-link';
+            const linkElement = document.getElementById(elementId);
+            const cloneLinkElement = linkElement.cloneNode(true);
+            const newThemeUrl = linkElement.getAttribute('href').replace(this.$appState.theme, event.theme);
 
-nav {
-  padding: 30px;
-}
+            cloneLinkElement.setAttribute('id', elementId + '-clone');
+            cloneLinkElement.setAttribute('href', newThemeUrl);
+            cloneLinkElement.addEventListener('load', () => {
+                linkElement.remove();
+                cloneLinkElement.setAttribute('id', elementId);
+            });
+            linkElement.parentNode.insertBefore(cloneLinkElement, linkElement.nextSibling);
+           
+      localStorage.setItem("theme", event.theme)
+    
+            this.$appState.theme = event.theme
+            this.$appState.darkTheme = event.dark;
+        };
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+        EventBus.on('theme-change', this.themeChangeListener);
+    },
+     beforeUnmount() {
+        EventBus.off('theme-change', this.themeChangeListener);
+    }
+};
+</script>
 
-nav a.router-link-exact-active {
-  color: #42b983;
-}
+<style lang="scss">
+@import "./App.scss";
 </style>

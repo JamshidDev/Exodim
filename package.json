@@ -7,6 +7,12 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "chart.js": "^3.8.2",
+    "core-js": "^3.24.0",
+    "node-polyfill-webpack-plugin": "^2.0.0",
+    "primeflex": "^3.2.1",
+    "primeicons": "^5.0.0",
+    "primevue": "^3.15.0",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",
     "vuex": "^4.0.0"
@@ -14,12 +20,18 @@
   "devDependencies": {
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-plugin-vuex": "~5.0.0",
-    "@vue/cli-service": "~5.0.0"
+    "@vue/cli-service": "~5.0.0",
+    "node-sass": "^7.0.1",
+    "sass-loader": "^13.0.2"
   },
   "browserslist": [
     "> 1%",
     "last 2 versions",
     "not dead",
     "not ie 11"
-  ]
+  ],
+  "browser": {
+    "fs": false,
+    "child_process": false
+   }
 }
