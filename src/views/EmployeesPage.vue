@@ -97,22 +97,26 @@
         :rowsPerPageOptions="[5, 10, 25]"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
         responsiveLayout="scroll"
-        showGridlines 
+        showGridlines
         class="pb-6"
       >
         <template #header>
           <div class="flex justify-content-between w-full">
-            <h5 class="mb-2 md:m-0 p-as-md-center uppercase">Umumiy xodimlar miqyosida (<span class="text-yellow-500">81121</span> )</h5>
+            <h5 class="mb-2 md:m-0 p-as-md-center uppercase">
+              Umumiy xodimlar miqyosida (<span class="text-yellow-500"
+                >81121</span
+              >
+              )
+            </h5>
             <Button
               icon="pi pi-send"
-              class=" p-button-warning"
+              class="p-button-warning"
               v-tooltip="`Sms xabar yuborish`"
               label="Yuborish"
               iconPos="right"
             />
           </div>
         </template>
-        
 
         <Column
           selectionMode="multiple"
@@ -121,15 +125,9 @@
         ></Column>
         <Column header="Fotosurat">
           <template #body="slotProps">
-          <div class="flex justify-content-center">
-              <Avatar
-              image="https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg"
-              :alt="slotProps.data.image"
-              class="mr-2"
-              size="large"
-              shape="circle"
-            />
-          </div>
+            <div class="flex justify-content-center">
+              <Image src="https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg" :alt="slotProps.data.name" width="50"  preview />
+            </div>
             <!-- <img src="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png" :alt="slotProps.data.image" class="product-image" /> -->
           </template>
         </Column>
@@ -161,29 +159,25 @@
             </div>
           </template>
         </Column>
-         <Column field="rating" header="Korxona nomi" style="min-width: 20rem">
+        <Column field="rating" header="Korxona nomi" style="min-width: 20rem">
           <template #body="slotProps">
             <div class="text-sm sm:text-sm md:text-md lg:text-lg xl:text-lg">
               Toshkent mintaqaviy temir yo'l uzeli
-              <span v-show="false">{{slotProps}}}</span>
+              <span v-show="false">{{ slotProps }}}</span>
             </div>
           </template>
         </Column>
 
-        <Column :exportable="false" style="min-width: 8rem">
+        <Column :exportable="false" style="min-width: 6rem">
           <template #body="slotProps">
-            <Button
-              icon="pi pi-pencil"
-              class="p-button-rounded p-button-warning mr-2"
-              v-tooltip="'Tahrirlash'"
-              @click="editProduct(slotProps.data)"
-            />
-            <Button
-              icon="pi pi-cloud-download"
-              class="p-button-rounded p-button-info"
-              v-tooltip="`Ma'lumotlarni yuklash`"
-              @click="confirmDeleteProduct(slotProps.data)"
-            />
+            <div class="flex w-full justify-content-center">
+              <Button
+                icon="pi pi-cloud-download"
+                class="p-button-rounded p-button-info"
+                v-tooltip="`Ma'lumotlarni yuklash`"
+                @click="confirmDeleteProduct(slotProps.data)"
+              />
+            </div>
           </template>
         </Column>
       </DataTable>
@@ -194,6 +188,25 @@
 export default {
   data() {
     return {
+      displayBasic: true,
+      responsiveOptions2: [
+        {
+          breakpoint: "1500px",
+          numVisible: 5,
+        },
+        {
+          breakpoint: "1024px",
+          numVisible: 3,
+        },
+        {
+          breakpoint: "768px",
+          numVisible: 2,
+        },
+        {
+          breakpoint: "560px",
+          numVisible: 1,
+        },
+      ],
       selectedProducts: null,
       value1: null,
       selectedCity: null,
@@ -565,6 +578,56 @@ export default {
           quantity: 25,
           inventoryStatus: "INSTOCK",
           rating: 8,
+        },
+      ],
+      images: [
+        {
+          itemImageSrc: "https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg",
+          thumbnailImageSrc: "https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg",
+          alt: "Description for Image 1",
+          title: "Title 1",
+        },
+        {
+          itemImageSrc: "https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg",
+          thumbnailImageSrc: "https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg",
+          alt: "Description for Image 2",
+          title: "Title 2",
+        },
+        {
+          itemImageSrc: "https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg",
+          thumbnailImageSrc: "https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg",
+          alt: "Description for Image 2",
+          title: "Title 2",
+        },
+        {
+          itemImageSrc: "https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg",
+          thumbnailImageSrc: "https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg",
+          alt: "Description for Image 2",
+          title: "Title 2",
+        },
+        {
+          itemImageSrc: "https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg",
+          thumbnailImageSrc: "https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg",
+          alt: "Description for Image 2",
+          title: "Title 2",
+        },
+        {
+          itemImageSrc: "https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg",
+          thumbnailImageSrc: "https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg",
+          alt: "Description for Image 2",
+          title: "Title 2",
+        },
+        {
+          itemImageSrc: "https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg",
+          thumbnailImageSrc: "https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg",
+          alt: "Description for Image 2",
+          title: "Title 2",
+        },
+        {
+          itemImageSrc: "https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg",
+          thumbnailImageSrc: "https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg",
+          alt: "Description for Image 2",
+          title: "Title 2",
         },
       ],
     };

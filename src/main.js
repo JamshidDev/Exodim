@@ -35,10 +35,16 @@ import Tooltip from 'primevue/tooltip';
 import OverlayPanel from 'primevue/overlaypanel';
 import Calendar from 'primevue/calendar';
 import InputNumber from 'primevue/inputnumber';
+import Password from 'primevue/password';
+import ToastService from 'primevue/toastservice';
+import Toast from 'primevue/toast';
+import Galleria from 'primevue/galleria';
+import Image from 'primevue/image';
 
 const app = createApp(App)
 
 app.use(PrimeVue, { ripple: true, inputStyle: 'outlined' })
+app.use(ToastService);
 app.use(store)
 app.use(router)
 
@@ -51,7 +57,7 @@ window.addEventListener("resize", (event) => {
 })
 app.config.globalProperties.SCREEN_WIDTH = window.innerWidth;
 app.config.globalProperties.SCREEN_HEIGHT = window.innerHeight;
-app.config.globalProperties.$appState = reactive({ theme: 'saga-orange', darkTheme: false });
+app.config.globalProperties.$appState = reactive({ theme: 'lara-light-blue', darkTheme: false });
 
 
 
@@ -86,6 +92,14 @@ app.component('Tooltip', Tooltip);
 app.component('OverlayPanel', OverlayPanel);
 app.component('Calendar', Calendar);
 app.component('InputNumber', InputNumber);
+app.component('Password', Password);
+app.component('Toast', Toast);
+app.component('Galleria', Galleria);
+app.component('Image', Image);
+
+
+
+
 
 
 

@@ -87,9 +87,9 @@ export default {
   methods: {
     customChangetheme($event) {
       if (this.darkMode) {
-        this.changeTheme($event, "vela-orange", true);
+        this.changeTheme($event, "lara-dark-blue", true);
       } else {
-        this.changeTheme($event, "saga-orange", true);
+        this.changeTheme($event, "lara-light-blue", true);
       }
     },
     decrementScale() {

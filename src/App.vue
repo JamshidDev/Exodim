@@ -1,6 +1,9 @@
 <template>
   <div>
-    <layout-vue></layout-vue>
+    <router-view>
+
+    </router-view>
+    <!-- <layout-vue></layout-vue> -->
   </div>
 </template>
 

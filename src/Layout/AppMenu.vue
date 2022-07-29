@@ -18,21 +18,21 @@ export default {
               label: "Statistika",
               icon: "pi pi-slack",
               command: () => {
-              this.$router.push("/statistic");
+              this.$router.push("/admin/statistic");
               },
             },
             {
               label: "Xodimlar",
               icon: "pi pi-search",
               command: () => {
-              this.$router.push("/employees")
+              this.$router.push("/admin/employees")
               },
             },
             {
               label: "Korxonalar",
               icon: "pi pi-building",
               command: () => {
-                this.$router.push("/companies")
+                this.$router.push("/admin/companies")
               },
             },
           ],
@@ -44,7 +44,7 @@ export default {
               label: "Statistika",
               icon: "pi pi-slack",
              command:()=>{
-              this.$router.push("/statistic");
+              this.$router.push("/admin/statistic");
              }
             },
             {
@@ -58,7 +58,7 @@ export default {
               label: "Shtat lavozimlari",
               icon: "pi pi-align-center",
               command: () => {
-               this.$router.push("/position")
+               this.$router.push("/admin/position")
               },
             },
             {
@@ -72,7 +72,7 @@ export default {
               label: "Hududlar",
               icon: "pi pi-map",
               command: () => {
-                this.$router.push("/map");
+                this.$router.push("/admin/map");
               },
             },
             {
@@ -118,7 +118,7 @@ export default {
               label: "Sozlamalar",
               icon: "pi pi-comments",
               command: () => {
-                this.$router.push("/setting");
+                this.$router.push("/admin/setting");
               },
             },
             {
