@@ -2,7 +2,7 @@
   <div class="w-full sidebar_box surface-1">
     <Menu
       :model="items"
-      class="w-full sidebar_menu  px-2 pb-4 border-none border-noround"
+      class="w-full sidebar_menu  px-2 pb-8 border-none border-noround"
     />
   </div>
 </template>

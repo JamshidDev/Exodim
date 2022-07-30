@@ -26,6 +26,16 @@
                 placeholder="Qidiruv"
               />
             </span>
+            <div>
+              <SplitButton
+                label="Saralash"
+                icon="pi pi-filter"
+                @click="save"
+                :model="nestedItems"
+                class="p-button-secondary mr-3"
+              ></SplitButton>
+              <Button label="Qo'shish" class="p-button-info"></Button>
+            </div>
           </div>
         </template>
 
@@ -35,7 +45,15 @@
           style="min-width: 16rem"
         >
           <template #body="slotProps">
-            <div class="flex font-medium">
+            <div
+              class="flex font-medium"
+              :class="[
+                slotProps.data.positionCount > slotProps.data.positionFakt &&
+                  'text-green-500',
+                slotProps.data.positionCount < slotProps.data.positionFakt &&
+                  'text-red-500',
+              ]"
+            >
               {{ slotProps.data.positionName }}
             </div>
           </template>
@@ -77,7 +95,35 @@
         >
           <template #body="slotProps">
             <div class="flex font-medium">
-              0/0 <span v-show="false">{{ slotProps }}}</span>
+              <div
+                class="text-red-500"
+                v-if="
+                  slotProps.data.positionCount < slotProps.data.positionFakt
+                "
+              >
+                Sverx -
+                {{
+                  Math.abs(
+                    slotProps.data.positionCount - slotProps.data.positionFakt
+                  )
+                }}
+              </div>
+              <div
+                v-if="
+                  slotProps.data.positionCount == slotProps.data.positionFakt
+                "
+              >
+                0/0
+              </div>
+              <div
+                v-if="
+                  slotProps.data.positionCount > slotProps.data.positionFakt
+                "
+                class="text-green-500"
+              >
+                Vakansiya -
+                {{ slotProps.data.positionCount - slotProps.data.positionFakt }}
+              </div>
             </div>
           </template>
         </Column>
@@ -115,6 +161,16 @@ export default {
   data() {
     return {
       searchValue: null,
+      nestedItems: [
+        {
+          label: "Vakansiya",
+          icon: "pi pi-sort-amount-down",
+        },
+          {
+          label: "Sverx",
+          icon: "pi pi-sort-amount-down",
+        },
+      ],
       positionList: [
         {
           positionName: `Boshqaruv raisi`,
@@ -156,7 +212,7 @@ export default {
           positionName: `Boshqaruv raisisning 1-o'rinbosari yordamchisi`,
           positionCategory: `М`,
           positionCount: 1,
-          positionFakt: 1,
+          positionFakt: 5,
         },
         {
           positionName: `Ishchi kadrlar bo'lim boshlig'i`,
