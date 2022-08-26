@@ -40,6 +40,11 @@ import ToastService from 'primevue/toastservice';
 import Toast from 'primevue/toast';
 import Galleria from 'primevue/galleria';
 import Image from 'primevue/image';
+import Menubar from 'primevue/menubar';
+import AutoComplete from 'primevue/autocomplete';
+import Sidebar from 'primevue/sidebar';
+import Slider from 'primevue/slider';
+
 
 const app = createApp(App)
 
@@ -96,6 +101,13 @@ app.component('Password', Password);
 app.component('Toast', Toast);
 app.component('Galleria', Galleria);
 app.component('Image', Image);
+app.component('Menubar', Menubar);
+app.component('AutoComplete', AutoComplete);
+app.component('Sidebar', Sidebar);
+app.component('Slider', Slider);
+
+
+
 
 
 

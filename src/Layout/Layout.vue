@@ -1,18 +1,33 @@
 <template >
   <div :class="layoutClass">
     <toolbar @controlSidebar="changeNavbar"></toolbar>
+    <!-- Layouts container -->
     <div class="layout_main_container">
-      <div class="layout_sidebar card">
+
+      <!-- Layout sidebar -->
+      <div class="layout_sidebar card shadow-1 border-1 border-white border-round-xs">
         <app-menu></app-menu>
       </div>
-      <div class="layout_main_section p-3">
-        <Breadcrumb
-          v-if="breadcrumb"
+
+      <!-- Layout main -->
+      <div class="layout_main_section px-3 pb-2"  >
+        <!-- Top breadcrumb -->
+        <div v-if="breadcrumb" class="grid py-1 card surface-0  px-2 mb-3">
+          <Breadcrumb
           :home="home"
           :model="items"
           class="border-none border-noround mb-3"
         />
-        <router-view ></router-view>
+        </div>
+        <!-- Top menuBar -->
+        <div class="pb-2 card mb-3">
+         <top-app-menu></top-app-menu>
+        </div>
+        <!-- Router main -->
+       <div class="pb-2 card surface-0  px-2 mb-3">
+         <router-view ></router-view>
+       </div>
+
         <!-- <AppFooter /> -->
       </div>
       <transition name="layout-mask" @click="changeNavbar()">
@@ -24,10 +39,12 @@
 <script>
 import AppMenu from "./AppMenu.vue";
 import Toolbar from "./Toolbar.vue";
+import TopAppMenu from "./TopAppMenu.vue";
 export default {
   components: {
     Toolbar,
     AppMenu,
+    TopAppMenu,
   },
   data() {
     return {
@@ -36,12 +53,17 @@ export default {
       sidebar_overall: false,
       mobile_active: false,
       breadcrumb: false,
+      menuBar:true,
 
       home: {
         icon: "pi pi-home",
         to: "/",
       },
       items: [{ label: "Statistika" }],
+
+
+      
+
     };
   },
   created() {

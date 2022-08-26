@@ -12,7 +12,7 @@ export default {
     return {
       items: [
         {
-          label: "Super Admin",
+          label: "Global",
           items: [
             {
               label: "Statistika",
@@ -38,7 +38,7 @@ export default {
           ],
         },
         {
-          label: "Admin",
+          label: "Asosiy",
           items: [
             {
               label: "Statistika",
@@ -92,7 +92,7 @@ export default {
           ],
         },
         {
-          label: "Xat va xabarlar",
+          label: "Xabarlar",
           items: [
             {
               label: "Chiquvchi xatlar",
@@ -144,15 +144,17 @@ export default {
 </script>
 <style lang="scss" >
 .sidebar_box {
-    height:calc(100vh - 72px) ;
-  max-height: calc(100vh - 72px);
+    height:calc(100vh - 58px) ;
+  max-height: calc(100vh - 58px);
   overflow-y: auto !important;
-  ::-webkit-scrollbar{
-    width: 1px !important;
-  }
+}
+.sidebar_box::-webkit-scrollbar {
+  width: 4px;
+  background-color: #FFFFFF;
+  scrollbar-color: #6969dd;
 }
 .sidebar_menu {
-  min-height: calc(100vh - 72px);
+  min-height: calc(100vh - 58px);
   .p-menuitem {
     font-weight: 500;
     font-size: 16px !important;

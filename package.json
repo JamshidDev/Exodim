@@ -7,6 +7,8 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@vuelidate/core": "^2.0.0-alpha.44",
+    "@vuelidate/validators": "^2.0.0-alpha.31",
     "chart.js": "^3.8.2",
     "core-js": "^3.24.0",
     "node-polyfill-webpack-plugin": "^2.0.0",
@@ -33,5 +35,5 @@
   "browser": {
     "fs": false,
     "child_process": false
-   }
+  }
 }

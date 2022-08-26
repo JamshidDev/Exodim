@@ -1,91 +1,6 @@
 <template >
-  <div class="grid card surface-0 shadow-1 py-2 px-2">
-    <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
-      <h6>Familiya</h6>
-      <InputText
-        type="text"
-        v-model="value1"
-        class="w-full"
-        placeholder="Familiyani kiriting"
-      />
-    </div>
-
-    <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
-      <h6>Ism</h6>
-      <InputText
-        type="text"
-        v-model="value1"
-        class="w-full"
-        placeholder="Ismni kiriting"
-      />
-    </div>
-
-    <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
-      <h6>Sharifi</h6>
-      <InputText
-        type="text"
-        v-model="value1"
-        class="w-full"
-        placeholder="Sharifni kiriting"
-      />
-    </div>
-    <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
-      <Button label="Qidiruv" icon="pi pi-search" class="mt-5 w-10" />
-      <Button
-        icon="pi pi-filter"
-        class="mt-5 w-2 p-button-text"
-        @click="openFilterPanel"
-      />
-      <OverlayPanel
-        ref="op"
-        :breakpoints="{ '960px': '75vw', '640px': '100vw' }"
-        :style="{ width: '450px' }"
-      >
-        <div class="grid">
-          <div class="col-12">
-            <h6 class="text-lg">Qo'shimcha filter sozlamalari</h6>
-          </div>
-          <div class="col-12">
-            <h6>Ishga qabul qilingan sana bo'yicha</h6>
-            <div class="w-full flex">
-              <div class="w-6">
-                <Dropdown
-                  v-model="selectedCity"
-                  :options="cities"
-                  optionLabel="name"
-                  placeholder="Muddatni kiriting"
-                  class="w-full"
-                />
-              </div>
-              <div class="w-6">
-                <Calendar
-                  v-model="selectedCity"
-                  class="w-full"
-                  placeholder="Tanlash"
-                />
-              </div>
-            </div>
-          </div>
-          <div class="col-12">
-            <h6>Ish tajribasi bo'yicha (yil)</h6>
-            <div class="w-full flex justify-content-start">
-              <div class="w-6">
-                <InputNumber
-                  v-model="selectedYear"
-                  suffix=" yil"
-                  placeholder="Ish tajribasi"
-                  class="w-full"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </OverlayPanel>
-    </div>
-    <!-- search bar ---end -->
-
-    <!-- Employees table ---start -->
-    <div class="col-12 pt-6">
+  <div class="grid">
+    <div class="col-12">
       <DataTable
         ref="dt"
         :value="data"
@@ -101,37 +16,31 @@
         class="pb-6"
       >
         <template #header>
-          <div class="flex justify-content-between w-full">
-            <h5 class="mb-2 md:m-0 p-as-md-center uppercase">
-              Umumiy xodimlar miqyosida (<span class="text-yellow-500"
-                >81121</span
-              >
-              )
-            </h5>
-            <Button
-              icon="pi pi-send"
-              class="p-button-warning"
-              v-tooltip="`Sms xabar yuborish`"
-              label="Yuborish"
-              iconPos="right"
-            />
+          <div class="grid">
+            <div class="col-12">
+              <h5 class="text-base md:m-0 p-as-md-center uppercase">
+                Korxonadagi umumiy xodimlar (<span class="text-yellow-500"
+                  >81121</span
+                >
+                )
+              </h5>
+            </div>
           </div>
         </template>
-
-        <Column
-          selectionMode="multiple"
-          style="width: 3rem"
-          :exportable="false"
-        ></Column>
         <Column header="Fotosurat">
           <template #body="slotProps">
-            <div class="flex justify-content-center">
-              <Image src="https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg" :alt="slotProps.data.name" width="50"  preview />
+            <div class="flex justify-content-center cursor-pointer">
+              <Image
+                src="https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg"
+                :alt="slotProps.data.name"
+                width="50"
+                preview
+              />
             </div>
             <!-- <img src="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png" :alt="slotProps.data.image" class="product-image" /> -->
           </template>
         </Column>
-        <Column field="name" header="F.I.SH" style="min-width: 16rem">
+        <Column field="name" header="F.I.SH" style="min-width: 20rem">
           <template #body="slotProps">
             <div
               class="
@@ -141,7 +50,10 @@
                 lg:text-lg
                 xl:text-lg
                 font-medium
+                cursor-pointer
+                text-blue-500
               "
+              v-tooltip.top="`Tahrirlash`"
             >
               {{ slotProps.data.name }}
             </div>
@@ -159,22 +71,19 @@
             </div>
           </template>
         </Column>
-        <Column field="rating" header="Korxona nomi" style="min-width: 16rem">
-          <template #body="slotProps">
-            <div class="text-sm sm:text-sm md:text-md lg:text-lg xl:text-lg">
-              Toshkent mintaqaviy temir yo'l uzeli
-              <span v-show="false">{{ slotProps }}}</span>
-            </div>
-          </template>
-        </Column>
-
-        <Column :exportable="false" style="min-width: 6rem">
+        <Column :exportable="false" style="min-width: 8rem">
           <template #body="slotProps">
             <div class="flex w-full justify-content-center">
               <Button
+                icon="pi pi-id-card"
+                class="p-button-rounded p-button-secondary mr-4"
+                v-tooltip.left="`Ma'lumotlarni ko'rish`"
+                @click="isShow =!isShow "
+              />
+              <Button
                 icon="pi pi-cloud-download"
                 class="p-button-rounded p-button-info"
-                v-tooltip="`Ma'lumotlarni yuklash`"
+                v-tooltip.left="`Ma'lumotlarni yuklash`"
                 @click="confirmDeleteProduct(slotProps.data)"
               />
             </div>
@@ -182,42 +91,20 @@
         </Column>
       </DataTable>
     </div>
+    <div class="col-12">
+        <employee-details :detailstShow="isShow"></employee-details>
+    </div>
   </div>
 </template>
 <script>
+import EmployeeDetails from './EmployeeDetails.vue';
 export default {
+  components: { EmployeeDetails },
   data() {
     return {
-      displayBasic: true,
-      responsiveOptions2: [
-        {
-          breakpoint: "1500px",
-          numVisible: 5,
-        },
-        {
-          breakpoint: "1024px",
-          numVisible: 3,
-        },
-        {
-          breakpoint: "768px",
-          numVisible: 2,
-        },
-        {
-          breakpoint: "560px",
-          numVisible: 1,
-        },
-      ],
-      selectedProducts: null,
-      value1: null,
-      selectedCity: null,
-      selectedYear: null,
-      cities: [
-        { name: "Bugun", code: "NY" },
-        { name: "Kecha", code: "RM" },
-        { name: "1 hafta oldin", code: "LDN" },
-        { name: "1 oy oldin", code: "IST" },
-        { name: "Tanlash", code: "PRS" },
-      ],
+      index: 0,
+      isShow:false,
+
       data: [
         {
           id: "1000",
@@ -580,64 +467,15 @@ export default {
           rating: 8,
         },
       ],
-      images: [
-        {
-          itemImageSrc: "https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg",
-          thumbnailImageSrc: "https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg",
-          alt: "Description for Image 1",
-          title: "Title 1",
-        },
-        {
-          itemImageSrc: "https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg",
-          thumbnailImageSrc: "https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg",
-          alt: "Description for Image 2",
-          title: "Title 2",
-        },
-        {
-          itemImageSrc: "https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg",
-          thumbnailImageSrc: "https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg",
-          alt: "Description for Image 2",
-          title: "Title 2",
-        },
-        {
-          itemImageSrc: "https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg",
-          thumbnailImageSrc: "https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg",
-          alt: "Description for Image 2",
-          title: "Title 2",
-        },
-        {
-          itemImageSrc: "https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg",
-          thumbnailImageSrc: "https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg",
-          alt: "Description for Image 2",
-          title: "Title 2",
-        },
-        {
-          itemImageSrc: "https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg",
-          thumbnailImageSrc: "https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg",
-          alt: "Description for Image 2",
-          title: "Title 2",
-        },
-        {
-          itemImageSrc: "https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg",
-          thumbnailImageSrc: "https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg",
-          alt: "Description for Image 2",
-          title: "Title 2",
-        },
-        {
-          itemImageSrc: "https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg",
-          thumbnailImageSrc: "https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg",
-          alt: "Description for Image 2",
-          title: "Title 2",
-        },
-      ],
+      selectedProducts: null,
     };
   },
-  methods: {
-    openFilterPanel(event) {
-      this.$refs.op.toggle(event);
+  method: {
+    tableNumber() {
+      return this.index;
     },
   },
 };
 </script>
-<style lang="scss">
+<style lang="">
 </style>
