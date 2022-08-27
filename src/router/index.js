@@ -86,6 +86,67 @@ const routes = [
         component: function () {
           return import(/* webpackChunkName: "about" */ '../views/AddingNewEmployee.vue')
         }
+      },
+      {
+        path: '/admin/editemployee/:id',
+        name: 'editemployee',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: function () {
+          return import(/* webpackChunkName: "about" */ '../views/EditEmployeePage.vue')
+        },
+        children:[
+          {
+            path: '/admin/editemployee/:id',
+            name: 'details-one',
+            // route level code-splitting
+            // this generates a separate chunk (about.[hash].js) for this route
+            // which is lazy-loaded when the route is visited.
+            component: function () {
+              return import(/* webpackChunkName: "about" */ '../components/editEmployee/EditPersonalInfo.vue')
+            },
+          },
+          {
+            path: '/admin/editemployee/:id/two',
+            name: 'details-two',
+            // route level code-splitting
+            // this generates a separate chunk (about.[hash].js) for this route
+            // which is lazy-loaded when the route is visited.
+            component: function () {
+              return import(/* webpackChunkName: "about" */ '../components/editEmployee/EditPersonalInfo.vue')
+            },
+          },
+          {
+            path: '/admin/editemployee/:id/three',
+            name: 'details-three',
+            // route level code-splitting
+            // this generates a separate chunk (about.[hash].js) for this route
+            // which is lazy-loaded when the route is visited.
+            component: function () {
+              return import(/* webpackChunkName: "about" */ '../components/editEmployee/EditPersonalInfo.vue')
+            },
+          },
+          {
+            path: '/admin/editemployee/:id/four',
+            name: 'details-four',
+            // route level code-splitting
+            // this generates a separate chunk (about.[hash].js) for this route
+            // which is lazy-loaded when the route is visited.
+            component: function () {
+              return import(/* webpackChunkName: "about" */ '../components/editEmployee/EditPersonalInfo.vue')
+            },
+          }, {
+            path: '/admin/editemployee/:id/five',
+            name: 'details-five',
+            // route level code-splitting
+            // this generates a separate chunk (about.[hash].js) for this route
+            // which is lazy-loaded when the route is visited.
+            component: function () {
+              return import(/* webpackChunkName: "about" */ '../components/editEmployee/EditPersonalInfo.vue')
+            },
+          },
+        ]
       }
     ]
   },

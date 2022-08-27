@@ -6,8 +6,8 @@
             </div>
             <div class="col-12 sm:col-12 md:col-6 lg:col-6 xl:col-6">
                 <div class="w-full flex justify-content-end">
-                       <SplitButton label="Export" :model="exportsProperty" class="p-button-success mr-2"></SplitButton>
-                      <Button icon="pi pi-plus" @click="goPush()" class="p-button-info" label="Xodim qo'shish" />
+                       <SplitButton label="Export" :model="exportsProperty" class="p-button-success mr-2 p-button-sm"></SplitButton>
+                      <Button icon="pi pi-plus" @click="goPush()" class="p-button-secondary p-button-sm" label="Xodim qo'shish" />
                 </div>
 
             </div>

@@ -1,13 +1,13 @@
 <template >
   <div class="fixed top-0 w-full z_index_top">
-    <Toolbar class="border-noround  px-4 pt-3 py-2">
+    <Toolbar class="border-noround  px-4  pb-2 pt-4">
       <template #start>
-        <Button
+        <!-- <Button
           icon="pi pi-bars"
           class="p-button-rounded p-button-outlined p-button-secondary p-button-sm"
           @click="controlNavbar()"
           
-        />
+        /> -->
         <!-- <div class="px-4 text-2xl text-blue-500 font-medium">CRM SYSTEM</div> -->
       </template>
 

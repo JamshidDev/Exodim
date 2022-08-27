@@ -43,6 +43,7 @@
         <Column field="name" header="F.I.SH" style="min-width: 20rem">
           <template #body="slotProps">
             <div
+              @click="goPush()"
               class="
                 text-sm
                 sm:text-sm
@@ -78,7 +79,7 @@
                 icon="pi pi-id-card"
                 class="p-button-rounded p-button-secondary mr-4"
                 v-tooltip.left="`Ma'lumotlarni ko'rish`"
-                @click="isShow =!isShow "
+                @click="isShow = !isShow"
               />
               <Button
                 icon="pi pi-cloud-download"
@@ -92,18 +93,18 @@
       </DataTable>
     </div>
     <div class="col-12">
-        <employee-details :detailstShow="isShow"></employee-details>
+      <employee-details :detailstShow="isShow"></employee-details>
     </div>
   </div>
 </template>
 <script>
-import EmployeeDetails from './EmployeeDetails.vue';
+import EmployeeDetails from "./EmployeeDetails.vue";
 export default {
   components: { EmployeeDetails },
   data() {
     return {
       index: 0,
-      isShow:false,
+      isShow: false,
 
       data: [
         {
@@ -470,11 +471,12 @@ export default {
       selectedProducts: null,
     };
   },
-  method: {
-    tableNumber() {
-      return this.index;
-    },
-  },
+  methods:{
+		goPush(){
+			this.$router.push(`/admin/editemployee/1`)
+		}
+	}
+ 
 };
 </script>
 <style lang="">

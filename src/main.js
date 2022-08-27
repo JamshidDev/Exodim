@@ -10,6 +10,11 @@ import { createApp, reactive } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import Maska from 'maska'
+
+
+
+// PrimeVue components
 
 import PrimeVue from 'primevue/config';
 
@@ -44,6 +49,11 @@ import Menubar from 'primevue/menubar';
 import AutoComplete from 'primevue/autocomplete';
 import Sidebar from 'primevue/sidebar';
 import Slider from 'primevue/slider';
+import ConfirmationService from 'primevue/confirmationservice';
+import ConfirmDialog from 'primevue/confirmdialog';
+import Steps from 'primevue/steps';
+
+
 
 
 const app = createApp(App)
@@ -52,6 +62,11 @@ app.use(PrimeVue, { ripple: true, inputStyle: 'outlined' })
 app.use(ToastService);
 app.use(store)
 app.use(router)
+app.use(Maska);
+app.use(ConfirmationService);
+
+
+
 
 // Global variables
 window.addEventListener("resize", (event) => {
@@ -105,6 +120,10 @@ app.component('Menubar', Menubar);
 app.component('AutoComplete', AutoComplete);
 app.component('Sidebar', Sidebar);
 app.component('Slider', Slider);
+app.component('ConfirmDialog', ConfirmDialog);
+app.component('Steps', Steps);
+
+
 
 
 

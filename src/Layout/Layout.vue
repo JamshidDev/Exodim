@@ -24,12 +24,17 @@
          <top-app-menu></top-app-menu>
         </div>
         <!-- Router main -->
-       <div class="pb-2 card surface-0  px-2 mb-3">
+       <div class="pb-2 card  min-h-screen  px-2 mb-3">
          <router-view ></router-view>
        </div>
+       <div class="pb-2 card px-2 mb-3 ">
+          <p class="text-center">Footer</p>
+       </div>
+        
 
         <!-- <AppFooter /> -->
       </div>
+      
       <transition name="layout-mask" @click="changeNavbar()">
         <div class="layout-mask p-component-overlay" v-if="mobile_active"></div>
       </transition>

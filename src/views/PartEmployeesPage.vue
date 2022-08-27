@@ -10,7 +10,7 @@
     </div>
     <div class="col-12">
       <!-- Body table -->
-      <body-table></body-table>
+      <body-table @editEmployee="goPush()"></body-table>
     </div>
   </div>
 </template>
@@ -26,6 +26,11 @@ export default {
     HeaderSearch,
     BodyTable,
   },
+  methods:{
+    goPush(){
+      this.$router.push("/admin")
+    }
+  }
 };
 </script>
 <style lang="scss">
