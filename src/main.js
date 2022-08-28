@@ -52,6 +52,7 @@ import Slider from 'primevue/slider';
 import ConfirmationService from 'primevue/confirmationservice';
 import ConfirmDialog from 'primevue/confirmdialog';
 import Steps from 'primevue/steps';
+import Textarea from 'primevue/textarea';
 
 
 
@@ -122,6 +123,8 @@ app.component('Sidebar', Sidebar);
 app.component('Slider', Slider);
 app.component('ConfirmDialog', ConfirmDialog);
 app.component('Steps', Steps);
+app.component('Textarea', Textarea);
+
 
 
 
