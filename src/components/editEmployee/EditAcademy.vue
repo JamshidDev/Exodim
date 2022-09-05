@@ -1,5 +1,6 @@
 <template >
-  <div class="grid card py-4 px-3">
+  <div class="grid card py-4 px-3"> 
+    <!-- Uneversity table -->
     <div class="col-12 mb-4 border-1 border-300 border-round-sm py-4">
       <DataTable
         ref="dt"
@@ -18,7 +19,7 @@
         <template #header>
           <div class="grid">
             <div class="col-6">
-              <h5 class="text-base md:m-0 p-as-md-center uppercase">
+              <h5 class="text-base md:m-0 p-as-md-center uppercase text-blue-600">
                 Ma'lumotlari
               </h5>
             </div>
@@ -28,7 +29,7 @@
                 class="p-button-secondary p-button-sm"
                 label="Qo'shish"
                 v-tooltip.bottom="`Bilim yurtini qo'shish`"
-                @click="controlAcademyDialog()"
+                @click="controlUniversityDialog(true)"
               />
             </div>
           </div>
@@ -114,9 +115,10 @@
       </DataTable>
     </div>
 
+
     <div class="col-12 mb-4 border-1 border-300 border-round-sm py-4 mb-4">
       <div class="grid xl:px-4 xl:mx-4 lg:px-2 xl:mx-2">
-        <div class="col-12 text-left text-lg font-medium uppercase mb-4">
+        <div class="col-12 text-left text-lg font-medium uppercase mb-4 text-blue-600">
           Akademik ma'lumotlari
         </div>
 
@@ -288,6 +290,9 @@
       </div>
     </div>
 
+
+
+        <!-- Foreign table -->
     <div class="col-12 mb-4 border-1 border-300 border-round-sm py-4 mb-4">
       <DataTable
         ref="dt"
@@ -306,7 +311,7 @@
         <template #header>
           <div class="grid">
             <div class="col-6">
-              <h5 class="text-base md:m-0 p-as-md-center uppercase mb-0">
+              <h5 class="text-base md:m-0 p-as-md-center uppercase text-blue-600 mb-0">
                 Xorijda ta'lim olganlar
               </h5>
             </div>
@@ -316,6 +321,7 @@
                 class="p-button-secondary p-button-sm"
                 label="Qo'shish"
                 v-tooltip.bottom="`Bilim yurtini qo'shish`"
+               @click="controlForeignDialog(true)"
               />
             </div>
           </div>
@@ -421,10 +427,11 @@
       </DataTable>
     </div>
 
+        <!-- Academy table -->
     <div class="col-12 mb-4 border-1 border-300 border-round-sm py-4 mb-4">
       <DataTable
         ref="dt"
-        :value="foreignCampus"
+        :value="academicCampus"
         v-model:selection="selectedProducts"
         dataKey="id"
         :paginator="false"
@@ -439,7 +446,7 @@
         <template #header>
           <div class="grid">
             <div class="col-6">
-              <h5 class="text-base md:m-0 p-as-md-center uppercase mb-0">
+              <h5 class="text-base md:m-0 p-as-md-center uppercase text-blue-600 mb-0">
                 Akademiyada ta'lim olganlar
               </h5>
             </div>
@@ -448,7 +455,7 @@
                 icon="pi pi-plus-circle"
                 class="p-button-secondary p-button-sm"
                 label="Qo'shish"
-                @click="controlAcademyDialog()"
+                @click="controlAcademyDialog(true)"
                 v-tooltip.bottom="`Bilim yurtini qo'shish`"
               />
             </div>
@@ -513,9 +520,11 @@
       </DataTable>
     </div>
 
+
+    <!-- University Dialog -->
     <div class="col-12">
       <Dialog
-        v-model:visible="academyDialog"
+        v-model:visible="universityDialog"
         :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
         :style="{ width: '50vw' }"
         :modal="true"
@@ -602,13 +611,182 @@
               <Button
                 label="Saqlash"
                 class="p-button-secondary p-button-sm"
-                @click="controlAcademyDialog()"
+                @click="controlUniversityDialog(false)"
               />
             </div>
           </div>
         </template>
       </Dialog>
     </div>
+
+     <!-- Foreign Dialog -->
+     <div class="col-12">
+      <Dialog
+        v-model:visible="foreignDialog"
+        :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+        :style="{ width: '50vw' }"
+        :modal="true"
+        header="Ma'lumot qo'shish"
+      >
+        <div class="grid pt-2">
+          <div class="col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6">
+            <h6 class="mb-2 pl-2">Qachondan</h6>
+            <InputText
+              type="text"
+              class="w-full"
+              placeholder="Yilni kiriting"
+              id="employeePhone"
+              v-model="v$.employeePhone.$model"
+              v-maska="'####'"
+              :class="{
+                'p-invalid': v$.employeePhone.$invalid && submitted,
+              }"
+            />
+          </div>
+          <div class="col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6">
+            <h6 class="mb-2 pl-2">Qachongacha</h6>
+            <InputText
+              type="text"
+              class="w-full"
+              placeholder="Yilni kiriting"
+              id="employeePhone"
+              v-model="v$.employeePhone.$model"
+              v-maska="'####'"
+              :class="{
+                'p-invalid': v$.employeePhone.$invalid && submitted,
+              }"
+            />
+          </div>
+         
+          <div class="col-12">
+            <h6 class="mb-2 pl-2">Tamomlagan bilim yurti</h6>
+            <Textarea
+              class="w-full"
+              placeholder="Bilim yurtini kiriting"
+              id="employeePhone"
+              v-model="v$.employeePhone.$model"
+              :class="{
+                'p-invalid': v$.employeePhone.$invalid && submitted,
+              }"
+              :autoResize="true"
+              rows="5"
+              cols="30"
+            />
+          </div>
+          <div class="col-12">
+            <h6 class="mb-2 pl-2">Yo'nalishi</h6>
+            <Textarea
+              placeholder="Yo'nalishni kiriting"
+              class="w-full"
+              id="employeePhone"
+              v-model="v$.employeePhone.$model"
+              :class="{
+                'p-invalid': v$.employeePhone.$invalid && submitted,
+              }"
+              :autoResize="true"
+              rows="5"
+              cols="30"
+            />
+          </div>
+          <div class="col-12">
+              <h6 class="mb-2 pl-2">Mablag'lashtirish</h6>
+              <Dropdown
+                id="employeeLanguage"
+                v-model="v$.employeeLanguage.$model"
+                :class="{
+                  'p-invalid': v$.employeeLanguage.$invalid && submitted,
+                }"
+                :options="Languages"
+                optionLabel="name"
+                placeholder="Oligohni tanlang"
+                class="w-full"
+              />
+          </div>
+        </div>
+
+        <template #footer>
+          <div class="col-12 pt-2">
+            <div class="flex justify-content-end">
+              <Button
+                label="Saqlash"
+                class="p-button-secondary p-button-sm"
+                @click="controlForeignDialog(false)"
+              />
+            </div>
+          </div>
+        </template>
+      </Dialog>
+    </div>
+
+    <!-- Academy Dialog -->
+    <div class="col-12">
+      <Dialog
+        v-model:visible="academyDialog"
+        :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
+        :style="{ width: '50vw' }"
+        :modal="true"
+        header="Ma'lumot qo'shish"
+      >
+        <div class="grid pt-2">
+          <div class="col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6">
+            <h6 class="mb-2 pl-2">Qachondan</h6>
+            <InputText
+              type="text"
+              class="w-full"
+              placeholder="Yilni kiriting"
+              id="employeePhone"
+              v-model="v$.employeePhone.$model"
+              v-maska="'####'"
+              :class="{
+                'p-invalid': v$.employeePhone.$invalid && submitted,
+              }"
+            />
+          </div>
+          <div class="col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6">
+            <h6 class="mb-2 pl-2">Qachongacha</h6>
+            <InputText
+              type="text"
+              class="w-full"
+              placeholder="Yilni kiriting"
+              id="employeePhone"
+              v-model="v$.employeePhone.$model"
+              v-maska="'####'"
+              :class="{
+                'p-invalid': v$.employeePhone.$invalid && submitted,
+              }"
+            />
+          </div>
+          <div class="col-12">
+              <h6 class="mb-2 pl-2">Akademiya nomi</h6>
+              <Dropdown
+                id="employeeLanguage"
+                v-model="v$.employeeLanguage.$model"
+                :class="{
+                  'p-invalid': v$.employeeLanguage.$invalid && submitted,
+                }"
+                :options="Languages"
+                optionLabel="name"
+                placeholder="Oligohni tanlang"
+                class="w-full"
+              />
+          </div>
+        </div>
+
+        <template #footer>
+          <div class="col-12 pt-2">
+            <div class="flex justify-content-end">
+              <Button
+                label="Saqlash"
+                class="p-button-secondary p-button-sm"
+                @click="controlAcademyDialog(false)"
+              />
+            </div>
+          </div>
+        </template>
+      </Dialog>
+    </div>
+
+
   </div>
 </template>
 <script>
@@ -660,7 +838,7 @@ export default {
       AcademicDegree,
       Party,
 
-      data: [
+      university: [
         {
           id: "1000",
           code: "f230fh0g3",
@@ -674,10 +852,15 @@ export default {
           rating: 5,
         },
       ],
+
       foreignCampus: null,
       academicCampus: null,
-
+      
+      universityDialog:false,
       academyDialog: false,
+      foreignDialog: false,
+
+
     };
   },
 
@@ -703,34 +886,21 @@ export default {
       if (!isFormValid) {
         return;
       }
-
-      this.toggleDialog();
     },
     goPush() {
       this.$router.push("/admin/partemployee");
     },
-    controlAcademyDialog() {
-      this.academyDialog = !this.academyDialog;
-    },
-    controlSuccessDialog() {
-      this.succesDialog = !this.succesDialog;
-    },
-    toggleDialog() {
-      this.showMessage = !this.showMessage;
 
-      if (!this.showMessage) {
-        this.resetForm();
-      }
+    controlUniversityDialog(item) {
+      this.universityDialog = item;
     },
-    resetForm() {
-      this.name = "";
-      this.email = "";
-      this.password = "";
-      this.date = null;
-      this.country = null;
-      this.accept = null;
-      this.submitted = false;
+    controlAcademyDialog(item) {
+      this.academyDialog = item;
     },
+    controlForeignDialog(item) {
+      this.foreignDialog = item;
+    },
+   
   },
 };
 </script>

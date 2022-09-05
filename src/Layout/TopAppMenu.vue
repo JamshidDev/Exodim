@@ -62,6 +62,9 @@ export default {
             {
               label: "Statistika",
               icon: "pi pi-slack",
+              command: () => {
+                this.$router.push("/admin/statistic")
+              },
             },
             {
               label: "Xodimlar",
@@ -73,14 +76,24 @@ export default {
             {
               label: "Bo'limlar",
               icon: "pi pi-sitemap",
+              command: () => {
+                this.$router.push("/admin/partfactory")
+              },
             },
             {
               label: "Shtat lavozimlari",
               icon: "pi pi-align-center",
+              command: () => {
+                this.$router.push("/admin/position")
+              },
+              
             },
             {
               label: "Arxiv",
               icon: "pi pi-shield",
+              command: () => {
+                this.$router.push("/admin/statistic")
+              },
             },
             {
               label: "Boshqalar",
@@ -89,10 +102,16 @@ export default {
                 {
                   label: "Rag'batlantirilganlar",
                   icon: "pi pi-star",
+                  command: () => {
+                this.$router.push("/admin/statistic")
+              },
                 },
                 {
                   label: "Hududlar",
                   icon: "pi pi-map",
+                  command: () => {
+                this.$router.push("/admin/statistic")
+              },
                 },
                
               ],

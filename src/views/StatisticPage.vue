@@ -1,5 +1,6 @@
 <template >
   <div class="grid">
+    <!-- header search dropdown -->
     <div class="col-12">
       <div class="grid card surface-0 shadow-1 py-2 px-2">
         <div class="col-12 md:col-6 lg:col-3 xl:col-3">
@@ -99,180 +100,606 @@
       </div>
     </div>
 
+    <!-- Header statistic box -->
+    <div class="col-12">
+      <div class="grid">
+        <!-- All users -->
+        <div class="col-12 sm:col-6 md:col-4 lg:col-2 xl:col-2">
+          <div class="card surface-0 shadow-1 p-4">
+            <div class="w-full flex justify-content-center">
+              <i class="pi pi-slack text-5xl text-blue-600"></i>
+            </div>
+            <h2 class="text-center text-6xl text-blue-400 font-bold mb-0">
+              12043
+            </h2>
+            <h6 class="text-center text-blue-400 mt-1">Barcha xodimlar</h6>
+          </div>
+        </div>
+
+        <!-- All vakant -->
+        <div class="col-12 sm:col-6 md:col-4 lg:col-2 xl:col-2">
+          <div class="card surface-0 shadow-1 p-4">
+            <div class="w-full flex justify-content-center">
+              <i class="pi pi-slack text-5xl text-blue-600"></i>
+            </div>
+            <h2 class="text-center text-6xl text-green-400 font-bold mb-0">
+              25
+            </h2>
+            <h6 class="text-center text-green-400 mt-1">Vakansiya</h6>
+          </div>
+        </div>
+
+        <!-- All sverx -->
+        <div class="col-12 sm:col-6 md:col-4 lg:col-2 xl:col-2">
+          <div class="card surface-0 shadow-1 p-4">
+            <div class="w-full flex justify-content-center">
+              <i class="pi pi-slack text-5xl text-blue-600"></i>
+            </div>
+            <h2 class="text-center text-6xl text-red-400 font-bold mb-0">34</h2>
+            <h6 class="text-center text-red-400 mt-1">Sverx</h6>
+          </div>
+        </div>
+
+         <!-- All position -->
+         <div class="col-12 sm:col-6 md:col-4 lg:col-2 xl:col-2">
+          <div class="card surface-0 shadow-1 p-4">
+            <div class="w-full flex justify-content-center">
+              <i class="pi pi-slack text-5xl text-blue-600"></i>
+            </div>
+            <h2 class="text-center text-6xl text-600 font-bold mb-0">12000</h2>
+            <h6 class="text-center text-500 mt-1">Shtat lavozimlari</h6>
+          </div>
+        </div>
+
+        <!-- All kasanachi -->
+        <div class="col-12 sm:col-6 md:col-4 lg:col-2 xl:col-2">
+          <div class="card surface-0 shadow-1 p-4">
+            <div class="w-full flex justify-content-center">
+              <i class="pi pi-slack text-5xl text-blue-600"></i>
+            </div>
+            <h2 class="text-center text-6xl text-600 font-bold mb-0">47</h2>
+            <h6 class="text-center text-500 mt-1">Kasanachilar</h6>
+          </div>
+        </div>
+
+        <!-- All notebook -->
+        <div class="col-12 sm:col-6 md:col-4 lg:col-2 xl:col-2">
+          <div class="card surface-0 shadow-1 p-4">
+            <div class="w-full flex justify-content-center">
+              <i class="pi pi-slack text-5xl text-blue-600"></i>
+            </div>
+            <h2 class="text-center text-6xl text-600 font-bold mb-0">7</h2>
+            <h6 class="text-center text-500 mt-1">Temir daftar</h6>
+          </div>
+        </div>
+
+       
+      </div>
+    </div>
+
+    <!-- First section information -->
     <div class="col-12 md:col-6 lg:col-4 xl:col-4">
-      <div class="card surface-0 shadow-1 p-4">
-        <div class="grid">
-          <div class="col-8 text-xl font-medium">Nafaqa yoshidagi xodimlar</div>
-          <div class="col-4">
-            <Button label="Ko'rish" class="p-button-sm p-button-outlined" />
+      <div class="card surface-0 shadow-1">
+        <div class="card p-4">
+          <Divider align="center" type="dashed">
+            <div class="font-medium text-blue-600">Bugun</div>
+          </Divider>
+          <div
+            class="
+              flex
+              justify-content-between
+              border-bottom-1 border-300
+              pb-2
+              mb-2
+            "
+          >
+            <div class="font-semibold text-lg pl-1">
+              Ishga qabul qilinganlar
+            </div>
+            <div class="text-xl text-blue-600 font-semibold pr-1">
+              <span class="text-yellow-500">0</span>/10
+            </div>
           </div>
-          <div class="col-12 xl:px-8 lg:px-6 md:px-4 sm:px-2 pt-2">
-            <Chart type="doughnut" :data="chartData" :options="lightOptions" />
+
+          <div
+            class="
+              flex
+              justify-content-between
+              border-bottom-1 border-300
+              pb-2
+              mb-2
+            "
+          >
+            <div class="font-semibold text-lg pl-1">Tu'gilgan kunlar</div>
+            <div class="text-xl text-blue-600 font-semibold pr-1">
+              <span class="text-yellow-500">2</span>/23
+            </div>
           </div>
-          <div class="col-12">
-            <Divider align="center" type="dashed">
-              <div class="font-medium">Hisobotlar</div>
-            </Divider>
-            <div class="flex">
-              <div class="font-medium">Umumiy xodimlardan</div>
-              <Tag class="mx-2" value="11.1%"></Tag>
-              <Tag class="mx-2" severity="info" value="121"></Tag
-              ><Tag class="mx-2" severity="success" value="754"></Tag>
+
+          <div
+            class="
+              flex
+              justify-content-between
+              border-bottom-1 border-300
+              pb-2
+              mb-2
+            "
+          >
+            <div class="font-semibold text-lg pl-1">
+              Faoliyati yakunlangan xodimlar
+            </div>
+            <div class="text-xl text-blue-600 font-semibold pr-1">
+              <span class="text-yellow-500">2</span>/10
             </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="col-12 md:col-6 lg:col-4 xl:col-4">
-      <div class="card surface-0 shadow-1 p-4">
-        <div class="grid">
-          <div class="col-8 text-xl font-medium">
-            Xodimlarning yoshi bo'yicha
-          </div>
-          <div class="col-4">
-            <Button label="Ko'rish" class="p-button-sm p-button-outlined" />
-          </div>
-          <div class="col-12 xl:px-8 lg:px-6 md:px-4 sm:px-2 pt-2">
-            <Chart type="pie" :data="secondtData" :options="lightOptions" />
-          </div>
-          <div class="col-12">
-            <Divider align="center" type="dashed">
-              <div class="font-medium">Hisobotlar</div>
-            </Divider>
-            <div class="flex">
-              <div class="font-medium">Umumiy xodimlardan</div>
-              <Tag class="mx-2" severity="warning" value="30 yosh 26.9%"></Tag>
-              <Tag class="mx-2" severity="info" value="30-45 yosh 46.5%"></Tag
-              ><Tag
-                class="mx-2"
-                severity="danger"
-                value="45 yoshdan 26.6%"
-              ></Tag>
+
+        <div class="card p-4 mb-4">
+          <Divider align="center" type="dashed">
+            <div class="font-medium text-500">Ma'lumoti xodimlarning</div>
+          </Divider>
+          <div
+            class="
+              flex
+              justify-content-between
+              border-bottom-1 border-300
+              pb-2
+              mb-2
+            "
+          >
+            <div class="font-semibold text-lg pl-1">Oliy ma'lumotli</div>
+            <div class="text-xl text-blue-600 font-semibold pr-1">
+              <span class="text-yellow-500">9000</span>/12043
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-12 md:col-6 lg:col-4 xl:col-4">
-      <div class="card surface-0 shadow-1 p-4">
-        <div class="grid">
-          <div class="col-8 text-xl font-medium">
-            Xodimlarning ma'lumoti bo'yicha
+
+          <div
+            class="
+              flex
+              justify-content-between
+              border-bottom-1 border-300
+              pb-2
+              mb-2
+            "
+          >
+            <div class="font-semibold text-lg pl-1">O'rta maxsus</div>
+            <div class="text-xl text-blue-600 font-semibold pr-1">
+              <span class="text-yellow-500">0</span>/12043
+            </div>
           </div>
-          <div class="col-4">
-            <Button label="Ko'rish" class="p-button-sm p-button-outlined" />
+
+          <div
+            class="
+              flex
+              justify-content-between
+              border-bottom-1 border-300
+              pb-2
+              mb-2
+            "
+          >
+            <div class="font-semibold text-lg pl-1">O'rta</div>
+            <div class="text-xl text-blue-600 font-semibold pr-1">
+              <span class="text-yellow-500">2</span>/12043
+            </div>
           </div>
-          <div class="col-12 xl:px-8 lg:px-6 md:px-4 sm:px-2 pt-2">
-            <Chart
-              type="polarArea"
-              :data="polarData"
-              :options="polarchartOptions"
-            />
+
+          <div
+            class="
+              flex
+              justify-content-between
+              border-bottom-1 border-300
+              pb-2
+              mb-2
+            "
+          >
+            <div class="font-semibold text-lg pl-1">
+              Tugallanmagan oliy (kunduzgi)
+            </div>
+            <div class="text-xl text-blue-600 font-semibold pr-1">
+              <span class="text-yellow-500">2</span>/12043
+            </div>
           </div>
-          <div class="col-12">
-            <Divider align="center" type="dashed">
-              <div class="font-medium">Hisobotlar</div>
-            </Divider>
-            <div class="flex">
-              <div class="font-medium">Umumiy xodimlardan</div>
-              <Tag class="mx-2" value="11.1%"></Tag>
-              <Tag class="mx-2" severity="info" value="121"></Tag
-              ><Tag class="mx-2" severity="success" value="754"></Tag>
+          <div
+            class="
+              flex
+              justify-content-between
+              border-bottom-1 border-300
+              pb-2
+              mb-2
+            "
+          >
+            <div class="font-semibold text-lg pl-1">
+              Tugallanmagan oliy (sirtqi)
+            </div>
+            <div class="text-xl text-blue-600 font-semibold pr-1">
+              <span class="text-yellow-500">0</span>/12043
+            </div>
+          </div>
+          <div
+            class="
+              flex
+              justify-content-between
+              border-bottom-1 border-300
+              pb-2
+              mb-2
+            "
+          >
+            <div class="font-semibold text-lg pl-1">
+              Tugallanmagan oliy (kechki)
+            </div>
+            <div class="text-xl text-blue-600 font-semibold pr-1">
+              <span class="text-yellow-500">0</span>/12043
+            </div>
+          </div>
+          <div
+            class="
+              flex
+              justify-content-between
+              border-bottom-1 border-300
+              pb-2
+              mb-2
+            "
+          >
+            <div class="font-semibold text-lg pl-1">
+              Tugallanmagan oliy (masofaviy)
+            </div>
+            <div class="text-xl text-blue-600 font-semibold pr-1">
+              <span class="text-yellow-500">0</span>/12043
+            </div>
+          </div>
+          <div
+            class="
+              flex
+              justify-content-between
+              border-bottom-1 border-300
+              pb-2
+              mb-2
+            "
+          >
+            <div class="font-semibold text-lg pl-1">
+              Tugallanmagan o'rta (11 ni tugatmagan)
+            </div>
+            <div class="text-xl text-blue-600 font-semibold pr-1">
+              <span class="text-yellow-500">0</span>/12043
+            </div>
+          </div>
+          <div
+            class="
+              flex
+              justify-content-between
+              border-bottom-1 border-300
+              pb-2
+              mb-2
+            "
+          >
+            <div class="font-semibold text-lg pl-1">
+              Tugalanmagan tayanch(9 ni tugatmagan)
+            </div>
+            <div class="text-xl text-blue-600 font-semibold pr-1">
+              <span class="text-yellow-500">0</span>/12043
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
-      <div class="card surface-0 shadow-1 p-4">
-        <div class="grid">
-          <div class="col-12">
-            <div class="text-xl font-medium">Erkak va ayollar soni</div>
-          </div>
-          <div class="col-12 px-8">
-            <Chart
-              type="doughnut"
-              :data="genderchartData"
-              :options="lightOptions"
-            />
-          </div>
+    <!-- Second section information -->
+    <div class="col-12 md:col-6 lg:col-4 xl:col-4">
+      <div class="card surface-0 shadow-1">
+        <div class="card p-4">
           <Divider align="center" type="dashed">
-            <div class="font-medium">Hisobotlar</div>
+            <div class="font-medium text-blue-600">Umumiy</div>
           </Divider>
-          <div class="font-medium">Xodimlar soni</div>
-          <Tag class="mx-2" value="81205"></Tag>
-          <Tag class="mx-2" severity="info" value="67224"></Tag
-          ><Tag class="mx-2" severity="warning" value="13981"></Tag>
+          <div
+            class="
+              flex
+              justify-content-between
+              border-bottom-1 border-300
+              pb-2
+              mb-2
+            "
+          >
+            <div class="font-semibold text-blue-500 text-lg pl-1">
+              Erkaklar
+            </div>
+            <div class="text-xl text-600 font-semibold pr-1">
+              <span class="text-green-500">10000</span>/12043
+            </div>
+          </div>
+
+          <div
+            class="
+              flex
+              justify-content-between
+              border-bottom-1 border-300
+              pb-2
+              mb-2
+            "
+          >
+            <div class="font-semibold text-blue-500 text-lg pl-1">
+              Ayollar
+            </div>
+            <div class="text-xl text-600 font-semibold pr-1">
+              <span class="text-yellow-500">2043</span>/12043
+            </div>
+          </div>
+        </div>
+
+        <div class="card p-4 ">
+          <Divider align="center" type="dashed">
+            <div class="font-medium text-500">Umumiy</div>
+          </Divider>
+          <div
+            class="
+              flex
+              justify-content-between
+              border-bottom-1 border-300
+              pb-2
+              mb-5
+            "
+          >
+            <div class="font-semibold text-lg pl-1">Rag'batlantirilganlar</div>
+            <div class="text-xl text-blue-600 font-semibold pr-1">
+              <span class="text-green-500">2456</span>/12043
+            </div>
+          </div>
+
+          <div
+            class="
+              flex
+              justify-content-between
+              border-bottom-1 border-300
+              pb-2
+              mb-2
+            "
+          >
+            <div class="font-semibold text-lg pl-1">
+              Intizomiy jazolanganlar
+            </div>
+            <div class="text-xl text-blue-600 font-semibold pr-1">
+              <span class="text-red-500">0</span>/12043
+            </div>
+          </div>
+        </div>
+
+        <div class="card p-4 mb-6">
+          <Divider align="center" type="dashed">
+            <div class="font-medium text-500">Umumiy</div>
+          </Divider>
+          <div
+            class="
+              flex
+              justify-content-between
+              border-bottom-1 border-300
+              pb-2
+              mb-2
+            "
+          >
+            <div class="font-semibold text-lg pl-1">Ta'tildagi xodimlar</div>
+            <div class="text-xl text-blue-600 font-semibold pr-1">
+              <span class="text-yellow-500">0</span>/12043
+            </div>
+          </div>
+
+          <div
+            class="
+              flex
+              justify-content-between
+              border-bottom-1 border-300
+              pb-2
+              mb-2
+            "
+          >
+            <div class="font-semibold text-lg pl-1">
+              Qora ro'yxatdagi xodimlar
+            </div>
+            <div class="text-xl text-blue-600 font-semibold pr-1">
+              <span class="text-yellow-500">0</span>/12043
+            </div>
+          </div>
+
+          <div
+            class="
+              flex
+              justify-content-between
+              border-bottom-1 border-300
+              pb-2
+              mb-2
+            "
+          >
+            <div class="font-semibold text-lg pl-1">
+              Ishga safaridagi xodimlar
+            </div>
+            <div class="text-xl text-blue-600 font-semibold pr-1">
+              <span class="text-yellow-500">0</span>/12043
+            </div>
+          </div>
+          <div
+            class="
+              flex
+              justify-content-between
+              border-bottom-1 border-300
+              pb-2
+              mb-2
+            "
+          >
+            <div class="font-semibold text-lg pl-1">
+              Ishga safaridagi xodimlar
+            </div>
+            <div class="text-xl text-blue-600 font-semibold pr-1">
+              <span class="text-yellow-500">0</span>/12043
+            </div>
+          </div>
+          
         </div>
       </div>
     </div>
-    <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
-      <div class="card surface-0 shadow-1 p-4">
-        <div class="grid">
-          <div class="col-12">
-            <div class="text-xl font-medium">Kasanachi xodimlar</div>
-          </div>
-          <div class="col-12 px-8">
-            <Chart
-              type="doughnut"
-              :data="genderchartData"
-              :options="lightOptions"
-            />
-          </div>
+
+     <!-- Third section information -->
+     <div class="col-12 md:col-6 lg:col-4 xl:col-4">
+      <div class="card surface-0 shadow-1">
+        <div class="card p-4">
           <Divider align="center" type="dashed">
-            <div class="font-medium">Hisobotlar</div>
+            <div class="font-medium text-blue-600">Bugungacha</div>
           </Divider>
-          <div class="font-medium">Xodimlar soni</div>
-          <Tag class="mx-2" value="81205"></Tag>
-          <Tag class="mx-2" severity="info" value="67224"></Tag
-          ><Tag class="mx-2" severity="warning" value="13981"></Tag>
+          <div
+            class="
+              flex
+              justify-content-between
+              border-bottom-1 border-300
+              pb-2
+              mb-2
+            "
+          >
+            <div class="font-semibold text-blue-500 text-lg pl-1">
+              Tibbiy ko'rik (yaroqli)
+            </div>
+            <div class="text-xl text-600 font-semibold pr-1">
+              <span class="text-green-500">11000</span>/12043
+            </div>
+          </div>
+
+          <div
+            class="
+              flex
+              justify-content-between
+              border-bottom-1 border-300
+              pb-2
+              mb-2
+            "
+          >
+            <div class="font-semibold text-blue-500 text-lg pl-1">
+              Tibbiy ko'rik (yaroqsiz)
+            </div>
+            <div class="text-xl text-600 font-semibold pr-1">
+              <span class="text-red-500">43</span>/12043
+            </div>
+          </div>
+
+          <div
+            class="
+              flex
+              justify-content-between
+              border-bottom-1 border-300
+              pb-2
+              mb-2
+            "
+          >
+            <div class="font-semibold text-blue-500 text-lg pl-1">
+              Tibbiy ko'rik (o'tmaganlar)
+            </div>
+            <div class="text-xl text-600 font-semibold pr-1">
+              <span class="text-yellow-500">1000</span>/12043
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
-      <div class="card surface-0 shadow-1 p-4">
-        <div class="grid">
-          <div class="col-12">
-            <div class="text-xl font-medium">Bo'sh ish o'rinlari</div>
-          </div>
-          <div class="col-12 px-8">
-            <Chart
-              type="doughnut"
-              :data="genderchartData"
-              :options="lightOptions"
-            />
-          </div>
+
+        <div class="card p-4 ">
           <Divider align="center" type="dashed">
-            <div class="font-medium">Hisobotlar</div>
+            <div class="font-medium text-500">Umumiy</div>
           </Divider>
-          <div class="font-medium">Xodimlar soni</div>
-          <Tag class="mx-2" value="81205"></Tag>
-          <Tag class="mx-2" severity="info" value="67224"></Tag
-          ><Tag class="mx-2" severity="warning" value="13981"></Tag>
+          <div
+            class="
+              flex
+              justify-content-between
+              border-bottom-1 border-300
+              pb-2
+              mb-5
+            "
+          >
+            <div class="font-semibold text-lg pl-1">Rag'batlantirilganlar</div>
+            <div class="text-xl text-blue-600 font-semibold pr-1">
+              <span class="text-green-500">2456</span>/12043
+            </div>
+          </div>
+
+          <div
+            class="
+              flex
+              justify-content-between
+              border-bottom-1 border-300
+              pb-2
+              mb-2
+            "
+          >
+            <div class="font-semibold text-lg pl-1">
+              Intizomiy jazolanganlar
+            </div>
+            <div class="text-xl text-blue-600 font-semibold pr-1">
+              <span class="text-red-500">0</span>/12043
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
-      <div class="card surface-0 shadow-1 p-4">
-        <div class="grid">
-          <div class="col-12">
-            <div class="text-xl font-medium">Temir daftardagi xodimlar</div>
-          </div>
-          <div class="col-12 px-8">
-            <Chart
-              type="doughnut"
-              :data="genderchartData"
-              :options="lightOptions"
-            />
-          </div>
+
+        <div class="card p-4 mb-6">
           <Divider align="center" type="dashed">
-            <div class="font-medium">Hisobotlar</div>
+            <div class="font-medium text-500">Umumiy</div>
           </Divider>
-          <div class="font-medium">Xodimlar soni</div>
-          <Tag class="mx-2" value="81205"></Tag>
-          <Tag class="mx-2" severity="info" value="67224"></Tag
-          ><Tag class="mx-2" severity="warning" value="13981"></Tag>
+          <div
+            class="
+              flex
+              justify-content-between
+              border-bottom-1 border-300
+              pb-2
+              mb-2
+            "
+          >
+            <div class="font-semibold text-lg pl-1">Ta'tildagi xodimlar</div>
+            <div class="text-xl text-blue-600 font-semibold pr-1">
+              <span class="text-yellow-500">0</span>/12043
+            </div>
+          </div>
+
+          <div
+            class="
+              flex
+              justify-content-between
+              border-bottom-1 border-300
+              pb-2
+              mb-2
+            "
+          >
+            <div class="font-semibold text-lg pl-1">
+              Qora ro'yxatdagi xodimlar
+            </div>
+            <div class="text-xl text-blue-600 font-semibold pr-1">
+              <span class="text-yellow-500">0</span>/12043
+            </div>
+          </div>
+
+          <div
+            class="
+              flex
+              justify-content-between
+              border-bottom-1 border-300
+              pb-2
+              mb-2
+            "
+          >
+            <div class="font-semibold text-lg pl-1">
+              Ishga safaridagi xodimlar
+            </div>
+            <div class="text-xl text-blue-600 font-semibold pr-1">
+              <span class="text-yellow-500">0</span>/12043
+            </div>
+          </div>
+          <div
+            class="
+              flex
+              justify-content-between
+              border-bottom-1 border-300
+              pb-2
+              mb-2
+            "
+          >
+            <div class="font-semibold text-lg pl-1">
+              Ishga safaridagi xodimlar
+            </div>
+            <div class="text-xl text-blue-600 font-semibold pr-1">
+              <span class="text-yellow-500">0</span>/12043
+            </div>
+          </div>
+          
         </div>
       </div>
     </div>
@@ -286,19 +713,9 @@ export default {
         labels: ["Erkaklar", "Ayollar"],
         datasets: [
           {
-            data: [121, 754],
-            backgroundColor: ["#3b82f6", "#22c55e"],
-            hoverBackgroundColor: ["#64B5F6", "#81C784"],
-          },
-        ],
-      },
-      secondtData: {
-        labels: ["30 yoshgacha", "30-45 yoshgacha", "45 yoshdan kattalar"],
-        datasets: [
-          {
-            data: [121, 754, 45],
-            backgroundColor: ["#F59E0B", "#3b82f6", "#ef4444"],
-            hoverBackgroundColor: ["#F59E0B", "#3b82f6", "#ef4444"],
+            data: [300, 50],
+            backgroundColor: ["#42A5F5", "#F59E0B"],
+            hoverBackgroundColor: ["#64B5F6", "#F59E0B"],
           },
         ],
       },
@@ -310,64 +727,6 @@ export default {
             },
           },
         },
-      },
-
-      polarData: {
-        datasets: [
-          {
-            data: [1323, 213, 7232, 3222, 1234, 923, 300, 69],
-            backgroundColor: [
-              "#42A5F5",
-              "#66BB6A",
-              "#FFA726",
-              "#26C6DA",
-              "#7E57C2",
-              "#F59E0B",
-              "#3b82f6",
-              "#ef4444",
-            ],
-            label: "My dataset",
-          },
-        ],
-        labels: [
-          "Tugallanmagan oliy (kunduzgi)",
-          "Tugallanmagan oliy (kechki)",
-          "Tugallanmagan oliy (sirtqi)",
-          "Tugallanmagan oliy (masofaviy)",
-          "O'rta",
-          "Tugallanmagan o'rta (11ni tugatmagan)",
-          "Tayanch o'rta",
-          "Tugallanmagan tayanch (9ni tugatmagan)",
-        ],
-      },
-      polarchartOptions: {
-        plugins: {
-          legend: {
-            labels: {
-              color: "#495057",
-            },
-          },
-        },
-        scales: {
-          r: {
-            grid: {
-              color: "#ebedef",
-            },
-          },
-        },
-      },
-
-      // gender chart
-      genderchartData: {
-        labels: ["Erkaklar", "Ayollar"],
-        datasets: [
-          {
-            data: [67224, 13981],
-            backgroundColor: ["#3b82f6", "#F59E0B"],
-            hoverBackgroundColor: ["#64B5F6", "#F59E0B"],
-            hoverOffset: 4,
-          },
-        ],
       },
 
       countries: [
@@ -387,5 +746,5 @@ export default {
   },
 };
 </script>
-<style lang="">
+<style lang="scss">
 </style>

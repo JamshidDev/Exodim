@@ -24,6 +24,7 @@
                 type="text"
                 v-model="searchValue"
                 placeholder="Qidiruv"
+                class="p-inputtext-sm"
               />
             </span>
             <div>
@@ -32,9 +33,9 @@
                 icon="pi pi-filter"
                 @click="save"
                 :model="nestedItems"
-                class="p-button-secondary mr-3"
+                class="p-button-secondary p-button-sm mr-3"
               ></SplitButton>
-              <Button label="Qo'shish" class="p-button-info"></Button>
+              <Button icon="pi pi-plus" label="Qo'shish" class="p-button-secondary p-button-sm"></Button>
             </div>
           </div>
         </template>
@@ -77,69 +78,18 @@
             </div>
           </template>
         </Column>
-        <Column
-          field="positionFakt"
-          header="Soni(Fakt)"
-          style="min-width: 4rem"
-        >
-          <template #body="slotProps">
-            <div class="flex font-medium">
-              {{ slotProps.data.positionFakt }}
-            </div>
-          </template>
-        </Column>
-        <Column
-          field="positionFakt"
-          header="Vakant/Sverx"
-          style="min-width: 6rem"
-        >
-          <template #body="slotProps">
-            <div class="flex font-medium">
-              <div
-                class="text-red-500"
-                v-if="
-                  slotProps.data.positionCount < slotProps.data.positionFakt
-                "
-              >
-                Sverx -
-                {{
-                  Math.abs(
-                    slotProps.data.positionCount - slotProps.data.positionFakt
-                  )
-                }}
-              </div>
-              <div
-                v-if="
-                  slotProps.data.positionCount == slotProps.data.positionFakt
-                "
-              >
-                0/0
-              </div>
-              <div
-                v-if="
-                  slotProps.data.positionCount > slotProps.data.positionFakt
-                "
-                class="text-green-500"
-              >
-                Vakansiya -
-                {{ slotProps.data.positionCount - slotProps.data.positionFakt }}
-              </div>
-            </div>
-          </template>
-        </Column>
-
         <Column :exportable="false" style="min-width: 10rem">
           <template #body="slotProps">
             <div class="flex justify-content-center">
               <Button
                 icon="pi pi-user"
-                class="p-button-rounded p-button-info"
+                class="p-button-rounded p-button-secondary"
                 v-tooltip="`Xodimlarni ko'rish`"
                 @click="confirmDeleteProduct(slotProps.data)"
               />
               <Button
                 icon="pi pi-pencil"
-                class="p-button-rounded p-button-warning mx-4"
+                class="p-button-rounded p-button-secondary mx-4"
                 v-tooltip="`Tahrirlash`"
                 @click="confirmDeleteProduct(slotProps.data)"
               />
