@@ -1,6 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 
+const beforeLogin =  (to, from, next) => {
+  const token = sessionStorage.getItem('token');
+  if(token){
+    next("/admin")
+  }else{
+    next("login")
+  }
+}
 
 const routes = [
   {
@@ -10,6 +18,13 @@ const routes = [
       return import(/* webpackChunkName: "about" */ '../Layout/Layout.vue')
     },
     children:[
+      {
+        path: '/admin',
+        name: 'homepage',
+        component: function () {
+          return import(/* webpackChunkName: "about" */ '../views/HomePage.vue')
+        }
+      },
       {
         path: '/admin/statistic',
         name: 'statistic',
@@ -161,6 +176,14 @@ const routes = [
       }
     ]
   },
+
+  // Home router
+  // Check user details
+  {
+    path: '/',
+    name: 'home',
+    beforeEnter:beforeLogin,
+  },
   {
     path: '/login',
     name: 'login',
@@ -194,6 +217,8 @@ const routes = [
  
  
 ]
+
+
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

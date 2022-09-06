@@ -30,10 +30,10 @@
       />
     </div>
     <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
-      <Button label="Qidiruv" icon="pi pi-search" class="mt-5 w-10" />
+      <Button label="Qidiruv" icon="pi pi-search " class="mt-5 w-10 p-button-secondary" />
       <Button
         icon="pi pi-filter"
-        class="mt-5 w-2 p-button-text"
+        class="mt-5 w-2 p-button-text p-button-secondary"
         @click="openFilterPanel"
       />
       <OverlayPanel
@@ -85,7 +85,7 @@
     <!-- search bar ---end -->
 
     <!-- Employees table ---start -->
-    <div class="col-12 pt-6">
+    <div class="col-12 pt-6" v-show="!loadingtable">
       <DataTable
         ref="dt"
         :value="data"
@@ -101,20 +101,13 @@
         class="pb-6"
       >
         <template #header>
-          <div class="flex justify-content-between w-full">
-            <h5 class="mb-2 md:m-0 p-as-md-center uppercase">
-              Umumiy xodimlar miqyosida (<span class="text-yellow-500"
+          <div class="flex w-full">
+            <h6 class="mb-2 md:m-0 uppercase">
+              Umumiy xodimlar (<span class="text-blue-500"
                 >81121</span
               >
               )
-            </h5>
-            <Button
-              icon="pi pi-send"
-              class="p-button-warning"
-              v-tooltip="`Sms xabar yuborish`"
-              label="Yuborish"
-              iconPos="right"
-            />
+            </h6>
           </div>
         </template>
 
@@ -150,18 +143,17 @@
 
         <Column field="rating" header="Lavozimi" style="min-width: 20rem">
           <template #body="slotProps">
-            <div class="text-sm sm:text-sm md:text-md lg:text-lg xl:text-lg">
+            <div class="text-sm sm:text-sm md:text-md lg:text-lg xl:text-lg font-medium">
               O'zbekiston temir yo'llari Aksiyadorlik jamiyati Personalni
               boshqarish va kadrlar tayyorlash boshqarmasida ish yurituvchi
-              O'zbekiston temir yo'llari Aksiyadorlik jamiyati Personalni
-              boshqarish va kadrlar tayyorlash boshqarmasida ish yurituvchi
+             
               {{ slotProps.data.name }}
             </div>
           </template>
         </Column>
         <Column field="rating" header="Korxona nomi" style="min-width: 16rem">
           <template #body="slotProps">
-            <div class="text-sm sm:text-sm md:text-md lg:text-lg xl:text-lg">
+            <div class="text-sm sm:text-sm md:text-md lg:text-lg xl:text-lg font-medium">
               Toshkent mintaqaviy temir yo'l uzeli
               <span v-show="false">{{ slotProps }}}</span>
             </div>
@@ -173,8 +165,8 @@
             <div class="flex w-full justify-content-center">
               <Button
                 icon="pi pi-cloud-download"
-                class="p-button-rounded p-button-info"
-                v-tooltip="`Ma'lumotlarni yuklash`"
+                class="p-button-rounded p-button-secondary"
+                v-tooltip.left="`Ma'lumotnomani yuklash`"
                 @click="confirmDeleteProduct(slotProps.data)"
               />
             </div>
@@ -182,31 +174,20 @@
         </Column>
       </DataTable>
     </div>
+    <div class="col-12 pt-6">
+      <employee-loader v-show="loadingtable"></employee-loader>
+    </div>
   </div>
 </template>
 <script>
+import EmployeeLoader from '../components/loaders/EmployeeLoader.vue';
 export default {
+  components: { EmployeeLoader },
   data() {
     return {
       displayBasic: true,
-      responsiveOptions2: [
-        {
-          breakpoint: "1500px",
-          numVisible: 5,
-        },
-        {
-          breakpoint: "1024px",
-          numVisible: 3,
-        },
-        {
-          breakpoint: "768px",
-          numVisible: 2,
-        },
-        {
-          breakpoint: "560px",
-          numVisible: 1,
-        },
-      ],
+      loadingtable:false,
+      
       selectedProducts: null,
       value1: null,
       selectedCity: null,
@@ -636,7 +617,16 @@ export default {
     openFilterPanel(event) {
       this.$refs.op.toggle(event);
     },
+    controlLoading(){
+      this.loadingtable = true;
+      setTimeout(()=>{
+        this.loadingtable =false
+      }, 2000)
+    }
   },
+  created(){
+    this.controlLoading()
+  }
 };
 </script>
 <style lang="scss">

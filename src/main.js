@@ -53,6 +53,10 @@ import ConfirmationService from 'primevue/confirmationservice';
 import ConfirmDialog from 'primevue/confirmdialog';
 import Steps from 'primevue/steps';
 import Textarea from 'primevue/textarea';
+import Skeleton from 'primevue/skeleton';
+import Knob from 'primevue/knob';
+import ContextMenu from 'primevue/contextmenu';
+
 
 
 
@@ -124,6 +128,11 @@ app.component('Slider', Slider);
 app.component('ConfirmDialog', ConfirmDialog);
 app.component('Steps', Steps);
 app.component('Textarea', Textarea);
+app.component('Skeleton', Skeleton);
+app.component('Knob', Knob);
+app.component('ContextMenu', ContextMenu);
+
+
 
 
 

@@ -38,6 +38,7 @@
             field="positionName"
             header="Bo'lim nomi"
             style="min-width:20rem"
+            class="py-0"
           >
             <template #body="slotProps">
               <div
@@ -58,6 +59,7 @@
             field="positionCategory"
             header="Shtat birligi (Plan)"
             style="min-width: 4rem"
+            class="py-0"
           >
             <template #body="slotProps">
               <div class="flex justify-content-center text-lg font-semibold">
@@ -65,21 +67,21 @@
               </div>
             </template>
           </Column>
-          <Column field="positionCount" header="Vakant va Sverx" style="min-width: 4rem">
+          <Column field="positionCount" header="Vakant va Sverx" style="min-width: 4rem" class="py-0">
             <template #body="slotProps">
               <div class="flex justify-content-center text-lg font-semibold">
                 {{ slotProps.data.positionCount }} / 0
               </div>
             </template>
           </Column>
-          <Column field="positionCount" header="Xodimlar soni" style="min-width: 4rem">
+          <Column field="positionCount" header="Xodimlar soni" style="min-width: 4rem" class="py-0">
             <template #body="slotProps">
               <div class="flex justify-content-center text-lg font-semibold">
                 {{ slotProps.data.positionCount }}
               </div>
             </template>
           </Column>
-          <Column field="positionCount" header="Shtatlar" style="min-width: 4rem">
+          <Column field="positionCount" header="Shtatlar" style="min-width: 4rem" class="py-0">
             <template #body="slotProps">
               <div class="flex justify-content-center font-medium">
                 <Button
@@ -92,7 +94,7 @@
               </div>
             </template>
           </Column>
-          <Column :exportable="false" style="min-width: 4rem">
+          <Column :exportable="false" style="min-width: 4rem" class="py-1">
             <template #body="slotProps">
               <div class="flex justify-content-center">
                 <Button
@@ -109,7 +111,7 @@
                 />
                 <Button
                   icon="pi pi-trash"
-                  class="p-button-rounded p-button-danger"
+                  class=" p-button-rounded p-button-danger "
                   v-tooltip.left="`O'chirish`"
                   @click="confirmDeleteProduct(slotProps.data)"
                 />

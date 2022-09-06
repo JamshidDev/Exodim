@@ -60,6 +60,10 @@ export default {
   },
   methods:{
     login(){
+        if(this.users.login){
+          sessionStorage.setItem('token', this.users.login)
+          this.$router.push('/')
+        }
         
         this.loading = !this.loading;
         setTimeout(()=>{

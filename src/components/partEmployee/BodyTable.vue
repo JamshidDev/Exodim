@@ -27,7 +27,7 @@
             </div>
           </div>
         </template>
-        <Column header="Fotosurat">
+        <Column header="Fotosurat" cla>
           <template #body="slotProps">
             <div class="flex justify-content-center cursor-pointer">
               <Image

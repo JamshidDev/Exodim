@@ -82,11 +82,11 @@
       <Button
         icon="pi pi-sitemap"
         label="Tashkiliy tuzilma"
-        class="p-button-info w-full mt-5"
+        class="p-button-secondary w-full mt-5"
       />
     </div>
 
-    <div class="col-12 pt-6">
+    <div class="col-12 pt-6" v-show="!tableLoading">
     <DataTable
       ref="dt"
       :value="data"
@@ -112,7 +112,7 @@
           <Button
             icon="pi pi-send"
             class="p-button-warning"
-            v-tooltip="`Sms xabar yuborish`"
+            v-tooltip.bottom="`Sms xabar yuborish`"
             label="Yuborish"
             iconPos="right"
           />
@@ -181,7 +181,7 @@
             <Button
               icon="pi pi-cloud-download"
               class="p-button-rounded p-button-info"
-              v-tooltip="`Ma'lumotlarni yuklash`"
+              v-tooltip.left="`Ma'lumotlarni yuklash`"
               @click="confirmDeleteProduct(slotProps.data)"
             />
           </div>
@@ -189,14 +189,20 @@
       </Column>
     </DataTable>
   </div>
+  <div class="col-12 pt-6">
+    <employee-loader v-show="tableLoading"></employee-loader>
+  </div>
   </div>
 
   
 </template>
 <script>
+import EmployeeLoader from '../components/loaders/EmployeeLoader.vue';
 export default {
+  components: { EmployeeLoader },
   data() {
     return {
+      tableLoading:false,
       selectedProducts: null,
       value1: null,
       selectedCity: null,
@@ -572,6 +578,17 @@ export default {
       ],
     };
   },
+  methods:{
+    controlLoading(){
+      this.tableLoading = true
+      setTimeout(() => {
+        this.tableLoading = false
+      }, 2000);
+    }
+  },
+  created(){
+    this.controlLoading()
+  }
 };
 </script>
 <style lang="">

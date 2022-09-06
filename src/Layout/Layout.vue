@@ -28,7 +28,7 @@
          <router-view ></router-view>
        </div>
        <div class="pb-2 card px-2 mb-3 ">
-          <p class="text-center">Footer</p>
+          <p class="text-center font-medium text-400">Dasturchilar <a href="https://telegram.me/Jamacoder">Jamshid</a> va <a href="https://telegram.me/losemanki6656">Jobir</a> </p>
        </div>
         
 
