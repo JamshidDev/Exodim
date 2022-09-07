@@ -1,5 +1,21 @@
 <template >
-  <div class="grid card surface-0 shadow-1 py-2 px-2">
+  <div class="grid card surface-0 shadow-1 py-4 px-3">
+
+    <div class="col-6 ">
+      <h6 class="uppercase pl-2">Umumiy korxonalar</h6>
+    </div>
+
+    <div class="col-6">
+      <div class="w-full flex justify-content-end">
+        <SplitButton
+          label="Export"
+          :model="items"
+          class="p-button-secondary p-button-sm"
+        ></SplitButton>
+       
+      </div>
+    </div>
+    <!-- Search employee surname -->
     <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
       <h6>Familiya</h6>
       <InputText
@@ -9,7 +25,7 @@
         placeholder="Familiyani kiriting"
       />
     </div>
-
+    <!-- Search employee name -->
     <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
       <h6>Ism</h6>
       <InputText
@@ -20,22 +36,30 @@
       />
     </div>
 
+    <!-- Search employee positionname -->
     <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
       <h6>Sharifi</h6>
       <InputText
         type="text"
         v-model="value1"
-        class="w-full"
+        class="w-full font-semibold"
         placeholder="Sharifni kiriting"
       />
     </div>
+
+    <!-- Search btn -->
     <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
-      <Button label="Qidiruv" icon="pi pi-search " class="mt-5 w-10 p-button-secondary" />
+      <Button
+        label="Qidiruv"
+        icon="pi pi-search "
+        class="mt-5 w-10 p-button-secondary"
+      />
       <Button
         icon="pi pi-filter"
         class="mt-5 w-2 p-button-text p-button-secondary"
         @click="openFilterPanel"
       />
+      <!-- Additional filter menu -->
       <OverlayPanel
         ref="op"
         :breakpoints="{ '960px': '75vw', '640px': '100vw' }"
@@ -43,41 +67,113 @@
       >
         <div class="grid">
           <div class="col-12">
-            <h6 class="text-lg">Qo'shimcha filter sozlamalari</h6>
+            <h6 class="text-sm uppercase">Qo'shimcha filter sozlamalari</h6>
           </div>
-          <div class="col-12">
-            <h6>Ishga qabul qilingan sana bo'yicha</h6>
+
+          <div class="col-6">
+            <div class="col-12">
+              <h6 class="text-sm mb-0">Katta korxonalar</h6>
+            </div>
             <div class="w-full flex">
-              <div class="w-6">
+              <div class="w-full">
                 <Dropdown
-                  v-model="selectedCity"
-                  :options="cities"
+                  v-model="selectedregion"
+                  :options="region"
                   optionLabel="name"
-                  placeholder="Muddatni kiriting"
-                  class="w-full"
+                  placeholder="Viloyati"
+                  class="w-full p-inputtext-sm"
                 />
               </div>
-              <div class="w-6">
-                <Calendar
-                  v-model="selectedCity"
-                  class="w-full"
-                  placeholder="Tanlash"
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="col-12">
+              <h6 class="text-sm mb-0">Korxonalar</h6>
+            </div>
+            <div class="w-full flex">
+              <div class="w-full">
+                <Dropdown
+                  v-model="selectedregion"
+                  :options="region"
+                  optionLabel="name"
+                  placeholder="Tumani"
+                  class="w-full p-inputtext-sm"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6">
+            <div class="col-12">
+              <h6 class="text-sm mb-0">Ma'lumoti</h6>
+            </div>
+            <div class="w-full flex">
+              <div class="w-full">
+                <Dropdown
+                  v-model="selectedregion"
+                  :options="region"
+                  optionLabel="name"
+                  placeholder="Ma'lumoti"
+                  class="w-full p-inputtext-sm"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="col-12">
+              <h6 class="text-sm mb-0">Ta'til</h6>
+            </div>
+            <div class="w-full flex">
+              <div class="w-full">
+                <Dropdown
+                  v-model="selectedregion"
+                  :options="region"
+                  optionLabel="name"
+                  placeholder="Ta'til"
+                  class="w-full p-inputtext-sm"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6">
+            <div class="col-12">
+              <h6 class="text-sm mb-1">Yosh oralig'i</h6>
+              <p class="text-center text-blue-600 font-semibold">
+                {{ selectedAge[0] + " -- " + selectedAge[1] }}
+              </p>
+            </div>
+            <div class="w-full flex">
+              <div class="w-full">
+                <Slider
+                  class=""
+                  v-model="selectedAge"
+                  :step="1"
+                  :range="true"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="col-12">
+              <h6 class="text-sm mb-0">Jinsi</h6>
+            </div>
+            <div class="w-full flex">
+              <div class="w-full">
+                <Dropdown
+                  v-model="selectedregion"
+                  :options="region"
+                  optionLabel="name"
+                  placeholder="Jinsi"
+                  class="w-full p-inputtext-sm"
                 />
               </div>
             </div>
           </div>
           <div class="col-12">
-            <h6>Ish tajribasi bo'yicha (yil)</h6>
-            <div class="w-full flex justify-content-start">
-              <div class="w-6">
-                <InputNumber
-                  v-model="selectedYear"
-                  suffix=" yil"
-                  placeholder="Ish tajribasi"
-                  class="w-full"
-                />
-              </div>
-            </div>
+            <p class="text-left text-600">
+              Qo'shimcha filter sozlamalariga e'tibor bilan tanlang
+            </p>
           </div>
         </div>
       </OverlayPanel>
@@ -94,18 +190,16 @@
         :paginator="true"
         :rows="10"
         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-        :rowsPerPageOptions="[5, 10, 25]"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
+        :rowsPerPageOptions="[10, 25, 50]"
+        currentPageReportTemplate="Ko'rish {first} dan {last} gacha {totalRecords} dan"
         responsiveLayout="scroll"
         showGridlines
-        class="pb-6"
+        class="pb-6 p-datatable-sm"
       >
         <template #header>
           <div class="flex w-full">
             <h6 class="mb-2 md:m-0 uppercase">
-              Umumiy xodimlar (<span class="text-blue-500"
-                >81121</span
-              >
+              Umumiy xodimlar (<span class="text-blue-500">81121</span>
               )
             </h6>
           </div>
@@ -116,10 +210,25 @@
           style="width: 3rem"
           :exportable="false"
         ></Column>
+        <Column header="No">
+          <template #body="slotProps">
+            <div class="flex justify-content-center">
+            <div v-show="false">{{slotProps.data.rating}} no </div>
+            {{countTable(1)}}
+            </div>
+            <!-- <img src="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png" :alt="slotProps.data.image" class="product-image" /> -->
+          </template>
+        </Column>
         <Column header="Fotosurat">
           <template #body="slotProps">
             <div class="flex justify-content-center">
-              <Image src="https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg" :alt="slotProps.data.name" width="50"  preview />
+              <Image
+                src="https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg"
+                :alt="slotProps.data.name"
+                width="40"
+                height="40"
+                preview
+              />
             </div>
             <!-- <img src="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png" :alt="slotProps.data.image" class="product-image" /> -->
           </template>
@@ -143,17 +252,35 @@
 
         <Column field="rating" header="Lavozimi" style="min-width: 20rem">
           <template #body="slotProps">
-            <div class="text-sm sm:text-sm md:text-md lg:text-lg xl:text-lg font-medium">
+            <div
+              class="
+                text-sm
+                sm:text-sm
+                md:text-md
+                lg:text-base
+                xl:text-base
+                font-medium
+              "
+            >
               O'zbekiston temir yo'llari Aksiyadorlik jamiyati Personalni
               boshqarish va kadrlar tayyorlash boshqarmasida ish yurituvchi
-             
+
               {{ slotProps.data.name }}
             </div>
           </template>
         </Column>
         <Column field="rating" header="Korxona nomi" style="min-width: 16rem">
           <template #body="slotProps">
-            <div class="text-sm sm:text-sm md:text-md lg:text-lg xl:text-lg font-medium">
+            <div
+              class="
+                text-sm
+                sm:text-sm
+                md:text-md
+                lg:text-base
+                xl:text-base
+                font-medium
+              "
+            >
               Toshkent mintaqaviy temir yo'l uzeli
               <span v-show="false">{{ slotProps }}}</span>
             </div>
@@ -162,7 +289,13 @@
 
         <Column :exportable="false" style="min-width: 6rem">
           <template #body="slotProps">
-            <div class="flex w-full justify-content-center">
+            <div class="flex w-full">
+              <Button
+                icon="pi pi-id-card"
+                class="p-button-rounded p-button-secondary mr-2"
+                v-tooltip.left="`Ma'lumotlarni ko'rish`"
+                @click="isShow = !isShow"
+              />
               <Button
                 icon="pi pi-cloud-download"
                 class="p-button-rounded p-button-secondary"
@@ -180,14 +313,14 @@
   </div>
 </template>
 <script>
-import EmployeeLoader from '../components/loaders/EmployeeLoader.vue';
+import EmployeeLoader from "../components/loaders/EmployeeLoader.vue";
 export default {
   components: { EmployeeLoader },
   data() {
     return {
       displayBasic: true,
-      loadingtable:false,
-      
+      loadingtable: false,
+
       selectedProducts: null,
       value1: null,
       selectedCity: null,
@@ -200,6 +333,18 @@ export default {
         { name: "Tanlash", code: "PRS" },
       ],
       data: [
+      {
+          id: "1000",
+          code: "f230fh0g3",
+          name: "Raximov Jamshid Shuxrat o'g'li",
+          description: "Product Description",
+          image: "bamboo-watch.jpg",
+          price: 65,
+          category: "Accessories",
+          quantity: 24,
+          inventoryStatus: "INSTOCK",
+          rating: 5,
+        },
         {
           id: "1000",
           code: "f230fh0g3",
@@ -611,22 +756,85 @@ export default {
           title: "Title 2",
         },
       ],
+      items: [
+        {
+          label: "Pdf",
+          icon: "pi pi pi-copy",
+          command: () => {
+            this.$toast.add({
+              severity: "success",
+              summary: "Updated",
+              detail: "Data Updated",
+              life: 3000,
+            });
+          },
+        },
+        {
+          label: "Exel",
+          icon: "pi pi pi-copy",
+          command: () => {
+            this.$toast.add({
+              severity: "success",
+              summary: "Updated",
+              detail: "Data Updated",
+              life: 3000,
+            });
+          },
+        },
+        {
+          label: "Printer",
+          icon: "pi pi-print",
+          command: () => {
+            this.$toast.add({
+              severity: "success",
+              summary: "Updated",
+              detail: "Data Updated",
+              life: 3000,
+            });
+          },
+        },
+      ],
+      selectedregion: null,
+      selectedAge: [10, 80],
+      region: [
+        {
+          id: 1,
+          name: "Xorazm",
+        },
+        {
+          id: 2,
+          name: "Toshkent",
+        },
+        {
+          id: 3,
+          name: "Buxoro",
+        },
+        {
+          id: 4,
+          name: "Termiz",
+        },
+      ],
+      currentPage:1,
+      
     };
   },
   methods: {
     openFilterPanel(event) {
       this.$refs.op.toggle(event);
     },
-    controlLoading(){
+    controlLoading() {
       this.loadingtable = true;
-      setTimeout(()=>{
-        this.loadingtable =false
-      }, 2000)
+      setTimeout(() => {
+        this.loadingtable = false;
+      }, 2000);
+    },
+     countTable(item){
+      return this.currentPage++
     }
   },
-  created(){
-    this.controlLoading()
-  }
+  created() {
+    this.controlLoading();
+  },
 };
 </script>
 <style lang="scss">

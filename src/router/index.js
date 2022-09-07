@@ -2,9 +2,18 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 
 const beforeLogin =  (to, from, next) => {
-  const token = sessionStorage.getItem('token');
+  const token = sessionStorage.getItem('access_token');
   if(token){
     next("/admin")
+  }else{
+    next("login")
+  }
+}
+
+const authLogin =  (to, from, next) => {
+  const token = sessionStorage.getItem('access_token');
+  if(token){
+    next()
   }else{
     next("login")
   }
@@ -14,6 +23,7 @@ const routes = [
   {
     path: '/admin',
     name: 'admin',
+    beforeEnter:authLogin,
     component: function () {
       return import(/* webpackChunkName: "about" */ '../Layout/Layout.vue')
     },
@@ -101,6 +111,16 @@ const routes = [
         // which is lazy-loaded when the route is visited.
         component: function () {
           return import(/* webpackChunkName: "about" */ '../views/PartEmployeesPage.vue')
+        }
+      },
+      {
+        path: '/admin/historyemployee',
+        name: 'historyemployee',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: function () {
+          return import(/* webpackChunkName: "about" */ '../views/HistoryEmployeePage.vue')
         }
       },
       {

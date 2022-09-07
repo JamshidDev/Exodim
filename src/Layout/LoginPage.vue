@@ -24,11 +24,11 @@
         </h3>
       </div>
       <div class="col-12">
-        <InputText type="text" class="w-full" v-model.trim="users.login"  placeholder="Login kiriting" />
+        <InputText type="text" class="w-full" v-model.trim="user.email"  placeholder="Login kiriting" />
       </div>
       <div class="col-12">
           <Password
-            v-model="users.password"
+            v-model="user.password"
             placeholder="Parol kiriting"
             toggleMask
             class="w-full mb-3"
@@ -48,11 +48,12 @@
   </div>
 </template>
 <script>
+  import authService from '../service/servises/authService';
 export default {
   data() {
     return {
-      users: {
-        login: null,
+      user: {
+        email: null,
         password: null,
       },
       loading:false
@@ -60,17 +61,24 @@ export default {
   },
   methods:{
     login(){
-        if(this.users.login){
-          sessionStorage.setItem('token', this.users.login)
-          this.$router.push('/')
-        }
-        
+      this.loading = !this.loading;
+      authService.loginAdmin(this.user).then((res)=>{
+        console.log(res.data);
+
+        sessionStorage.setItem('access_token', res.data.access_token)
+        sessionStorage.setItem('token_type', res.data.token_type)
+        sessionStorage.setItem('expires_in', res.data.expires_in)
+        this.$router.push('/')
         this.loading = !this.loading;
+
+      }).catch((error)=>{
+         this.loading = !this.loading;
         setTimeout(()=>{
             this.loading = !this.loading;
               this.$toast.add({severity:'error', summary: "Tizimga kirish", detail:"Login yoki parol noto'g'ri", life: 3000});
            
         }, 2000)
+      }) 
     }
   }
 };

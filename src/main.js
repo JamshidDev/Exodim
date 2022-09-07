@@ -9,7 +9,7 @@ import "./assets/style/layouts.scss"
 import { createApp, reactive } from 'vue'
 import App from './App.vue'
 import router from './router'
-import store from './store'
+import store from './store/index'
 import Maska from 'maska'
 
 

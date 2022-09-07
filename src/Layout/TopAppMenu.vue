@@ -88,23 +88,23 @@ export default {
           {
             name: "global_search",
             permission: {
-              label: "Xodimlar",
+              label: "Korxonalar",
               icon: "pi pi-search",
               command: () => {
                 this.$router.push("/admin/employees");
               },
             },
           },
-          {
-            name: "global_factory",
-            permission: {
-              label: "Korxonalar",
-              icon: "pi pi-building",
-              command: () => {
-                this.$router.push("/admin/companies");
-              },
-            },
-          },
+          // {
+          //   name: "global_factory",
+          //   permission: {
+          //     label: "Sms tizimi",
+          //     icon: "pi pi-envelope",
+          //     command: () => {
+          //       this.$router.push("/admin/companies");
+          //     },
+          //   },
+          // },
         ],
         // basic menu items
         [
@@ -149,12 +149,32 @@ export default {
             },
           },
           {
+            name: "basic_regions",
+            permission: {
+              label: "Tibbiy ko'rik",
+              icon: "pi pi-box",
+              command: () => {
+                this.$router.push("/admin/statistic");
+              },
+            },
+          },
+          {
+            name: "basic_regions",
+            permission: {
+              label: "Ta'tillar",
+              icon: "pi pi-briefcase",
+              command: () => {
+                this.$router.push("/admin/statistic");
+              },
+            },
+          },
+          {
             name: "basic_history",
             permission: {
               label: "Arxiv",
               icon: "pi pi-shield",
               command: () => {
-                this.$router.push("/admin/statistic");
+                this.$router.push("/admin/historyemployee");
               },
             },
           },
