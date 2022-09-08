@@ -5,7 +5,7 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use(function (config) {
-    let token = sessionStorage.getItem('token') ? sessionStorage.getItem('token') : null;
+    let token = sessionStorage.getItem('access_token') ? sessionStorage.getItem('access_token') : null;
     if (token) {
         config.headers.common['Access-Control-Allow-Origin'] = '*'
         config.headers.common['Authorization'] = 'Bearer ' + token

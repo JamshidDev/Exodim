@@ -56,6 +56,7 @@ import Textarea from 'primevue/textarea';
 import Skeleton from 'primevue/skeleton';
 import Knob from 'primevue/knob';
 import ContextMenu from 'primevue/contextmenu';
+import Paginator from 'primevue/paginator';
 
 
 
@@ -75,11 +76,14 @@ app.use(ConfirmationService);
 
 // Global variables
 window.addEventListener("resize", (event) => {
-    console.log(event.currentTarget.innerWidth);
     app.config.globalProperties.SCREEN_WIDTH = event.currentTarget.innerWidth;
     app.config.globalProperties.SCREEN_HEIGHT = event.currentTarget.innerHeight;
 
 })
+addEventListener('beforeunload', (event) => { 
+    console.log(event);
+    window.stop()
+});
 app.config.globalProperties.SCREEN_WIDTH = window.innerWidth;
 app.config.globalProperties.SCREEN_HEIGHT = window.innerHeight;
 app.config.globalProperties.$appState = reactive({ theme: 'lara-light-blue', darkTheme: false });
@@ -131,6 +135,8 @@ app.component('Textarea', Textarea);
 app.component('Skeleton', Skeleton);
 app.component('Knob', Knob);
 app.component('ContextMenu', ContextMenu);
+app.component('Paginator', Paginator);
+
 
 
 

@@ -4,38 +4,14 @@
   </div>
 </template>
 <script>
+  import { mapGetters } from 'vuex';
 export default {
   data() {
     return {
-      permissions: [
-        "super_admin",
-        "basic_admin",
-        "message_admin",
-        "control_admin",
-        "global_statistic",
-        "global_search",
-        "global_factory",
-        "basic_statistic",
-        "basic_search",
-        "basic_position",
-        "basic_history",
-        "basic_pris",
-        "basic_part",
-        "basic_regions",
-        "message_offer",
-        "message_enter_msg",
-        "message_out_msg",
-        "control_login",
-        "control_action",
-        "control_history",
-        "deleteAdmin",
-        "updateAdmin",
-        "historyAdmin",
-      ],
       permissionList: [
         // super admin
         {
-          name: "super_admin",
+          name: "role-list",
           permissions: {
             label: "Global",
             icon: "pi pi-globe",
@@ -76,7 +52,7 @@ export default {
         // global menu items
         [
           {
-            name: "global_statistic",
+            name: "role-list",
             permission: {
               label: "Statistika",
               icon: "pi pi-slack",
@@ -86,7 +62,7 @@ export default {
             },
           },
           {
-            name: "global_search",
+            name: "role-list",
             permission: {
               label: "Korxonalar",
               icon: "pi pi-search",
@@ -428,13 +404,15 @@ export default {
       customBarRouter: [],
     };
   },
+  computed:{
+    ...mapGetters(["get_adminPermissions"])
+  },
   methods: {
-    generateBarRouter() {
-      this.permissionList.forEach((item, index) => {
-        if (this.permissions.includes(item.name)) {
-          console.log(index);
+   async generateBarRouter() {
+     await this.permissionList.forEach((item, index) => {
+        if (this.get_adminPermissions(item.name)) {
           this.childPermissions[index].forEach((childItem, childIndex) => {
-            if (this.permissions.includes(childItem.name)) {
+            if (this.get_adminPermissions(childItem.name)) {
               item.permissions.items.push(childItem.permission);
             }
           });
@@ -442,7 +420,7 @@ export default {
         }
       });
 
-      console.log(this.customBarRouter);
+      // console.log(this.customBarRouter);
     },
     get_Permission(arrey, permission) {
       if (arrey.length > 0) {

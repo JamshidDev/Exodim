@@ -1,10 +1,14 @@
 const state ={
-    
+    adminPermissions:[],
+    adminRoles:[],
+    adminDetails:[],
+
+
 }
 
 const getters = {
-    get_adminPermission:(state)=> (key)=>{
-        return  state.permission.length>0 ? state.permission.includes(key) : null;
+    get_adminPermissions:(state)=> (key)=>{
+        return  state.adminPermissions.length>0 ? state.adminPermissions.includes(key) : null;
     },
     get_adminDetails(state){
         return state.adminDetails
@@ -12,8 +16,8 @@ const getters = {
 }
 
 const actions ={
-    set_adminPermission(ctx, payload){
-        ctx.commit("update_adminPermission", payload)
+    set_adminPermissions(ctx, payload){
+        ctx.commit("update_adminPermissions", payload)
     },
     set_adminDetails(ctx, payload){
         ctx.commit("update_adminDetails", payload)
@@ -23,8 +27,8 @@ const actions ={
 }
 
 const mutations = {
-    update_adminPermission(state, item){
-        state.permission = item
+    update_adminPermissions(state, item){
+        state.adminPermissions = item
     },
     update_adminDetails(state, item){
         state.adminDetails = item
