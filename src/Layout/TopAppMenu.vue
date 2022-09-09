@@ -20,7 +20,7 @@ export default {
         },
         // basic admin
         {
-          name: "basic_admin",
+          name: "role-list",
           permissions: {
             label: "Asosiy",
             icon: "pi pi-microsoft",
@@ -85,7 +85,7 @@ export default {
         // basic menu items
         [
           {
-            name: "basic_statistic",
+            name: "role-list",
             permission: {
               label: "Statistika",
               icon: "pi pi-slack",
@@ -95,7 +95,7 @@ export default {
             },
           },
           {
-            name: "basic_search",
+            name: "role-list",
             permission: {
               label: "Xodimlar",
               icon: "pi pi-users",
@@ -105,7 +105,7 @@ export default {
             },
           },
           {
-            name: "basic_part",
+            name: "role-list",
             permission: {
               label: "Bo'limlar",
               icon: "pi pi-sitemap",
@@ -115,7 +115,7 @@ export default {
             },
           },
           {
-            name: "basic_position",
+            name: "role-list",
             permission: {
               label: "Shtat lavozimlari",
               icon: "pi pi-align-center",
@@ -125,7 +125,7 @@ export default {
             },
           },
           {
-            name: "basic_regions",
+            name: "role-list",
             permission: {
               label: "Tibbiy ko'rik",
               icon: "pi pi-box",
@@ -135,7 +135,7 @@ export default {
             },
           },
           {
-            name: "basic_regions",
+            name: "role-list",
             permission: {
               label: "Ta'tillar",
               icon: "pi pi-briefcase",
@@ -145,7 +145,7 @@ export default {
             },
           },
           {
-            name: "basic_history",
+            name: "role-list",
             permission: {
               label: "Arxiv",
               icon: "pi pi-shield",
@@ -155,7 +155,7 @@ export default {
             },
           },
           {
-            name: "basic_pris",
+            name: "role-list",
             permission: {
               label: "Rag'batlantirilganlar",
               icon: "pi pi-star",
@@ -165,7 +165,7 @@ export default {
             },
           },
           {
-            name: "basic_regions",
+            name: "role-list",
             permission: {
               label: "Hududlar",
               icon: "pi pi-map",
@@ -432,6 +432,7 @@ export default {
   },
   created() {
     this.generateBarRouter();
+    console.log(localStorage.getItem('Adminpermissions'));
   },
 };
 </script>

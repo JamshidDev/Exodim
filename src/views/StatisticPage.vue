@@ -1,24 +1,31 @@
 <template >
-  <div class="grid" >
+  <div class="grid">
     <!-- header search dropdown -->
     <div class="col-12">
       <div class="grid card surface-0 shadow-1 py-2 px-2">
-        <div class="col-12 md:col-6 lg:col-3 xl:col-3">
-          <h6>Katta Korxonalar - 48</h6>
+        <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3 p-fluid">
+          <h6>
+            Katta korxonalar -
+            {{
+              bigOrganizationList.length
+                ? bigOrganizationList.length - 1
+                : bigOrganizationList.length
+            }}
+          </h6>
           <Dropdown
-            v-model="selectedCountry"
-            :options="countries"
+            id="adressDistrict"
+            v-model="bigOrgValue"
+            :options="bigOrganizationList"
             optionLabel="name"
+            class="xl:p-inputtext-sm"
             :filter="true"
-            placeholder="Korxona tanlang"
-            :showClear="true"
-            class="w-full"
+            placeholder="Tanlang"
+            emptyMessage="Hech narsa topilmadi"
+            emptyFilterMessage="Tizmda ma'lumot topilmadi..."
+            @change="changeRailway"
           >
-            <template #value="slotProps">
-              <div
-                class="country-item country-item-value"
-                v-if="slotProps.value"
-              >
+            <template #value="slotProps" class="custop_dropdown">
+              <div class="max-w-100" v-if="slotProps.value">
                 <div>{{ slotProps.value.name }}</div>
               </div>
               <span v-else>
@@ -26,41 +33,49 @@
               </span>
             </template>
             <template #option="slotProps">
-              <div class="country-item">
+              <div class="max-w-100">
                 <div>{{ slotProps.option.name }}</div>
               </div>
             </template>
           </Dropdown>
         </div>
-        <div class="col-12 md:col-6 lg:col-3 xl:col-3">
-          <h6>Korxonalar - 0</h6>
-          <Dropdown
-            v-model="selectedCountry"
-            :options="countries"
-            optionLabel="name"
-            :filter="true"
-            placeholder="Korxona tanlang"
-            :showClear="true"
-            class="w-full"
+        <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
+      <h6>
+        Korxonalar -
+        {{
+          organizations.length ? organizations.length - 1 : organizations.length
+        }}
+      </h6>
+      <Dropdown
+        id="adressDistrict"
+        v-model="orgValue"
+        :options="organizations"
+        optionLabel="name"
+        @change="changeOrganization"
+        :filter="true"
+        placeholder=" Tanlang"
+        class="w-full"
+        emptyMessage="Hech narsa topilmadi"
+        emptyFilterMessage="Tizmda ma'lumot topilmadi..."
+      >
+        <template #value="slotProps">
+          <div
+            class="country-item country-item-value w-full"
+            v-if="slotProps.value"
           >
-            <template #value="slotProps">
-              <div
-                class="country-item country-item-value"
-                v-if="slotProps.value"
-              >
-                <div>{{ slotProps.value.name }}</div>
-              </div>
-              <span v-else>
-                {{ slotProps.placeholder }}
-              </span>
-            </template>
-            <template #option="slotProps">
-              <div class="country-item">
-                <div>{{ slotProps.option.name }}</div>
-              </div>
-            </template>
-          </Dropdown>
-        </div>
+            <div>{{ slotProps.value.name }}</div>
+          </div>
+          <span v-else>
+            {{ slotProps.placeholder }}
+          </span>
+        </template>
+        <template #option="slotProps">
+          <div class="country-item w-full">
+            <div>{{ slotProps.option.name }}</div>
+          </div>
+        </template>
+      </Dropdown>
+    </div>
         <div class="col-12 md:col-6 lg:col-3 xl:col-3">
           <h6>Bo'limlar va bekatlar-0</h6>
           <Dropdown
@@ -122,8 +137,8 @@
                 <div class="w-full flex justify-content-center">
                   <i class="pi pi-slack text-5xl text-blue-600"></i>
                 </div>
-                <h2 class="text-center text-6xl text-blue-400 font-bold mb-0">
-                  12043
+                <h2 class="text-center xl:text-6xl lg:text-3xl md:text-5xl sm:text-5xl text-6xl text-blue-400 font-bold mb-0">
+                  {{allCadries}}
                 </h2>
                 <h6 class="text-center text-blue-400 mt-1">Barcha xodimlar</h6>
                 <ContextMenu ref="menu" :model="items" />
@@ -136,8 +151,8 @@
                 <div class="w-full flex justify-content-center">
                   <i class="pi pi-slack text-5xl text-blue-600"></i>
                 </div>
-                <h2 class="text-center text-6xl text-green-400 font-bold mb-0">
-                  25
+                <h2 class="text-center xl:text-6xl lg:text-3xl md:text-5xl sm:text-5xl text-6xl text-green-400 font-bold mb-0">
+                  {{allVakant}}
                 </h2>
                 <h6 class="text-center text-green-400 mt-1">Vakansiya</h6>
               </div>
@@ -149,8 +164,8 @@
                 <div class="w-full flex justify-content-center">
                   <i class="pi pi-slack text-5xl text-blue-600"></i>
                 </div>
-                <h2 class="text-center text-6xl text-red-400 font-bold mb-0">
-                  34
+                <h2 class="text-center xl:text-6xl lg:text-3xl md:text-5xl sm:text-5xl text-6xl text-red-400 font-bold mb-0">
+                  {{allSverx}}
                 </h2>
                 <h6 class="text-center text-red-400 mt-1">Sverx</h6>
               </div>
@@ -158,14 +173,14 @@
 
             <!-- All position -->
             <div class="col-12 sm:col-6 md:col-4 lg:col-2 xl:col-2">
-              <div class="card surface-0 shadow-1 p-4">
+              <div class="card surface-0 shadow-1 px-0 py-4">
                 <div class="w-full flex justify-content-center">
                   <i class="pi pi-slack text-5xl text-blue-600"></i>
                 </div>
-                <h2 class="text-center text-6xl text-600 font-bold mb-0">
-                  12000
+                <h2 class="text-center xl:text-6xl lg:text-3xl md:text-5xl sm:text-5xl text-6xl text-600 font-bold mb-0">
+                  {{allPlan}}
                 </h2>
-                <h6 class="text-center text-500 mt-1">Shtat lavozimlari</h6>
+                <h6 class="text-center text-500 mt-1">Shtat birligi</h6>
               </div>
             </div>
 
@@ -175,7 +190,7 @@
                 <div class="w-full flex justify-content-center">
                   <i class="pi pi-slack text-5xl text-blue-600"></i>
                 </div>
-                <h2 class="text-center text-6xl text-600 font-bold mb-0">47</h2>
+                <h2 class="text-center xl:text-6xl lg:text-3xl md:text-5xl sm:text-5xl text-6xl text-600 font-bold mb-0">{{allContract}}</h2>
                 <h6 class="text-center text-500 mt-1">Kasanachilar</h6>
               </div>
             </div>
@@ -186,8 +201,156 @@
                 <div class="w-full flex justify-content-center">
                   <i class="pi pi-slack text-5xl text-blue-600"></i>
                 </div>
-                <h2 class="text-center text-6xl text-600 font-bold mb-0">7</h2>
+                <h2 class="text-center xl:text-6xl lg:text-3xl md:text-5xl sm:text-5xl text-6xl text-600 font-bold mb-0">{{allIronNote}}</h2>
                 <h6 class="text-center text-500 mt-1">Temir daftar</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        
+
+        <!-- Second section information -->
+        <div class="col-12 md:col-6 lg:col-4 xl:col-4">
+          <div class="card surface-0 shadow-1">
+            <div class="card p-4 pb-6">
+              <Divider align="center" type="dashed">
+                <div class="font-medium text-500">Diagrammalar orqali</div>
+              </Divider>
+              <div class="grid">
+                <div class="col-12 xl:col-6">
+                  <div class="flex justify-content-center">
+                    <Knob
+                      size="180"
+                      v-model="allManChart"
+                      valueTemplate="{value}%"
+                      readonly
+                      valueColor="MediumTurquoise"
+                      rangeColor="SlateGray"
+                      textColor="MediumTurquoise"
+                    />
+                  </div>
+                  <h5 class="text-center my-0">{{allManCadries}}</h5>
+                  <h6 class="text-center mt-0">Erkaklar soni</h6>
+                </div>
+                <div class="col-12 xl:col-6">
+                  <div class="flex justify-content-center">
+                    <Knob
+                      size="180"
+                      v-model="allWomanChart"
+                      valueTemplate="{value}%"
+                      readonly
+                      valueColor="MediumTurquoise"
+                      rangeColor="SlateGray"
+                      textColor="MediumTurquoise"
+                    />
+                  </div>
+                  <h5 class="text-center my-0">{{allWomanCadries}}</h5>
+                  <h6 class="text-center mt-0">Ayollar soni</h6>
+                </div>
+                <div class="col-12 xl:col-6">
+                  <div class="flex justify-content-center">
+                    <Knob
+                      size="180"
+                      v-model="pensionsManChart"
+                      valueTemplate="{value}%"
+                      readonly
+                      valueColor="MediumTurquoise"
+                      rangeColor="SlateGray"
+                      textColor="MediumTurquoise"
+                    />
+                  </div>
+                  <h5 class="text-center my-0">{{pensionsMan}}</h5>
+                  <h6 class="text-center mt-0">Nafaqa yoshidagi erkaklar</h6>
+                </div>
+                <div class="col-12 xl:col-6">
+                  <div class="flex justify-content-center">
+                    <Knob
+                      size="180"
+                      v-model="pensionWomanChart"
+                      valueTemplate="{value}%"
+                      readonly
+                      valueColor="MediumTurquoise"
+                      rangeColor="SlateGray"
+                      textColor="MediumTurquoise"
+                    />
+                  </div>
+                  <h5 class="text-center my-0">{{pensionWoman}}</h5>
+                  <h6 class="text-center mt-0">Nafaqa yoshidagi ayollar</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Third section information -->
+        <div class="col-12 md:col-6 lg:col-4 xl:col-4">
+          <div class="card surface-0 shadow-1">
+            <div class="card p-4 pb-6">
+              <Divider align="center" type="dashed">
+                <div class="font-medium text-500">Diagrammalar orqali</div>
+              </Divider>
+              <div class="grid">
+                <div class="col-12 xl:col-6">
+                  <div class="flex justify-content-center">
+                    <Knob
+                      size="180"
+                      v-model="allCadry30Chart"
+                      valueTemplate="{value}%"
+                      readonly
+                      valueColor="MediumTurquoise"
+                      rangeColor="SlateGray"
+                      textColor="MediumTurquoise"
+                    />
+                  </div>
+                  <h5 class="text-center my-0">{{allCadry30}}</h5>
+                  <h6 class="text-center mt-0">30 yoshdan kichiklar</h6>
+                </div>
+                <div class="col-12 xl:col-6">
+                  <div class="flex justify-content-center">
+                    <Knob
+                      size="180"
+                      v-model="allCadry3045Chart"
+                      valueTemplate="{value}%"
+                      readonly
+                      valueColor="MediumTurquoise"
+                      rangeColor="SlateGray"
+                      textColor="MediumTurquoise"
+                    />
+                  </div>
+                  <h5 class="text-center my-0">{{allCadry3045}}</h5>
+                  <h6 class="text-center mt-0">30 -- 45 yoshlilar </h6>
+                </div>
+                <div class="col-12 xl:col-6">
+                  <div class="flex justify-content-center">
+                    <Knob
+                      size="180"
+                      v-model="allCadry45Chart"
+                      valueTemplate="{value}%"
+                      readonly
+                      valueColor="MediumTurquoise"
+                      rangeColor="SlateGray"
+                      textColor="MediumTurquoise"
+                    />
+                  </div>
+                  <h5 class="text-center my-0">{{allCadry45}}</h5>
+                  <h6 class="text-center mt-0">45 yoshdan kattalar</h6>
+                </div>
+                <div class="col-12 xl:col-6">
+                  <div class="flex justify-content-center">
+                    <Knob
+                      size="180"
+                      v-model="woman"
+                      valueTemplate="{value}%"
+                      readonly
+                      valueColor="MediumTurquoise"
+                      rangeColor="SlateGray"
+                      textColor="MediumTurquoise"
+                    />
+                  </div>
+                  <h5 class="text-center my-0">3043</h5>
+                  <h6 class="text-center mt-0">Qora ro'yhatdagilar</h6>
+                </div>
               </div>
             </div>
           </div>
@@ -213,7 +376,7 @@
                   Ishga qabul qilinganlar
                 </div>
                 <div class="text-xl text-600 font-semibold pr-1">
-                  <span class="text-green-500">0</span>/12043
+                  <span class="text-green-500">{{allNewCadries}}</span>/{{allCadries}}
                 </div>
               </div>
               <div
@@ -229,7 +392,7 @@
                   Faoliyati yakunlangan xodimlar
                 </div>
                 <div class="text-xl text-600 font-semibold pr-1">
-                  <span class="text-red-500">2</span>/12043
+                  <span class="text-red-500">{{allDeleteCadries}}</span>/{{allCadries}}
                 </div>
               </div>
               <div
@@ -243,7 +406,7 @@
               >
                 <div class="font-semibold text-base pl-1">Tug'ulgan kunlar</div>
                 <div class="text-xl text-600 font-semibold pr-1">
-                  <span class="text-yellow-500">23</span>/12043
+                  <span class="text-yellow-500">{{allBirthdayCadries}}</span>/{{allCadries}}
                 </div>
               </div>
             </div>
@@ -274,7 +437,7 @@
                   Tibbiy ko'rik (yaroqli)
                 </div>
                 <div class="text-xl text-600 font-semibold pr-1">
-                  <span class="text-green-500">11000</span>/12043
+                  <span class="text-green-500">11000</span>/{{allCadries}}
                 </div>
               </div>
 
@@ -300,7 +463,7 @@
                   Tibbiy ko'rik (yaroqsiz)
                 </div>
                 <div class="text-xl text-600 font-semibold pr-1">
-                  <span class="text-red-500">43</span>/12043
+                  <span class="text-red-500">43</span>/{{allCadries}}
                 </div>
               </div>
 
@@ -326,7 +489,7 @@
                   Tibbiy ko'rik (o'tmaganlar)
                 </div>
                 <div class="text-xl text-600 font-semibold pr-1">
-                  <span class="text-yellow-500">1000</span>/12043
+                  <span class="text-yellow-500">1000</span>/{{allCadries}}
                 </div>
               </div>
 
@@ -352,7 +515,7 @@
                   Mehnat ta'tilidagi xodimlar
                 </div>
                 <div class="text-xl text-600 font-semibold pr-1">
-                  <span class="text-yellow-500">124</span>/12043
+                  <span class="text-yellow-500">124</span>/{{allCadries}}
                 </div>
               </div>
               <div
@@ -377,7 +540,7 @@
                   Bola parvarishidagi xodimlar
                 </div>
                 <div class="text-xl text-600 font-semibold pr-1">
-                  <span class="text-yellow-500">324</span>/12043
+                  <span class="text-yellow-500">324</span>/{{allCadries}}
                 </div>
               </div>
               <div
@@ -402,7 +565,7 @@
                   Intizomiy jazolanganlar
                 </div>
                 <div class="text-xl text-600 font-semibold pr-1">
-                  <span class="text-red-500">24</span>/12043
+                  <span class="text-red-500">24</span>/{{allCadries}}
                 </div>
               </div>
               <div
@@ -427,7 +590,7 @@
                   Rag'batlantirilganlar
                 </div>
                 <div class="text-xl text-600 font-semibold pr-1">
-                  <span class="text-yellow-500">624</span>/12043
+                  <span class="text-yellow-500">624</span>/{{allCadries}}
                 </div>
               </div>
               <div
@@ -452,7 +615,7 @@
                   Rag'batlantirilganlar
                 </div>
                 <div class="text-xl text-600 font-semibold pr-1">
-                  <span class="text-yellow-500">624</span>/12043
+                  <span class="text-yellow-500">624</span>/{{allCadries}}
                 </div>
               </div>
               <div
@@ -477,7 +640,7 @@
                   Rag'batlantirilganlar
                 </div>
                 <div class="text-xl text-600 font-semibold pr-1">
-                  <span class="text-yellow-500">624</span>/12043
+                  <span class="text-yellow-500">624</span>/{{allCadries}}
                 </div>
               </div>
               <div
@@ -502,169 +665,23 @@
                   Qora ro'yhatdagilar
                 </div>
                 <div class="text-xl text-600 font-semibold pr-1">
-                  <span class="text-red-500">24</span>/12043
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Second section information -->
-        <div class="col-12 md:col-6 lg:col-4 xl:col-4">
-          <div class="card surface-0 shadow-1">
-            <div class="card p-4 pb-6">
-              <Divider align="center" type="dashed">
-                <div class="font-medium text-500">Diagrammalar orqali</div>
-              </Divider>
-              <div class="grid">
-                <div class="col-12 xl:col-6">
-                  <div class="flex justify-content-center">
-                    <Knob
-                      size="180"
-                      v-model="man"
-                      valueTemplate="{value}%"
-                      readonly
-                      valueColor="MediumTurquoise"
-                      rangeColor="SlateGray"
-                      textColor="MediumTurquoise"
-                    />
-                  </div>
-                  <h5 class="text-center my-0">10000</h5>
-                  <h6 class="text-center mt-0">Erkaklar soni</h6>
-                </div>
-                <div class="col-12 xl:col-6">
-                  <div class="flex justify-content-center">
-                    <Knob
-                      size="180"
-                      v-model="woman"
-                      valueTemplate="{value}%"
-                      readonly
-                      valueColor="MediumTurquoise"
-                      rangeColor="SlateGray"
-                      textColor="MediumTurquoise"
-                    />
-                  </div>
-                  <h5 class="text-center my-0">3043</h5>
-                  <h6 class="text-center mt-0">Ayollar soni</h6>
-                </div>
-                <div class="col-12 xl:col-6">
-                  <div class="flex justify-content-center">
-                    <Knob
-                      size="180"
-                      v-model="man"
-                      valueTemplate="{value}%"
-                      readonly
-                      valueColor="MediumTurquoise"
-                      rangeColor="SlateGray"
-                      textColor="MediumTurquoise"
-                    />
-                  </div>
-                  <h5 class="text-center my-0">10000</h5>
-                  <h6 class="text-center mt-0">Nafaqa yoshidagi erkaklar</h6>
-                </div>
-                <div class="col-12 xl:col-6">
-                  <div class="flex justify-content-center">
-                    <Knob
-                      size="180"
-                      v-model="woman"
-                      valueTemplate="{value}%"
-                      readonly
-                      valueColor="MediumTurquoise"
-                      rangeColor="SlateGray"
-                      textColor="MediumTurquoise"
-                    />
-                  </div>
-                  <h5 class="text-center my-0">3043</h5>
-                  <h6 class="text-center mt-0">Nafaqa yoshidagi ayollar</h6>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Third section information -->
-        <div class="col-12 md:col-6 lg:col-4 xl:col-4">
-          <div class="card surface-0 shadow-1">
-            <div class="card p-4 pb-6">
-              <Divider align="center" type="dashed">
-                <div class="font-medium text-500">Diagrammalar orqali</div>
-              </Divider>
-              <div class="grid">
-                <div class="col-12 xl:col-6">
-                  <div class="flex justify-content-center">
-                    <Knob
-                      size="180"
-                      v-model="man"
-                      valueTemplate="{value}%"
-                      readonly
-                      valueColor="MediumTurquoise"
-                      rangeColor="SlateGray"
-                      textColor="MediumTurquoise"
-                    />
-                  </div>
-                  <h5 class="text-center my-0">10000</h5>
-                  <h6 class="text-center mt-0">Erkaklar soni</h6>
-                </div>
-                <div class="col-12 xl:col-6">
-                  <div class="flex justify-content-center">
-                    <Knob
-                      size="180"
-                      v-model="woman"
-                      valueTemplate="{value}%"
-                      readonly
-                      valueColor="MediumTurquoise"
-                      rangeColor="SlateGray"
-                      textColor="MediumTurquoise"
-                    />
-                  </div>
-                  <h5 class="text-center my-0">3043</h5>
-                  <h6 class="text-center mt-0">Ayollar soni</h6>
-                </div>
-                <div class="col-12 xl:col-6">
-                  <div class="flex justify-content-center">
-                    <Knob
-                      size="180"
-                      v-model="man"
-                      valueTemplate="{value}%"
-                      readonly
-                      valueColor="MediumTurquoise"
-                      rangeColor="SlateGray"
-                      textColor="MediumTurquoise"
-                    />
-                  </div>
-                  <h5 class="text-center my-0">10000</h5>
-                  <h6 class="text-center mt-0">Nafaqa yoshidagi erkaklar</h6>
-                </div>
-                <div class="col-12 xl:col-6">
-                  <div class="flex justify-content-center">
-                    <Knob
-                      size="180"
-                      v-model="woman"
-                      valueTemplate="{value}%"
-                      readonly
-                      valueColor="MediumTurquoise"
-                      rangeColor="SlateGray"
-                      textColor="MediumTurquoise"
-                    />
-                  </div>
-                  <h5 class="text-center my-0">3043</h5>
-                  <h6 class="text-center mt-0">Nafaqa yoshidagi ayollar</h6>
+                  <span class="text-red-500">24</span>/{{allCadries}}
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-     
     </div>
     <div class="col-12" v-show="loading">
-        <statistic-skeleton ></statistic-skeleton>
-      </div>
+      <statistic-skeleton></statistic-skeleton>
+    </div>
   </div>
 </template>
 <script>
 import StatisticSkeleton from "../components/loaders/StatisticSkeleton.vue";
-
+import organizationsService from "../service/servises/organizationsService";
+import globalStatistic from '@/service/servises/globalStatistic'
 export default {
   components: { StatisticSkeleton },
 
@@ -672,21 +689,51 @@ export default {
     return {
       loading: false,
 
-      countries: [
-        { name: "Australia", code: "AU" },
-        { name: "Brazil", code: "BR" },
-        { name: "China", code: "CN" },
-        { name: "Egypt", code: "EG" },
-        { name: "France", code: "FR" },
-        { name: "Germany", code: "DE" },
-        { name: "India", code: "IN" },
-        { name: "Japan", code: "JP" },
-        { name: "Spain", code: "ES" },
-        { name: "United States", code: "US" },
-      ],
+      bigOrganizationList: [],
+      bigOrgValue: null, //fake
+      organizations: [],
+      orgValue: null, //fake
+      departmentList: [],
+      departmentValue: null, //fake
+
+      organization: {
+        railway_id: null,
+        organization_id: null,
+      },
+
+      allCadries:0,
+      allVakant:0,
+      allSverx:0,
+      allPlan:0,
+      allContract:0,
+      allIronNote:0,
+
+      allManCadries:0,
+      allWomanCadries:0,
+      pensionsMan:0,
+      pensionWoman:0,
+
+      allNewCadries:0,
+      allDeleteCadries:0,
+      allBirthdayCadries:0,
+
+      allCadry30:0,
+      allCadry3045:0,
+      allCadry45:0,
+
+      // Chart Details
+      allManChart:0,
+      allWomanChart:0,
+      pensionsManChart:0,
+      pensionWomanChart:0,
+      allCadry30Chart:0,
+      allCadry3045Chart:0,
+      allCadry45Chart:0,
+
+
+
       selectedCountry: null,
-      man: Math.floor((10000 / 12043) * 100),
-      woman: Math.floor((3043 / 12043) * 100),
+     
       items: [
         {
           label: "Ko'rish",
@@ -700,18 +747,113 @@ export default {
     };
   },
   methods: {
-    controlLoader() {
-      this.loading = true;
-      setTimeout(() => {
-        this.loading = false;
-      }, 2000);
+    controlLoader(item) {
+      this.loading = item;
+    
     },
+
+    get_Statistic(params){
+      this.controlLoader(true)
+      console.table(params);
+      globalStatistic.get_globalStatistic(params).then((res)=>{
+        console.table(res.data);
+        this.allCadries =res.data.all_cadries_count;
+        this.allVakant =res.data.vakant
+        this.allSverx =res.data.sverx;
+        this.allPlan =res.data.plan;
+        this.allContract=res.data.contracts;
+        this.allIronNote = 0;
+        this.allManCadries=res.data.cadries_man_count;
+        this.allWomanCadries=res.data.cadries_woman_count;
+        this.pensionWoman=res.data.pension_Woman;
+        this.pensionsMan=res.data.pension_Man;
+        this.allNewCadries=res.data.new_cadries;
+        this.allDeleteCadries=res.data.delete_cadries;
+        this.allBirthdayCadries=res.data.birthdays;
+        this.allCadry30=res.data.cadry30;
+        this.allCadry3045=0;
+        this.allCadry45=res.data.cadry45;
+
+        this.allManChart = Math.floor((res.data.cadries_man_count / res.data.all_cadries_count) * 100);
+        this.allWomanChart =100-this.allManChart;
+        this.pensionsManChart = Math.floor((res.data.pension_Man / res.data.all_cadries_count) * 100);
+        this.pensionWomanChart =Math.floor((res.data.pension_Woman / res.data.all_cadries_count) * 100);
+        this.allCadry30Chart = Math.floor((res.data.cadry30 / res.data.all_cadries_count) * 100);
+        this.allCadry3045Chart =0;
+        this.allCadry45Chart = Math.floor((res.data.cadry45 / res.data.all_cadries_count) * 100);
+
+
+        this.controlLoader(false)
+      }).catch((error)=>{
+        console.log(error);
+        this.controlLoader(false)
+      })
+    },
+
+    get_Railway() {
+      organizationsService
+        .get_Railway()
+        .then((res) => {
+          if (res.data.length) {
+            this.bigOrganizationList = res.data;
+            this.bigOrganizationList.unshift({
+              name: "Barchasi",
+              id: null,
+            });
+          } else {
+            this.bigOrganizationList = res.data;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    get_Organization(id) {
+      organizationsService
+        .get_Organization({ railway_id: id })
+        .then((res) => {
+          if (res.data.length) {
+            this.organizations = res.data;
+            this.organizations.unshift({
+              name: "Barchasi",
+              id: null,
+            });
+          } else {
+            this.organizations = res.data;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    changeRailway(event) {
+      this.organization.railway_id = event.value.id;
+      this.get_Statistic(this.organization)
+      this.get_Organization(event.value.id);
+      this.organization.organization_id = null;
+      this.orgValue = null;
+      
+    },
+
+    changeOrganization(event) {
+      this.organization.organization_id = event.value.id;
+      this.get_Statistic(this.organization)
+
+      console.log(event.value.id);
+    },
+
+    
+
     onImageRightClick(event) {
       this.$refs.menu.show(event);
     },
   },
   created() {
     this.controlLoader();
+    this.get_Statistic(this.organization)
+    this.get_Railway();
   },
 };
 </script>

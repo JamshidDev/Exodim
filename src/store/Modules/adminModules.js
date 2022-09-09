@@ -1,5 +1,5 @@
 const state ={
-    adminPermissions:[],
+    adminPermissions: localStorage.getItem('Adminpermissions') ? localStorage.getItem('Adminpermissions') : [],
     adminRoles:[],
     adminDetails:[],
 

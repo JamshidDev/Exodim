@@ -99,10 +99,8 @@ export default {
             });
           }
           this.set_adminPermissions(permissions)
-
-          sessionStorage.setItem("access_token", res.data.access_token);
-          sessionStorage.setItem("token_type", res.data.token_type);
-          sessionStorage.setItem("expires_in", res.data.expires_in);
+          localStorage.setItem("Adminpermissions", JSON.stringify(permissions) )
+          localStorage.setItem("access_token", res.data.access_token);
           this.$router.push("/");
           this.controlLoader(false);
         })

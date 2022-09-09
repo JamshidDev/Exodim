@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 
 const beforeLogin =  (to, from, next) => {
-  const token = sessionStorage.getItem('access_token');
+  const token = localStorage.getItem('access_token');
   if(token){
     next("/admin")
   }else{
@@ -11,7 +11,7 @@ const beforeLogin =  (to, from, next) => {
 }
 
 const authLogin =  (to, from, next) => {
-  const token = sessionStorage.getItem('access_token');
+  const token = localStorage.getItem('access_token');
   if(token){
     next()
   }else{

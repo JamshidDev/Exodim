@@ -1,20 +1,14 @@
 <template >
   <div class="grid card surface-0 shadow-1 py-4 px-3">
-    <div class="col-6">
-      <h6 class="uppercase pl-2">Umumiy korxonalar</h6>
-    </div>
-
-    <div class="col-6">
-      <div class="w-full flex justify-content-end">
-        <SplitButton
-          label="Export"
-          :model="items"
-          class="p-button-secondary p-button-sm"
-        ></SplitButton>
-      </div>
-    </div>
     <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3 p-fluid">
-      <h6>Katta korxonalar - {{ bigOrganizationList.length-1 }}</h6>
+      <h6>
+        Katta korxonalar -
+        {{
+          bigOrganizationList.length
+            ? bigOrganizationList.length - 1
+            : bigOrganizationList.length
+        }}
+      </h6>
       <Dropdown
         id="adressDistrict"
         v-model="bigOrgValue"
@@ -44,7 +38,12 @@
     </div>
 
     <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
-      <h6>Korxonalar - {{ organizations.length? organizations.length-1 : organizations.length }}</h6>
+      <h6>
+        Korxonalar -
+        {{
+          organizations.length ? organizations.length - 1 : organizations.length
+        }}
+      </h6>
       <Dropdown
         id="adressDistrict"
         v-model="orgValue"
@@ -77,7 +76,14 @@
     </div>
 
     <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
-      <h6>Bo'limlar va bekatlar - {{ departmentList.length? departmentList.length-1 : departmentList.length }}</h6>
+      <h6>
+        Bo'limlar va bekatlar -
+        {{
+          departmentList.length
+            ? departmentList.length - 1
+            : departmentList.length
+        }}
+      </h6>
       <Dropdown
         id="adressDistrict"
         v-model="departmentValue"
@@ -111,11 +117,11 @@
 
     <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
       <Button
-        label="Qidiruv"
         icon="pi pi-search "
         class="mt-5 w-10 p-button-secondary"
         @click="searchBtn()"
       />
+
       <Button
         icon="pi pi-filter"
         class="mt-5 w-2 p-button-text p-button-secondary"
@@ -148,7 +154,7 @@
                 class="w-full p-inputtext-sm"
                 @change="changeStuffs"
                 emptyMessage="Hech narsa topilmadi"
-        emptyFilterMessage="Tizmda ma'lumot topilmadi..."
+                emptyFilterMessage="Tizmda ma'lumot topilmadi..."
               >
                 <template #value="slotProps">
                   <div
@@ -266,6 +272,7 @@
                   v-model="selectedAge"
                   :step="1"
                   :range="true"
+                  @change="changeCadrAge"
                 />
               </div>
             </div>
@@ -278,10 +285,11 @@
               <div class="w-full">
                 <Dropdown
                   v-model="regionValue"
-                  :options="regionList"
+                  :options="genderList"
                   optionLabel="name"
                   placeholder="Jinsi"
                   class="w-full p-inputtext-sm"
+                  @change="changeGender"
                 />
               </div>
             </div>
@@ -290,14 +298,20 @@
             <p class="text-left text-600 mb-0">
               Qo'shimcha filter sozlamalarini sozlash
             </p>
-            <Tag class="cursor-pointer" value="Tozalash" severity="danger" icon="pi pi-filter-slash" @click="clearFilterDetails()"></Tag>
+            <Tag
+              class="cursor-pointer"
+              value="Tozalash"
+              severity="danger"
+              icon="pi pi-filter-slash"
+              @click="clearFilterDetails()"
+            ></Tag>
           </div>
         </div>
       </OverlayPanel>
     </div>
 
     <!-- Employees table ---start -->
-    <div class="col-12 pt-6" v-show="!loadingtable">
+    <div class="col-12 pt-2" v-show="!loadingtable">
       <DataTable
         ref="dt"
         :value="cadries"
@@ -305,7 +319,7 @@
         dataKey="id"
         responsiveLayout="scroll"
         showGridlines
-        class=" p-datatable-sm"
+        class="p-datatable-sm"
       >
         <template #header>
           <div class="flex w-full">
@@ -317,14 +331,6 @@
               )
             </h6>
           </div>
-          <div class="flex justify-content-center">
-            <Paginator
-              v-model:first="currentPage"
-              v-model:rows="per_page"
-              :totalRecords="totalpage"
-              :rowsPerPageOptions="[10, 20, 30]"
-            ></Paginator>
-          </div>
         </template>
 
         <Column
@@ -332,6 +338,11 @@
           style="width: 3rem"
           :exportable="false"
         ></Column>
+        <Column header="No">
+          <template #body="slotProps">
+            <div class="w-full text-center text-lg font-semibold">{{slotProps.data.number}}</div>
+          </template>
+        </Column>
         <Column header="Fotosurat">
           <template #body="slotProps">
             <div class="flex justify-content-center">
@@ -343,7 +354,6 @@
                 preview
               />
             </div>
-            <!-- <img src="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png" :alt="slotProps.data.image" class="product-image" /> -->
           </template>
         </Column>
         <Column field="name" header="F.I.SH" style="min-width: 16rem">
@@ -358,7 +368,8 @@
                 font-medium
               "
             >
-              {{ slotProps.data.fullname }}
+             
+              <div>{{ slotProps.data.fullname }}</div>
             </div>
           </template>
         </Column>
@@ -375,10 +386,7 @@
                 font-medium
               "
             >
-              O'zbekiston temir yo'llari Aksiyadorlik jamiyati Personalni
-              boshqarish va kadrlar tayyorlash boshqarmasida ish yurituvchi
-
-              {{ slotProps.data.fullname }}
+              {{ slotProps.data.staff.post_name }}
             </div>
           </template>
         </Column>
@@ -394,8 +402,7 @@
                 font-medium
               "
             >
-              Toshkent mintaqaviy temir yo'l uzeli
-              <span v-show="false">{{ slotProps }}}</span>
+              <span>{{ slotProps.data.organization.name }}</span>
             </div>
           </template>
         </Column>
@@ -419,41 +426,34 @@
           </template>
         </Column>
         <template #footer>
-          <div class="flex justify-content-center">
-            <Paginator
-              v-model:first="currentPage"
-              v-model:rows="per_page"
-              :totalRecords="totalpage"
-              :rowsPerPageOptions="[10, 20, 30]"
-            ></Paginator>
-          </div>
+          <table-pagination
+          v-show="totalCadries>10"
+            :total_page="totalCadries"
+            @pagination="changePagination($event)"
+          ></table-pagination>
         </template>
       </DataTable>
     </div>
-    <div class="col-12 pt-6" v-show="loadingtable">
-     
-      <employee-loader ></employee-loader>
+    <div class="col-12 pt-2" v-show="loadingtable">
+      <employee-loader></employee-loader>
     </div>
     <div class="col-12">
-      <Toast position="bottom-right"  />
+      <Toast position="bottom-right" />
     </div>
   </div>
 </template>
 <script>
+import TablePagination from "../components/Pagination/TablePagination.vue";
 import organizationsService from "../service/servises/organizationsService";
 import globalFactoryService from "../service/servises/globalFactoryService";
 import EmployeeLoader from "../components/loaders/EmployeeLoader.vue";
 export default {
-  components: { EmployeeLoader },
+  components: { EmployeeLoader, TablePagination },
   data() {
     return {
       displayBasic: true,
       loadingtable: false,
-
       selectedCadries: null,
-      value1: null,
-      selectedCity: null,
-      selectedYear: null,
       cadries: [],
       items: [
         {
@@ -493,29 +493,38 @@ export default {
           },
         },
       ],
-   
+
       selectedAge: [10, 80],
-     
 
       // Organization
       bigOrganizationList: [],
       bigOrgValue: null, //fake
       organizations: [],
       orgValue: null, //fake
-      Stuffs: [],
-      stuffValue: null, //fake
       departmentList: [],
       departmentValue: null, //fake
+      Stuffs: [],
+      stuffValue: null, //fake
       educationList: [],
       educationValue: null, //fake
       regionList: [],
       regionValue: null, //fake
       vacationList: [],
       vacationValue: null, //fake
+      genderList:[
+        {
+          name:"Erkak",
+          id:0
+        },
+        {
+          name:"Ayol",
+          id:1
+        }
+      ],
+      genderValue:null, //fake
+      selectedAge: [10, 80],
 
-      currentPage: 1,
-      per_page: 10,
-      totalpage: 0,
+
       totalCadries: 0,
 
       // Organization params
@@ -537,30 +546,25 @@ export default {
       },
     };
   },
-  watch: {
-    currentPage(number) {
-      console.log(number);
-      console.log(this.per_page);
-      this.organization.page = (number + this.per_page) / this.per_page;
-      this.getOrg(this.organization);
-    },
-    per_page(number) {
-      this.currentPage = 1
-      this.organization.per_page = number;
-      // this.getOrg(this.organization);
-    },
-  },
   methods: {
     // get Global organization function
     getOrg(params) {
       this.controlLoading(true);
+      console.table(params)
       globalFactoryService
         .getOrganization(params)
         .then((res) => {
+          
           this.totalCadries = res.data.cadries.pagination.total;
-          this.totalpage = res.data.cadries.pagination.total;
+          let cadrList =[];
+          let number = (this.organization.page -1)*this.organization.per_page;
+           res.data.cadries.data.forEach((item)=>{
+            number++
+            item.number= number
+            console.table(item.number);
+             cadrList.push(item)
+          })
           this.cadries = res.data.cadries.data;
-
           this.controlLoading(false);
         })
         .catch((error) => {
@@ -574,11 +578,15 @@ export default {
       organizationsService
         .get_Railway()
         .then((res) => {
-          this.bigOrganizationList = res.data;
-          this.bigOrganizationList.unshift({
-            name:"Barchasi",
-            id:null
-          });
+          if (res.data.length) {
+            this.bigOrganizationList = res.data;
+            this.bigOrganizationList.unshift({
+              name: "Barchasi",
+              id: null,
+            });
+          } else {
+            this.bigOrganizationList = res.data;
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -589,17 +597,15 @@ export default {
       organizationsService
         .get_Organization({ railway_id: id })
         .then((res) => {
-         
-          if(res.data.length){
+          if (res.data.length) {
             this.organizations = res.data;
             this.organizations.unshift({
-            name:"Barchasi",
-            id:null
-          });
-          }else{
+              name: "Barchasi",
+              id: null,
+            });
+          } else {
             this.organizations = res.data;
           }
-          
         })
         .catch((error) => {
           console.log(error);
@@ -611,8 +617,8 @@ export default {
         .getDepartment({ organization_id: id })
         .then((res) => {
           res.data.unshift({
-            name:"Barchasi",
-            id:null
+            name: "Barchasi",
+            id: null,
           });
           this.departmentList = res.data;
         })
@@ -621,7 +627,7 @@ export default {
         });
     },
 
-    get_Stuffs(id) {
+    get_Stuffs(id){
       organizationsService
         .get_Staffs({ organization_id: id })
         .then((res) => {
@@ -694,38 +700,54 @@ export default {
     changeStuffs(event) {
       this.organization.staff_id = event.value.id;
     },
-    changeEducation(event){
+    changeEducation(event) {
       this.organization.education_id = event.value.id;
     },
-    changeRegion(event){
-    
+    changeRegion(event) {},
+
+    changeCadrAge(event){
+      this.organization.age_start = event[0]
+      this.organization.age_end = event[1]
     },
-    changeVacation(event){
-      this.organization.vacation_id = event.value.id;
+    changeGender(event){
+
     },
 
-    searchBtn(){
+    changeVacation(event) {
+      this.organization.vacation_id = event.value.id;
+    },
+    changePagination(event) {
+      this.organization.page = event.page;
+      this.organization.per_page = event.per_page;
+      this.getOrg(this.organization);
+    },
+
+    searchBtn() {
       console.table(this.organization);
       this.getOrg(this.organization);
     },
 
     // clear additional filter details
-    clearFilterDetails(){
-      this.organization.staff_id =null;
-      this.stuffValue =null;
-      this.organization.education_id =null;
-      this.educationValue =null;
-      this.organization.vacation_id =null;
-      this.vacationValue =null;
-      this.organization.first_name =null;
-      this.organization.last_name =null;
-      this.organization.middle_name =null;
-      this.$toast.add({severity:'success', summary: 'Muvofaqqiyatli bajarildi', detail:'Tozalandi', life: 2000});
-      
+    clearFilterDetails() {
+      this.organization.staff_id = null;
+      this.stuffValue = null;
+      this.organization.education_id = null;
+      this.educationValue = null;
+      this.organization.vacation_id = null;
+      this.vacationValue = null;
+      this.organization.first_name = null;
+      this.organization.last_name = null;
+      this.organization.middle_name = null;
+      this.organization.age_end = null;
+      this.organization.age_start = null;
+      this.selectedAge = [10,80]
+      this.$toast.add({
+        severity: "success",
+        summary: "Muvofaqqiyatli bajarildi",
+        detail: "Tozalandi",
+        life: 2000,
+      });
     },
-
-
-
 
     openFilterPanel(event) {
       this.$refs.op.toggle(event);
