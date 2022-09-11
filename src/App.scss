@@ -2,3 +2,13 @@
     z-index: 1000 !important;
     top: 7rem;
 }
+
+.p-dropdown-panel {
+    max-width: 100px;
+  }
+  
+  .p-dropdown-item {
+    max-width: 100%;
+    overflow: visible !important;
+    white-space: normal !important;
+  }

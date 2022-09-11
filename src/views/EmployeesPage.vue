@@ -155,6 +155,8 @@
                 @change="changeStuffs"
                 emptyMessage="Hech narsa topilmadi"
                 emptyFilterMessage="Tizmda ma'lumot topilmadi..."
+                @before-show="beforeOpen"
+                :disabled="Stuffs.length==0"
               >
                 <template #value="slotProps">
                   <div
@@ -284,10 +286,10 @@
             <div class="w-full flex">
               <div class="w-full">
                 <Dropdown
-                  v-model="regionValue"
+                  v-model="genderValue"
                   :options="genderList"
                   optionLabel="name"
-                  placeholder="Jinsi"
+                  placeholder="Tanlang"
                   class="w-full p-inputtext-sm"
                   @change="changeGender"
                 />
@@ -315,11 +317,11 @@
       <DataTable
         ref="dt"
         :value="cadries"
-        v-model:selection="selectedCadries"
         dataKey="id"
         responsiveLayout="scroll"
         showGridlines
         class="p-datatable-sm"
+        v-show="totalCadries"
       >
         <template #header>
           <div class="flex w-full">
@@ -332,12 +334,6 @@
             </h6>
           </div>
         </template>
-
-        <Column
-          selectionMode="multiple"
-          style="width: 3rem"
-          :exportable="false"
-        ></Column>
         <Column header="No">
           <template #body="slotProps">
             <div class="w-full text-center text-lg font-semibold">{{slotProps.data.number}}</div>
@@ -414,13 +410,13 @@
                 icon="pi pi-id-card"
                 class="p-button-rounded p-button-secondary mr-2"
                 v-tooltip.left="`Ma'lumotlarni ko'rish`"
-                @click="isShow = !isShow"
+                @click="openResume(slotProps.data.id)"
               />
               <Button
                 icon="pi pi-cloud-download"
                 class="p-button-rounded p-button-secondary"
                 v-tooltip.left="`Ma'lumotnomani yuklash`"
-                @click="confirmDeleteProduct(slotProps.data)"
+                @click="DowloadResume(slotProps.data.id)"
               />
             </div>
           </template>
@@ -433,12 +429,15 @@
           ></table-pagination>
         </template>
       </DataTable>
+      <search-not-found-page v-show="!totalCadries"></search-not-found-page>
     </div>
     <div class="col-12 pt-2" v-show="loadingtable">
       <employee-loader></employee-loader>
     </div>
     <div class="col-12">
       <Toast position="bottom-right" />
+      <word-template :cadry_id="Dowload_cadry_id" v-show="false" ref="word_resume"></word-template>
+      <employee-details ref="show_resume"></employee-details>
     </div>
   </div>
 </template>
@@ -447,8 +446,12 @@ import TablePagination from "../components/Pagination/TablePagination.vue";
 import organizationsService from "../service/servises/organizationsService";
 import globalFactoryService from "../service/servises/globalFactoryService";
 import EmployeeLoader from "../components/loaders/EmployeeLoader.vue";
+import SearchNotFoundPage from "../components/EmptyComponent/SearchNotFoundPage.vue";
+import WordTemplate from "../components/Eksport/WordTemplate.vue";
+import EmployeeDetails from "../components/partEmployee/EmployeeDetails.vue";
+import regionsService from "../service/servises/regionsService";
 export default {
-  components: { EmployeeLoader, TablePagination },
+  components: { EmployeeLoader, TablePagination, SearchNotFoundPage,WordTemplate,EmployeeDetails },
   data() {
     return {
       displayBasic: true,
@@ -493,6 +496,8 @@ export default {
           },
         },
       ],
+
+      Dowload_cadry_id:null,
 
       selectedAge: [10, 80],
 
@@ -543,6 +548,7 @@ export default {
         education_id: null,
         age_start: null,
         age_end: null,
+        region_id:null,
       },
     };
   },
@@ -561,7 +567,6 @@ export default {
            res.data.cadries.data.forEach((item)=>{
             number++
             item.number= number
-            console.table(item.number);
              cadrList.push(item)
           })
           this.cadries = res.data.cadries.data;
@@ -671,6 +676,7 @@ export default {
         });
     },
 
+
     changeRailway(event) {
       this.organization.railway_id = event.value.id;
       this.get_Organization(event.value.id);
@@ -703,14 +709,17 @@ export default {
     changeEducation(event) {
       this.organization.education_id = event.value.id;
     },
-    changeRegion(event) {},
+    changeRegion(event) {
+      this.organization.region_id = event.value.id
+
+    },
 
     changeCadrAge(event){
       this.organization.age_start = event[0]
       this.organization.age_end = event[1]
     },
     changeGender(event){
-
+      this.organization.sex = event.value.id;
     },
 
     changeVacation(event) {
@@ -727,6 +736,20 @@ export default {
       this.getOrg(this.organization);
     },
 
+    // Dowload resume
+    DowloadResume(id){
+      console.table(id);
+     this.$refs.word_resume.generateWord(id)
+    },
+
+    // Opent resume
+    openResume(id){
+      this.$refs.show_resume.showResume(id)
+    },
+
+    beforeOpen(event){
+      console.log(event);
+    },
     // clear additional filter details
     clearFilterDetails() {
       this.organization.staff_id = null;
@@ -740,6 +763,10 @@ export default {
       this.organization.middle_name = null;
       this.organization.age_end = null;
       this.organization.age_start = null;
+      this.organization.sex =null;
+      this.organization.region_id = null,
+      this.regionValue = null,
+      this.genderValue = null;
       this.selectedAge = [10,80]
       this.$toast.add({
         severity: "success",
@@ -766,21 +793,7 @@ export default {
 };
 </script>
 <style lang="scss">
-.custop_dropdown {
-  max-width: 100% !important;
-}
-.p-dropdown-panel {
-  max-width: 100px;
-}
-.p-dropdown-items-wrapper {
-  max-width: 100%;
-}
-.p-dropdown-item {
-  max-width: 100%;
-  overflow: visible !important;
-  white-space: normal !important;
-}
-.max-w-100 {
-  max-width: 100%;
-}
+
+
+
 </style>

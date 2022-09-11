@@ -417,6 +417,7 @@ export default {
             }
           });
           this.customBarRouter.push(item.permissions);
+          console.log(this.customBarRouter);
         }
       });
 
