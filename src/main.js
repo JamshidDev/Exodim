@@ -57,6 +57,7 @@ import Skeleton from 'primevue/skeleton';
 import Knob from 'primevue/knob';
 import ContextMenu from 'primevue/contextmenu';
 import Paginator from 'primevue/paginator';
+import ScrollPanel from 'primevue/scrollpanel';
 
 
 
@@ -136,6 +137,8 @@ app.component('Skeleton', Skeleton);
 app.component('Knob', Knob);
 app.component('ContextMenu', ContextMenu);
 app.component('Paginator', Paginator);
+app.component('ScrollPanel', ScrollPanel);
+
 
 
 

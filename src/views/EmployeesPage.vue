@@ -373,28 +373,28 @@
         <Column field="rating" header="Lavozimi" style="min-width: 20rem">
           <template #body="slotProps">
             <div
-              class="
+            class="
                 text-sm
                 sm:text-sm
                 md:text-md
-                lg:text-base
-                xl:text-base
+                lg:text-lg
+                xl:text-lg
                 font-medium
               "
             >
-              {{ slotProps.data.staff.post_name }}
+              {{ slotProps.data.staff? slotProps.data.staff.post_name : `Tizimda ma'lumot yo'q` }}
             </div>
           </template>
         </Column>
         <Column field="rating" header="Korxona nomi" style="min-width: 16rem">
           <template #body="slotProps">
             <div
-              class="
+            class="
                 text-sm
                 sm:text-sm
                 md:text-md
-                lg:text-base
-                xl:text-base
+                lg:text-lg
+                xl:text-lg
                 font-medium
               "
             >
@@ -449,7 +449,6 @@ import EmployeeLoader from "../components/loaders/EmployeeLoader.vue";
 import SearchNotFoundPage from "../components/EmptyComponent/SearchNotFoundPage.vue";
 import WordTemplate from "../components/Eksport/WordTemplate.vue";
 import EmployeeDetails from "../components/partEmployee/EmployeeDetails.vue";
-import regionsService from "../service/servises/regionsService";
 export default {
   components: { EmployeeLoader, TablePagination, SearchNotFoundPage,WordTemplate,EmployeeDetails },
   data() {
@@ -560,7 +559,7 @@ export default {
       globalFactoryService
         .getOrganization(params)
         .then((res) => {
-          
+          console.log(res.data.cadries);
           this.totalCadries = res.data.cadries.pagination.total;
           let cadrList =[];
           let number = (this.organization.page -1)*this.organization.per_page;

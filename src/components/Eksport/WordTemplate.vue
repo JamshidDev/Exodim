@@ -265,7 +265,7 @@
                 <td style="border: solid black 1pt">
                   {{ item.birth_place }}
                 </td>
-                <td style="border: solid black 1pt">{{ item.relative }}</td>
+                <td style="border: solid black 1pt">{{ item.post }}</td>
                 <td style="border: solid black 1pt">
                   {{ item.address }}
                 </td>
@@ -321,10 +321,10 @@ export default {
       EksportService.get_ResumeDetails({ id: id })
         .then((res) => {
           this.editTemplate(res.data);
-          console.log(res.data);
           let fileName = res.data.cadry.fullname.split(" ");
+
           setTimeout(() => {
-            this.Export2Word("exportContent", fileName);
+            this.Export2Word("exportContent", fileName[1]);
           }, 800);
         })
         .catch((error) => {

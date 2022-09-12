@@ -4,268 +4,612 @@
       <div class="grid">
         <div class="col-12 flex justify-content-center">
           <div class="document_container">
-            <table
-              class="table"
-              cellpadding="0"
-              cellspacing="0"
-              style="
-                margin-left: -25.5pt;
-                margin-top: 0in;
-                border-collapse: collapse;
-              "
-            >
-              <tr>
-                <th width="15%" style="min-width: 15%"></th>
-                <th width="12%" style="min-width: 12%"></th>
-                <th width="12%" style="min-width: 12%"></th>
-                <th width="12%" style="min-width: 12%"></th>
-                <th width="12%" style="min-width: 12%"></th>
-                <th width="12%" style="min-width: 12%"></th>
-                <th width="10%" style="min-width: 10%"></th>
-                <th width="100px" style="max-width: 100px"></th>
-              </tr>
-              <tbody>
-                <tr>
-                  <td colspan="8" style="text-align: center; font-size: 18.5">
-                    <b>MA'LUMOTNOMA </b>
-                    <p style="margin-bottom: 0px; margin-top: 0px">
-                      <b> {{ cadry.fullName }}</b>
-                    </p>
-                  </td>
-                </tr>
-                <tr>
-                  <td colspan="7"></td>
-                  <td style="text-align: right" rowspan="8">
-                    <img
-                      :src="cadry.phote"
-                      width="112"
-                      height="153"
-                    />
-                  </td>
-                </tr>
-                <tr style="font-size: 14.5px; margin-bottom: 4pt">
-                  <td colspan="7">{{cadry.post_date}} dan:</td>
-                </tr>
-                <tr style="font-size: 14.5px; margin-bottom: 4pt">
-                  <td colspan="6">
-                    <b
-                      >{{cadry.post_name}}</b
+            <div class="grid pb-8 mb-8">
+              <div class="col-12">
+                <h5
+                  class="
+                    font-bold
+                    text-2xl text-center
+                    mb-0
+                    text-black-alpha-90
+                  "
+                >
+                  MA'LUMOTNOMA
+                </h5>
+                <h6
+                  class="font-bold text-xl text-center mt-1 text-black-alpha-90"
+                >
+                  {{ cadry.fullName }}
+                </h6>
+              </div>
+
+              <div class="col-10">
+                <div class="grid">
+                  <div class="col-12">
+                    <h6
+                      class="
+                        font-medium
+                        text-base text-left
+                        my-1
+                        text-black-alpha-80
+                      "
                     >
-                  </td>
-                  <td></td>
-                </tr>
-                <tr style="font-size: 14.5px">
-                  <td colspan="3">
-                    <b>Tug'ilgan yili:</b>
-                  </td>
-                  <td></td>
-                  <td colspan="3">
-                    <b>Tug'ilgan joyi:</b>
-                  </td>
-                </tr>
-                <tr style="font-size: 14.5px">
-                  <td
-                    colspan="3"
-                    style="vertical-align: top; margin-bottom: 4pt"
+                      {{ cadry.post_date }} dan:
+                    </h6>
+                    <h6
+                      class="
+                        font-semibold
+                        text-lg text-left
+                        mt-0
+                        text-black-alpha-90
+                      "
+                    >
+                      {{ cadry.post_name }}
+                    </h6>
+                  </div>
+                  <div class="col-6">
+                    <h6
+                      class="
+                        font-semibold
+                        text-lg text-left
+                        mb-1
+                        text-black-alpha-90
+                      "
+                    >
+                      Tug'ilgan yili:
+                    </h6>
+                    <h6
+                      class="
+                        font-medium
+                        text-base text-left
+                        my-0
+                        text-black-alpha-80
+                      "
+                    >
+                      {{ cadry.birth_date }}
+                    </h6>
+                  </div>
+                  <div class="col-6">
+                    <h6
+                      class="
+                        font-semibold
+                        text-lg text-left
+                        mb-1
+                        text-black-alpha-90
+                      "
+                    >
+                      Tug'ilgan joyi:
+                    </h6>
+                    <h6
+                      class="
+                        font-medium
+                        text-base text-left
+                        my-0
+                        text-black-alpha-80
+                      "
+                    >
+                      {{ cadry.birth_place }}
+                    </h6>
+                  </div>
+                  <div class="col-6">
+                    <h6
+                      class="
+                        font-semibold
+                        text-lg text-left
+                        mb-1
+                        text-black-alpha-90
+                      "
+                    >
+                      Millati:
+                    </h6>
+                    <h6
+                      class="
+                        font-medium
+                        text-base text-left
+                        my-0
+                        text-black-alpha-80
+                      "
+                    >
+                      {{ cadry.nationality }}
+                    </h6>
+                  </div>
+                  <div class="col-6">
+                    <h6
+                      class="
+                        font-semibold
+                        text-lg text-left
+                        mb-1
+                        text-black-alpha-90
+                      "
+                    >
+                      Partiyaviyligi:
+                    </h6>
+                    <h6
+                      class="
+                        font-medium
+                        text-base text-left
+                        my-0
+                        text-black-alpha-80
+                      "
+                    >
+                      {{ cadry.party }}
+                    </h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-2 flex justify-content-center align-items-end">
+                <img :src="cadry.phote" width="112" height="153" />
+              </div>
+              <div class="col-5">
+                <h6
+                  class="
+                    font-semibold
+                    text-lg text-left
+                    mb-1
+                    text-black-alpha-90
+                  "
+                >
+                  Ma'lumoti:
+                </h6>
+                <h6
+                  class="
+                    font-medium
+                    text-base text-left
+                    my-0
+                    text-black-alpha-80
+                  "
+                >
+                  {{ cadry.education }}
+                </h6>
+              </div>
+              <div class="col-7">
+                <h6
+                  class="
+                    font-semibold
+                    text-lg text-left
+                    mb-1
+                    text-black-alpha-90
+                  "
+                >
+                  Tamomlagan:
+                </h6>
+                <h6
+                  v-for="item in cadry.educations"
+                  :key="item.id"
+                  class="
+                    font-medium
+                    text-base text-left
+                    my-0
+                    text-black-alpha-80
+                  "
+                >
+                  {{ item.date2 }} yil, {{ item.name }}
+                </h6>
+              </div>
+
+              <div class="col-5">
+                <h6
+                  class="
+                    font-semibold
+                    text-lg text-left
+                    mb-1
+                    text-black-alpha-90
+                  "
+                >
+                  Ma'lumoti bo'yicha mutaxassisligi:
+                </h6>
+              </div>
+              <div class="col-7">
+                <h6
+                  v-for="item in cadry.educations"
+                  :key="item.id"
+                  class="
+                    font-medium
+                    text-base text-left
+                    my-0
+                    text-black-alpha-80
+                  "
+                >
+                  {{ item.speciality }}
+                </h6>
+              </div>
+
+              <div class="col-5">
+                <h6
+                  class="
+                    font-semibold
+                    text-lg text-left
+                    mb-1
+                    text-black-alpha-90
+                  "
+                >
+                  Ilmiy darajasi:
+                </h6>
+                <h6
+                  class="
+                    font-medium
+                    text-base text-left
+                    my-0
+                    text-black-alpha-80
+                  "
+                >
+                  {{ cadry.academec_degree }}
+                </h6>
+              </div>
+              <div class="col-7">
+                <h6
+                  class="
+                    font-semibold
+                    text-lg text-left
+                    mb-1
+                    text-black-alpha-90
+                  "
+                >
+                  Ilmiy unvoni:
+                </h6>
+                <h6
+                  class="
+                    font-medium
+                    text-base text-left
+                    my-0
+                    text-black-alpha-80
+                  "
+                >
+                  {{ cadry.academec_title }}
+                </h6>
+              </div>
+
+              <div class="col-5">
+                <h6
+                  class="
+                    font-semibold
+                    text-lg text-left
+                    mb-1
+                    text-black-alpha-90
+                  "
+                >
+                  Qaysi chet tillarini biladi:
+                </h6>
+                <h6
+                  class="
+                    font-medium
+                    text-base text-left
+                    my-0
+                    text-black-alpha-80
+                  "
+                >
+                  {{ cadry.lan }}
+                </h6>
+              </div>
+              <div class="col-7">
+                <h6
+                  class="
+                    font-semibold
+                    text-lg text-left
+                    mb-1
+                    text-black-alpha-90
+                  "
+                >
+                  Xarbiy (maxsus) unvoni:
+                </h6>
+                <h6
+                  class="
+                    font-medium
+                    text-base text-left
+                    my-0
+                    text-black-alpha-80
+                  "
+                >
+                  {{ cadry.military_rank }}
+                </h6>
+              </div>
+
+              <div class="col-6">
+                <h6
+                  class="
+                    font-semibold
+                    text-lg text-left
+                    mb-1
+                    text-black-alpha-90
+                  "
+                >
+                  Davlat mukofotlari bilan taqdirlanganmi(qanaqa):
+                </h6>
+                <h6
+                  class="
+                    font-medium
+                    text-base text-left
+                    my-0
+                    text-black-alpha-80
+                  "
+                >
+                  Taqdirlanmagan
+                </h6>
+              </div>
+              <div class="col-6"></div>
+
+              <div class="col-12">
+                <h6
+                  class="
+                    font-semibold
+                    text-lg text-left
+                    mb-1
+                    text-black-alpha-90
+                  "
+                >
+                  Xalq deputatlari respublika, viloyat, shahar va tuman Kengashi
+                  deputatimi yoki boshqa saylanadigan organlarning
+                  a'zosimi(to'liq ko'rsatilishi lozim):
+                </h6>
+                <h6
+                  class="
+                    font-medium
+                    text-base text-left
+                    my-0
+                    text-black-alpha-80
+                  "
+                >
+                  <span
+                    v-for="(item, index) in cadry.incentives"
+                    :key="item.id"
+                    style="padding-right: 10px"
                   >
-                  {{cadry.birth_date}}
-                  </td>
-                  <td></td>
-                  <td colspan="3">{{cadry.birth_place}}</td>
-                </tr>
-                <tr style="font-size: 14.5px">
-                  <td colspan="3">
-                    <b>Millati:</b>
-                  </td>
-                  <td></td>
-                  <td colspan="3">
-                    <b>Partiyaviyligi:</b>
-                  </td>
-                </tr>
-                <tr style="font-size: 14.5px; margin-bottom: 4pt">
-                  <td colspan="3" style="vertical-align: top">{{cadry.nationality}}</td>
-                  <td></td>
-                  <td colspan="3">{{cadry.party}}</td>
-                </tr>
-                <tr style="font-size: 14.5px">
-                  <td colspan="3">
-                    <b>Ma'lumoti:</b>
-                  </td>
-                  <td></td>
-                  <td colspan="3">
-                    <b>Tamomlagan:</b>
-                  </td>
-                </tr>
-                <tr style="font-size: 14.5px; margin-bottom: 4pt">
-                  <td colspan="3" style="vertical-align: top">{{cadry.education}}</td>
-                  <td></td>
-                  <td colspan="4" >
-                    <div v-for="item in cadry.educations" :key="item.id">
-                        {{item.date2}} yil,  {{item.name}}
+                    {{ item.type_action }}
+                    {{ index + 1 == cadry.incentives.length ? "" : "," }}
+                  </span>
+                </h6>
+              </div>
+
+              <div class="col-12">
+                <h6
+                  class="
+                    font-semibold
+                    text-xl text-center text-black-alpha-90
+                    pt-4
+                    pb-1
+                  "
+                >
+                  MEHNAT FAOLIYATI
+                </h6>
+              </div>
+
+              <!-- Cadry stuffs -->
+              <div class="col-12 pb-6">
+                <div class="grid" v-for="item in cadry.carers" :key="item.id">
+                  <div class="col-2">
+                    <h6
+                      class="
+                        font-semibold
+                        text-lg text-left
+                        mb-1
+                        text-black-alpha-90
+                      "
+                    >
+                      {{ item.date1 }} -{{ item.date2 }} yy
+                    </h6>
+                  </div>
+                  <div class="col-10">
+                    <h6
+                      class="
+                        font-semibold
+                        text-lg text-left
+                        mb-1
+                        text-black-alpha-90
+                      "
+                    >
+                      {{ item.staff_name }}
+                    </h6>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Cadry relatives -->
+
+              <div class="col-12">
+                <h6
+                  class="
+                    font-semibold
+                    text-xl text-center text-black-alpha-90
+                    py-0
+                    mb-0
+                  "
+                >
+                  {{ cadry.fullName }}ning yaqin qarindoshlari haqida ma'lumot
+                </h6>
+                <h6
+                  class="
+                    font-semibold
+                    text-xl text-center text-black-alpha-90
+                    mt-1
+                    py-0
+                  "
+                >
+                  MA'LUMOT
+                </h6>
+                <div class="col-12">
+                  <div class="grid my-0 py-0">
+                    <div
+                      class="
+                        col-2
+                        border-1 border-800
+                        font-medium font-semibold
+                        text-lg
+                        flex
+                        justify-content-center
+                        align-items-center
+                        mb-1
+                        text-black-alpha-90
+                        my-0
+                      "
+                    >
+                      Qarindoshligi
                     </div>
-                   
-                </td>
-                </tr>
-                <tr style="font-size: 14.5px; margin-bottom: 4pt">
-                  <td colspan="3" >
-                    <b>Ma'lumoti bo'yicha mutaxassisligi:</b>
-                  </td>
-                  <td></td>
-                  <td colspan="4" >
-                    <div v-for="item in cadry.educations" :key="item.speciality">{{item.speciality}}</div>
-                </td>
-                </tr>
-
-                <tr style="font-size: 14.5px">
-                  <td colspan="3">
-                    <b>Ilmiy darajasi:</b>
-                  </td>
-                  <td></td>
-                  <td colspan="4">
-                    <b>Ilmiy unvoni:</b>
-                  </td>
-                </tr>
-
-                <tr style="font-size: 14.5px; margin-bottom: 4pt">
-                  <td colspan="3">{{cadry.academec_degree}}</td>
-                  <td></td>
-                  <td colspan="4">{{cadry.academec_title}}</td>
-                </tr>
-
-
-                <tr style="font-size: 14.5px">
-                  <td colspan="3">
-                    <b>Qaysi chet tillarini biladi:</b>
-                  </td>
-                  <td></td>
-                  <td colspan="4">
-                    <b>Xarbiy (maxsus) unvoni:</b>
-                  </td>
-                </tr>
-
-                <tr style="font-size: 14.5px; margin-bottom: 4pt">
-                  <td colspan="3">{{cadry.lan}}</td>
-                  <td></td>
-                  <td colspan="4">{{cadry.military_rank}}</td>
-                </tr>
-
-                <tr style="font-size: 14.5px">
-                  <td colspan="8">
-                    <b>Davlat mukofotlari bilan taqdirlanganmi(qanaqa):</b>
-                  </td>
-                </tr>
-                <tr style="font-size: 14.5px; margin-bottom: 4pt">
-                  <td colspan="8">Taqdirlanmagan</td>
-                </tr>
-
-                <tr style="font-size: 14.5px">
-                  <td colspan="8">
-                    <b
-                      >Xalq deputatlari respublika, viloyat, shahar va tuman
-                      Kengashi deputatimi yoki boshqa saylanadigan organlarning
-                      a'zosimi(to'liq ko'rsatilishi lozim):</b
+                    <div
+                      class="
+                        col-2
+                        border-1 border-800
+                        font-medium font-semibold
+                        text-lg
+                        flex
+                        justify-content-center
+                        align-items-center
+                        mb-1
+                        text-black-alpha-90
+                        border-left-none
+                        my-0
+                      "
                     >
-                  </td>
-                </tr>
-                <tr style="font-size: 14.5px; margin-bottom: 4pt">
-                  <td colspan="8">
-                    <span v-for="(item, index) in cadry.incentives" :key="item.id" style="padding-right:10px">
-                        {{item.type_action}} {{(index+1)==cadry.incentives.length? "" : ","}}
-                    </span>
-                  </td>
-                </tr>
+                      Familiyasi,ismi va otasining ismi
+                    </div>
+                    <div
+                      class="
+                        col-2
+                        border-1 border-800
+                        font-medium font-semibold
+                        text-lg
+                        flex
+                        justify-content-center
+                        align-items-center
+                        mb-1
+                        text-black-alpha-90
+                        border-left-none
+                        my-0
+                      "
+                    >
+                      Tug'ilgan yili va joyi
+                    </div>
+                    <div
+                      class="
+                        col-3
+                        border-1 border-800
+                        font-medium font-semibold
+                        text-lg
+                        flex
+                        justify-content-center
+                        align-items-center
+                        mb-1
+                        text-black-alpha-90
+                        border-left-none
+                        my-0
+                      "
+                    >
+                      Ish joyi va lavozimi
+                    </div>
+                    <div
+                      class="
+                        col-3
+                        border-1 border-800
+                        font-medium font-semibold
+                        text-lg
+                        flex
+                        justify-content-center
+                        align-items-center
+                        mb-1
+                        text-black-alpha-90
+                        border-left-none
+                        my-0
+                      "
+                    >
+                      Turar joyi
+                    </div>
+                  </div>
+                  <div class="grid my-0 py-0" v-for="item in cadry.relatives" :key="item.id">
+                    <div
+                      class="
+                        col-2
+                        border-1 border-800
+                        font-medium font-semibold
+                        text-lg
+                        flex
+                        justify-content-center
+                        align-items-center
+                        mb-1
+                        text-black-alpha-90
+                        my-0
+                        border-top-none
+                      "
+                    >
+                      {{item.relative}}
+                    </div>
+                    <div
+                      class="
+                        col-2
+                        border-1 border-800
+                        font-medium font-semibold
+                        text-lg
+                        flex
+                        justify-content-center
+                        align-items-center
+                        mb-1
+                        text-black-alpha-90
+                        border-left-none
+                        border-top-none
 
+                        my-0
+                      "
+                    >
+                      {{item.fullname}}
+                    </div>
+                    <div
+                      class="
+                        col-2
+                        border-1 border-800
+                        font-medium font-semibold
+                        text-lg
+                        flex
+                        justify-content-center
+                        align-items-center
+                        mb-1
+                        text-black-alpha-90
+                        border-left-none
+                        border-top-none
+                        my-0
+                      "
+                    >
+                    {{item.birth_place}}
+                    </div>
+                    <div
+                      class="
+                        col-3
+                        border-1 border-800
+                        font-medium font-semibold
+                        text-lg
+                        flex
+                        justify-content-center
+                        align-items-center
+                        mb-1
+                        text-black-alpha-90
+                        border-left-none
+                        border-top-none
+                        my-0
+                      "
+                    >
+                    {{item.post}}
+                    </div>
+                    <div
+                      class="
+                        col-3
+                        border-1 border-800
+                        font-medium font-semibold
+                        text-lg
+                        flex
+                        justify-content-center
+                        align-items-center
+                        mb-1
+                        text-black-alpha-90
+                        border-left-none
+                        border-top-none
+                        my-0
+                      "
+                    >
+                    {{item.address}}
+                    </div>
+                  </div>
+                 
+                </div>
+              </div>
 
-                <tr>
-                  <td
-                    colspan="8"
-                    style="
-                      text-align: center;
-                      font-size: 18.5;
-                      margin-bottom: 4pt;
-                    "
-                  >
-                    <b>MEHNAT FAOLIYATI</b>
-                  </td>
-                </tr>
-
-                <tr v-for="item in cadry.carers" :key="item.id" style="font-size: 14.5; margin-bottom: 4pt">
-                <td style="vertical-align:top">{{item.date1}} -{{item.date2}}  yy.</td>
-                <td colspan="7">
-                  {{item.staff_name}}
-                </td>
-              </tr>
-              </tbody>
-            </table>
-
-            <p style="text-autospace: none"><span>&nbsp;</span></p>
-
-            <b
-              ><span><br clear="all" style="page-break-before: always" /> </span
-            ></b>
-
-            <b style="text-align: center; font-size: 12pt; margin-top: 0px"
-            >{{cadry.fullName}}ning yaqin qarindoshlari haqida
-            ma'lumot</b
-          >
-
-            <p style="text-align: center; margin-bottom: 5px; margin-top: 0px">
-              <b><span>MA'LUMOT</span></b>
-            </p>
-
-            <table
-              class="table"
-              cellpadding="0"
-              cellspacing="0"
-              style="
-                margin-left: -25.5pt;
-                border-collapse: collapse;
-                border: none;
-                text-align: center;
-                font-size: 14.5;
-              "
-            >
-              <tr style=" border: 0px;">
-                <th width="16%" style="min-width: 16%; border: 0px;"></th>
-                <th width="18%" style="min-width: 16%; border: 0px;"></th>
-                <th width="22%" style="min-width: 16%; border: 0px;"></th>
-                <th width="22%" style="min-width: 16%; border: 0px;"></th>
-                <th width="22%" style="min-width: 16%; border: 0px;"></th>
-              </tr>
-              <tbody>
-                <tr>
-                  <td style="border: solid black 1pt">
-                    <b>Qarindoshligi</b>
-                  </td>
-                  <td style="border: solid black 1pt">
-                    <b>Familiyasi,ismi va otasining ismi</b>
-                  </td>
-                  <td style="border: solid black 1pt">
-                    <b>Tug'ilgan yili va joyi</b>
-                  </td>
-                  <td style="border: solid black 1pt">
-                    <b>Ish joyi va lavozimi</b>
-                  </td>
-                  <td style="border: solid black 1pt">
-                    <b>Turar joyi</b>
-                  </td>
-                </tr>
-
-                <tr v-for="item in cadry.relatives" :key="item.id">
-                <td style="border: solid black 1pt"><b>{{item.relative}}</b></td>
-                <td style="border: solid black 1pt">
-                  {{item.fullname}}
-                </td>
-                <td style="border: solid black 1pt">
-                  {{item.birth_place}}
-                </td>
-                <td style="border: solid black 1pt">{{item.relative}}</td>
-                <td style="border: solid black 1pt">
-                  {{item.address}}
-                </td>
-              </tr>
-              </tbody>
-            </table>
+            </div>
           </div>
         </div>
       </div>
@@ -289,14 +633,14 @@ export default {
         relatives: [],
         educations: [],
         lan: null,
-        academec_degree:null,
-        academec_title:null,
-        deputy:null,
-        military_rank:null,
-        incentives:[],
-        nationality:null,
-        party:null,
-        education:null,
+        academec_degree: null,
+        academec_title: null,
+        deputy: null,
+        military_rank: null,
+        incentives: [],
+        nationality: null,
+        party: null,
+        education: null,
       },
     };
   },
@@ -324,8 +668,6 @@ export default {
           this.cadry.party = res.data.cadry.party;
           this.cadry.education = res.data.cadry.education;
 
-
-          
           console.log(res.data);
           this.visibleFull = true;
           // setTimeout(()=>{
@@ -341,6 +683,6 @@ export default {
 </script>
 <style lang="scss"  scoped>
 .document_container {
-  max-width: 800px;
+  max-width: 900px;
 }
 </style>

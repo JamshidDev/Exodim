@@ -78,20 +78,27 @@
             </template>
           </Dropdown>
         </div>
-        <div class="col-12 md:col-6 lg:col-3 xl:col-3">
-          <h6>Bo'limlar va bekatlar-0</h6>
+        <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
+          <h6>Bo'limlar va bekatlar- {{
+              departmentList.length
+                ? departmentList.length - 1
+                : departmentList.length
+            }}</h6>
           <Dropdown
-            v-model="selectedCountry"
-            :options="countries"
+            id="adressDistrict"
+            v-model="departmentValue"
+            :options="departmentList"
             optionLabel="name"
+            @change="changeDepartment"
             :filter="true"
-            placeholder="Bo'lim tanlang"
-            :showClear="true"
+            placeholder=" Tanlang"
             class="w-full"
+            emptyMessage="Hech narsa topilmadi"
+            emptyFilterMessage="Tizmda ma'lumot topilmadi..."
           >
             <template #value="slotProps">
               <div
-                class="country-item country-item-value"
+                class="country-item country-item-value w-full"
                 v-if="slotProps.value"
               >
                 <div>{{ slotProps.value.name }}</div>
@@ -101,7 +108,7 @@
               </span>
             </template>
             <template #option="slotProps">
-              <div class="country-item">
+              <div class="country-item w-full">
                 <div>{{ slotProps.option.name }}</div>
               </div>
             </template>
@@ -802,6 +809,7 @@ export default {
       organization: {
         railway_id: null,
         organization_id: null,
+        department_id:null,
       },
 
       allCadries: 0,
@@ -957,21 +965,56 @@ export default {
         });
     },
 
+
+    get_Department(id) {
+      organizationsService
+        .getDepartment({ organization_id: id })
+        .then((res) => {
+          console.log(res.data);
+          if (res.data.length) {
+            this.departmentList = res.data;
+            this.departmentList.unshift({
+              name: "Barchasi",
+              id: null,
+            });
+          } else {
+            this.departmentList = res.data;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+
+
     changeRailway(event) {
       this.organization.railway_id = event.value.id;
+      this.organization.department_id = null;
+      this.organization.organization_id = null;
       this.get_Statistic(this.organization);
       this.get_Organization(event.value.id);
-      this.organization.organization_id = null;
       this.orgValue = null;
+      this.departmentValue = null;
+      this.departmentList = []
     },
 
     changeOrganization(event) {
       this.organization.organization_id = event.value.id;
       this.get_Statistic(this.organization);
+      this.organization.department_id = null;
+      this.departmentValue = null;
+      this.get_Department(event.value.id)
 
       console.log(event.value.id);
     },
 
+    changeDepartment(event) {
+      this.organization.department_id = event.value.id;
+      this.get_Statistic(this.organization);
+
+      console.log(event.value.id);
+    },
     formatNumber(item) {
       let text = item.toString();
       if (text.indexOf(".") !== -1) {

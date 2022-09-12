@@ -1,14 +1,14 @@
 <template >
   <div class="fixed top-0 w-full z_index_top">
-    <Toolbar class="border-noround  px-4  pb-2 pt-4">
+    <Toolbar class="border-noround  px-4  pb-2 pt-2">
       <template #start>
         <!-- <Button
           icon="pi pi-bars"
-          class="p-button-rounded p-button-outlined p-button-secondary p-button-sm"
+          class="p-button-rounded p-button-outlined p-button-secondary p-button-sm p-0"
           @click="controlNavbar()"
           
         /> -->
-        <!-- <div class="px-4 text-2xl text-blue-500 font-medium">CRM SYSTEM</div> -->
+        <img @click="poshGo()" class="logo-picture cursor-pointer" src="https://railway.uz/local/templates/main_v2/img/logo.webp" alt="">
       </template>
 
       <template #end>
@@ -114,7 +114,9 @@ export default {
              {
               label: "Sozlamalar",
               icon: "pi pi-cog",
-              url: "https://vuejs.org/",
+              command: () => {
+                this.$router.push("/admin/setting");
+              },
             },
             {
               label: "Bloklash oynani",
@@ -124,13 +126,15 @@ export default {
               },
             },
               {
-              label: "Profile",
-              icon: "pi pi-user-edit",
-              url: "https://vuejs.org/",
+              label: "Profil",
+              icon: "pi pi-user",
+              command: () => {
+                this.$router.push("/admin/profil");
+              },
             },
             {
               label: "Chiqish",
-              icon: "pi pi-upload",
+              icon: "pi pi-power-off",
               command: () => {
                 this.$router.push("/login");
               },
@@ -267,17 +271,23 @@ export default {
     toggle2(event) {
       this.$refs.notefication.toggle(event);
     },
+    poshGo(){
+      this.$router.push("/admin")
+    },
     controlNavbar() {
       this.$emit("controlSidebar");
     },
   },
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .z_index_top {
   z-index: 998 !important;
 }
 .notefications_scroll::-webkit-scrollbar {
   width: 1px;
 }
+.logo-picture{
+        width: 30px;
+    }
 </style>
