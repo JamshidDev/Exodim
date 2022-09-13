@@ -1,36 +1,707 @@
-<template>
-  <div class="grid card surface-0 shadow-1 py-2 px-2">
-    <!-- Header button -->
-    <div class="col-12">
-      <herader-button></herader-button>
+<template >
+  <div class="grid card surface-0 shadow-1 py-4 px-3">
+    <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3 p-fluid">
+      <InputText
+        type="text"
+        v-model="organization.first_name"
+        class="w-full font-semibold"
+        placeholder="Ismni kiriting"
+      />
     </div>
-    <!-- Header search -->
-    <div class="col-12">
-      <header-search></header-search>
+
+    <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3 p-fluid">
+      <InputText
+        type="text"
+        v-model="organization.last_name"
+        class="w-full font-semibold"
+        placeholder="Familiya kiriting"
+      />
+    </div>
+      <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3 p-fluid">
+      <Dropdown
+        id="adressDistrict"
+        v-model="departmentValue"
+        :options="departmentList"
+        optionLabel="name"
+        class="xl:p-inputtext-sm"
+        :filter="true"
+        placeholder="Bo'limni tanlang"
+        emptyMessage="Hech narsa topilmadi"
+        emptyFilterMessage="Tizmda ma'lumot topilmadi..."
+        @change="changeDepartment"
+      >
+        <template #value="slotProps" class="custop_dropdown">
+          <div class="max-w-100" v-if="slotProps.value">
+            <div>{{ slotProps.value.name }}</div>
+          </div>
+          <span v-else>
+            {{ slotProps.placeholder }}
+          </span>
+        </template>
+        <template #option="slotProps">
+          <div class="max-w-100">
+            <div>{{ slotProps.option.name }}</div>
+          </div>
+        </template>
+      </Dropdown>
+    </div>
+
+    <!-- <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
+      <h6>
+        Korxonalar -
+        {{
+          organizations.length ? organizations.length - 1 : organizations.length
+        }}
+      </h6>
+      <Dropdown
+        id="adressDistrict"
+        v-model="orgValue"
+        :options="organizations"
+        optionLabel="name"
+        @change="changeOrganization"
+        :filter="true"
+        placeholder=" Tanlang"
+        class="w-full"
+        emptyMessage="Hech narsa topilmadi"
+        emptyFilterMessage="Tizmda ma'lumot topilmadi..."
+      >
+        <template #value="slotProps">
+          <div
+            class="country-item country-item-value w-full"
+            v-if="slotProps.value"
+          >
+            <div>{{ slotProps.value.name }}</div>
+          </div>
+          <span v-else>
+            {{ slotProps.placeholder }}
+          </span>
+        </template>
+        <template #option="slotProps">
+          <div class="country-item w-full">
+            <div>{{ slotProps.option.name }}</div>
+          </div>
+        </template>
+      </Dropdown>
+    </div> -->
+
+    <!-- <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
+      <h6>
+        Bo'limlar va bekatlar -
+        {{
+          departmentList.length
+            ? departmentList.length - 1
+            : departmentList.length
+        }}
+      </h6>
+      <Dropdown
+        id="adressDistrict"
+        v-model="departmentValue"
+        :options="departmentList"
+        optionLabel="name"
+        :filter="true"
+        placeholder="Tanlang"
+        class="w-full"
+        @change="changeDepartment"
+        emptyMessage="Hech narsa topilmadi"
+        emptyFilterMessage="Tizmda ma'lumot topilmadi..."
+      >
+        <template #value="slotProps">
+          <div
+            class="country-item country-item-value w-full"
+            v-if="slotProps.value"
+          >
+            <div>{{ slotProps.value.name }}</div>
+          </div>
+          <span v-else>
+            {{ slotProps.placeholder }}
+          </span>
+        </template>
+        <template #option="slotProps">
+          <div class="country-item w-full">
+            <div>{{ slotProps.option.name }}</div>
+          </div>
+        </template>
+      </Dropdown>
+    </div> -->
+
+    <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
+      <Button
+        icon="pi pi-search "
+        class=" w-10 p-button-secondary"
+        @click="searchBtn()"
+      />
+
+      <Button
+        icon="pi pi-filter"
+        class=" w-2 p-button-text p-button-secondary"
+        @click="openFilterPanel"
+      />
+      <!-- Additional filter menu -->
+      <OverlayPanel
+        ref="op"
+        :breakpoints="{ '960px': '75vw', '640px': '100vw' }"
+        :style="{ width: '550px' }"
+      >
+        <div class="grid">
+          <div class="col-12">
+            <h6 class="text-sm uppercase">Qo'shimcha filter sozlamalari</h6>
+          </div>
+
+          <div class="col-12">
+            <div class="col-12">
+              <h6 class="text-sm mb-0">Lavozim {{ Stuffs.length }}</h6>
+            </div>
+            <div class="w-full flex">
+              <Dropdown
+                id="adressDistrict"
+                v-model="stuffValue"
+                :options="Stuffs"
+                optionLabel="name"
+                :filter="true"
+                placeholder="Tanlang"
+                class="w-full p-inputtext-sm"
+                @change="changeStuffs"
+                emptyMessage="Hech narsa topilmadi"
+                emptyFilterMessage="Tizmda ma'lumot topilmadi..."
+                @before-show="beforeOpen"
+                :disabled="Stuffs.length == 0"
+              >
+                <template #value="slotProps">
+                  <div
+                    class="country-item country-item-value w-full"
+                    v-if="slotProps.value"
+                  >
+                    <div>{{ slotProps.value.name }}</div>
+                  </div>
+                  <span v-else>
+                    {{ slotProps.placeholder }}
+                  </span>
+                </template>
+                <template #option="slotProps">
+                  <div class="country-item w-full">
+                    <div>{{ slotProps.option.name }}</div>
+                  </div>
+                </template>
+              </Dropdown>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="col-12">
+              <h6 class="text-sm mb-0">Ma'lumoti</h6>
+            </div>
+            <div class="w-full flex">
+              <div class="w-full">
+                <Dropdown
+                  v-model="educationValue"
+                  :options="educationList"
+                  optionLabel="name"
+                  placeholder="Tanlang"
+                  class="w-full p-inputtext-sm"
+                  @change="changeEducation"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6">
+            <div class="col-12">
+              <h6 class="text-sm mb-0">Viloyat</h6>
+            </div>
+            <div class="w-full flex">
+              <div class="w-full">
+                <Dropdown
+                  v-model="regionValue"
+                  :options="regionList"
+                  optionLabel="name"
+                  placeholder="Tanlang"
+                  class="w-full p-inputtext-sm"
+                  @change="changeRegion"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="col-12">
+              <h6 class="text-sm mb-0">Ta'til</h6>
+            </div>
+            <div class="w-full flex">
+              <div class="w-full">
+                <Dropdown
+                  v-model="vacationValue"
+                  :options="vacationList"
+                  optionLabel="name"
+                  placeholder="Ta'til"
+                  class="w-full p-inputtext-sm"
+                  @change="changeVacation"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="col-12">
+              <h6 class="text-sm mb-0">Sharif</h6>
+            </div>
+            <div class="w-full flex">
+              <div class="w-full">
+                <InputText
+                  type="text"
+                  v-model="organization.middle_name"
+                  class="w-full font-semibold p-inputtext-sm"
+                  placeholder="Kiriting"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="col-12">
+              <h6 class="text-sm mb-1">Yosh oralig'i</h6>
+              <p class="text-center text-blue-600 font-semibold">
+                {{ selectedAge[0] + " -- " + selectedAge[1] }}
+              </p>
+            </div>
+            <div class="w-full flex">
+              <div class="w-full">
+                <Slider
+                  class=""
+                  v-model="selectedAge"
+                  :step="1"
+                  :range="true"
+                  @change="changeCadrAge"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="col-12">
+              <h6 class="text-sm mb-0">Jinsi</h6>
+            </div>
+            <div class="w-full flex">
+              <div class="w-full">
+                <Dropdown
+                  v-model="genderValue"
+                  :options="genderList"
+                  optionLabel="name"
+                  placeholder="Tanlang"
+                  class="w-full p-inputtext-sm"
+                  @change="changeGender"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="col-12 flex justify-content-between align-items-center">
+            <p class="text-left text-600 mb-0">
+              Qo'shimcha filter sozlamalarini sozlash
+            </p>
+            <Tag
+              class="cursor-pointer"
+              value="Tozalash"
+              severity="danger"
+              icon="pi pi-filter-slash"
+              @click="clearFilterDetails()"
+            ></Tag>
+          </div>
+        </div>
+      </OverlayPanel>
+    </div>
+
+    <!-- Employees table ---start -->
+    <div class="col-12 pt-2" v-show="!loadingtable">
+      <DataTable
+        ref="dt"
+        :value="cadries"
+        dataKey="id"
+        responsiveLayout="scroll"
+        showGridlines
+        class="p-datatable-sm"
+        v-show="totalCadries"
+      >
+        <template #header>
+          <div class="flex w-full">
+            <h6 class="mb-2 md:m-0 uppercase py-2 px-3">
+              Xodimlar soni (<span
+                class="text-blue-500 font-semibold text-base"
+                >{{ totalCadries }}</span
+              >
+              )
+            </h6>
+          </div>
+        </template>
+        <Column header="No">
+          <template #body="slotProps">
+            <div class="w-full text-center text-lg font-semibold">
+              {{ slotProps.data.number }}
+            </div>
+          </template>
+        </Column>
+        <Column header="Fotosurat">
+          <template #body="slotProps">
+            <div class="flex justify-content-center">
+              <Image
+                :src="slotProps.data.photo"
+                :alt="slotProps.data.fullname"
+                width="40"
+                height="40"
+                preview
+              />
+            </div>
+          </template>
+        </Column>
+        <Column field="name" header="F.I.SH" style="min-width: 16rem">
+          <template #body="slotProps">
+            <div
+              class="
+                text-sm
+                sm:text-sm
+                md:text-md
+                lg:text-lg
+                xl:text-lg
+                font-medium
+                text-blue-600
+                hover:text-green-500
+                cursor-pointer
+                uppercase
+              "
+              @click="goPush(slotProps.data.id)"
+            >
+              <div>{{ slotProps.data.fullname }}</div>
+            </div>
+          </template>
+        </Column>
+
+        <Column header="Lavozimi" style="min-width: 20rem">
+          <template #body="slotProps">
+            <div
+              class="
+                text-sm
+                sm:text-sm
+                md:text-md
+                lg:text-lg
+                xl:text-lg
+                text-yellow-700
+              "
+            >
+              {{
+                slotProps.data.staff
+                  ? slotProps.data.staff.post_name
+                  : `Tizimda ma'lumot yo'q`
+              }}
+            </div>
+          </template>
+        </Column>
+        <Column  header="Bo'lim nomi" style="min-width: 16rem">
+          <template #body="slotProps">
+            <div
+              class="
+                text-sm
+                sm:text-sm
+                md:text-md
+                lg:text-lg
+                xl:text-lg
+                font-medium
+                text-indigo-700
+              "
+            >
+              <span>{{ slotProps.data.department }}</span>
+            </div>
+          </template>
+        </Column>
+
+        <Column :exportable="false" style="min-width: 6rem">
+          <template #body="slotProps">
+            <div class="flex w-full">
+              <Button
+                icon="pi pi-id-card"
+                class="p-button-rounded p-button-secondary mr-2"
+                v-tooltip.left="`Ma'lumotlarni ko'rish`"
+                @click="openResume(slotProps.data.id)"
+              />
+              <Button
+                icon="pi pi-cloud-download"
+                class="p-button-rounded p-button-secondary"
+                v-tooltip.left="`Ma'lumotnomani yuklash`"
+                @click="DowloadResume(slotProps.data.id)"
+              />
+            </div>
+          </template>
+        </Column>
+        <template #footer>
+          <table-pagination
+            v-show="totalCadries > 10"
+            :total_page="totalCadries"
+            @pagination="changePagination($event)"
+          ></table-pagination>
+        </template>
+      </DataTable>
+      <search-not-found-page v-show="!totalCadries"></search-not-found-page>
+    </div>
+    <div class="col-12 pt-2" v-show="loadingtable">
+      <employee-loader></employee-loader>
     </div>
     <div class="col-12">
-      <!-- Body table -->
-      <body-table @editEmployee="goPush()"></body-table>
+      <Toast position="bottom-right" />
+      <word-template
+        :cadry_id="Dowload_cadry_id"
+        v-show="false"
+        ref="word_resume"
+      ></word-template>
+      <employee-details ref="show_resume"></employee-details>
     </div>
   </div>
 </template>
 <script>
-import HeraderButton from "../components/partEmployee/HeraderButton.vue";
-import HeaderSearch from "../components/partEmployee/HeaderSearch.vue";
-import BodyTable from '../components/partEmployee/BodyTable.vue';
-
-
+import TablePagination from "../components/Pagination/TablePagination.vue";
+import organizationsService from "../service/servises/organizationsService";
+import employeeService from "../service/servises/employeeService";
+import EmployeeLoader from "../components/loaders/EmployeeLoader.vue";
+import SearchNotFoundPage from "../components/EmptyComponent/SearchNotFoundPage.vue";
+import WordTemplate from "../components/Eksport/WordTemplate.vue";
+import EmployeeDetails from "../components/partEmployee/EmployeeDetails.vue";
 export default {
   components: {
-    HeraderButton,
-    HeaderSearch,
-    BodyTable,
+    EmployeeLoader,
+    TablePagination,
+    SearchNotFoundPage,
+    WordTemplate,
+    EmployeeDetails,
   },
-  methods:{
-    goPush(){
-      this.$router.push("/admin")
-    }
-  }
+  data() {
+    return {
+      displayBasic: true,
+      loadingtable: false,
+      selectedCadries: null,
+      cadries: [],
+
+      Dowload_cadry_id: null,
+
+      selectedAge: [10, 80],
+
+      // Organization
+      departmentList: [],
+      departmentValue: null, //fake
+      Stuffs: [],
+      stuffValue: null, //fake
+      educationList: [],
+      educationValue: null, //fake
+      regionList: [],
+      regionValue: null, //fake
+      vacationList: [],
+      vacationValue: null, //fake
+      genderList: [
+        {
+          name: "Erkak",
+          id: 0,
+        },
+        {
+          name: "Ayol",
+          id: 1,
+        },
+      ],
+      genderValue: null, //fake
+      selectedAge: [10, 80],
+
+      totalCadries: 0,
+
+      // Organization params
+      organization: {
+        railway_id: null,
+        organization_id: null,
+        department_id: null,
+        per_page: 10,
+        page: 1,
+        last_name: null,
+        first_name: null,
+        middle_name: null,
+        staff_id: null,
+        sex: null,
+        vacation_id: null,
+        education_id: null,
+        age_start: null,
+        age_end: null,
+        region_id: null,
+      },
+    };
+  },
+  methods: {
+    // get Employee function
+    getEmployee(params) {
+      this.controlLoading(true);
+      console.table(params);
+      employeeService
+        .get_Employees(params)
+        .then((res) => {
+          console.log(res.data.cadries);
+          this.totalCadries = res.data.cadries.pagination.total;
+          let cadrList = [];
+          let number =
+            (this.organization.page - 1) * this.organization.per_page;
+          res.data.cadries.data.forEach((item) => {
+            number++;
+            item.number = number;
+            cadrList.push(item);
+          });
+          this.cadries = res.data.cadries.data;
+          this.controlLoading(false);
+        })
+        .catch((error) => {
+          this.controlLoading(false);
+          console.log(error);
+        });
+    },
+    get_Department(id) {
+      employeeService
+        .get_Department({ organization_id: id })
+        .then((res) => {
+          res.data.unshift({
+            name: "Barchasi",
+            id: null,
+          });
+          this.departmentList = res.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    get_Stuffs(id) {
+      employeeService
+        .get_Stuffs({ organization_id: id })
+        .then((res) => {
+          this.Stuffs = res.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    get_Education() {
+      organizationsService
+        .getEducation()
+        .then((res) => {
+          this.educationList = res.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    get_getRegions() {
+      organizationsService
+        .getRegions()
+        .then((res) => {
+          this.regionList = res.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    get_getVacations() {
+      organizationsService
+        .getVacations()
+        .then((res) => {
+          this.vacationList = res.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    changeDepartment(event) {
+      this.organization.department_id = event.value.id;
+      this.getEmployee(this.organization);
+    },
+
+    changeStuffs(event) {
+      this.organization.staff_id = event.value.id;
+    },
+    changeEducation(event) {
+      this.organization.education_id = event.value.id;
+    },
+    changeRegion(event) {
+      this.organization.region_id = event.value.id;
+    },
+
+    changeCadrAge(event) {
+      this.organization.age_start = event[0];
+      this.organization.age_end = event[1];
+    },
+    changeGender(event) {
+      this.organization.sex = event.value.id;
+    },
+
+    changeVacation(event) {
+      this.organization.vacation_id = event.value.id;
+    },
+    changePagination(event) {
+      this.organization.page = event.page;
+      this.organization.per_page = event.per_page;
+      this.getEmployee(this.organization);
+    },
+
+    goPush(id){
+      this.$router.push(`/admin/editemployee/${id}`)
+    },
+
+    searchBtn() {
+      console.table(this.organization);
+      this.getEmployee(this.organization);
+    },
+
+    // Dowload resume
+    DowloadResume(id) {
+      console.table(id);
+      this.$refs.word_resume.generateWord(id);
+    },
+
+    // Opent resume
+    openResume(id) {
+      this.$refs.show_resume.showResume(id);
+    },
+
+    beforeOpen(event) {
+      console.log(event);
+    },
+    // clear additional filter details
+    clearFilterDetails() {
+      this.organization.staff_id = null;
+      this.stuffValue = null;
+      this.organization.education_id = null;
+      this.educationValue = null;
+      this.organization.vacation_id = null;
+      this.vacationValue = null;
+      this.organization.first_name = null;
+      this.organization.last_name = null;
+      this.organization.middle_name = null;
+      this.organization.age_end = null;
+      this.organization.age_start = null;
+      this.organization.sex = null;
+      (this.organization.region_id = null),
+        (this.regionValue = null),
+        (this.genderValue = null);
+      this.selectedAge = [10, 80];
+      this.$toast.add({
+        severity: "success",
+        summary: "Muvofaqqiyatli bajarildi",
+        detail: "Tozalandi",
+        life: 2000,
+      });
+    },
+
+    openFilterPanel(event) {
+      this.$refs.op.toggle(event);
+    },
+    controlLoading(item) {
+      this.loadingtable = item;
+    },
+  },
+  created() {
+    this.getEmployee(this.organization);
+    this.get_Department()
+    this.get_Education();
+    this.get_getRegions();
+    this.get_getVacations();
+    this.get_Stuffs()
+  },
 };
 </script>
 <style lang="scss">

@@ -19,15 +19,18 @@
       </div>
     </div>
 
-    
     <div class="col-12">
-      <div class="grid xl:px-8 lg:px-4  py-4">
+      <div class="grid xl:px-8 lg:px-4 py-4">
         <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
-          <div class="employee-avatar-box">
+          <div class="employee-avatar-box" @click="$refs.file.click()">
             <div class="img-box">
               <img
                 class="employee-avatar"
-                src="http://exodim.railway.uz/storage/cadry-photos/d83fad83e045f0e3b00bb9924a9f809a.jpg"
+                :src="
+                  defaulAvatar
+                    ? defaulAvatar
+                    : default_avatar
+                "
                 alt=""
               />
               <div class="hover-element">
@@ -70,7 +73,7 @@
                 type="text"
                 id="thirdName"
                 v-model="v$.thirdName.$model"
-                v-maska="'S*'"
+                v-maska="'S S*'"
                 :class="{ 'p-invalid': v$.thirdName.$invalid && submitted }"
                 class="w-full"
                 placeholder="Sharifni kiriting"
@@ -204,239 +207,282 @@
           </div>
         </div>
       </div>
-        <!-- Person pasport details -->
-        <div class="col-12 mb-4 border-1 border-300 border-round-sm py-4 ">
-          <div class="grid xl:px-4 xl:mx-4 lg:px-2 xl:mx-2">
-            <div class="col-12 text-left text-lg font-medium uppercase mb-4">
-              Pasport ma'lumotlari
-            </div>
+      <!-- Person pasport details -->
+      <div class="col-12 mb-4 border-1 border-300 border-round-sm py-4">
+        <div class="grid xl:px-4 xl:mx-4 lg:px-2 xl:mx-2">
+          <div class="col-12 text-left text-lg font-medium uppercase mb-4">
+            Pasport ma'lumotlari
+          </div>
 
-            <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
-              <h6 class="mb-2 pl-2">Pasport seriyasi</h6>
-              <InputText
-                type="text"
-                class="w-full"
-                placeholder="Seriyani kiriting"
-                id="passportSeriya"
-                v-model="v$.passportSeriya.$model"
-                v-maska="'AA ######'"
-                :class="{
-                  'p-invalid': v$.passportSeriya.$invalid && submitted,
-                }"
-              />
-            </div>
+          <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
+            <h6 class="mb-2 pl-2">Pasport seriyasi</h6>
+            <InputText
+              type="text"
+              class="w-full"
+              placeholder="Seriyani kiriting"
+              id="passportSeriya"
+              v-model="v$.passportSeriya.$model"
+              v-maska="'AA ######'"
+              :class="{
+                'p-invalid': v$.passportSeriya.$invalid && submitted,
+              }"
+            />
+          </div>
 
-            <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
-              <h6 class="mb-2 pl-2">Pasport JSHR</h6>
-              <InputText
-                type="text"
-                class="w-full"
-                placeholder="JSHR raqami"
-                id="passportJSHR"
-                v-model="v$.passportJSHR.$model"
-                v-maska="'##-##-##-##-##-##-##'"
-                :class="{ 'p-invalid': v$.passportJSHR.$invalid && submitted }"
-              />
-            </div>
+          <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
+            <h6 class="mb-2 pl-2">Pasport JSHR</h6>
+            <InputText
+              type="text"
+              class="w-full"
+              placeholder="JSHR raqami"
+              id="passportJSHR"
+              v-model="v$.passportJSHR.$model"
+              v-maska="'##-##-##-##-##-##-##'"
+              :class="{ 'p-invalid': v$.passportJSHR.$invalid && submitted }"
+            />
+          </div>
 
-            <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
-              <h6 class="mb-2 pl-2">Berilgan viloyat</h6>
-              <Dropdown
-                id="passportRegion"
-                v-model="v$.passportRegion.$model"
-                :class="{
-                  'p-invalid': v$.passportRegion.$invalid && submitted,
-                }"
-                :options="Regions"
-                optionLabel="name"
-                placeholder="Viloyatni tanlang"
-                class="w-full"
-              />
-            </div>
+          <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
+            <h6 class="mb-2 pl-2">Berilgan viloyat</h6>
+            <Dropdown
+              id="passportRegion"
+              v-model="v$.passportRegion.$model"
+              :class="{
+                'p-invalid': v$.passportRegion.$invalid && submitted,
+              }"
+              :options="Regions"
+              optionLabel="name"
+              placeholder="Viloyatni tanlang"
+              class="w-full"
+            />
+          </div>
 
-            <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
-              <h6 class="mb-2 pl-2">Berilgan tuman</h6>
-              <Dropdown
-                id="passportDistrict"
-                v-model="v$.passportDistrict.$model"
-                :class="{
-                  'p-invalid': v$.passportDistrict.$invalid && submitted,
-                }"
-                :options="Districts"
-                optionLabel="name"
-                :filter="true"
-                placeholder="Tumanni tanlang"
-                :showClear="true"
-                class="w-full"
-              >
-                <template #value="slotProps">
-                  <div
-                    class="country-item country-item-value"
-                    v-if="slotProps.value"
-                  >
-                    <div>{{ slotProps.value.name }}</div>
-                  </div>
-                  <span v-else>
-                    {{ slotProps.placeholder }}
-                  </span>
-                </template>
-                <template #option="slotProps">
-                  <div class="country-item">
-                    <div>{{ slotProps.option.name }}</div>
-                  </div>
-                </template>
-              </Dropdown>
-            </div>
+          <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
+            <h6 class="mb-2 pl-2">Berilgan tuman</h6>
+            <Dropdown
+              id="passportDistrict"
+              v-model="v$.passportDistrict.$model"
+              :class="{
+                'p-invalid': v$.passportDistrict.$invalid && submitted,
+              }"
+              :options="Districts"
+              optionLabel="name"
+              :filter="true"
+              placeholder="Tumanni tanlang"
+              :showClear="true"
+              class="w-full"
+            >
+              <template #value="slotProps">
+                <div
+                  class="country-item country-item-value"
+                  v-if="slotProps.value"
+                >
+                  <div>{{ slotProps.value.name }}</div>
+                </div>
+                <span v-else>
+                  {{ slotProps.placeholder }}
+                </span>
+              </template>
+              <template #option="slotProps">
+                <div class="country-item">
+                  <div>{{ slotProps.option.name }}</div>
+                </div>
+              </template>
+            </Dropdown>
+          </div>
 
-            <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
-              <h6 class="mb-2 pl-2">Berilgan sana</h6>
-              <Calendar
-                class="w-full"
-                :manualInput="true"
-                id="passportDate"
-                v-model="v$.passportDate.$model"
-                :class="{ 'p-invalid': v$.passportDate.$invalid && submitted }"
-                v-maska="'##/##/####'"
-                placeholder="Sanani tanlang"
-                dateFormat="dd/mm/yy"
-                :showButtonBar="true"
-              />
-            </div>
+          <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
+            <h6 class="mb-2 pl-2">Berilgan sana</h6>
+            <Calendar
+              class="w-full"
+              :manualInput="true"
+              id="passportDate"
+              v-model="v$.passportDate.$model"
+              :class="{ 'p-invalid': v$.passportDate.$invalid && submitted }"
+              v-maska="'##/##/####'"
+              placeholder="Sanani tanlang"
+              dateFormat="dd/mm/yy"
+              :showButtonBar="true"
+            />
           </div>
         </div>
+      </div>
 
-        <!-- Position information details -->
-        <div class="col-12 mb-4 border-1 border-300 border-round-sm py-4">
-          <div class="grid xl:px-4 xl:mx-4 lg:px-2 xl:mx-2">
-            <div class="col-12 text-left text-lg font-medium uppercase mb-4">
-              Lavozim ma'lumotlari
-            </div>
+      <!-- Position information details -->
+      <div class="col-12 mb-4 border-1 border-300 border-round-sm py-4">
+        <div class="grid xl:px-4 xl:mx-4 lg:px-2 xl:mx-2">
+          <div class="col-12 text-left text-lg font-medium uppercase mb-4">
+            Lavozim ma'lumotlari
+          </div>
 
-            <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
-              <h6 class="mb-2 pl-2">Lavozim sanasi</h6>
-              <Calendar
-                class="w-full"
-                :manualInput="true"
-                id="positionDate"
-                v-model="v$.positionDate.$model"
-                :class="{ 'p-invalid': v$.positionDate.$invalid && submitted }"
-                v-maska="'##/##/####'"
-                placeholder="Sanani tanlang"
-                dateFormat="dd/mm/yy"
-                :showButtonBar="true"
-              />
-            </div>
-            <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
-              <h6 class="mb-2 pl-2">Bo'lim nomi</h6>
-              <Dropdown
-                id="positionPart"
-                v-model="v$.positionPart.$model"
-                :class="{ 'p-invalid': v$.positionPart.$invalid && submitted }"
-                :options="FactoryPart"
-                optionLabel="name"
-                :filter="true"
-                placeholder="Bo'limni tanlang"
-                :showClear="true"
-                class="w-full"
-              >
-                <template #value="slotProps">
-                  <div
-                    class="country-item country-item-value"
-                    v-if="slotProps.value"
-                  >
-                    <div>{{ slotProps.value.name }}</div>
-                  </div>
-                  <span v-else>
-                    {{ slotProps.placeholder }}
-                  </span>
-                </template>
-                <template #option="slotProps">
-                  <div class="country-item">
-                    <div>{{ slotProps.option.name }}</div>
-                  </div>
-                </template>
-              </Dropdown>
-            </div>
-            <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
-              <h6 class="mb-2 pl-2">Shtat lavozimi</h6>
-              <Dropdown
-                id="positionName"
-                v-model="v$.positionName.$model"
-                :class="{ 'p-invalid': v$.positionName.$invalid && submitted }"
-                :options="FactoryTitle"
-                optionLabel="name"
-                :filter="true"
-                placeholder="Shtat lavozimni tanlang"
-                :showClear="true"
-                class="w-full"
-              >
-                <template #value="slotProps">
-                  <div
-                    class="country-item country-item-value"
-                    v-if="slotProps.value"
-                  >
-                    <div>{{ slotProps.value.name }}</div>
-                  </div>
-                  <span v-else>
-                    {{ slotProps.placeholder }}
-                  </span>
-                </template>
-                <template #option="slotProps">
-                  <div class="country-item">
-                    <div>{{ slotProps.option.name }}</div>
-                  </div>
-                </template>
-              </Dropdown>
-            </div>
-            <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
-              <h6 class="mb-2 pl-2">Ish stavkasi</h6>
-              <Dropdown
-                id="positionAmount"
-                v-model="v$.positionAmount.$model"
-                :class="{
-                  'p-invalid': v$.positionAmount.$invalid && submitted,
-                }"
-                :options="FactoryAmount"
-                optionLabel="name"
-                placeholder="Stavkani tanlang"
-                class="w-full"
-              />
-            </div>
-            <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
-              <h6 class="mb-2 pl-2">Birinchi lavozim sanasi (O'TY)</h6>
-              <Calendar
-                class="w-full"
-                :manualInput="true"
-                id="positionFirstDate"
-                v-model="v$.positionFirstDate.$model"
-                :class="{
-                  'p-invalid': v$.positionFirstDate.$invalid && submitted,
-                }"
-                dateFormat="dd/mm/yy"
-                v-maska="'##/##/####'"
-                placeholder="Sanani tanlang"
-              />
-            </div>
-            <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
-              <h6 class="mb-2 pl-2">Xizmat darajasi</h6>
-              <Dropdown
-                id="positionDegree"
-                v-model="v$.positionDegree.$model"
-                :class="{
-                  'p-invalid': v$.positionDegree.$invalid && submitted,
-                }"
-                :options="FactoryDegree"
-                optionLabel="name"
-                placeholder="Darajani tanlang"
-                class="w-full"
-              />
-            </div>
+          <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
+            <h6 class="mb-2 pl-2">Lavozim sanasi</h6>
+            <Calendar
+              class="w-full"
+              :manualInput="true"
+              id="positionDate"
+              v-model="v$.positionDate.$model"
+              :class="{ 'p-invalid': v$.positionDate.$invalid && submitted }"
+              v-maska="'##/##/####'"
+              placeholder="Sanani tanlang"
+              dateFormat="dd/mm/yy"
+              :showButtonBar="true"
+            />
+          </div>
+          <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
+            <h6 class="mb-2 pl-2">Bo'lim nomi</h6>
+            <Dropdown
+              id="positionPart"
+              v-model="v$.positionPart.$model"
+              :class="{ 'p-invalid': v$.positionPart.$invalid && submitted }"
+              :options="FactoryPart"
+              optionLabel="name"
+              :filter="true"
+              placeholder="Bo'limni tanlang"
+              :showClear="true"
+              class="w-full"
+            >
+              <template #value="slotProps">
+                <div
+                  class="country-item country-item-value"
+                  v-if="slotProps.value"
+                >
+                  <div>{{ slotProps.value.name }}</div>
+                </div>
+                <span v-else>
+                  {{ slotProps.placeholder }}
+                </span>
+              </template>
+              <template #option="slotProps">
+                <div class="country-item">
+                  <div>{{ slotProps.option.name }}</div>
+                </div>
+              </template>
+            </Dropdown>
+          </div>
+          <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
+            <h6 class="mb-2 pl-2">Shtat lavozimi</h6>
+            <Dropdown
+              id="positionName"
+              v-model="v$.positionName.$model"
+              :class="{ 'p-invalid': v$.positionName.$invalid && submitted }"
+              :options="FactoryTitle"
+              optionLabel="name"
+              :filter="true"
+              placeholder="Shtat lavozimni tanlang"
+              :showClear="true"
+              class="w-full"
+            >
+              <template #value="slotProps">
+                <div
+                  class="country-item country-item-value"
+                  v-if="slotProps.value"
+                >
+                  <div>{{ slotProps.value.name }}</div>
+                </div>
+                <span v-else>
+                  {{ slotProps.placeholder }}
+                </span>
+              </template>
+              <template #option="slotProps">
+                <div class="country-item">
+                  <div>{{ slotProps.option.name }}</div>
+                </div>
+              </template>
+            </Dropdown>
+          </div>
+          <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
+            <h6 class="mb-2 pl-2">Ish stavkasi</h6>
+            <Dropdown
+              id="positionAmount"
+              v-model="v$.positionAmount.$model"
+              :class="{
+                'p-invalid': v$.positionAmount.$invalid && submitted,
+              }"
+              :options="FactoryAmount"
+              optionLabel="name"
+              placeholder="Stavkani tanlang"
+              class="w-full"
+            />
+          </div>
+          <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
+            <h6 class="mb-2 pl-2">Birinchi lavozim sanasi (O'TY)</h6>
+            <Calendar
+              class="w-full"
+              :manualInput="true"
+              id="positionFirstDate"
+              v-model="v$.positionFirstDate.$model"
+              :class="{
+                'p-invalid': v$.positionFirstDate.$invalid && submitted,
+              }"
+              dateFormat="dd/mm/yy"
+              v-maska="'##/##/####'"
+              placeholder="Sanani tanlang"
+            />
+          </div>
+          <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
+            <h6 class="mb-2 pl-2">Xizmat darajasi</h6>
+            <Dropdown
+              id="positionDegree"
+              v-model="v$.positionDegree.$model"
+              :class="{
+                'p-invalid': v$.positionDegree.$invalid && submitted,
+              }"
+              :options="FactoryDegree"
+              optionLabel="name"
+              placeholder="Darajani tanlang"
+              class="w-full"
+            />
           </div>
         </div>
+      </div>
+
+      <div class="col-12">
+        <Dialog
+          v-model:visible="cropperDialog"
+          :style="{ width: '380px' }"
+          :modal="true"
+          class="bg-blue-700"
+          :closable="false"
+        >
+          <template #header>
+            <h6 class="font-semibold flex uppercase">Rasmni tekislash</h6>
+          </template>
+          <cropper
+            ref="cropper"
+            class="cropper"
+            @change="change"
+            @ready="readyCropper"
+            :stencil-props="{
+              aspectRatio: 3 / 4,
+            }"
+            :src="image.src"
+            :autoZoom="true"
+          />
+          <template #footer>
+            <div class="flex justify-content-between">
+              <Button
+                label="Bekor qilish"
+                @click="controlCopper(false)"
+                class="p-button-danger p-button-sm"
+              />
+              <Button
+                label="Tasdiqlash"
+                @click="cropImage()"
+                class="p-button-secondary p-button-sm"
+                autofocus
+              />
+            </div>
+          </template>
+        </Dialog>
+      </div>
     </div>
   </div>
 </template>
 <script>
+  import default_avatar from '@/assets/avatar/default_avatar.png'
+import { Cropper } from "vue-advanced-cropper";
+import "vue-advanced-cropper/dist/style.css";
 import { globalValidate } from "../../validation/vuevalidate";
 import {
   Regions,
@@ -455,10 +501,21 @@ import { minLength, required } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
 
 export default {
+  components: {
+    Cropper,
+  },
   setup: () => ({ v$: useVuelidate() }),
 
   data() {
     return {
+      image: {
+        src: null,
+        type: "image/jpg",
+      },
+      defaulAvatar: null,
+      cropperDialog: false,
+      default_avatar,
+
       firstName: "",
       lastName: "",
       thirdName: "",
@@ -583,6 +640,50 @@ export default {
       this.accept = null;
       this.submitted = false;
     },
+
+    cropImage() {
+      const result = this.$refs.cropper.getResult();
+      console.log(result);
+      this.defaulAvatar = result.canvas.toDataURL();
+      // const newTab = window.open();
+      // newTab.document.body.innerHTML = `<img src="${result.canvas.toDataURL(
+      //   this.image.type
+      // )}"></img>`;
+    },
+    controlCopper(item) {
+      this.cropperDialog = item;
+    },
+
+    uploadImage(event) {
+      /// Reference to the DOM input element
+
+     
+        const { files } = event.target;
+      // Ensure that you have a file before attempting to read it
+      if (files && files[0]) {
+        // 1. Revoke the object URL, to allow the garbage collector to destroy the uploaded before file
+        if (this.image.src) {
+          URL.revokeObjectURL(this.image.src);
+        }
+        // 2. Create the blob link to the file to optimize performance:
+        const blob = URL.createObjectURL(files[0]);
+
+        // 3. Update the image. The type will be derived from the extension and it can lead to an incorrect result:
+        this.image = {
+          src: blob,
+          type: files[0].type,
+        };
+        this.cropperDialog = true;
+       
+
+       
+      }
+    },
+  },
+  unmounted() {
+    if (this.image.src) {
+      URL.revokeObjectURL(this.image.src);
+    }
   },
 };
 </script>
