@@ -382,7 +382,7 @@
                 font-medium
               "
             >
-              {{ slotProps.data.staff? slotProps.data.staff.post_name : `Tizimda ma'lumot yo'q` }}
+              {{ slotProps.data.staff? slotProps.data.staff.staff_full : `Tizimda ma'lumot yo'q` }}
             </div>
           </template>
         </Column>

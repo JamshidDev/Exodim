@@ -46,7 +46,7 @@ export const globalValidate = {
   },
   passportJSHR:{
     required,
-    minLength: minLength(20),
+    minLength: minLength(14),
   },
   passportRegion:{
     required,

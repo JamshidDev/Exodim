@@ -58,6 +58,8 @@ import Knob from 'primevue/knob';
 import ContextMenu from 'primevue/contextmenu';
 import Paginator from 'primevue/paginator';
 import ScrollPanel from 'primevue/scrollpanel';
+import ProgressSpinner from 'primevue/progressspinner';
+
 
 
 
@@ -138,6 +140,8 @@ app.component('Knob', Knob);
 app.component('ContextMenu', ContextMenu);
 app.component('Paginator', Paginator);
 app.component('ScrollPanel', ScrollPanel);
+app.component('ProgressSpinner', ProgressSpinner);
+
 
 
 

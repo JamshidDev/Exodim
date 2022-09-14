@@ -1,5 +1,9 @@
 <template>
-  <div class="grid card py-4 px-3">
+  
+  <div class="grid card py-4 px-3" v-if="barLoader">
+    <progress-bar-loader></progress-bar-loader>
+  </div>
+  <div v-if="!barLoader" class="grid card py-4 px-3">
     <div class="col-12">
       <div class="flex justify-content-end">
         <Button
@@ -11,7 +15,7 @@
         />
         <Button
           icon="pi pi-save"
-          @click="handleSubmit(!v$.$invalid)"
+          @click="updateEmployee(!v$.$invalid)"
           class="p-button-secondary p-button-sm"
           label="Saqlash"
           v-tooltip.bottom="`Ma'lumotlarni qayta saqlash`"
@@ -26,11 +30,7 @@
             <div class="img-box">
               <img
                 class="employee-avatar"
-                :src="
-                  defaulAvatar
-                    ? defaulAvatar
-                    : default_avatar
-                "
+                :src="defaulAvatar ? defaulAvatar : default_avatar"
                 alt=""
               />
               <div class="hover-element">
@@ -44,7 +44,7 @@
         <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
           <div class="grid">
             <div class="col-12">
-              <h6 class="mb-2 pl-2">Familiya</h6>
+              <h6 class="mb-2 pl-2 text-500">Familiya</h6>
               <InputText
                 type="text"
                 class="w-full font-semibold"
@@ -56,7 +56,7 @@
               />
             </div>
             <div class="col-12">
-              <h6 class="mb-2">Ism</h6>
+              <h6 class="mb-2 pl-2 text-500">Ism</h6>
               <InputText
                 type="text"
                 class="w-full font-semibold"
@@ -68,14 +68,13 @@
               />
             </div>
             <div class="col-12">
-              <h6 class="mb-2">Sharif</h6>
+              <h6 class="mb-2 pl-2 text-500">Sharif</h6>
               <InputText
                 type="text"
                 id="thirdName"
                 v-model="v$.thirdName.$model"
-                v-maska="'S S*'"
                 :class="{ 'p-invalid': v$.thirdName.$invalid && submitted }"
-                class="w-full"
+                class="w-full font-semibold"
                 placeholder="Sharifni kiriting"
               />
             </div>
@@ -86,9 +85,9 @@
         <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
           <div class="grid">
             <div class="col-12">
-              <h6 class="mb-2">Tug'ilgan sanasi (kun-oy-yil)</h6>
+              <h6 class="mb-2 pl-2 text-500">Tug'ilgan sanasi (kun-oy-yil)</h6>
               <Calendar
-                class="w-full font-semibold"
+              class="w-full font-semibold"
                 :manualInput="true"
                 id="bornDate"
                 v-model="v$.bornDate.$model"
@@ -97,32 +96,35 @@
                 dateFormat="dd/mm/yy"
                 :showButtonBar="true"
                 placeholder="Sanani tanlang"
+                @date-select="changeBornData"
               />
             </div>
             <div class="col-12">
-              <h6 class="mb-2">Tug'ilgan viloyati</h6>
+              <h6 class="mb-2 pl-2 text-500">Tug'ilgan viloyati</h6>
               <Dropdown
                 id="bornRegion"
                 v-model="v$.bornRegion.$model"
                 :class="{ 'p-invalid': v$.bornRegion.$invalid && submitted }"
-                :options="Regions"
+                :options="regionList"
                 optionLabel="name"
+                optionValue="id"
                 placeholder="Viloyatni tanlang"
                 class="w-full font-semibold"
+               
               />
             </div>
             <div class="col-12 p-fluid">
-              <h6 class="mb-2">Tug'ilgan tumani</h6>
+              <h6 class="mb-2 pl-2 text-500">Tug'ilgan tumani</h6>
               <Dropdown
                 id="bornDistric"
                 v-model="v$.bornDistric.$model"
                 :class="{ 'p-invalid': v$.bornDistric.$invalid && submitted }"
-                :options="Districts"
+                :options="districtList"
                 optionLabel="name"
                 :filter="true"
                 placeholder="Tumanni tanlang"
-                :showClear="true"
                 class="w-full font-semibold"
+                @change="changeBornDistrict"
               >
                 <template #value="slotProps">
                   <div
@@ -149,35 +151,36 @@
         <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
           <div class="grid">
             <div class="col-12 p-fluid">
-              <h6 class="mb-2">Yashash manzili</h6>
+              <h6 class="mb-2 pl-2 text-500">Yashash manzili</h6>
               <Dropdown
                 id="adressRegion"
                 v-model="v$.adressRegion.$model"
                 :class="{ 'p-invalid': v$.adressRegion.$invalid && submitted }"
-                :options="Regions"
+                :options="regionList"
                 optionLabel="name"
+                optionValue="id"
                 placeholder="Viloyatni tanlang"
-                class="w-full"
+                class="w-full font-semibold"
               />
             </div>
             <div class="col-12 p-fluid">
-              <h6 class="mb-2">Yashash manzili</h6>
+              <h6 class="mb-2 pl-2 text-500">Yashash manzili</h6>
               <Dropdown
                 id="adressDistrict"
                 v-model="v$.adressDistrict.$model"
                 :class="{
                   'p-invalid': v$.adressDistrict.$invalid && submitted,
                 }"
-                :options="Districts"
+                :options="districtList"
                 optionLabel="name"
                 :filter="true"
                 placeholder="Tumanni tanlang"
-                :showClear="true"
-                class="w-full"
+                class="w-full font-semibold"
+                @change="changeadressDistrict"
               >
                 <template #value="slotProps">
                   <div
-                    class="country-item country-item-value"
+                  
                     v-if="slotProps.value"
                   >
                     <div>{{ slotProps.value.name }}</div>
@@ -194,10 +197,10 @@
               </Dropdown>
             </div>
             <div class="col-12">
-              <h6 class="mb-2 pl-2">Qo'shimcha manzil</h6>
+              <h6 class="mb-2 pl-2 text-500">Qo'shimcha manzil</h6>
               <InputText
                 type="text"
-                class="w-full"
+                class="w-full font-semibold"
                 placeholder="Ko'cha va uy manzili"
                 id="adressStreet"
                 v-model="v$.adressStreet.$model"
@@ -210,15 +213,15 @@
       <!-- Person pasport details -->
       <div class="col-12 mb-4 border-1 border-300 border-round-sm py-4">
         <div class="grid xl:px-4 xl:mx-4 lg:px-2 xl:mx-2">
-          <div class="col-12 text-left text-lg font-medium uppercase mb-4">
+          <!-- <div class="col-12 text-left text-lg font-medium uppercase mb-4">
             Pasport ma'lumotlari
-          </div>
+          </div> -->
 
           <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
-            <h6 class="mb-2 pl-2">Pasport seriyasi</h6>
+            <h6 class="mb-2 pl-2 text-500">Pasport seriyasi</h6>
             <InputText
               type="text"
-              class="w-full"
+              class="w-full font-semibold"
               placeholder="Seriyani kiriting"
               id="passportSeriya"
               v-model="v$.passportSeriya.$model"
@@ -230,47 +233,48 @@
           </div>
 
           <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
-            <h6 class="mb-2 pl-2">Pasport JSHR</h6>
+            <h6 class="mb-2 pl-2 text-500">Pasport JSHR</h6>
             <InputText
               type="text"
-              class="w-full"
+              class="w-full font-semibold"
               placeholder="JSHR raqami"
               id="passportJSHR"
               v-model="v$.passportJSHR.$model"
-              v-maska="'##-##-##-##-##-##-##'"
+              v-maska="'##############'"
               :class="{ 'p-invalid': v$.passportJSHR.$invalid && submitted }"
             />
           </div>
 
           <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
-            <h6 class="mb-2 pl-2">Berilgan viloyat</h6>
+            <h6 class="mb-2 pl-2 text-500">Berilgan viloyat</h6>
             <Dropdown
               id="passportRegion"
               v-model="v$.passportRegion.$model"
               :class="{
                 'p-invalid': v$.passportRegion.$invalid && submitted,
               }"
-              :options="Regions"
+              :options="regionList"
               optionLabel="name"
+              optionValue="id"
               placeholder="Viloyatni tanlang"
-              class="w-full"
+              class="w-full font-semibold"
             />
           </div>
 
           <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
-            <h6 class="mb-2 pl-2">Berilgan tuman</h6>
+            <h6 class="mb-2 pl-2 text-500">Berilgan tuman</h6>
             <Dropdown
               id="passportDistrict"
               v-model="v$.passportDistrict.$model"
               :class="{
                 'p-invalid': v$.passportDistrict.$invalid && submitted,
               }"
-              :options="Districts"
+              :options="districtList"
               optionLabel="name"
               :filter="true"
               placeholder="Tumanni tanlang"
-              :showClear="true"
-              class="w-full"
+              class="w-full font-semibold"
+              @change="changePassDistrict"
             >
               <template #value="slotProps">
                 <div
@@ -292,9 +296,9 @@
           </div>
 
           <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
-            <h6 class="mb-2 pl-2">Berilgan sana</h6>
+            <h6 class="mb-2 pl-2 text-500">Berilgan sana</h6>
             <Calendar
-              class="w-full"
+            class="w-full font-semibold"
               :manualInput="true"
               id="passportDate"
               v-model="v$.passportDate.$model"
@@ -305,139 +309,149 @@
               :showButtonBar="true"
             />
           </div>
-        </div>
-      </div>
-
-      <!-- Position information details -->
-      <div class="col-12 mb-4 border-1 border-300 border-round-sm py-4">
-        <div class="grid xl:px-4 xl:mx-4 lg:px-2 xl:mx-2">
-          <div class="col-12 text-left text-lg font-medium uppercase mb-4">
-            Lavozim ma'lumotlari
-          </div>
 
           <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
-            <h6 class="mb-2 pl-2">Lavozim sanasi</h6>
+            <h6 class="mb-2 pl-2 text-500">Telefon raqam</h6>
+            <InputText
+              type="text"
+              class="w-full font-semibold"
+              placeholder="Raqamni kiriting"
+              id="employeePhone"
+              v-model="v$.employeePhone.$model"
+              v-maska="'(##)-###-##-##'"
+              :class="{
+                'p-invalid': v$.employeePhone.$invalid && submitted,
+              }"
+            />
+          </div>
+          <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
+            <h6 class="mb-2 pl-2 text-500">Qachondan beri ishlaydi(O'TY)</h6>
             <Calendar
-              class="w-full"
+            class="w-full font-semibold"
               :manualInput="true"
-              id="positionDate"
-              v-model="v$.positionDate.$model"
-              :class="{ 'p-invalid': v$.positionDate.$invalid && submitted }"
+              id="passportDate"
+              v-model="v$.positionFirstDate.$model"
+              :class="{
+                'p-invalid': v$.positionFirstDate.$invalid && submitted,
+              }"
               v-maska="'##/##/####'"
               placeholder="Sanani tanlang"
               dateFormat="dd/mm/yy"
               :showButtonBar="true"
             />
           </div>
-          <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
-            <h6 class="mb-2 pl-2">Bo'lim nomi</h6>
+          <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-1">
+            <h6 class="mb-2 pl-2 text-500">Jinsi</h6>
             <Dropdown
-              id="positionPart"
-              v-model="v$.positionPart.$model"
-              :class="{ 'p-invalid': v$.positionPart.$invalid && submitted }"
-              :options="FactoryPart"
-              optionLabel="name"
-              :filter="true"
-              placeholder="Bo'limni tanlang"
-              :showClear="true"
-              class="w-full"
-            >
-              <template #value="slotProps">
-                <div
-                  class="country-item country-item-value"
-                  v-if="slotProps.value"
-                >
-                  <div>{{ slotProps.value.name }}</div>
-                </div>
-                <span v-else>
-                  {{ slotProps.placeholder }}
-                </span>
-              </template>
-              <template #option="slotProps">
-                <div class="country-item">
-                  <div>{{ slotProps.option.name }}</div>
-                </div>
-              </template>
-            </Dropdown>
-          </div>
-          <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
-            <h6 class="mb-2 pl-2">Shtat lavozimi</h6>
-            <Dropdown
-              id="positionName"
-              v-model="v$.positionName.$model"
-              :class="{ 'p-invalid': v$.positionName.$invalid && submitted }"
-              :options="FactoryTitle"
-              optionLabel="name"
-              :filter="true"
-              placeholder="Shtat lavozimni tanlang"
-              :showClear="true"
-              class="w-full"
-            >
-              <template #value="slotProps">
-                <div
-                  class="country-item country-item-value"
-                  v-if="slotProps.value"
-                >
-                  <div>{{ slotProps.value.name }}</div>
-                </div>
-                <span v-else>
-                  {{ slotProps.placeholder }}
-                </span>
-              </template>
-              <template #option="slotProps">
-                <div class="country-item">
-                  <div>{{ slotProps.option.name }}</div>
-                </div>
-              </template>
-            </Dropdown>
-          </div>
-          <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
-            <h6 class="mb-2 pl-2">Ish stavkasi</h6>
-            <Dropdown
-              id="positionAmount"
-              v-model="v$.positionAmount.$model"
+              id="employeeGender"
+              v-model="v$.employeeGender.$model"
               :class="{
-                'p-invalid': v$.positionAmount.$invalid && submitted,
+                'p-invalid': v$.employeeGender.$invalid && submitted,
               }"
-              :options="FactoryAmount"
+              :options="genderList"
               optionLabel="name"
-              placeholder="Stavkani tanlang"
-              class="w-full"
+              optionValue="id"
+              placeholder="Jinsini tanlang"
+              class="w-full font-semibold"
             />
           </div>
-          <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
-            <h6 class="mb-2 pl-2">Birinchi lavozim sanasi (O'TY)</h6>
-            <Calendar
-              class="w-full"
-              :manualInput="true"
-              id="positionFirstDate"
-              v-model="v$.positionFirstDate.$model"
-              :class="{
-                'p-invalid': v$.positionFirstDate.$invalid && submitted,
-              }"
-              dateFormat="dd/mm/yy"
-              v-maska="'##/##/####'"
-              placeholder="Sanani tanlang"
-            />
-          </div>
-          <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
-            <h6 class="mb-2 pl-2">Xizmat darajasi</h6>
+          <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-2">
+            <h6 class="mb-2 pl-2 text-500">Xizmat darajasi</h6>
             <Dropdown
-              id="positionDegree"
+              id="employeeGender"
               v-model="v$.positionDegree.$model"
               :class="{
                 'p-invalid': v$.positionDegree.$invalid && submitted,
               }"
-              :options="FactoryDegree"
+              :options="workLevel"
               optionLabel="name"
-              placeholder="Darajani tanlang"
-              class="w-full"
+              optionValue="id"
+              placeholder="Jinsini tanlang"
+              class="w-full font-semibold"
             />
           </div>
         </div>
       </div>
 
+      <!-- Position information details -->
+      <div class="col-12 mb-4 border-1 border-300 border-round-sm py-4">
+        <div class="grid xl:px-4 xl:mx-4 lg:px-2 xl:mx-2">
+          <!-- <div class="col-12 text-left text-lg font-medium uppercase mb-4">
+            Lavozim ma'lumotlari
+          </div> -->
+          <div class="col-12">
+            <div class="w-full overflow-x-auto">
+              <table class="w-full" style="min-width: 900px">
+                <tr>
+                  <td
+                    width="10%"
+                    class="uppercase text-base font-semibold text-center"
+                    style="min-width: 10%"
+                  >
+                    Sana
+                  </td>
+                  <td
+                    width="60%"
+                    class="uppercase text-base font-semibold"
+                    style="min-width: 60%"
+                  >
+                    Lavozim nomi
+                  </td>
+                  <td
+                    width="5%"
+                    class="uppercase text-base font-semibold text-center"
+                    style="min-width: 5%"
+                  >
+                    Stavka
+                  </td>
+                  <td
+                    width="10%"
+                    class="uppercase text-base font-semibold text-center"
+                    style="min-width: 10%"
+                  >
+                    Faoliyat turi
+                  </td>
+                  <td
+                    width="10%"
+                    class="uppercase text-base font-semibold text-center"
+                    style="min-width: 10%"
+                  ></td>
+                </tr>
+                <tbody class="pt-4">
+                  <tr
+                    v-for="item in stuffList"
+                    :key="item.id"
+                    class="border-1 border-300 my-1 w-full"
+                  >
+                    <td class="text-lg font-semibold text-blue-600 text-center">
+                      {{ item.staff_date }}
+                    </td>
+                    <td class="text-lg font-semibold text-blue-600 text-left">
+                      {{ item.staff_full }}
+                    </td>
+                    <td class="text-lg font-semibold text-blue-600 text-center">
+                      {{ item.stavka }}
+                    </td>
+                    <td class="text-lg font-semibold text-blue-600 text-center">
+                      {{ item.staff_status }}
+                    </td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="col-12">
+        <input
+          v-show="false"
+          type="file"
+          ref="file"
+          @change="uploadImage($event)"
+          accept="image/*"
+        />
         <Dialog
           v-model:visible="cropperDialog"
           :style="{ width: '380px' }"
@@ -468,7 +482,7 @@
               />
               <Button
                 label="Tasdiqlash"
-                @click="cropImage()"
+                @click="uploadAvatar()"
                 class="p-button-secondary p-button-sm"
                 autofocus
               />
@@ -480,29 +494,20 @@
   </div>
 </template>
 <script>
-  import default_avatar from '@/assets/avatar/default_avatar.png'
+  import ProgressBarLoader from '../loaders/ProgressBarLoader.vue'
+import default_avatar from "@/assets/avatar/default_avatar.png";
 import { Cropper } from "vue-advanced-cropper";
 import "vue-advanced-cropper/dist/style.css";
 import { globalValidate } from "../../validation/vuevalidate";
-import {
-  Regions,
-  Districts,
-  Genders,
-  Nations,
-  Languages,
-  FactoryPart,
-  FactoryTitle,
-  FactoryDegree,
-  FactoryAmount,
-  AcademicDegree,
-  Party,
-} from "../../enum/enums.js";
+import employeeService from "../../service/servises/employeeService";
+import organizationsService from "../../service/servises/organizationsService";
 import { minLength, required } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
 
 export default {
   components: {
     Cropper,
+    ProgressBarLoader,
   },
   setup: () => ({ v$: useVuelidate() }),
 
@@ -531,39 +536,54 @@ export default {
       passportRegion: null,
       passportDistrict: null,
       passportDate: "",
-
-      positionDate: "",
-      positionPart: null,
-      positionName: null,
-      positionAmount: "",
+      employeePhone: null,
       positionFirstDate: "",
       positionDegree: null,
 
-      academic: null,
-      academicDegree: null,
-      academicTitle: null,
-      employeeNation: null,
-      employeeLanguage: null,
-      employeeParty: null,
       employeeGender: null,
       employeePhone: "",
-      employeeMilitaryTitle: "",
-      employeeSelectedOrgan: "",
+
+
+      regionList: [],
+      districtList: [],
+      departmentList: [],
+      stuffList: [],
+      workLevel:[],
+
+      cadry:{
+        last_name:null,
+        first_name:null,
+        middle_name:null,
+        birth_date:null,
+        birth_region_id:null,
+        birth_city_id:null,
+        address_region_id:null,
+        address_city_id:null,
+        address:null,
+        pass_region_id:null,
+        pass_city_id:null,
+        pass_date:null,
+        passport:null,
+        jshshir:null,
+        sex:null,
+        phone:null,
+        worklevel_id:null,
+        job_date:null,
+      },
 
       submitted: false,
-      displayResponsive: false,
-      succesDialog: false,
-      Regions,
-      Districts,
-      Genders,
-      Nations,
-      Languages,
-      FactoryPart,
-      FactoryTitle,
-      FactoryDegree,
-      FactoryAmount,
-      AcademicDegree,
-      Party,
+      genderList:[
+        {
+          name:"Erkak",
+          id:1
+        },
+        {
+          name:"Ayol",
+          id:0
+        }
+      ],
+
+      barLoader:false,
     };
   },
 
@@ -584,81 +604,172 @@ export default {
       passportRegion: globalValidate.passportRegion,
       passportDistrict: globalValidate.passportDistrict,
       passportDate: globalValidate.passportDate,
+      employeePhone: globalValidate.employeePhone,
+      employeeGender: globalValidate.employeeGender,
 
-      positionDate: globalValidate.positionDate,
-      positionPart: globalValidate.positionPart,
-      positionName: globalValidate.positionName,
-      positionAmount: globalValidate.positionAmount,
       positionFirstDate: globalValidate.positionFirstDate,
       positionDegree: globalValidate.positionDegree,
 
-      academic: globalValidate.academic,
-      academicDegree: globalValidate.academicDegree,
-      academicTitle: globalValidate.academicTitle,
-      employeeNation: globalValidate.employeeNation,
-      employeeLanguage: globalValidate.employeeLanguage,
-      employeeParty: globalValidate.employeeParty,
-      employeeGender: globalValidate.employeeGender,
-      employeePhone: globalValidate.employeePhone,
-      employeeMilitaryTitle: globalValidate.employeeMilitaryTitle,
-      employeeSelectedOrgan: globalValidate.employeeSelectedOrgan,
     };
   },
 
+  created() {
+    this.getEmployee(this.$route.params.id);
+    this.get_Region();
+    this.get_District();
+    this.getWorkLevel()
+  },
+
   methods: {
-    handleSubmit(isFormValid) {
+    // get cadry details
+    getEmployee(id) {
+      this.controlLoader(true)
+      employeeService.get_employeeDetails({ id }).then((res) => {
+        let cadry = res.data.cadry;
+        this.defaulAvatar = cadry.photo;
+        this.firstName = cadry.first_name;
+        this.lastName = cadry.last_name;
+        this.thirdName = cadry.middle_name;
+        this.bornDate = this.dateFormat(cadry.birth_date);
+        this.bornRegion =cadry.address_region_id.id
+        this.bornDistric = cadry.birth_city_id;
+        this.cadry.birth_city_id = cadry.birth_city_id.id;
+        this.adressRegion = cadry.address_region_id.id;
+        this.adressDistrict = cadry.address_city_id;
+        this.cadry.address_city_id = cadry.address_city_id.id;
+        this.adressStreet = cadry.address;
+        this.passportSeriya = cadry.passport;
+        this.passportJSHR = cadry.jshshir;
+        this.passportRegion = cadry.pass_region_id.id;
+        this.passportDistrict = cadry.pass_city_id;
+        this.cadry.pass_city_id = cadry.pass_city_id.id;
+        this.passportDate = this.dateFormat(cadry.pass_date)
+        this.positionFirstDate = this.dateFormat(cadry.job_date)
+        this.positionDegree = cadry.worklevel_id.id;
+        
+        this.employeePhone = cadry.phone
+        this.employeeGender = cadry.sex
+
+        this.stuffList = cadry.allStaffs;
+
+        this.controlLoader(false)
+      }).catch((error)=>{
+        console.log(error);
+        this.controlLoader(false)
+      })
+    },
+
+    updateEmployee(isFormValid){
+      this.cadry.first_name = this.firstName;
+      this.cadry.last_name = this.lastName;
+      this.cadry.middle_name = this.thirdName;
+      this.cadry.birth_date = this.bornDate;
+      this.cadry.birth_region_id = this.bornRegion;
+      this.cadry.address_region_id = this.adressRegion;
+      this.cadry.address = this.adressStreet;
+      this.cadry.pass_region_id = this.passportRegion;
+      this.cadry.pass_date = this.passportDate;
+      this.cadry.passport = this.passportSeriya;
+      this.cadry.jshshir = this.passportJSHR;
+      this.cadry.sex = this.employeeGender;
+      this.cadry.phone = this.employeePhone;
+      this.cadry.worklevel_id = this.positionDegree;
+      this.cadry.job_date = this.positionFirstDate;
       this.submitted = true;
       console.log(isFormValid);
       if (!isFormValid) {
-        return;
+        console.table(this.cadry);
       }
-
-      this.toggleDialog();
     },
+
+    // get region list
+    get_Region() {
+      organizationsService
+        .getRegions()
+        .then((res) => {
+          this.regionList = res.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    // get district list
+    get_District() {
+      organizationsService
+        .getDistricts()
+        .then((res) => {
+          this.districtList = res.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    getWorkLevel(){
+      employeeService.get_workLevel().then((res)=>{
+        this.workLevel = res.data
+      }).catch((error)=>{
+        console.log(error);
+      })
+    },
+
     goPush() {
       this.$router.push("/admin/partemployee");
     },
-    controlDialog() {
-      this.displayResponsive = !this.displayResponsive;
+    changeBornDistrict(event){
+      this.cadry.birth_city_id = event.value.id
     },
-    controlSuccessDialog() {
-      this.succesDialog = !this.succesDialog;
+    changeadressDistrict(event){
+      this.cadry.address_city_id = event.value.id
     },
-    toggleDialog() {
-      this.showMessage = !this.showMessage;
-
-      if (!this.showMessage) {
-        this.resetForm();
-      }
+    changePassDistrict(event){
+      this.cadry.pass_city_id = event.value.id
     },
-    resetForm() {
-      this.name = "";
-      this.email = "";
-      this.password = "";
-      this.date = null;
-      this.country = null;
-      this.accept = null;
-      this.submitted = false;
+    changeBornData(){
+      console.log(this.bornDate);
     },
 
-    cropImage() {
-      const result = this.$refs.cropper.getResult();
-      console.log(result);
-      this.defaulAvatar = result.canvas.toDataURL();
-      // const newTab = window.open();
-      // newTab.document.body.innerHTML = `<img src="${result.canvas.toDataURL(
-      //   this.image.type
-      // )}"></img>`;
+    
+   
+    
+
+    uploadAvatar() {
+      let id = this.$route.params.id 
+
+      this.$refs.cropper.getResult().canvas.toBlob(function (blob) {
+        console.log(blob);
+        let form = new FormData();
+        form.append("photo", blob);
+        
+        employeeService
+          .get_employeeAvatar({ id:id , form: form })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
     },
+
+
+
     controlCopper(item) {
       this.cropperDialog = item;
+    },
+    dateFormat(time){
+      let date = time.toString().split("-");
+      let newFormatDate = new Date(date[0], date[1], date[2])
+      console.log(newFormatDate);
+      return newFormatDate;
+
     },
 
     uploadImage(event) {
       /// Reference to the DOM input element
 
-     
-        const { files } = event.target;
+      const { files } = event.target;
       // Ensure that you have a file before attempting to read it
       if (files && files[0]) {
         // 1. Revoke the object URL, to allow the garbage collector to destroy the uploaded before file
@@ -674,17 +785,18 @@ export default {
           type: files[0].type,
         };
         this.cropperDialog = true;
-       
-
-       
       }
     },
-  },
-  unmounted() {
-    if (this.image.src) {
-      URL.revokeObjectURL(this.image.src);
+
+    controlLoader(item){
+      this.barLoader = item
     }
   },
+  // unmounted() {
+  //   // if (this.image.src) {
+  //   //   URL.revokeObjectURL(this.image.src);
+  //   // }
+  // },
 };
 </script>
 <style lang="scss">

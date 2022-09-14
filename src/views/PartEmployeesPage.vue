@@ -382,7 +382,7 @@
             >
               {{
                 slotProps.data.staff
-                  ? slotProps.data.staff.post_name
+                  ? slotProps.data.staff.staff_full
                   : `Tizimda ma'lumot yo'q`
               }}
             </div>

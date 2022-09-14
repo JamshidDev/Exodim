@@ -20,9 +20,14 @@ const getEducation = ()=>{
     return axios.get(`/api/filter/educations`)
 }
 
-const getRegions = ()=>{
-    return axios.get(`/api/filter/regions`)
+const getRegions = (payload)=>{
+    return axios.get(`/api/filter/regions`, {params:payload})
 }
+
+const getDistricts = ()=>{
+    return axios.get(`/api/filter/cities`)
+}
+
 
 const getVacations = ()=>{
     return axios.get(`/api/filter/vacations`)
@@ -30,4 +35,4 @@ const getVacations = ()=>{
 
 
 
-export default {get_Railway,get_Organization,getDepartment, get_Staffs, getEducation, getRegions, getVacations}
+export default {get_Railway,get_Organization,getDepartment, get_Staffs, getEducation, getRegions, getVacations, getDistricts}
