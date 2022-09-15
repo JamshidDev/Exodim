@@ -37,4 +37,6 @@ const get_employeeAvatar = (payload)=>{
 
 
 
+
+
 export default {get_Employees,get_Department,get_Stuffs,get_employeeDetails, get_employeeAvatar,update_empolyee,get_workLevel}

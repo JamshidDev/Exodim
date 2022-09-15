@@ -20,6 +20,20 @@ const getEducation = ()=>{
     return axios.get(`/api/filter/educations`)
 }
 
+const getacademikDegree = ()=>{
+    return axios.get(`/api/filter/academicDegree`)
+}
+
+const getacademikTitles = ()=>{
+    return axios.get(`/api/filter/academicTitlies`)
+}
+
+const getNationality = ()=>{
+    return axios.get(`/api/filter/nationalities`)
+}
+
+
+
 const getRegions = (payload)=>{
     return axios.get(`/api/filter/regions`, {params:payload})
 }
@@ -35,4 +49,4 @@ const getVacations = ()=>{
 
 
 
-export default {get_Railway,get_Organization,getDepartment, get_Staffs, getEducation, getRegions, getVacations, getDistricts}
+export default {get_Railway,get_Organization,getDepartment, get_Staffs, getEducation, getRegions, getVacations, getDistricts, getacademikDegree,getacademikTitles, getNationality}

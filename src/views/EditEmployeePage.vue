@@ -10,42 +10,50 @@
               class="p-button-secondary p-button-rounded p-button-sm"
               v-tooltip.right="`Orqaga`"
             />
-            <div
-              class="
-                uppercase
-                pl-2
-                text-xl text-center
-                font-semibold
-                xl:inline-block
-                hidden
-              "
+            <SelectButton
+              v-model="live_router"
+              :options="routerList"
+              optionLabel="name"
+              dataKey="value"
+              @change="changeRouter"
+              class="hidden xl:inline-block lg:inline-block md:inline-block"
             >
-              Xodim ma'lumotlari tahrirlash
-            </div>
+              <template #option="slotProps">
+                <i :class="[slotProps.option.value==live_router.value? 'text-white' : 'text-blue-600', slotProps.option.icon, 'text-sm  xl:hidden' ]"></i>
+                <div class="text-base uppercase font-semibold xl:inline-block hidden" :class="[slotProps.option.value==live_router.value? 'text-white' : 'text-blue-600']">
+                  {{ slotProps.option.name }}
+                </div>
+              </template>
+            </SelectButton>
             <Button
               icon="pi pi-sync"
               @click="handleSubmit(!v$.$invalid)"
-              class="p-button-secondary p-button-sm"
+              class="p-button-secondary "
               label="Lotin"
               v-tooltip.bottom="`Ma'lumotlarni lotinchaga o'girish`"
             />
           </div>
-        </div>
-        <div class="col-12 mb-2 xl:hidden">
-          <h6 class="uppercase pl-2 text-xl text-center font-semibold">
-            Xodim ma'lumotlari tahrirlash
-          </h6>
+          <div class="col-12 flex justify-content-center xl:hidden lg:hidden md:hidden">
+            <SelectButton
+              v-model="live_router"
+              :options="routerList"
+              optionLabel="name"
+              dataKey="value"
+              @change="changeRouter"
+            >
+              <template #option="slotProps">
+                <i :class="[slotProps.option.value==live_router.value? 'text-white' : 'text-blue-600', slotProps.option.icon, 'text-sm lg:text-lg md:text-lg  xl:hidden' ]"></i>
+                <div class="text-base uppercase font-semibold xl:inline-block hidden" :class="[slotProps.option.value==live_router.value? 'text-white' : 'text-blue-600']">
+                  {{ slotProps.option.name }}
+                </div>
+              </template>
+            </SelectButton>
+          </div>
         </div>
 
-        
-
-        <div class=" col-12 pt-0">
+        <div class="col-12 pt-0">
           <router-view
             v-slot="{ Component }"
-            :formData="formObject"
-            @prevPage="prevPage($event)"
-            @nextPage="nextPage($event)"
-            @complete="complete"
           >
             <keep-alive>
               <component :is="Component" />
@@ -57,61 +65,99 @@
   </div>
 </template>
 <script>
+
 export default {
   data() {
     return {
-      items: [
+      live_router:{
+          icon: "pi pi-align-left",
+          value: "1",
+          name: "Shaxsiy ma'lumotlar",
+        },
+      routerList: [
         {
-          label: "Shaxsiy ma'lumotlar",
-          to: "/admin/editemployee/1",
+          route: "",
+          value: "1",
+          name: "Shaxsiy ma'lumotlar",
+          icon: "pi pi-home",
         },
         {
-          label: "Malumoti",
-          to: "/admin/editemployee/1/two",
+          route: "two",
+          value: "2",
+          name: "Ma'lumoti",
+          icon: "pi pi-briefcase",
         },
         {
-          label: "Mehnat faoliyati",
-          to: "/admin/editemployee/1/three",
+          route: "three",
+          value: "3",
+          name: "Faoliyati",
+          icon: "pi pi-align-left",
         },
         {
-          label: "Yaqin qarindoshlari",
-          to: "/admin/editemployee/1/four",
+          route: "four",
+          value: "4",
+          name: "Qarindoshlari",
+          icon: "pi pi-users",
         },
         {
-          label: "Qo'shimacha ma'lumotlar",
-          to: "/admin/editemployee/1/five",
+          route: "five",
+          value: "5",
+          name: "Qo'shimcha",
+          icon: "pi pi-bars",
         },
       ],
-      formObject: {},
     };
   },
   methods: {
     goPush() {
       this.$router.push("/admin/partemployee");
     },
-    nextPage(event) {
-      for (let field in event.formData) {
-        this.formObject[field] = event.formData[field];
+    changeRouter(event){
+      let id = this.$route.params.id
+      this.$router.push(`/admin/editemployee/${id}/${this.live_router.route}`)
+    },
+    ActiveRouter(name){
+      if(name=='details-one'){
+        this.live_router =  {
+          route: "",
+          value: "1",
+          name: "Shaxsiy ma'lumotlar",
+          icon: "pi pi-home",
+        }
+      }else if(name=='details-two'){
+        this.live_router =  {
+          route: "two",
+          value: "2",
+          name: "Ma'lumoti",
+          icon: "pi pi-briefcase",
+        }
+      }else if(name=='details-three'){
+        this.live_router =  {
+          route: "three",
+          value: "3",
+          name: "Faoliyati",
+          icon: "pi pi-align-left",
+        }
+      }else if(name=='details-four'){
+        this.live_router =  {
+          route: "four",
+          value: "4",
+          name: "Qarindoshlari",
+          icon: "pi pi-users",
+        }
+      }else if(name=='details-five'){
+        this.live_router =  {
+          route: "five",
+          value: "5",
+          name: "Qo'shimcha",
+          icon: "pi pi-bars",
+        }
       }
-
-      this.$router.push(this.items[event.pageIndex + 1].to);
-    },
-    prevPage(event) {
-      this.$router.push(this.items[event.pageIndex - 1].to);
-    },
-    complete() {
-      this.$toast.add({
-        severity: "success",
-        summary: "Order submitted",
-        detail:
-          "Dear, " +
-          this.formObject.firstname +
-          " " +
-          this.formObject.lastname +
-          " your order completed.",
-      });
-    },
+    }
   },
+  mounted(){
+    this.ActiveRouter(this.$route.name)
+  }
 };
 </script>
 <style lang="">

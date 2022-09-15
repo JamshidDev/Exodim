@@ -97,7 +97,6 @@
                 dateFormat="dd/mm/yy"
                 :showButtonBar="true"
                 placeholder="Sanani tanlang"
-                @date-select="changeBornData"
               />
             </div>
             <div class="col-12">

@@ -59,6 +59,7 @@ import ContextMenu from 'primevue/contextmenu';
 import Paginator from 'primevue/paginator';
 import ScrollPanel from 'primevue/scrollpanel';
 import ProgressSpinner from 'primevue/progressspinner';
+import SelectButton from 'primevue/selectbutton';
 
 
 
@@ -141,6 +142,8 @@ app.component('ContextMenu', ContextMenu);
 app.component('Paginator', Paginator);
 app.component('ScrollPanel', ScrollPanel);
 app.component('ProgressSpinner', ProgressSpinner);
+app.component('SelectButton', SelectButton);
+
 
 
 
