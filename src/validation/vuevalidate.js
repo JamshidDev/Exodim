@@ -104,6 +104,7 @@ academic:{
   },
   employeePhone:{
     required,
+    minLength: minLength(14),
   },
   employeeMilitaryTitle:{
     required,

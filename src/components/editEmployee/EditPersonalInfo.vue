@@ -1,9 +1,10 @@
 <template>
-  
   <div class="grid card py-4 px-3" v-if="barLoader">
-    <progress-bar-loader></progress-bar-loader>
+    <div class="col-12">
+      <progress-bar-loader></progress-bar-loader>
+    </div>
   </div>
-  <div v-if="!barLoader" class="grid card py-4 px-3">
+  <div v-if="!barLoader" class="grid card surface-0 py-4">
     <div class="col-12">
       <div class="flex justify-content-end">
         <Button
@@ -50,9 +51,9 @@
                 class="w-full font-semibold"
                 placeholder="Familiyani kiriting"
                 id="firstName"
-                v-model="v$.firstName.$model"
+                v-model="v$.lastName.$model"
                 v-maska="'S*'"
-                :class="{ 'p-invalid': v$.firstName.$invalid && submitted }"
+                :class="{ 'p-invalid': v$.lastName.$invalid && submitted }"
               />
             </div>
             <div class="col-12">
@@ -62,9 +63,9 @@
                 class="w-full font-semibold"
                 placeholder="Ismni kiriting"
                 id="lastName"
-                v-model="v$.lastName.$model"
+                v-model="v$.firstName.$model"
                 v-maska="'S*'"
-                :class="{ 'p-invalid': v$.lastName.$invalid && submitted }"
+                :class="{ 'p-invalid': v$.firstName.$invalid && submitted }"
               />
             </div>
             <div class="col-12">
@@ -87,7 +88,7 @@
             <div class="col-12">
               <h6 class="mb-2 pl-2 text-500">Tug'ilgan sanasi (kun-oy-yil)</h6>
               <Calendar
-              class="w-full font-semibold"
+                class="w-full font-semibold"
                 :manualInput="true"
                 id="bornDate"
                 v-model="v$.bornDate.$model"
@@ -110,7 +111,6 @@
                 optionValue="id"
                 placeholder="Viloyatni tanlang"
                 class="w-full font-semibold"
-               
               />
             </div>
             <div class="col-12 p-fluid">
@@ -179,10 +179,7 @@
                 @change="changeadressDistrict"
               >
                 <template #value="slotProps">
-                  <div
-                  
-                    v-if="slotProps.value"
-                  >
+                  <div v-if="slotProps.value">
                     <div>{{ slotProps.value.name }}</div>
                   </div>
                   <span v-else>
@@ -298,7 +295,7 @@
           <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
             <h6 class="mb-2 pl-2 text-500">Berilgan sana</h6>
             <Calendar
-            class="w-full font-semibold"
+              class="w-full font-semibold"
               :manualInput="true"
               id="passportDate"
               v-model="v$.passportDate.$model"
@@ -311,6 +308,22 @@
           </div>
 
           <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
+            <h6 class="mb-2 pl-2 text-500">Qachondan beri ishlaydi(O'TY)</h6>
+            <Calendar
+              class="w-full font-semibold"
+              :manualInput="true"
+              id="passportDate"
+              v-model="v$.positionFirstDate.$model"
+              :class="{
+                'p-invalid': v$.positionFirstDate.$invalid && submitted,
+              }"
+              v-maska="'##/##/####'"
+              placeholder="Sanani tanlang"
+              dateFormat="dd/mm/yy"
+              :showButtonBar="true"
+            />
+          </div>
+          <div class="col-12 sm:col-12 md:col-4 lg:col-2 xl:col-2">
             <h6 class="mb-2 pl-2 text-500">Telefon raqam</h6>
             <InputText
               type="text"
@@ -324,23 +337,7 @@
               }"
             />
           </div>
-          <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
-            <h6 class="mb-2 pl-2 text-500">Qachondan beri ishlaydi(O'TY)</h6>
-            <Calendar
-            class="w-full font-semibold"
-              :manualInput="true"
-              id="passportDate"
-              v-model="v$.positionFirstDate.$model"
-              :class="{
-                'p-invalid': v$.positionFirstDate.$invalid && submitted,
-              }"
-              v-maska="'##/##/####'"
-              placeholder="Sanani tanlang"
-              dateFormat="dd/mm/yy"
-              :showButtonBar="true"
-            />
-          </div>
-          <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-1">
+          <div class="col-12 sm:col-12 md:col-4 lg:col-2 xl:col-2">
             <h6 class="mb-2 pl-2 text-500">Jinsi</h6>
             <Dropdown
               id="employeeGender"
@@ -355,7 +352,7 @@
               class="w-full font-semibold"
             />
           </div>
-          <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-2">
+          <div class="col-12 sm:col-12 md:col-4 lg:col-2 xl:col-2">
             <h6 class="mb-2 pl-2 text-500">Xizmat darajasi</h6>
             <Dropdown
               id="employeeGender"
@@ -494,11 +491,12 @@
   </div>
 </template>
 <script>
-  import ProgressBarLoader from '../loaders/ProgressBarLoader.vue'
+import ProgressBarLoader from "../loaders/ProgressBarLoader.vue";
+import formatter from "../../util/formatter.js";
 import default_avatar from "@/assets/avatar/default_avatar.png";
 import { Cropper } from "vue-advanced-cropper";
 import "vue-advanced-cropper/dist/style.css";
-import { globalValidate } from "../../validation/vuevalidate";
+import { globalValidate } from "../../validation/vuevalidate.js";
 import employeeService from "../../service/servises/employeeService";
 import organizationsService from "../../service/servises/organizationsService";
 import { minLength, required } from "@vuelidate/validators";
@@ -543,47 +541,47 @@ export default {
       employeeGender: null,
       employeePhone: "",
 
-
       regionList: [],
       districtList: [],
       departmentList: [],
       stuffList: [],
-      workLevel:[],
+      workLevel: [],
+      fileName: null,
 
-      cadry:{
-        last_name:null,
-        first_name:null,
-        middle_name:null,
-        birth_date:null,
-        birth_region_id:null,
-        birth_city_id:null,
-        address_region_id:null,
-        address_city_id:null,
-        address:null,
-        pass_region_id:null,
-        pass_city_id:null,
-        pass_date:null,
-        passport:null,
-        jshshir:null,
-        sex:null,
-        phone:null,
-        worklevel_id:null,
-        job_date:null,
+      cadry: {
+        last_name: null,
+        first_name: null,
+        middle_name: null,
+        birth_date: null,
+        birth_region_id: null,
+        birth_city_id: null,
+        address_region_id: null,
+        address_city_id: null,
+        address: null,
+        pass_region_id: null,
+        pass_city_id: null,
+        pass_date: null,
+        passport: null,
+        jshshir: null,
+        sex: null,
+        phone: null,
+        worklevel_id: null,
+        job_date: null,
       },
 
       submitted: false,
-      genderList:[
+      genderList: [
         {
-          name:"Erkak",
-          id:1
+          name: "Erkak",
+          id: 1,
         },
         {
-          name:"Ayol",
-          id:0
-        }
+          name: "Ayol",
+          id: 0,
+        },
       ],
 
-      barLoader:false,
+      barLoader: false,
     };
   },
 
@@ -609,7 +607,6 @@ export default {
 
       positionFirstDate: globalValidate.positionFirstDate,
       positionDegree: globalValidate.positionDegree,
-
     };
   },
 
@@ -617,68 +614,84 @@ export default {
     this.getEmployee(this.$route.params.id);
     this.get_Region();
     this.get_District();
-    this.getWorkLevel()
+    this.getWorkLevel();
   },
 
   methods: {
     // get cadry details
     getEmployee(id) {
-      this.controlLoader(true)
-      employeeService.get_employeeDetails({ id }).then((res) => {
-        let cadry = res.data.cadry;
-        this.defaulAvatar = cadry.photo;
-        this.firstName = cadry.first_name;
-        this.lastName = cadry.last_name;
-        this.thirdName = cadry.middle_name;
-        this.bornDate = this.dateFormat(cadry.birth_date);
-        this.bornRegion =cadry.address_region_id.id
-        this.bornDistric = cadry.birth_city_id;
-        this.cadry.birth_city_id = cadry.birth_city_id.id;
-        this.adressRegion = cadry.address_region_id.id;
-        this.adressDistrict = cadry.address_city_id;
-        this.cadry.address_city_id = cadry.address_city_id.id;
-        this.adressStreet = cadry.address;
-        this.passportSeriya = cadry.passport;
-        this.passportJSHR = cadry.jshshir;
-        this.passportRegion = cadry.pass_region_id.id;
-        this.passportDistrict = cadry.pass_city_id;
-        this.cadry.pass_city_id = cadry.pass_city_id.id;
-        this.passportDate = this.dateFormat(cadry.pass_date)
-        this.positionFirstDate = this.dateFormat(cadry.job_date)
-        this.positionDegree = cadry.worklevel_id.id;
-        
-        this.employeePhone = cadry.phone
-        this.employeeGender = cadry.sex
+      this.controlLoader(true);
+      employeeService
+        .get_employeeDetails({ id })
 
-        this.stuffList = cadry.allStaffs;
+        .then((res) => {
+          console.table(res.data.cadry);
+          let cadry = res.data.cadry;
+          this.defaulAvatar = cadry.photo;
+          this.firstName = cadry.first_name;
+          this.lastName = cadry.last_name;
+          this.thirdName = cadry.middle_name;
+          this.bornDate = formatter.interDateFormatter(cadry.birth_date);
+          this.bornRegion = cadry.address_region_id.id;
+          this.bornDistric = cadry.birth_city_id;
+          this.cadry.birth_city_id = cadry.birth_city_id.id;
+          this.adressRegion = cadry.address_region_id.id;
+          this.adressDistrict = cadry.address_city_id;
+          this.cadry.address_city_id = cadry.address_city_id.id;
+          this.adressStreet = cadry.address;
+          this.passportSeriya = cadry.passport;
+          this.passportJSHR = cadry.jshshir;
+          this.passportRegion = cadry.pass_region_id.id;
+          this.passportDistrict = cadry.pass_city_id;
+          this.cadry.pass_city_id = cadry.pass_city_id.id;
+          this.passportDate = formatter.interDateFormatter(cadry.pass_date);
+          this.positionFirstDate = formatter.interDateFormatter(cadry.job_date);
+          formatter.outDateFormatter(cadry.job_date);
+          this.positionDegree = cadry.worklevel_id.id;
 
-        this.controlLoader(false)
-      }).catch((error)=>{
-        console.log(error);
-        this.controlLoader(false)
-      })
+          this.employeePhone = cadry.phone;
+          this.employeeGender = cadry.sex;
+
+          this.stuffList = cadry.allStaffs;
+
+          this.controlLoader(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          this.controlLoader(false);
+        });
     },
 
-    updateEmployee(isFormValid){
+
+    // update cadry details
+    updateEmployee(isFormValid) {
+      this.submitted = true;
       this.cadry.first_name = this.firstName;
       this.cadry.last_name = this.lastName;
       this.cadry.middle_name = this.thirdName;
-      this.cadry.birth_date = this.bornDate;
+      this.cadry.birth_date = formatter.outDateFormatter(this.bornDate);
       this.cadry.birth_region_id = this.bornRegion;
       this.cadry.address_region_id = this.adressRegion;
       this.cadry.address = this.adressStreet;
       this.cadry.pass_region_id = this.passportRegion;
-      this.cadry.pass_date = this.passportDate;
+      this.cadry.pass_date = formatter.outDateFormatter(this.passportDate);
       this.cadry.passport = this.passportSeriya;
       this.cadry.jshshir = this.passportJSHR;
       this.cadry.sex = this.employeeGender;
       this.cadry.phone = this.employeePhone;
       this.cadry.worklevel_id = this.positionDegree;
-      this.cadry.job_date = this.positionFirstDate;
-      this.submitted = true;
-      console.log(isFormValid);
-      if (!isFormValid) {
-        console.table(this.cadry);
+      this.cadry.job_date = formatter.outDateFormatter(this.positionFirstDate);
+      console.table(this.cadry);
+      if (isFormValid) {
+        employeeService
+          .update_empolyee({ id: this.$route.params.id, data: this.cadry })
+          .then((res) => {
+            this.getEmployee(this.$route.params.id);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        console.log(isFormValid);
       }
     },
 
@@ -706,41 +719,58 @@ export default {
         });
     },
 
-    getWorkLevel(){
-      employeeService.get_workLevel().then((res)=>{
-        this.workLevel = res.data
-      }).catch((error)=>{
-        console.log(error);
-      })
+    getWorkLevel() {
+      employeeService
+        .get_workLevel()
+        .then((res) => {
+          this.workLevel = res.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
 
     goPush() {
       this.$router.push("/admin/partemployee");
     },
-    changeBornDistrict(event){
-      this.cadry.birth_city_id = event.value.id
+
+    changeBornDistrict(event) {
+      this.cadry.birth_city_id = event.value.id;
     },
-    changeadressDistrict(event){
-      this.cadry.address_city_id = event.value.id
+    changeadressDistrict(event) {
+      this.cadry.address_city_id = event.value.id;
     },
-    changePassDistrict(event){
-      this.cadry.pass_city_id = event.value.id
-    },
-    changeBornData(){
-      console.log(this.bornDate);
+    changePassDistrict(event) {
+      this.cadry.pass_city_id = event.value.id;
     },
 
-    
-   
-    
-
+    // upload avatar picture method
     uploadAvatar() {
-      let id = this.$route.params.id 
+      this.controlCopper(false);
+      let id = this.$route.params.id;
 
-      this.$refs.cropper.getResult().canvas.toBlob(function (blob) {
+      this.$refs.cropper.getResult().canvas.toBlob((blob) => {
         console.log(blob);
         let form = new FormData();
-        form.append("photo", blob);
+        form.append("photo", blob, "avatar.jpg");
+
+        employeeService
+          .get_employeeAvatar({ id: id, form: form })
+          .then((res) => {
+            console.log(res);
+            this.getEmployee(id);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+      /*
+let id = this.$route.params.id 
+      let name = this.fileName
+      this.$refs.cropper.getResult().canvas.toBlob( (blob)=> {
+        
+        let form = new FormData();
+        form.append("photo", blob, "JAmshid.jpg")
         
         employeeService
           .get_employeeAvatar({ id:id , form: form })
@@ -751,19 +781,11 @@ export default {
             console.log(error);
           });
       });
+      */
     },
-
-
 
     controlCopper(item) {
       this.cropperDialog = item;
-    },
-    dateFormat(time){
-      let date = time.toString().split("-");
-      let newFormatDate = new Date(date[0], date[1], date[2])
-      console.log(newFormatDate);
-      return newFormatDate;
-
     },
 
     uploadImage(event) {
@@ -788,9 +810,9 @@ export default {
       }
     },
 
-    controlLoader(item){
-      this.barLoader = item
-    }
+    controlLoader(item) {
+      this.barLoader = item;
+    },
   },
   // unmounted() {
   //   // if (this.image.src) {

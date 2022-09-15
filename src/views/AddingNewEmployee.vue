@@ -868,7 +868,7 @@ export default {
   },
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .employee-avatar-box {
   width: 100%;
   display: flex;

@@ -1,5 +1,14 @@
 <template >
   <div class="grid card surface-0 shadow-1 py-4 px-3">
+    <div class="col-12 flex justify-content-end">
+      <Button
+              icon="pi pi-plus"
+              @click="goNewPush()"
+              class="p-button-info p-button-sm"
+              label="Xodim qo'shish"
+              v-tooltip.bottom="`Yangi xodim qo'shish`"
+            />
+    </div>
     <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3 p-fluid">
       <InputText
         type="text"
@@ -361,6 +370,7 @@
                 cursor-pointer
                 uppercase
               "
+              v-tooltip.bottom="`Tahrirlash`"
               @click="goPush(slotProps.data.id)"
             >
               <div>{{ slotProps.data.fullname }}</div>
@@ -640,6 +650,9 @@ export default {
 
     goPush(id){
       this.$router.push(`/admin/editemployee/${id}`)
+    },
+    goNewPush(){
+      this.$router.push("/admin/addnewemployee")
     },
 
     searchBtn() {

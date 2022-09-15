@@ -39,7 +39,7 @@
 
         
 
-        <div class="card pt-0">
+        <div class=" col-12 pt-0">
           <router-view
             v-slot="{ Component }"
             :formData="formObject"
