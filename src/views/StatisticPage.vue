@@ -693,7 +693,7 @@
                   "
                   @click="statisticShow(102)"
                 >
-                  Rag'batlantirilganlar
+                  Ilmiy darajali xodimlar
                 </div>
                 <div class="text-xl text-600 font-semibold pr-1">
                   <span class="text-yellow-500">00</span>/{{ allCadries }}
@@ -719,7 +719,7 @@
                   "
                   @click="statisticShow(102)"
                 >
-                  Rag'batlantirilganlar
+                Ilmiy unvonli xodimlar
                 </div>
                 <div class="text-xl text-600 font-semibold pr-1">
                   <span class="text-yellow-500">00</span>/{{ allCadries }}

@@ -112,6 +112,25 @@ academic:{
   employeeSelectedOrgan:{
     required,
   },
+
+  // University dialog validate
+  universityItemdate1:{
+    required,
+    minLength: minLength(4),
+  },
+  universityItemdate2:{
+    required,
+    minLength: minLength(4),
+  },
+  universityItemname:{
+    required,
+  },
+  universityItemspeciality:{
+    required,
+  },
+  
+
+
 };
 
 export default { globalValidate };

@@ -60,6 +60,7 @@ import Paginator from 'primevue/paginator';
 import ScrollPanel from 'primevue/scrollpanel';
 import ProgressSpinner from 'primevue/progressspinner';
 import SelectButton from 'primevue/selectbutton';
+import MultiSelect from 'primevue/multiselect';
 
 
 
@@ -143,6 +144,8 @@ app.component('Paginator', Paginator);
 app.component('ScrollPanel', ScrollPanel);
 app.component('ProgressSpinner', ProgressSpinner);
 app.component('SelectButton', SelectButton);
+app.component('MultiSelect', MultiSelect);
+
 
 
 

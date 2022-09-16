@@ -1,6 +1,7 @@
 <template >
   <div class="grid card py-4">
-    <div class="col-12 mb-4 py-4 mb-4">
+
+    <div class="col-12 pt-1 mb-2">
       <div class="grid">
         <div
           class="
@@ -8,7 +9,7 @@
             text-left text-base
             font-medium
             uppercase
-            mb-4
+            mb-2
             text-blue-600
           "
         >
@@ -21,10 +22,10 @@
               <h6 class="mb-2 pl-2 text-500">Malumoti</h6>
               <Dropdown
                 id="academic"
-                v-model="v$.academic.$model"
-                :class="{ 'p-invalid': v$.academic.$invalid && submitted }"
+                v-model="academic"
                 :options="educationList"
                 optionLabel="name"
+                optionValue="id"
                 placeholder="Malumoti tanlang"
                 class="w-full font-semibold"
               />
@@ -33,12 +34,10 @@
               <h6 class="mb-2 pl-2 text-500">Ilmiy darajasi</h6>
               <Dropdown
                 id="academicDegree"
-                v-model="v$.academicDegree.$model"
-                :class="{
-                  'p-invalid': v$.academicDegree.$invalid && submitted,
-                }"
+                v-model="academicDegree"
                 :options="academikDegreeList"
                 optionLabel="name"
+                optionValue="id"
                 placeholder="Darajani tanlang"
                 class="w-full font-semibold"
               />
@@ -52,12 +51,10 @@
               <h6 class="mb-2 pl-2 text-500">Ilmiy unvoni</h6>
               <Dropdown
                 id="academicTitle"
-                v-model="v$.academicTitle.$model"
-                :class="{
-                  'p-invalid': v$.academicTitle.$invalid && submitted,
-                }"
-                :options="academicTitle"
+                v-model="academicTitle"
+                :options="academikTitleList"
                 optionLabel="name"
+                optionValue="id"
                 placeholder="Unvonni tanlang"
                 class="w-full font-semibold"
               />
@@ -66,10 +63,9 @@
               <h6 class="mb-2 pl-2 text-500">Millati</h6>
               <Dropdown
                 id="employeeNation"
-                v-model="v$.employeeNation.$model"
-                :class="{
-                  'p-invalid': v$.employeeNation.$invalid && submitted,
-                }"
+                v-model="employeeNation"
+                optionValue="id"
+
                 :options="nationalList"
                 optionLabel="name"
                 placeholder="Millatni tanlang"
@@ -96,17 +92,8 @@
             </div>
             <div class="col-12">
               <h6 class="mb-2 pl-2 text-500">Chet tillari</h6>
-              <Dropdown
-                id="employeeLanguage"
-                v-model="v$.employeeLanguage.$model"
-                :class="{
-                  'p-invalid': v$.employeeLanguage.$invalid && submitted,
-                }"
-                :options="Languages"
-                optionLabel="name"
-                placeholder="Tilni tanlang"
-                class="w-full font-semibold"
-              />
+              <MultiSelect class="w-full font-semibold" v-model="employeeLanguage" :options="languagesList"  optionLabel="name" />
+             
             </div>
           </div>
         </div>
@@ -120,22 +107,17 @@
                 class="w-full font-semibold"
                 placeholder="Azoligini kiriting"
                 id="employeeSelectedOrgan"
-                v-model="v$.employeeSelectedOrgan.$model"
-                :class="{
-                  'p-invalid': v$.employeeSelectedOrgan.$invalid && submitted,
-                }"
+                v-model="employeeSelectedOrgan"
               />
             </div>
             <div class="col-12">
               <h6 class="mb-2 pl-2 text-500">Partiyaviyligi</h6>
               <Dropdown
                 id="employeeParty"
-                v-model="v$.employeeParty.$model"
-                :class="{
-                  'p-invalid': v$.employeeParty.$invalid && submitted,
-                }"
+                v-model="employeeParty"
                 :options="Party"
                 optionLabel="name"
+                optionValue="id"
                 placeholder="Partiyani tanlang"
                 class="w-full font-semibold"
               />
@@ -154,411 +136,311 @@
       </div>
     </div>
 
+
     <!-- Uneversity table -->
-    <div class="col-12 mb-4 py-4 px-0 flex justify-content-center">
-      <div class="col-12  px-0">
-        <DataTable
-          contextMenu
-          ref="dt"
-          :value="university"
-          v-model:selection="selectedProducts"
-          dataKey="id"
-          :paginator="false"
-          :rows="10"
-          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-          :rowsPerPageOptions="[5, 10, 25]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
-          responsiveLayout="scroll"
-          showGridlines
-          class="pb-6 p-datatable-sm"
-        >
+    <div class="col-12 py-1 px-0">
+      <DataTable
+        :value="universityList"
+        dataKey="id"
+        :paginator="false"
+        responsiveLayout="scroll"
+        showGridlines
+        class="pb-6 p-datatable-sm"
+      >
+        <template #header>
+          <div class="grid">
+            <div class="col-6">
+              <h5
+                class="text-base md:m-0 p-as-md-center uppercase text-blue-600"
+              >
+                Oligoh ma'lumotlari
+              </h5>
+            </div>
+            <div class="col-6 flex justify-content-end align-items-center">
+              <Button
+                icon="pi pi-plus-circle"
+                class="p-button-info p-button-sm"
+                label="Qo'shish"
+                v-tooltip.bottom="`Bilim yurtini qo'shish`"
+                @click="addItemUniversity()"
+              />
+            </div>
+          </div>
+        </template>
+        <Column style="min-width:100px; width:100px;">
           <template #header>
-            <div class="grid">
-              <div class="col-6">
-                <h5
-                  class="
-                    text-base
-                    md:m-0
-                    p-as-md-center
-                    uppercase
-                    text-blue-600
-                  "
-                >
-                  Ma'lumotlari
-                </h5>
-              </div>
-              <div class="col-6 flex justify-content-end">
-                <Button
-                  icon="pi pi-plus-circle"
-                  class="p-button-secondary p-button-sm"
-                  label="Qo'shish"
-                  v-tooltip.bottom="`Bilim yurtini qo'shish`"
-                  @click="controlUniversityDialog(true)"
-                />
-              </div>
+            <div class="text-800 font-semibold">Qachondan</div>
+          </template>
+          <template #body="slotProps">
+            <div
+              class="text-center cursor-pointer font-semibold"
+            >
+              {{ slotProps.data.date1 }}
             </div>
           </template>
-          <Column style="min-width: 2rem">
-            <template #header>
-              <div class="text-800 font-semibold">Qachondan</div>
-            </template>
-            <template #body="slotProps">
-              <div
-                class="flex justify-content-center cursor-pointer font-semibold"
-              >
-                2022
-                <div v-show="false">{{ slotProps.data.name }}</div>
-              </div>
-              <!-- <img src="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png" :alt="slotProps.data.image" class="product-image" /> -->
-            </template>
-          </Column>
-          <Column style="min-width: 2rem">
-            <template #header>
-              <div class="text-800 font-semibold">
-                Qachongacha
-              </div>
-            </template>
-            <template #body="slotProps">
-              <div
-                class="flex justify-content-center cursor-pointer font-semibold"
-              >
-                2022
-                <div v-show="false">{{ slotProps.data.name }}</div>
-              </div>
-            </template>
-          </Column>
+        </Column>
+        <Column style="min-width:100px; width:100px;">
+          <template #header>
+            <div class="text-800 font-semibold">Qachongacha</div>
+          </template>
+          <template #body="slotProps">
+            <div
+              class="text-center cursor-pointer font-semibold"
+            >
+              {{ slotProps.data.date2 }}
+            </div>
+          </template>
+        </Column>
 
-          <Column style="min-width: 20rem">
-            <template #header>
-              <div class="text-800 font-semibold">
-                Bilim yurti nomi
-              </div>
-            </template>
-            <template #body="slotProps">
-              <div
-                class="
-                  text-sm
-                  sm:text-sm
-                  md:text-md
-                  lg:text-lg
-                  xl:text-lg
-                  font-semibold
-                "
-              >
-                Toshkent temir yo'l transporti muhandislari instituti
-                <div v-show="false">{{ slotProps.data.name }}</div>
-              </div>
-            </template>
-          </Column>
-          <Column style="min-width: 10rem">
-            <template #header>
-              <div class="text-800 font-semibold">
-                Mutaxassisligi
-              </div>
-            </template>
-            <template #body="slotProps">
-              <div
-                class="
-                  text-sm
-                  sm:text-sm
-                  md:text-md
-                  lg:text-lg
-                  xl:text-lg
-                  font-semibold
-                "
-              >
-                Biznesni boshqarish magistri
-                <div v-show="false">{{ slotProps.data.name }}</div>
-              </div>
-            </template>
-          </Column>
-          <Column :exportable="false" style="min-width: 8rem">
-            <template #header>
-              <div class="text-800 font-semibold">
-                Amallar
-              </div>
-            </template>
-            <template #body="slotProps">
-              <div class="flex gap-2">
-                <div
-                  class="
-                    flex
-                    w-full
-                    justify-content-center
-                    py-2
-                    bg-blue-500
-                    cursor-pointer
-                    border-1 border-blue-500 border-round
-                  "
-                  style="max-width: 40px"
-                >
-                  <i class="pi pi-pencil text-white text-lg"></i>
-                </div>
-                <delete-button :deleteItem="slotProps.data" @deleteAcceptEvent="deleteItem($event)"></delete-button>
-              </div>
-            </template>
-          </Column>
-        </DataTable>
-      </div>
-      <ContextMenu ref="menu" :model="items" class="font-medium" />
+        <Column style="min-width: 20rem">
+          <template #header>
+            <div class="text-800 font-semibold">Bilim yurti nomi</div>
+          </template>
+          <template #body="slotProps">
+            <div
+              class="
+                font-semibold
+              "
+            >
+              {{ slotProps.data.name }}
+            </div>
+          </template>
+        </Column>
+        <Column style="min-width:300px; width:500px;">
+          <template #header>
+            <div class="text-800 font-semibold">Mutaxassisligi</div>
+          </template>
+          <template #body="slotProps">
+            <div
+              class="
+                font-semibold
+              "
+            >
+              {{ slotProps.data.speciality }}
+            </div>
+          </template>
+        </Column>
+        <Column :exportable="false" style="min-width:100px; width:150px;">
+          <template #header>
+            <div class="text-800 font-semibold">Amallar</div>
+          </template>
+          <template #body="slotProps">
+            <div class="flex gap-2">
+              <edit-button
+                :editItem="slotProps.data"
+                @editEvent="editItemUniversity($event)"
+              ></edit-button>
+              <delete-button
+                :deleteItem="slotProps.data.id"
+                @deleteAcceptEvent="deleteCadryUniversity($event)"
+              ></delete-button>
+            </div>
+          </template>
+        </Column>
+      </DataTable>
     </div>
 
+
     <!-- Foreign table -->
-    <div class="col-12 mb-4 py-4 px-0 flex justify-content-center">
-      <div class="col-12 xl:col-8 lg:col-10 px-0">
-        <DataTable
-          ref="dt"
-          :value="foreignCampus"
-          v-model:selection="selectedProducts"
-          dataKey="id"
-          :paginator="false"
-          :rows="10"
-          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-          :rowsPerPageOptions="[5, 10, 25]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
-          responsiveLayout="scroll"
-          showGridlines
-          class="pb-6 p-datatable-sm"
-        >
+    <div class="col-12 py-1 px-0">
+      <DataTable
+        :value="cadryAbroadList"
+        dataKey="id"
+        :paginator="false"
+        responsiveLayout="scroll"
+        showGridlines
+        class="pb-6 p-datatable-sm"
+      >
+        <template #header>
+          <div class="grid">
+            <div class="col-6">
+              <h5
+                class="text-base md:m-0 p-as-md-center uppercase text-blue-600"
+              >
+              XORIJDA TA'LIM OLGANLAR
+              </h5>
+            </div>
+            <div class="col-6 flex justify-content-end align-items-center">
+              <Button
+                icon="pi pi-plus-circle"
+                class="p-button-info p-button-sm"
+                label="Qo'shish"
+                v-tooltip.bottom="`Bilim yurtini qo'shish`"
+              />
+            </div>
+          </div>
+        </template>
+        <Column style="min-width:100px; width:100px;">
           <template #header>
-            <div class="grid">
-              <div class="col-6">
-                <h5
-                  class="
-                    text-base
-                    md:m-0
-                    p-as-md-center
-                    uppercase
-                    text-blue-600
-                    mb-0
-                  "
-                >
-                  Xorijda ta'lim olganlar
-                </h5>
-              </div>
-              <div class="col-6 flex justify-content-end align-items-center">
-                <Button
-                  icon="pi pi-plus-circle"
-                  class="p-button-secondary p-button-sm"
-                  label="Qo'shish"
-                  v-tooltip.bottom="`Bilim yurtini qo'shish`"
-                  @click="controlForeignDialog(true)"
-                />
-              </div>
+            <div class="text-800 font-semibold">Qachondan</div>
+          </template>
+          <template #body="slotProps">
+            <div
+              class="text-center cursor-pointer font-semibold"
+            >
+              {{ slotProps.data.date1 }}
             </div>
           </template>
-          <Column header="Qachondan" style="min-width: 2rem">
-            <template #body="slotProps">
-              <div
-                class="flex justify-content-center cursor-pointer font-semibold"
-              >
-                2022
-                <div v-show="false">{{ slotProps.data.name }}</div>
-              </div>
-            </template>
-          </Column>
-          <Column field="name" header="Qachondan" style="min-width: 2rem">
-            <template #body="slotProps">
-              <div
-                class="flex justify-content-center cursor-pointer font-semibold"
-              >
-                2022
-                <div v-show="false">{{ slotProps.data.name }}</div>
-              </div>
-            </template>
-          </Column>
+        </Column>
+        <Column style="min-width:100px; width:100px;">
+          <template #header>
+            <div class="text-800 font-semibold">Qachongacha</div>
+          </template>
+          <template #body="slotProps">
+            <div
+              class="text-center cursor-pointer font-semibold"
+            >
+              {{ slotProps.data.date2 }}
+            </div>
+          </template>
+        </Column>
 
-          <Column
-            field="rating"
-            header="Ta'lim muassasasi"
-            style="min-width: 20rem"
-          >
-            <template #body="slotProps">
-              <div
-                class="
-                  text-sm
-                  sm:text-sm
-                  md:text-md
-                  lg:text-lg
-                  xl:text-lg
-                  font-semibold
-                "
-              >
-                Toshkent temir yo'l transporti muhandislari instituti
-                <div v-show="false">{{ slotProps.data.name }}</div>
-              </div>
-            </template>
-          </Column>
-          <Column
-            field="rating"
-            header="Mutaxassisligi"
-            style="min-width: 10rem"
-          >
-            <template #body="slotProps">
-              <div
-                class="
-                  text-sm
-                  sm:text-sm
-                  md:text-md
-                  lg:text-lg
-                  xl:text-lg
-                  font-semibold
-                "
-              >
-                Biznesni boshqarish magistri
-                <div v-show="false">{{ slotProps.data.name }}</div>
-              </div>
-            </template>
-          </Column>
-          <Column
-            field="rating"
-            header="	Mablag'lashtirish"
-            style="min-width: 10rem"
-          >
-            <template #body="slotProps">
-              <div
-                class="
-                  text-sm
-                  sm:text-sm
-                  md:text-md
-                  lg:text-lg
-                  xl:text-lg
-                  font-semibold
-                "
-              >
-                Biznesni boshqarish magistri
-                <div v-show="false">{{ slotProps.data.name }}</div>
-              </div>
-            </template>
-          </Column>
-          <Column :exportable="false" style="min-width: 8rem">
-            <template #body="slotProps">
-              <div class="flex w-full justify-content-center">
-                <Button
-                  icon="pi pi-pencil"
-                  class="p-button-rounded p-button-secondary p-button-sm mr-4"
-                  v-tooltip.left="`Tahrirlash`"
-                  @click="isShow = !isShow"
-                />
-                <Button
-                  icon="pi pi-trash"
-                  class="p-button-rounded p-button-danger p-button-sm"
-                  v-tooltip.left="`O'chirish`"
-                  @click="confirmDeleteProduct(slotProps.data)"
-                />
-              </div>
-            </template>
-          </Column>
-        </DataTable>
-      </div>
+        <Column style="min-width: 20rem">
+          <template #header>
+            <div class="text-800 font-semibold">Ta'lim muassasasi</div>
+          </template>
+          <template #body="slotProps">
+            <div
+              class="
+                font-semibold
+              "
+            >
+              {{ slotProps.data.institute }}
+            </div>
+          </template>
+        </Column>
+        <Column style="min-width:100px; width:200px;">
+          <template #header>
+            <div class="text-800 font-semibold">Mutaxassisligi</div>
+          </template>
+          <template #body="slotProps">
+            <div
+              class="
+                font-semibold
+              "
+            >
+              {{ slotProps.data.direction }}
+            </div>
+          </template>
+        </Column>
+        <Column style="min-width:100px; width:200px;">
+          <template #header>
+            <div class="text-800 font-semibold">Mablag'lashtirish</div>
+          </template>
+          <template #body="slotProps">
+            <div
+              class="
+                font-semibold
+              "
+            >
+              {{ slotProps.data.type_abroad.name }}
+            </div>
+          </template>
+        </Column>
+        <Column :exportable="false" style="min-width:100px; width:150px;">
+          <template #header>
+            <div class="text-800 font-semibold">Amallar</div>
+          </template>
+          <template #body="slotProps">
+            <div class="flex gap-2">
+              <edit-button
+                :editItem="slotProps.data"
+              ></edit-button>
+              <delete-button
+                :deleteItem="slotProps.data.id"
+               
+              ></delete-button>
+            </div>
+          </template>
+        </Column>
+      </DataTable>
     </div>
 
     <!-- Academy table -->
-    <div class="col-12 mb-4 py-4 px-0 flex justify-content-center">
-      <div class="col-12 xl:col-8 lg:col-10 px-0">
-        <DataTable
-          ref="dt"
-          :value="academicCampus"
-          v-model:selection="selectedProducts"
-          dataKey="id"
-          :paginator="false"
-          :rows="10"
-          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-          :rowsPerPageOptions="[5, 10, 25]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
-          responsiveLayout="scroll"
-          showGridlines
-          class="pb-6 p-datatable-sm"
-        >
+    <div class="col-12 py-1 px-0">
+      <DataTable
+        :value="cadryAcademyList"
+        dataKey="id"
+        :paginator="false"
+        responsiveLayout="scroll"
+        showGridlines
+        class="pb-6 p-datatable-sm"
+      >
+        <template #header>
+          <div class="grid">
+            <div class="col-6">
+              <h5
+                class="text-base md:m-0 p-as-md-center uppercase text-blue-600"
+              >
+              AKADEMIYADA TA'LIM OLGANLAR
+              </h5>
+            </div>
+            <div class="col-6 flex justify-content-end align-items-center">
+              <Button
+                icon="pi pi-plus-circle"
+                class="p-button-info p-button-sm"
+                label="Qo'shish"
+                v-tooltip.bottom="`Bilim yurtini qo'shish`"
+              />
+            </div>
+          </div>
+        </template>
+        <Column style="min-width:100px; width:100px;">
           <template #header>
-            <div class="grid">
-              <div class="col-6">
-                <h5
-                  class="
-                    text-base
-                    md:m-0
-                    p-as-md-center
-                    uppercase
-                    text-blue-600
-                    mb-0
-                  "
-                >
-                  Akademiyada ta'lim olganlar
-                </h5>
-              </div>
-              <div class="col-6 flex justify-content-end align-items-center">
-                <Button
-                  icon="pi pi-plus-circle"
-                  class="p-button-secondary p-button-sm"
-                  label="Qo'shish"
-                  @click="controlAcademyDialog(true)"
-                  v-tooltip.bottom="`Bilim yurtini qo'shish`"
-                />
-              </div>
+            <div class="text-800 font-semibold">Qachondan</div>
+          </template>
+          <template #body="slotProps">
+            <div
+              class="text-center cursor-pointer font-semibold"
+            >
+              {{ slotProps.data.date1 }}
             </div>
           </template>
-          <Column header="Qachondan" style="min-width: 2rem">
-            <template #body="slotProps">
-              <div
-                class="flex justify-content-center cursor-pointer font-semibold"
-              >
-                2022
-                <div v-show="false">{{ slotProps.data.name }}</div>
-              </div>
-            </template>
-          </Column>
-          <Column field="name" header="Qachondan" style="min-width: 2rem">
-            <template #body="slotProps">
-              <div
-                class="flex justify-content-center cursor-pointer font-semibold"
-              >
-                2022
-                <div v-show="false">{{ slotProps.data.name }}</div>
-              </div>
-            </template>
-          </Column>
+        </Column>
+        <Column style="min-width:100px; width:100px;">
+          <template #header>
+            <div class="text-800 font-semibold">Qachongacha</div>
+          </template>
+          <template #body="slotProps">
+            <div
+              class="text-center cursor-pointer font-semibold"
+            >
+              {{ slotProps.data.date2 }}
+            </div>
+          </template>
+        </Column>
 
-          <Column
-            field="rating"
-            header="	Akademiya nomi"
-            style="min-width: 20rem"
-          >
-            <template #body="slotProps">
-              <div
-                class="
-                  text-sm
-                  sm:text-sm
-                  md:text-md
-                  lg:text-lg
-                  xl:text-lg
-                  font-semibold
-                "
-              >
-                Toshkent temir yo'l transporti muhandislari instituti
-                <div v-show="false">{{ slotProps.data.name }}</div>
-              </div>
-            </template>
-          </Column>
-          <Column :exportable="false" style="min-width: 8rem">
-            <template #body="slotProps">
-              <div class="flex w-full justify-content-center">
-                <Button
-                  icon="pi pi-pencil"
-                  class="p-button-rounded p-button-secondary p-button-sm mr-4"
-                  v-tooltip.left="`Tahrirlash`"
-                  @click="isShow = !isShow"
-                />
-                <Button
-                  icon="pi pi-trash"
-                  class="p-button-rounded p-button-danger p-button-sm"
-                  v-tooltip.left="`O'chirish`"
-                  @click="confirmDeleteProduct(slotProps.data)"
-                />
-              </div>
-            </template>
-          </Column>
-        </DataTable>
-      </div>
+        <Column style="min-width: 20rem">
+          <template #header>
+            <div class="text-800 font-semibold">Akademiya nomi</div>
+          </template>
+          <template #body="slotProps">
+            <div
+              class="
+                font-semibold
+              "
+            >
+              {{ slotProps.data.institute.name }}
+            </div>
+          </template>
+        </Column>
+        <Column :exportable="false" style="min-width:100px; width:150px;">
+          <template #header>
+            <div class="text-800 font-semibold">Amallar</div>
+          </template>
+          <template #body="slotProps">
+            <div class="flex gap-2">
+              <edit-button
+                :editItem="slotProps.data"
+              ></edit-button>
+              <delete-button
+                :deleteItem="slotProps.data.id"
+               
+              ></delete-button>
+            </div>
+          </template>
+        </Column>
+      </DataTable>
     </div>
 
     <!-- University Dialog -->
@@ -574,60 +456,84 @@
         }"
         :style="{ width: '50vw' }"
         :modal="true"
-        header="Ma'lumot qo'shish"
       >
+        <template #header>
+          <h6 class="uppercase text-lg text-blue-500 font-medium">
+            {{
+              universityDialogType
+                ? "Ma'lumot qo'shish"
+                : "Ma'lumotni tahrirlash"
+            }}
+          </h6>
+        </template>
         <div class="grid pt-2">
           <div class="col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6">
-            <h6 class="mb-2 pl-2">Qachondan</h6>
+            <h6 class="mb-2 pl-2 text-500">Qachondan</h6>
             <InputText
               type="text"
-              class="w-full"
+              class="w-full font-semibold"
               placeholder="Yilni kiriting"
               id="employeePhone"
-              v-model="v$.employeePhone.$model"
-              v-maska="'####'"
+              v-model="v$.universityItemdate1.$model"
               :class="{
-                'p-invalid': v$.employeePhone.$invalid && submitted,
+                'p-invalid': v$.universityItemdate1.$invalid && submitted,
               }"
+              v-maska="'####'"
             />
           </div>
           <div class="col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6">
-            <h6 class="mb-2 pl-2">Qachongacha</h6>
+            <h6 class="mb-2 pl-2 text-500">Qachongacha</h6>
             <InputText
               type="text"
-              class="w-full"
+              class="w-full font-semibold"
               placeholder="Yilni kiriting"
               id="employeePhone"
-              v-model="v$.employeePhone.$model"
+              v-model="v$.universityItemdate2.$model"
+              :class="{
+                'p-invalid': v$.universityItemdate2.$invalid && submitted,
+              }"
               v-maska="'####'"
-              :class="{
-                'p-invalid': v$.employeePhone.$invalid && submitted,
-              }"
             />
           </div>
           <div class="col-12">
-            <h6 class="mb-2 pl-2">Oligohni tanlang</h6>
+            <h6 class="mb-2 pl-2 text-500">Oligohni tanlang</h6>
             <Dropdown
-              id="employeeLanguage"
-              v-model="v$.employeeLanguage.$model"
-              :class="{
-                'p-invalid': v$.employeeLanguage.$invalid && submitted,
-              }"
-              :options="Languages"
+              id="passportDistrict"
+              v-model="selectUniversity"
+      
+              :options="UniversityList"
               optionLabel="name"
+              :filter="true"
               placeholder="Oligohni tanlang"
-              class="w-full"
-            />
+              class="w-full font-semibold"
+              @change="changeUniversityList"
+            >
+              <template #value="slotProps">
+                <div
+                  v-if="slotProps.value"
+                >
+                  <div>{{ slotProps.value.name }}</div>
+                </div>
+                <span v-else>
+                  {{ slotProps.placeholder }}
+                </span>
+              </template>
+              <template #option="slotProps">
+                <div class="country-item">
+                  <div>{{ slotProps.option.name }}</div>
+                </div>
+              </template>
+            </Dropdown>
           </div>
           <div class="col-12">
-            <h6 class="mb-2 pl-2">Tamomlagan bilim yurti</h6>
+            <h6 class="mb-2 pl-2 text-500">Tamomlagan bilim yurti</h6>
             <Textarea
-              class="w-full"
+              class="w-full font-semibold"
               placeholder="Bilim yurtini kiriting"
               id="employeePhone"
-              v-model="v$.employeePhone.$model"
+              v-model="v$.universityItemname.$model"
               :class="{
-                'p-invalid': v$.employeePhone.$invalid && submitted,
+                'p-invalid': v$.universityItemname.$invalid && submitted,
               }"
               :autoResize="true"
               rows="5"
@@ -635,14 +541,14 @@
             />
           </div>
           <div class="col-12">
-            <h6 class="mb-2 pl-2">Yo'nalishi</h6>
+            <h6 class="mb-2 pl-2 text-500">Yo'nalishi</h6>
             <Textarea
               placeholder="Yo'nalishni kiriting"
-              class="w-full"
+              class="w-full font-semibold"
               id="employeePhone"
-              v-model="v$.employeePhone.$model"
+              v-model="v$.universityItemspeciality.$model"
               :class="{
-                'p-invalid': v$.employeePhone.$invalid && submitted,
+                'p-invalid': v$.universityItemspeciality.$invalid && submitted,
               }"
               :autoResize="true"
               rows="5"
@@ -657,7 +563,7 @@
               <Button
                 label="Saqlash"
                 class="p-button-secondary p-button-sm"
-                @click="controlUniversityDialog(false)"
+                @click="updateAndAddItems(v$)"
               />
             </div>
           </div>
@@ -846,7 +752,7 @@
   </div>
 </template>
 <script>
-  import DeleteButton from '@/components/buttons/DeleteButton'
+import DeleteButton from "@/components/buttons/DeleteButton";
 import organizationsService from "../../service/servises/organizationsService";
 import { globalValidate } from "../../validation/vuevalidate";
 import {
@@ -864,10 +770,13 @@ import {
 } from "../../enum/enums.js";
 import { minLength, required } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
+import employeeService from "../../service/servises/employeeService";
+import EditButton from "../buttons/EditButton.vue";
 
 export default {
-  components:{
-    DeleteButton
+  components: {
+    DeleteButton,
+    EditButton,
   },
   setup: () => ({ v$: useVuelidate() }),
 
@@ -884,10 +793,28 @@ export default {
       employeeMilitaryTitle: "",
       employeeSelectedOrgan: "",
 
+
       educationList: [],
       academikDegreeList: [],
       academikTitleList: [],
       nationalList: [],
+      languagesList:[],
+      partyList:[],
+
+      cadryAcademyList: [],
+      cadryAbroadList:[],
+
+
+      universityDialogType: true,
+      universityDialog: false,
+      universityList: [],
+      UniversityList:[],
+      universityId:null,
+      selectUniversity:null,
+      universityItemdate1: "",
+      universityItemdate2: "",
+      universityItemname: "",
+      universityItemspeciality: "",
 
       submitted: false,
       displayResponsive: false,
@@ -903,42 +830,13 @@ export default {
       FactoryAmount,
       AcademicDegree,
       Party,
-
-      university: [
-        {
-          id: "1000",
-          code: "f230fh0g3",
-          name: "Raximov Jamshid Shuxrat o'g'li",
-          description: "Product Description",
-          image: "bamboo-watch.jpg",
-          price: 65,
-          category: "Accessories",
-          quantity: 24,
-          inventoryStatus: "INSTOCK",
-          rating: 5,
-        },
-      ],
+      submitted: false,
 
       foreignCampus: null,
       academicCampus: null,
 
-      universityDialog: false,
       academyDialog: false,
       foreignDialog: false,
-
-      items: [
-        {
-          label: "Tahrirlash",
-          icon: "pi pi-pencil",
-          command: (event) => {
-            console.log(event);
-          },
-        },
-        {
-          label: "O'chirish",
-          icon: "pi pi-trash",
-        },
-      ],
     };
   },
 
@@ -954,19 +852,79 @@ export default {
       employeePhone: globalValidate.employeePhone,
       employeeMilitaryTitle: globalValidate.employeeMilitaryTitle,
       employeeSelectedOrgan: globalValidate.employeeSelectedOrgan,
+      universityItemdate1: globalValidate.universityItemdate1,
+      universityItemdate2: globalValidate.universityItemdate2,
+      universityItemname: globalValidate.universityItemname,
+      universityItemspeciality: globalValidate.universityItemname,
     };
   },
 
   methods: {
-    handleSubmit(isFormValid) {
-      this.submitted = true;
-      console.log(isFormValid);
-      if (!isFormValid) {
-        return;
-      }
-    },
     goPush() {
       this.$router.push("/admin/partemployee");
+    },
+
+    getCadry(id) {
+      employeeService
+        .get_CadryInfo({ id: id })
+        .then((res) => {
+         
+          // this.cadryInfo =res.data.cadry
+          this.academic = res.data.cadry.education_id.id;
+          this.academicDegree = res.data.cadry.academicdegree_id.id
+          this.academicTitle = res.data.cadry.academictitle_id.id
+          this.employeeNation = res.data.cadry.nationality_id.id
+          this.employeeLanguage = res.data.cadry.languages
+          this.employeeMilitaryTitle = res.data.cadry.military_rank
+          this.employeeSelectedOrgan = res.data.cadry.deputy;
+          this.employeeParty = res.data.cadry.party_id.id   
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+
+    getCadryUniversity(id) {
+      employeeService.get_CadryUniversity({ cadry_id: id }).then((res) => {
+        this.universityList = res.data.infoeducations;
+      });
+    },
+
+    updateCadryUniversity(id, data){
+      employeeService.update_CadryUniversity({id, data }).then((res) => {
+        this.getCadryUniversity(this.$route.params.id);
+        this.submitted = false;
+      }).catch((error)=>{
+        console.log(error);
+      })
+    },
+
+    addingCadryUniversity(id, data){
+      employeeService.adding_CadryUniversity({id, data }).then((res) => {
+        this.getCadryUniversity(this.$route.params.id);
+      });
+    },
+
+    deleteCadryUniversity(id){
+      employeeService.delete_CadryUniversity({id }).then((res) => {
+        this.getCadryUniversity(this.$route.params.id);
+      });
+    },
+
+
+
+    get_CadryAcademy(id) {
+      employeeService.get_CadryAcademy({ cadry_id: id }).then((res) => {
+        this.cadryAcademyList = res.data;
+      });
+    },
+
+    get_CadryAbroad(id) {
+      employeeService.get_CadryAbroad({cadry_id: id}).then((res) => {
+        console.log(res.data);
+        this.cadryAbroadList = res.data;
+      });
     },
 
     get_Education() {
@@ -995,7 +953,7 @@ export default {
       organizationsService
         .getacademikTitles()
         .then((res) => {
-          this.academicTitle = res.data;
+          this.academikTitleList = res.data;
         })
         .catch((error) => {
           console.log(error);
@@ -1012,12 +970,79 @@ export default {
           console.log(error);
         });
     },
-    deleteItem(event){
+
+    get_Languages(){
+      employeeService.get_Languages().then((res)=>{
+        this.languagesList = res.data
+      })
+    },
+
+    get_Party(){
+      employeeService.get_Party().then((res)=>{
+        this.partyList = res.data
+      })
+    },
+
+    get_universityList(){
+      employeeService.get_universityList().then((res)=>{
+        this.UniversityList = res.data
+      })
+    },
+
+
+    deleteItem(event) {
       console.log(event);
+    },
+
+    addItemUniversity() {
+      this.universityItemdate1 = "";
+      this.universityItemdate2 = "";
+      this.universityItemname = "";
+      this.universityItemspeciality = "";
+
+      this.universityDialogType = true;
+      this.controlUniversityDialog(true);
+    },
+
+    editItemUniversity(event) {
+      console.log(event);
+      this.universityId = event.id
+      this.universityItemdate1 = event.date1;
+      this.universityItemdate2 = event.date2;
+      this.universityItemname = event.name;
+      this.universityItemspeciality = event.speciality;
+
+      this.universityDialogType = false;
+      this.controlUniversityDialog(true);
+    },
+
+    updateAndAddItems(valid) {
+      this.submitted = true;
+      let data = {
+          date1:this.universityItemdate1,
+          date2: this.universityItemdate2,
+          institut:  this.universityItemname,
+          speciality: this.universityItemspeciality,
+        };
+      if(this.universityDialogType){
+        this.controlUniversityDialog(false)
+        this.addingCadryUniversity(this.$route.params.id, data)
+      }else{ 
+        this.controlUniversityDialog(false)
+        this.updateCadryUniversity(this.universityId, data)
+      }
+      
+
+      // this.updateCadryUniversity()
+      console.log(valid);
     },
 
     onImageRightClick(event) {
       this.$refs.menu.show(event);
+    },
+
+    changeUniversityList(event){
+      this.universityItemname = event.value.name
     },
 
     controlUniversityDialog(item) {
@@ -1031,10 +1056,18 @@ export default {
     },
   },
   created() {
+    this.getCadryUniversity(this.$route.params.id);
+    this.get_CadryAcademy(this.$route.params.id);
+
     this.get_Education();
     this.get_AcademikDegree();
     this.get_AcademikTitles();
     this.get_Nationality();
+    this.get_Languages();
+    this.get_universityList()
+
+    this.getCadry(this.$route.params.id);
+    this.get_CadryAbroad(this.$route.params.id)
   },
 };
 </script>
