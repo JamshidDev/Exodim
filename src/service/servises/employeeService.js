@@ -23,13 +23,13 @@ const get_workLevel = (payload)=>{
 
 
 const update_empolyee = (payload)=>{
-    return axios.post(`/api/organization/cadries/${payload.id}`, payload.data)
+    return axios.put(`/api/organization/cadries/${payload.id}`, payload.data)
 }
 
 
 
 const get_employeeAvatar = (payload)=>{
-    return axios.post(`/api/organization/cadries/${payload.id}/update/photo`, payload.form)
+    return axios.put(`/api/organization/cadries/${payload.id}/update/photo`, payload.form)
 }
 
 const get_CadryInfo = (payload)=>{
@@ -60,12 +60,19 @@ const get_Party = (payload)=>{
 
 const get_universityList= (payload)=>{
     return axios.get(`/api/filter/instituts`)
+}
 
+const get_Info= (payload)=>{
+    return axios.get(`/api/filter/cadry-informations`)
+}
+
+const update_Info= (payload)=>{
+    return axios.put(`/api/organization/cadries/information/${payload.id}`, payload.data)
 }
 
 
 const update_CadryUniversity = (payload)=>{
-    return axios.post(`/api/organization/cadry/instituts/${payload.id}/update`, payload.data)
+    return axios.put(`/api/organization/cadry/instituts/${payload.id}/update`, payload.data)
 }
 
 const adding_CadryUniversity = (payload)=>{
@@ -73,7 +80,7 @@ const adding_CadryUniversity = (payload)=>{
 }
 
 const delete_CadryUniversity = (payload)=>{
-    return axios.post(`/api/organization/cadry/instituts/${payload.id}/delete`)
+    return axios.delete(`/api/organization/cadry/instituts/${payload.id}/delete`)
 }
 
 
@@ -93,4 +100,4 @@ const delete_CadryUniversity = (payload)=>{
 
 
 
-export default {get_Employees,get_Department,get_Stuffs,get_employeeDetails, get_employeeAvatar,update_empolyee,get_workLevel, get_CadryUniversity,get_CadryAcademy, get_CadryAbroad,get_CadryInfo,get_Languages,get_Party,get_universityList, update_CadryUniversity, adding_CadryUniversity, delete_CadryUniversity}
+export default {get_Employees,get_Department,get_Stuffs,get_employeeDetails, get_employeeAvatar,update_empolyee,get_workLevel, get_CadryUniversity,get_CadryAcademy, get_CadryAbroad,get_CadryInfo,get_Languages,get_Party,get_universityList, update_CadryUniversity, adding_CadryUniversity, delete_CadryUniversity, get_Info, update_Info}

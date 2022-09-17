@@ -65,7 +65,6 @@
                 id="employeeNation"
                 v-model="employeeNation"
                 optionValue="id"
-
                 :options="nationalList"
                 optionLabel="name"
                 placeholder="Millatni tanlang"
@@ -84,15 +83,12 @@
                 class="w-full font-semibold"
                 placeholder="Unvonni kiriting"
                 id="employeeMilitaryTitle"
-                v-model="v$.employeeMilitaryTitle.$model"
-                :class="{
-                  'p-invalid': v$.employeeMilitaryTitle.$invalid && submitted,
-                }"
+                v-model="employeeMilitaryTitle"
               />
             </div>
             <div class="col-12">
               <h6 class="mb-2 pl-2 text-500">Chet tillari</h6>
-              <MultiSelect class="w-full font-semibold" v-model="employeeLanguage" :options="languagesList"  optionLabel="name" />
+              <MultiSelect class="w-full font-semibold" v-model="employeeLanguage" :options="languagesList"  optionLabel="name" placeholder="Tilni tanlang" />
              
             </div>
           </div>
@@ -127,7 +123,7 @@
         <div class="col-12 flex justify-content-end">
           <Button
             icon="pi pi-save"
-            @click="handleSubmit(!v$.$invalid)"
+            @click="update_Info()"
             class="p-button-secondary p-button-sm"
             label="Saqlash"
             v-tooltip.bottom="`Ma'lumotlarni saqlash`"
@@ -309,7 +305,7 @@
             </div>
           </template>
         </Column>
-        <Column style="min-width:100px; width:200px;">
+        <Column style="min-width:100px; width:300px;">
           <template #header>
             <div class="text-800 font-semibold">Mutaxassisligi</div>
           </template>
@@ -788,8 +784,6 @@ export default {
       employeeNation: null,
       employeeLanguage: null,
       employeeParty: null,
-      employeeGender: null,
-      employeePhone: "",
       employeeMilitaryTitle: "",
       employeeSelectedOrgan: "",
 
@@ -801,7 +795,7 @@ export default {
       languagesList:[],
       partyList:[],
 
-      cadryAcademyList: [],
+     
       cadryAbroadList:[],
 
 
@@ -816,20 +810,15 @@ export default {
       universityItemname: "",
       universityItemspeciality: "",
 
+      academyDialogType:true,
+      academyDialog:false,
+      AcademyList: [],
+      academydate1:"",
+      academydate2:"",
+      academyname:"",
+      academyspeciality:"",
       submitted: false,
-      displayResponsive: false,
-      succesDialog: false,
-      Regions,
-      Districts,
-      Genders,
-      Nations,
-      Languages,
-      FactoryPart,
-      FactoryTitle,
-      FactoryDegree,
-      FactoryAmount,
-      AcademicDegree,
-      Party,
+     
       submitted: false,
 
       foreignCampus: null,
@@ -868,8 +857,6 @@ export default {
       employeeService
         .get_CadryInfo({ id: id })
         .then((res) => {
-         
-          // this.cadryInfo =res.data.cadry
           this.academic = res.data.cadry.education_id.id;
           this.academicDegree = res.data.cadry.academicdegree_id.id
           this.academicTitle = res.data.cadry.academictitle_id.id
@@ -884,6 +871,12 @@ export default {
         });
     },
 
+    // Cadry university Action
+    get_universityList(){
+      employeeService.get_universityList().then((res)=>{
+        this.UniversityList = res.data
+      })
+    },
 
     getCadryUniversity(id) {
       employeeService.get_CadryUniversity({ cadry_id: id }).then((res) => {
@@ -914,6 +907,8 @@ export default {
 
 
 
+
+
     get_CadryAcademy(id) {
       employeeService.get_CadryAcademy({ cadry_id: id }).then((res) => {
         this.cadryAcademyList = res.data;
@@ -927,72 +922,52 @@ export default {
       });
     },
 
-    get_Education() {
-      organizationsService
-        .getEducation()
-        .then((res) => {
-          this.educationList = res.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
+    
 
-    get_AcademikDegree() {
-      organizationsService
-        .getacademikDegree()
-        .then((res) => {
-          this.academikDegreeList = res.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-
-    get_AcademikTitles() {
-      organizationsService
-        .getacademikTitles()
-        .then((res) => {
-          this.academikTitleList = res.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-
-    get_Nationality() {
-      organizationsService
-        .getNationality()
-        .then((res) => {
-          this.nationalList = res.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-
-    get_Languages(){
-      employeeService.get_Languages().then((res)=>{
-        this.languagesList = res.data
+    get_Info(){
+      employeeService.get_Info().then((res)=>{
+        console.log(res.data);
+        this.educationList = res.data.educations;
+        this.academikTitleList = res.data.academicTitlies;
+        this.academikDegreeList = res.data.academicDegree;
+        this.nationalList = res.data.nationalities;
+        this.Party = res.data.parties;
+        this.languagesList = res.data.languages;
+      }).catch((error)=>{
+        console.log(error);
       })
     },
 
-    get_Party(){
-      employeeService.get_Party().then((res)=>{
-        this.partyList = res.data
+    update_Info(){
+      let langIds = [];
+      this.employeeLanguage.forEach((item)=>{
+        langIds.push(item.id)
       })
-    },
 
-    get_universityList(){
-      employeeService.get_universityList().then((res)=>{
-        this.UniversityList = res.data
+      let data = {
+        education_id: this.academic,
+        academictitle_id:this.academicTitle,
+        academicdegree_id: this.academicDegree,
+        nationality_id:this.employeeNation,
+        party_id: this.employeeParty,
+        military_rank : this.employeeMilitaryTitle,
+        deputy:this.employeeSelectedOrgan,
+        languages:langIds,
+
+
+      }
+      console.log(data);
+      employeeService.update_Info({id:this.$route.params.id, data,}).then((res)=>{
+        console.log(res.data);
+        this.get_Info();
+      }).catch((error)=>{
+        console.log(error);
       })
+      
     },
 
 
-    deleteItem(event) {
-      console.log(event);
-    },
+
 
     addItemUniversity() {
       this.universityItemdate1 = "";
@@ -1045,6 +1020,8 @@ export default {
       this.universityItemname = event.value.name
     },
 
+
+
     controlUniversityDialog(item) {
       this.universityDialog = item;
     },
@@ -1058,16 +1035,12 @@ export default {
   created() {
     this.getCadryUniversity(this.$route.params.id);
     this.get_CadryAcademy(this.$route.params.id);
-
-    this.get_Education();
-    this.get_AcademikDegree();
-    this.get_AcademikTitles();
-    this.get_Nationality();
-    this.get_Languages();
+    this.get_CadryAbroad(this.$route.params.id)
     this.get_universityList()
+    this.get_Info()
 
     this.getCadry(this.$route.params.id);
-    this.get_CadryAbroad(this.$route.params.id)
+   
   },
 };
 </script>
