@@ -417,7 +417,6 @@ export default {
             }
           });
           this.customBarRouter.push(item.permissions);
-          console.log(this.customBarRouter);
         }
       });
 
@@ -433,7 +432,6 @@ export default {
   },
   created() {
     this.generateBarRouter();
-    console.log(localStorage.getItem('Adminpermissions'));
   },
 };
 </script>

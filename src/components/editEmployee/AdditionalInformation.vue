@@ -1,301 +1,256 @@
 <template >
-    <div class="grid card py-4 px-3">
-        <!-- Punishment table-->
-      <div class="col-12 mb-6 border-1 border-300 border-round-sm py-4 shadow-1">
-        <DataTable
-          ref="dt"
-          :value="university"
-          v-model:selection="selectedProducts"
-          dataKey="id"
-          :paginator="false"
-          :rows="10"
-          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-          :rowsPerPageOptions="[5, 10, 25]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
-          responsiveLayout="scroll"
-          showGridlines
-          class="pb-6"
-          :reorderableColumns="true"  @rowReorder="onRowReorder"
-        >
-          <template #header>
-            <div class="grid">
-              <div class="col-6">
-                <h5 class="text-base md:m-0 p-as-md-center uppercase text-red-500">
-                    Intizomiy jazo
-                </h5>
-              </div>
-              <div class="col-6 flex justify-content-end">
-                <Button
-                  icon="pi pi-plus-circle"
-                  class="p-button-secondary p-button-sm"
-                  label="Qo'shish"
-                  v-tooltip.bottom="`Bilim yurtini qo'shish`"
-                  @click="controlUniversityDialog(true)"
-                />
-              </div>
-            </div>
-          </template>
-          <Column header="Prikaz raqami" style="min-width: 1rem">
-            <template #body="slotProps">
-              <div
-                class="flex justify-content-center cursor-pointer font-semibold  text-sm
-                  sm:text-sm
-                  md:text-md
-                  lg:text-lg
-                  xl:text-lg"
-              >
-               1223
-                <div v-show="false">{{ slotProps.data.name }}</div>
-              </div>
-             
-            </template>
-          </Column>
-          <Column  header="Sanasi" style="min-width: 5rem">
-            <template #body="slotProps">
-              <div
-                class="flex justify-content-center cursor-pointer font-semibold  text-sm
-                  sm:text-sm
-                  md:text-md
-                  lg:text-lg
-                  xl:text-lg"
-              >
-               12.06.2022
-                <div v-show="false">{{ slotProps.data.name }}</div>
-              </div>
-            </template>
-          </Column>
-  
-          <Column field="rating" header="Jazo turi" style="min-width: 35rem">
-            <template #body="slotProps">
-              <div
-                class="
-                  text-sm
-                  sm:text-sm
-                  md:text-md
-                  lg:text-lg
-                  xl:text-lg
-                  font-semibold
-                "
-              >
-                Lavozimini suvistemol qilish
-                <div v-show="false">{{ slotProps.data.name }}</div>
-              </div>
-            </template>
-          </Column>
-          <Column field="rating" header="Jazo sababi" style="min-width: 50rem">
-            <template #body="slotProps">
-              <div
-                class="
-                  text-sm
-                  sm:text-sm
-                  md:text-md
-                  lg:text-lg
-                  xl:text-lg
-                  font-semibold
-                "
-              >
-              O'zbekiston temir yo'llari  DAK statistika va hisobga olish boshqarmasi statistika va tezkor hisoblash bo'limining 2-toifali navbatchi muhandisi, shu bo'limning lokomotivlarni davlatlararo kesishuv punkitlariga kirish bo'yicha 2-toifali muhandisi
-                <div v-show="false">{{ slotProps.data.name }}</div>
-              </div>
-            </template>
-          </Column>
-          <Column :exportable="false" style="min-width: 10rem">
-            <template #body="slotProps">
-              <div class="flex w-full justify-content-center">
-                <Button
-                  icon="pi pi-pencil"
-                  class="p-button-rounded p-button-secondary mr-4 p-button-sm"
-                  v-tooltip.left="`Tahrirlash`"
-                  @click="controlUniversityDialog(true)"
-                />
-                <Button
-                  icon="pi pi-trash"
-                  class="p-button-rounded p-button-danger p-button-sm"
-                  v-tooltip.left="`O'chirish`"
-                  @click="confirmDeleteProduct(slotProps.data)"
-                />
-              </div>
-            </template>
-          </Column>
-        </DataTable>
-      </div>
+  <div class="grid card py-4" v-if="barLoader">
+    <div class="col-12">
+      <progress-bar-loader></progress-bar-loader>
+    </div>
+  </div>
 
-      <!-- Encourage table -->
-      <div class="col-12 mb-4 border-1 border-300 border-round-sm py-4 shadow-1">
-        <DataTable
-          ref="dt"
-          :value="university"
-          v-model:selection="selectedProducts"
-          dataKey="id"
-          :paginator="false"
-          :rows="10"
-          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-          :rowsPerPageOptions="[5, 10, 25]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
-          responsiveLayout="scroll"
-          showGridlines
-          class="pb-6"
-          :reorderableColumns="true"  @rowReorder="onRowReorder"
-        >
-          <template #header>
-            <div class="grid">
-              <div class="col-6">
-                <h5 class="text-base md:m-0 p-as-md-center uppercase text-blue-600">
-                    Lavozim yo'riqnomasi
-                </h5>
-              </div>
-              <div class="col-6 flex justify-content-end">
-                <Button
-                  icon="pi pi-plus-circle"
-                  class="p-button-secondary p-button-sm"
-                  label="Qo'shish"
-                  v-tooltip.bottom="`Bilim yurtini qo'shish`"
-                  @click="controlUniversityDialog(true)"
-                />
-              </div>
-            </div>
-          </template>
-          <Column header="Izoh" style="min-width: 90rem">
-            <template #body="slotProps">
-              <div
-                class="flex justify-content-start cursor-pointer font-semibold  text-sm
-                  sm:text-sm
-                  md:text-md
-                  lg:text-lg
-                  xl:text-lg"
+  <div  class="grid card py-4" v-if="!barLoader">
+    <div class="col-12 py-1 px-0">
+      <DataTable
+        :value="punishmentList"
+        dataKey="id"
+        :paginator="false"
+        responsiveLayout="scroll"
+        @rowReorder="onRowReorder"
+        showGridlines
+        class="pb-6 p-datatable-sm"
+      >
+        <template #header>
+          <div class="grid">
+            <div class="col-6">
+              <h5
+                class="text-base md:m-0 p-as-md-center uppercase text-blue-600"
               >
-               Lavozim yo'riqnomasi 2022
-                <div v-show="false">{{ slotProps.data.name }}</div>
-              </div>
-             
-            </template>
-          </Column>
-         
-         
-          <Column :exportable="false" style="min-width: 10rem">
-            <template #body="slotProps">
-              <div class="flex w-full justify-content-center">
-                <Button
-                  icon="pi pi-pencil"
-                  class="p-button-rounded p-button-secondary mr-4 p-button-sm"
-                  v-tooltip.left="`Tahrirlash`"
-                  @click="controlUniversityDialog(true)"
-                />
-                <Button
-                  icon="pi pi-trash"
-                  class="p-button-rounded p-button-danger p-button-sm"
-                  v-tooltip.left="`O'chirish`"
-                  @click="confirmDeleteProduct(slotProps.data)"
-                />
-              </div>
-            </template>
-          </Column>
-        </DataTable>
-      </div>
-  
-         <!-- Punishment Dialog -->
-         <div class="col-12">
-        <Dialog
-          v-model:visible="universityDialog"
-          :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-          :style="{ width: '50vw' }"
-          :modal="true"
-          header="Mehnat faoliyatini qo'shish"
-        >
-          <div class="grid pt-2">
-            <div class="col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6">
-              <h6 class="mb-2 pl-2">Qachondan</h6>
-              <InputText
-                type="text"
-                class="w-full"
-                placeholder="Yilni kiriting"
-                id="employeePhone"
-                v-model="workStartDate"
-                v-maska="'####'"
-              />
+              Intizomiy jazo
+              </h5>
             </div>
-            <div class="col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6">
-              <h6 class="mb-2 pl-2">Qachongacha</h6>
-              <InputText
-                type="text"
-                class="w-full"
-                placeholder="Yilni kiriting"
-                id="employeePhone"
-                v-model="workEndDate"
-                v-maska="'####'"
-              />
-            </div>
-          
-            <div class="col-12">
-              <h6 class="mb-2 pl-2">Lavozimi</h6>
-              <Textarea
-                class="w-full"
-                placeholder="Lavozim to'liq nomi kiriting"
-                id="employeePhone"
-                v-model="workTitle"
-                :autoResize="true"
-                rows="5"
-                cols="30"
+            <div class="col-6 flex justify-content-end align-items-center">
+              <Button
+                icon="pi pi-plus-circle"
+                class="p-button-info p-button-sm"
+                label="Qo'shish"
+                v-tooltip.bottom="`Bilim yurtini qo'shish`"
+                @click="addItem()"
               />
             </div>
           </div>
-  
-          <template #footer>
-            <div class="col-12 pt-2">
-              <div class="flex justify-content-end">
-                <Button
-                  label="Saqlash"
-                  class="p-button-secondary p-button-sm"
-                  @click="controlUniversityDialog(false)"
-                />
-              </div>
+        </template>
+        <Column style="min-width:100px; width:100px;">
+          <template #header>
+            <div class="text-800 font-semibold">Prikaz nomer</div>
+          </template>
+          <template #body="slotProps">
+            <div
+              class="text-center cursor-pointer font-semibold"
+            >
+              {{ slotProps.data.command_number }}
             </div>
           </template>
-        </Dialog>
-      </div>
+        </Column>
+        <Column  style="min-width:150px;">
+          <template #header>
+            <div class="text-800 font-semibold">	Sanasi</div>
+          </template>
+          <template #body="slotProps">
+            <div
+              class="text-center cursor-pointer font-semibold"
+            >
+              {{ slotProps.data.date_punishment }}
+            </div>
+          </template>
+        </Column>
+
+        <Column style="min-width:200px; width:300px;">
+          <template #header>
+            <div class="text-800 font-semibold">Jazo turi</div>
+          </template>
+          <template #body="slotProps">
+            <div
+              class="
+                font-semibold
+              "
+            >
+              {{ slotProps.data.reason_punishment }}
+            </div>
+          </template>
+        </Column>
+        <Column style="min-width:200px; width:300px;">
+          <template #header>
+            <div class="text-800 font-semibold">	Jazo sababi</div>
+          </template>
+          <template #body="slotProps">
+            <div
+              class="
+                font-semibold
+              "
+            >
+              {{ slotProps.data.type_punishment }}
+            </div>
+          </template>
+        </Column>
+        <Column :exportable="false" style="min-width:100px; width:150px;">
+          <template #header>
+            <div class="text-800 font-semibold">Amallar</div>
+          </template>
+          <template #body="slotProps">
+            <div class="flex gap-2">
+              <edit-button
+                :editItem="slotProps.data"
+                @editEvent="editRelative($event)"
+              ></edit-button>
+              <delete-button
+                :deleteItem="slotProps.data.id"
+                @deleteAcceptEvent="deleteRelative($event)"
+              ></delete-button>
+            </div>
+          </template>
+        </Column>
+      </DataTable>
     </div>
-  </template>
-  <script>
-  export default {
-    data() {
-      return {
-        university: [
-          {
-            id: "1000",
-            code: "f230fh0g3",
-            name: "Raximov Jamshid Shuxrat o'g'li",
-            description: "Product Description",
-            image: "bamboo-watch.jpg",
-            price: 65,
-            category: "Accessories",
-            quantity: 24,
-            inventoryStatus: "INSTOCK",
-            rating: 5,
-          },
-        ],
-  
-        universityDialog: false,
-        selectedProducts:null,
-  
-        workStartDate:null,
-        workEndDate:null,
-        workTitle:null,
-  
-  
-  
-      };
+    <div class="col-12">
+     
+      <Dialog
+        v-model:visible="relativeDialog"
+        :breakpoints="{
+          '1960px': '30vw',
+          '1600px': '40vw',
+          '1200px': '70vw',
+          '960px': '80vw',
+          '640px': '90vw',
+        }"
+        :style="{ width: '50vw' }"
+        :modal="true"
+      >
+        <template #header>
+          <h6 class="uppercase text-lg text-blue-500 font-medium">
+            {{
+              relativeDialogType
+                ? "Ma'lumot qo'shish"
+                : "Ma'lumotni tahrirlash"
+            }}
+          </h6>
+        </template>
+        <div class="grid pt-2">
+          <div class="col-12">
+            <h6 class="mb-2 pl-2 text-500">Qarindoshligi</h6>
+            <Dropdown
+                id="bornRegion"
+                v-model="relative_id"
+                :options="relativeList"
+                optionLabel="name"
+                optionValue="id"
+                placeholder="Tanlang"
+                class="w-full font-semibold"
+              />
+          </div>
+          <div class="col-12">
+            <h6 class="mb-2 pl-2 text-500">F.I.SH</h6>
+            <InputText
+              type="text"
+              class="w-full font-semibold"
+              placeholder="Kiriting"
+              id="employeePhone"
+              v-model="relative_fullName"
+            />
+          </div>
+          <div class="col-12">
+            <h6 class="mb-2 pl-2 text-500">Tug'ilgan yili va joyi</h6>
+            <InputText
+              type="text"
+              class="w-full font-semibold"
+              placeholder="Kiritng"
+              id="employeePhone"
+              v-model="relative_birthday"
+            />
+          </div>
+         
+          <div class="col-12">
+            <h6 class="mb-2 pl-2 text-500">Kasbi</h6>
+            <Textarea
+              class="w-full font-semibold"
+              placeholder="Kiriting"
+              id="employeePhone"
+              v-model="relative_job"
+              :autoResize="true"
+              rows="1"
+            />
+          </div>
+          <div class="col-12">
+            <h6 class="mb-2 pl-2 text-500">Hozirda yashash manzili</h6>
+            <Textarea
+              class="w-full font-semibold"
+              placeholder="Kiriting"
+              id="employeePhone"
+              v-model="relative_adress"
+              :autoResize="true"
+              rows="1"
+            />
+          </div>
+        </div>
+
+        <template #footer>
+          <div class="col-12 pt-2">
+            <div class="flex justify-content-end">
+              <Button
+                label="Saqlash"
+                class="p-button-secondary p-button-sm"
+                @click="addAndEdit()"
+              />
+            </div>
+          </div>
+        </template>
+      </Dialog>
+
+    </div>
+
+  </div>
+</template>
+<script>
+  import DeleteButton from '../buttons/DeleteButton.vue';
+  import EditButton from '../buttons/EditButton.vue';
+
+  import ProgressBarLoader from "../loaders/ProgressBarLoader.vue";
+  import employeeAdditionalService from '../../service/servises/employeeAdditionalService';
+export default {
+  components:{
+    DeleteButton, EditButton,ProgressBarLoader,
+  },
+  data(){
+    return{
+      barLoader:false,
+      punishmentList:[],
+
+     
+
+
+    }
+  },
+  methods:{
+   
+    get_punishment(id, loader){
+      this.controlLoader(loader)
+      employeeAdditionalService.get_CadryPunishment({id}).then((res)=>{
+        console.log(res.data);
+        this.punishmentList = res.data.punishments
+
+        this.controlLoader(false)
+      }).catch((error)=>{
+        this.controlLoader(false)
+        console.log(error);
+      })
     },
+
+
+    controlLoader(item){
+      this.barLoader = item
+    }
+  },
+
+  created(){
+   this.get_punishment(this.$route.params.id, true)
+  }
+
   
-    methods: {
-      controlUniversityDialog(item) {
-        this.universityDialog = item;
-      },
-      onRowReorder(event) {
-          console.log(event.value);
-        this.university = event.value;
-      },
-    },
-  };
-  </script>
-  <style lang="">
-  </style>
+};
+</script>

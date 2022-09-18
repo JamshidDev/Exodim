@@ -746,24 +746,12 @@
       </Dialog>
     </div>
   </div>
+
 </template>
 <script>
 import DeleteButton from "@/components/buttons/DeleteButton";
-import organizationsService from "../../service/servises/organizationsService";
 import { globalValidate } from "../../validation/vuevalidate";
-import {
-  Regions,
-  Districts,
-  Genders,
-  Nations,
-  Languages,
-  FactoryPart,
-  FactoryTitle,
-  FactoryDegree,
-  FactoryAmount,
-  AcademicDegree,
-  Party,
-} from "../../enum/enums.js";
+
 import { minLength, required } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
 import employeeService from "../../service/servises/employeeService";
@@ -952,7 +940,7 @@ export default {
         party_id: this.employeeParty,
         military_rank : this.employeeMilitaryTitle,
         deputy:this.employeeSelectedOrgan,
-        languages:langIds,
+        language:langIds,
 
 
       }
@@ -968,7 +956,7 @@ export default {
 
 
 
-
+    // university event
     addItemUniversity() {
       this.universityItemdate1 = "";
       this.universityItemdate2 = "";
@@ -1019,12 +1007,13 @@ export default {
     changeUniversityList(event){
       this.universityItemname = event.value.name
     },
-
-
-
     controlUniversityDialog(item) {
       this.universityDialog = item;
     },
+
+    // Foregn study
+
+   
     controlAcademyDialog(item) {
       this.academyDialog = item;
     },

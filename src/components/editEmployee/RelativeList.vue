@@ -1,249 +1,353 @@
 <template >
-    <div class="grid card py-4 px-3">
-      <div class="col-12 mb-4 border-1 border-300 border-round-sm py-4 ">
-        <DataTable
-          ref="dt"
-          :value="university"
-          v-model:selection="selectedProducts"
-          dataKey="id"
-          :paginator="false"
-          :rows="10"
-          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-          :rowsPerPageOptions="[5, 10, 25]"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
-          responsiveLayout="scroll"
-          showGridlines
-          class="pb-6"
-          :reorderableColumns="true"  @rowReorder="onRowReorder"
-        >
-          <template #header>
-            <div class="grid">
-              <div class="col-6">
-                <h5 class="text-base md:m-0 p-as-md-center text-blue-600 uppercase">
-                 Yaqin qarindoshlari
-                </h5>
-              </div>
-              <div class="col-6 flex justify-content-end">
-                <Button
-                  icon="pi pi-plus-circle"
-                  class="p-button-secondary p-button-sm"
-                  label="Qo'shish"
-                  v-tooltip.bottom="`Bilim yurtini qo'shish`"
-                  @click="controlUniversityDialog(true)"
-                />
-              </div>
+  <div class="grid card py-4" v-if="barLoader">
+    <div class="col-12">
+      <progress-bar-loader></progress-bar-loader>
+    </div>
+  </div>
+
+  <div  class="grid card py-4" v-if="!barLoader">
+    <div class="col-12 py-1 px-0">
+      <DataTable
+        :value="cadryRelativeList"
+        dataKey="id"
+        :paginator="false"
+        responsiveLayout="scroll"
+        @rowReorder="onRowReorder"
+        showGridlines
+        class="pb-6 p-datatable-sm"
+      >
+        <template #header>
+          <div class="grid">
+            <div class="col-6">
+              <h5
+                class="text-base md:m-0 p-as-md-center uppercase text-blue-600"
+              >
+              Yaqin qarindoshlari
+              </h5>
             </div>
-          </template>
-          <Column
-            :rowReorder="true"
-            headerStyle="width: 3rem"
-            :reorderableColumn="false"
-          />
-          <Column header="Qarindoshligi" style="min-width: 1rem">
-            <template #body="slotProps">
-              <div
-                class="flex justify-content-center cursor-pointer font-semibold  text-sm
-                  sm:text-sm
-                  md:text-md
-                  lg:text-lg
-                  xl:text-lg"
-              >
-               Otasi
-                <div v-show="false">{{ slotProps.data.name }}</div>
-              </div>
-             
-            </template>
-          </Column>
-          <Column  header="F.I.SH" style="min-width: 5rem">
-            <template #body="slotProps">
-              <div
-                class="flex justify-content-center cursor-pointer font-semibold  text-sm
-                  sm:text-sm
-                  md:text-md
-                  lg:text-lg
-                  xl:text-lg"
-              >
-               Palvonov Shuxrat Raximberganovich
-                <div v-show="false">{{ slotProps.data.name }}</div>
-              </div>
-            </template>
-          </Column>
-  
-          <Column field="rating" header="Tugilgan yili va joyi" style="min-width: 10rem">
-            <template #body="slotProps">
-              <div
-                class="
-                  text-sm
-                  sm:text-sm
-                  md:text-md
-                  lg:text-lg
-                  xl:text-lg
-                  font-semibold
-                "
-              >
-                1969-yil Xorazm viloyati Shovot tumani
-                <div v-show="false">{{ slotProps.data.name }}</div>
-              </div>
-            </template>
-          </Column>
-          <Column field="rating" header="Kasbi" style="min-width: 30rem">
-            <template #body="slotProps">
-              <div
-                class="
-                  text-sm
-                  sm:text-sm
-                  md:text-md
-                  lg:text-lg
-                  xl:text-lg
-                  font-semibold
-                "
-              >
-              O'zbekiston temir yo'llari  DAK statistika va hisobga olish boshqarmasi statistika va tezkor hisoblash bo'limining 2-toifali navbatchi muhandisi, shu bo'limning lokomotivlarni davlatlararo kesishuv punkitlariga kirish bo'yicha 2-toifali muhandisi
-                <div v-show="false">{{ slotProps.data.name }}</div>
-              </div>
-            </template>
-          </Column>
-          <Column field="rating" header="Yashash manzili" style="min-width: 10rem">
-            <template #body="slotProps">
-              <div
-                class="
-                  text-sm
-                  sm:text-sm
-                  md:text-md
-                  lg:text-lg
-                  xl:text-lg
-                  font-semibold
-                "
-              >
-                Xorazm viloyati Shovot tumani Beglar ko'chasi 5-uy
-                <div v-show="false">{{ slotProps.data.name }}</div>
-              </div>
-            </template>
-          </Column>
-          <Column :exportable="false" style="min-width: 8rem">
-            <template #body="slotProps">
-              <div class="flex w-full justify-content-center">
-                <Button
-                  icon="pi pi-pencil"
-                  class="p-button-rounded p-button-secondary mr-4 p-button-sm"
-                  v-tooltip.left="`Tahrirlash`"
-                  @click="controlUniversityDialog(true)"
-                />
-                <Button
-                  icon="pi pi-trash"
-                  class="p-button-rounded p-button-danger p-button-sm"
-                  v-tooltip.left="`O'chirish`"
-                  @click="confirmDeleteProduct(slotProps.data)"
-                />
-              </div>
-            </template>
-          </Column>
-        </DataTable>
-      </div>
-  
-         <!-- University Dialog -->
-         <div class="col-12">
-        <Dialog
-          v-model:visible="universityDialog"
-          :breakpoints="{ '960px': '75vw', '640px': '90vw' }"
-          :style="{ width: '50vw' }"
-          :modal="true"
-          header="Mehnat faoliyatini qo'shish"
-        >
-          <div class="grid pt-2">
-            <div class="col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6">
-              <h6 class="mb-2 pl-2">Qachondan</h6>
-              <InputText
-                type="text"
-                class="w-full"
-                placeholder="Yilni kiriting"
-                id="employeePhone"
-                v-model="workStartDate"
-                v-maska="'####'"
-              />
-            </div>
-            <div class="col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6">
-              <h6 class="mb-2 pl-2">Qachongacha</h6>
-              <InputText
-                type="text"
-                class="w-full"
-                placeholder="Yilni kiriting"
-                id="employeePhone"
-                v-model="workEndDate"
-                v-maska="'####'"
-              />
-            </div>
-          
-            <div class="col-12">
-              <h6 class="mb-2 pl-2">Lavozimi</h6>
-              <Textarea
-                class="w-full"
-                placeholder="Lavozim to'liq nomi kiriting"
-                id="employeePhone"
-                v-model="workTitle"
-                :autoResize="true"
-                rows="5"
-                cols="30"
+            <div class="col-6 flex justify-content-end align-items-center">
+              <Button
+                icon="pi pi-plus-circle"
+                class="p-button-info p-button-sm"
+                label="Qo'shish"
+                v-tooltip.bottom="`Bilim yurtini qo'shish`"
+                @click="addItem()"
               />
             </div>
           </div>
-  
-          <template #footer>
-            <div class="col-12 pt-2">
-              <div class="flex justify-content-end">
-                <Button
-                  label="Saqlash"
-                  class="p-button-secondary p-button-sm"
-                  @click="controlUniversityDialog(false)"
-                />
-              </div>
+        </template>
+        <Column :rowReorder="true" style="min-width:30px; width:50px;" class="text-center" :reorderableColumn="false" />
+        <Column style="min-width:100px; width:100px;">
+          <template #header>
+            <div class="text-800 font-semibold">Qarindoshligi</div>
+          </template>
+          <template #body="slotProps">
+            <div
+              class="text-center cursor-pointer font-semibold"
+            >
+              {{ slotProps.data.relative }}
             </div>
           </template>
-        </Dialog>
-      </div>
+        </Column>
+        <Column  style="min-width:150px;">
+          <template #header>
+            <div class="text-800 font-semibold">F.I.SH</div>
+          </template>
+          <template #body="slotProps">
+            <div
+              class="text-center cursor-pointer font-semibold"
+            >
+              {{ slotProps.data.fullname }}
+            </div>
+          </template>
+        </Column>
+
+        <Column style="min-width:200px; width:300px;">
+          <template #header>
+            <div class="text-800 font-semibold">Tugilgan yili va joyi</div>
+          </template>
+          <template #body="slotProps">
+            <div
+              class="
+                font-semibold
+              "
+            >
+              {{ slotProps.data.birth_place }}
+            </div>
+          </template>
+        </Column>
+        <Column style="min-width:200px; width:300px;">
+          <template #header>
+            <div class="text-800 font-semibold">Kasbi</div>
+          </template>
+          <template #body="slotProps">
+            <div
+              class="
+                font-semibold
+              "
+            >
+              {{ slotProps.data.post }}
+            </div>
+          </template>
+        </Column>
+        <Column style="min-width:300px; width:400px;">
+          <template #header>
+            <div class="text-800 font-semibold">Yashash manzili</div>
+          </template>
+          <template #body="slotProps">
+            <div
+              class="
+                font-semibold
+              "
+            >
+              {{ slotProps.data.address }}
+            </div>
+          </template>
+        </Column>
+        <Column :exportable="false" style="min-width:100px; width:150px;">
+          <template #header>
+            <div class="text-800 font-semibold">Amallar</div>
+          </template>
+          <template #body="slotProps">
+            <div class="flex gap-2">
+              <edit-button
+                :editItem="slotProps.data"
+                @editEvent="editRelative($event)"
+              ></edit-button>
+              <delete-button
+                :deleteItem="slotProps.data.id"
+                @deleteAcceptEvent="deleteRelative($event)"
+              ></delete-button>
+            </div>
+          </template>
+        </Column>
+      </DataTable>
     </div>
-  </template>
-  <script>
-  export default {
-    data() {
-      return {
-        university: [
-          {
-            id: "1000",
-            code: "f230fh0g3",
-            name: "Raximov Jamshid Shuxrat o'g'li",
-            description: "Product Description",
-            image: "bamboo-watch.jpg",
-            price: 65,
-            category: "Accessories",
-            quantity: 24,
-            inventoryStatus: "INSTOCK",
-            rating: 5,
-          },
-        ],
-  
-        universityDialog: false,
-        selectedProducts:null,
-  
-        workStartDate:null,
-        workEndDate:null,
-        workTitle:null,
-  
-  
-  
-      };
+    <div class="col-12">
+     
+      <Dialog
+        v-model:visible="relativeDialog"
+        :breakpoints="{
+          '1960px': '30vw',
+          '1600px': '40vw',
+          '1200px': '70vw',
+          '960px': '80vw',
+          '640px': '90vw',
+        }"
+        :style="{ width: '50vw' }"
+        :modal="true"
+      >
+        <template #header>
+          <h6 class="uppercase text-lg text-blue-500 font-medium">
+            {{
+              relativeDialogType
+                ? "Ma'lumot qo'shish"
+                : "Ma'lumotni tahrirlash"
+            }}
+          </h6>
+        </template>
+        <div class="grid pt-2">
+          <div class="col-12">
+            <h6 class="mb-2 pl-2 text-500">Qarindoshligi</h6>
+            <Dropdown
+                id="bornRegion"
+                v-model="relative_id"
+                :options="relativeList"
+                optionLabel="name"
+                optionValue="id"
+                placeholder="Tanlang"
+                class="w-full font-semibold"
+              />
+          </div>
+          <div class="col-12">
+            <h6 class="mb-2 pl-2 text-500">F.I.SH</h6>
+            <InputText
+              type="text"
+              class="w-full font-semibold"
+              placeholder="Kiriting"
+              id="employeePhone"
+              v-model="relative_fullName"
+            />
+          </div>
+          <div class="col-12">
+            <h6 class="mb-2 pl-2 text-500">Tug'ilgan yili va joyi</h6>
+            <InputText
+              type="text"
+              class="w-full font-semibold"
+              placeholder="Kiritng"
+              id="employeePhone"
+              v-model="relative_birthday"
+            />
+          </div>
+         
+          <div class="col-12">
+            <h6 class="mb-2 pl-2 text-500">Kasbi</h6>
+            <Textarea
+              class="w-full font-semibold"
+              placeholder="Kiriting"
+              id="employeePhone"
+              v-model="relative_job"
+              :autoResize="true"
+              rows="1"
+            />
+          </div>
+          <div class="col-12">
+            <h6 class="mb-2 pl-2 text-500">Hozirda yashash manzili</h6>
+            <Textarea
+              class="w-full font-semibold"
+              placeholder="Kiriting"
+              id="employeePhone"
+              v-model="relative_adress"
+              :autoResize="true"
+              rows="1"
+            />
+          </div>
+        </div>
+
+        <template #footer>
+          <div class="col-12 pt-2">
+            <div class="flex justify-content-end">
+              <Button
+                label="Saqlash"
+                class="p-button-secondary p-button-sm"
+                @click="addAndEdit()"
+              />
+            </div>
+          </div>
+        </template>
+      </Dialog>
+
+    </div>
+
+  </div>
+</template>
+<script>
+  import DeleteButton from '../buttons/DeleteButton.vue';
+  import EditButton from '../buttons/EditButton.vue';
+import employeeRelative from '../../service/servises/employeeRelative';
+  import ProgressBarLoader from "../loaders/ProgressBarLoader.vue";
+export default {
+  components:{
+    DeleteButton, EditButton,ProgressBarLoader,
+  },
+  data(){
+    return{
+      barLoader:false,
+
+     cadryRelativeList:[],
+     relativeList:[],
+     relative_id:null,
+     relativeDialogType:true,
+     relativeDialog:false,
+     relative_fullName:"",
+     relative_birthday:"",
+     relative_job:"",
+     relative_adress: "",
+     cadry_relative_id:null,
+
+
+    }
+  },
+  methods:{
+    get_cadryRelative(id, loader){
+      this.controlLoader(loader)
+      employeeRelative.get_CadryRelative({id}).then((res)=>{
+        console.log(res.data.cadryRelatives);
+        this.cadryRelativeList = res.data.cadryRelatives;
+        this.relativeList = res.data.relatives;
+        this.controlLoader(false)
+      }).catch((error)=>{
+        this.controlLoader(false)
+        console.log(error);
+      })
     },
-  
-    methods: {
-      controlUniversityDialog(item) {
-        this.universityDialog = item;
-      },
-      onRowReorder(event) {
-          console.log(event.value);
-        this.university = event.value;
-      },
+
+    addItem(){
+      this.relative_id = null,
+      this.relative_fullName=""
+      this.relative_birthday = "",
+      this.relative_job=""
+      this.relative_adress = "",
+      this.relativeDialogType = true
+      this.controlDialog(true)
+
     },
-  };
-  </script>
-  <style lang="">
-  </style>
+    editRelative(event){
+      this.cadry_relative_id = event.id
+      this.relative_id = 3,
+      this.relative_fullName=event.fullname
+      this.relative_birthday = event.birth_place
+      this.relative_job=event.post
+      this.relative_adress = event.address,
+      this.relativeDialogType = false
+      console.table(event);
+      this.controlDialog(true)
+    },
+
+    addAndEdit(){
+      this.controlDialog(false)
+      let data ={
+        relative_id:this.relative_id,
+        fullname: this.relative_fullName,
+        birth_place:this.relative_birthday,
+        post:this.relative_job,
+        address: this.relative_adress,
+      }
+
+      if(this.relativeDialogType){
+        employeeRelative.create_CadryRelative({id:this.$route.params.id, data}).then((res)=>{
+          this.get_cadryRelative(this.$route.params.id, false)
+        }).catch((error)=>{
+          console.log(error);
+        })
+       
+      }else{
+        console.log(data);
+        employeeRelative.update_CadryRelative({relative_id:this.cadry_relative_id, data }).then((res)=>{
+          this.get_cadryRelative(this.$route.params.id, false)
+        }).catch((error)=>{
+          console.log(error);
+        })
+      }
+    },
+
+    deleteRelative(id){
+      employeeRelative.delete_CadryRelative({relative_id:id}).then((res)=>{
+        this.get_cadryRelative(this.$route.params.id, false)
+        }).catch((error)=>{
+          console.log(error);
+        })
+    },
+
+
+
+    onRowReorder(event){
+      this.cadryRelativeList = event.value;
+      let data = []
+      event.value.forEach((item, index)=>{
+        data.push({
+          cadry_relative_id: item.id,
+          position:index+1
+        })
+      })
+      employeeRelative.sortable_CadryRelative({data}).then((res)=>{
+        console.log(res);
+      }).catch((error)=>{
+        console.log(error);
+      })
+    },
+    controlDialog(item){
+      this.relativeDialog = item
+    },
+    controlLoader(item){
+      this.barLoader = item
+    }
+  },
+
+  created(){
+   this.get_cadryRelative(this.$route.params.id, true)
+  }
+
+  
+};
+</script>
