@@ -1,0 +1,27 @@
+<template>
+    <a
+      class="
+        flex
+        w-full
+        justify-content-center
+        py-2
+        bg-yellow-500
+        active:bg-yellow-400
+        cursor-pointer
+        border-1 border-yellow-500 border-round
+      "
+      @click="updateBtn"
+      style="max-width: 40px"
+      :href="file_Link"
+      download
+    >
+      <i class="pi pi-cloud-download text-white text-lg"></i>
+    </a>
+  </template>
+  <script>
+  export default {
+      props:["file_Link"],
+  };
+  </script>
+  <style lang="">
+  </style>

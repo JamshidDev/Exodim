@@ -17,7 +17,7 @@ const delete_CadryRelative = (payload)=>{
 }
 
 const sortable_CadryRelative = (payload)=>{
-    return axios.put(`/api/organization/cadry/relatives/sortable`, payload.data)
+    return axios.put(`/api/organization/cadry/relatives/sortable`, payload)
 }
 
 

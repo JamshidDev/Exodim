@@ -18,7 +18,7 @@ const delete_CadryCareers = (payload)=>{
 }
 
 const sortable_CadryCareers = (payload)=>{
-    return axios.put(`/api/organization/cadry/career/sortable`,payload.data)
+    return axios.put(`/api/organization/cadry/career/sortable`,payload)
 }
 
 

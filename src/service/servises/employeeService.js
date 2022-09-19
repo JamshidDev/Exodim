@@ -29,7 +29,7 @@ const update_empolyee = (payload)=>{
 
 
 const get_employeeAvatar = (payload)=>{
-    return axios.put(`/api/organization/cadries/${payload.id}/update/photo`, payload.form)
+    return axios.post(`/api/organization/cadries/${payload.id}/update/photo`, payload.form)
 }
 
 const get_CadryInfo = (payload)=>{
@@ -41,15 +41,6 @@ const get_CadryInfo = (payload)=>{
 const get_CadryUniversity = (payload)=>{
     return axios.get(`/api/organization/cadry/instituts`, {params:payload},)
 }
-
-const get_CadryAcademy = (payload)=>{
-    return axios.get(`/api/organization/cadry/academicStudies`, {params:payload},)
-}
-
-const get_CadryAbroad = (payload)=>{
-    return axios.get(`/api/organization/cadry/abroadStudies`, {params:payload},)
-}
-
 const get_Languages = (payload)=>{
     return axios.get(`/api/filter/languages`)
 }
@@ -100,4 +91,4 @@ const delete_CadryUniversity = (payload)=>{
 
 
 
-export default {get_Employees,get_Department,get_Stuffs,get_employeeDetails, get_employeeAvatar,update_empolyee,get_workLevel, get_CadryUniversity,get_CadryAcademy, get_CadryAbroad,get_CadryInfo,get_Languages,get_Party,get_universityList, update_CadryUniversity, adding_CadryUniversity, delete_CadryUniversity, get_Info, update_Info}
+export default {get_Employees,get_Department,get_Stuffs,get_employeeDetails, get_employeeAvatar,update_empolyee,get_workLevel, get_CadryUniversity,get_CadryInfo,get_Languages,get_Party,get_universityList, update_CadryUniversity, adding_CadryUniversity, delete_CadryUniversity, get_Info, update_Info}

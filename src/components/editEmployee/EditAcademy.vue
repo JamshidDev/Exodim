@@ -1,5 +1,10 @@
 <template >
-  <div class="grid card py-4">
+   <div class="grid card py-4" v-if="barLoader">
+    <div class="col-12">
+      <progress-bar-loader></progress-bar-loader>
+    </div>
+  </div>
+  <div class="grid card py-4" v-if="!barLoader">
 
     <div class="col-12 pt-1 mb-2">
       <div class="grid">
@@ -262,6 +267,7 @@
                 class="p-button-info p-button-sm"
                 label="Qo'shish"
                 v-tooltip.bottom="`Bilim yurtini qo'shish`"
+                @click="addItemAbroad()"
               />
             </div>
           </div>
@@ -329,7 +335,7 @@
                 font-semibold
               "
             >
-              {{ slotProps.data.type_abroad.name }}
+              {{ slotProps.data.abroad_id.name }}
             </div>
           </template>
         </Column>
@@ -341,10 +347,11 @@
             <div class="flex gap-2">
               <edit-button
                 :editItem="slotProps.data"
+                @editEvent="editItemAbroad($event)"
               ></edit-button>
               <delete-button
                 :deleteItem="slotProps.data.id"
-               
+                @deleteAcceptEvent="deleteAbroad($event)"
               ></delete-button>
             </div>
           </template>
@@ -416,7 +423,7 @@
                 font-semibold
               "
             >
-              {{ slotProps.data.institute.name }}
+              {{ slotProps.data.academic_id.name }}
             </div>
           </template>
         </Column>
@@ -570,7 +577,7 @@
     <!-- Foreign Dialog -->
     <div class="col-12">
       <Dialog
-        v-model:visible="foreignDialog"
+        v-model:visible="abroadDialog"
         :breakpoints="{
           '1960px': '30vw',
           '1600px': '40vw',
@@ -580,81 +587,73 @@
         }"
         :style="{ width: '50vw' }"
         :modal="true"
-        header="Ma'lumot qo'shish"
       >
+        <template #header>
+          <h6 class="uppercase text-lg text-blue-500 font-medium">
+            {{
+              abroadDialogType
+                ? "Ma'lumot qo'shish"
+                : "Ma'lumotni tahrirlash"
+            }}
+          </h6>
+        </template>
         <div class="grid pt-2">
           <div class="col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6">
-            <h6 class="mb-2 pl-2">Qachondan</h6>
+            <h6 class="mb-2 pl-2 text-500">Qachondan</h6>
             <InputText
               type="text"
-              class="w-full"
+              class="w-full font-semibold"
               placeholder="Yilni kiriting"
               id="employeePhone"
-              v-model="v$.employeePhone.$model"
+              v-model="abroad_date1"
               v-maska="'####'"
-              :class="{
-                'p-invalid': v$.employeePhone.$invalid && submitted,
-              }"
             />
           </div>
           <div class="col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6">
-            <h6 class="mb-2 pl-2">Qachongacha</h6>
+            <h6 class="mb-2 pl-2 text-500">Qachongacha</h6>
             <InputText
               type="text"
-              class="w-full"
+              class="w-full font-semibold"
               placeholder="Yilni kiriting"
               id="employeePhone"
-              v-model="v$.employeePhone.$model"
+              v-model="abroad_date2"
               v-maska="'####'"
-              :class="{
-                'p-invalid': v$.employeePhone.$invalid && submitted,
-              }"
             />
           </div>
-
+          
           <div class="col-12">
-            <h6 class="mb-2 pl-2">Tamomlagan bilim yurti</h6>
+            <h6 class="mb-2 pl-2 text-500">Ta'lum muassasasi nomi</h6>
             <Textarea
-              class="w-full"
+              class="w-full font-semibold"
               placeholder="Bilim yurtini kiriting"
               id="employeePhone"
-              v-model="v$.employeePhone.$model"
-              :class="{
-                'p-invalid': v$.employeePhone.$invalid && submitted,
-              }"
+              v-model="abroad_institute"
               :autoResize="true"
-              rows="5"
-              cols="30"
+              rows="1"
             />
           </div>
           <div class="col-12">
-            <h6 class="mb-2 pl-2">Yo'nalishi</h6>
+            <h6 class="mb-2 pl-2 text-500">Yo'nalishi</h6>
             <Textarea
               placeholder="Yo'nalishni kiriting"
-              class="w-full"
+              class="w-full font-semibold"
               id="employeePhone"
-              v-model="v$.employeePhone.$model"
-              :class="{
-                'p-invalid': v$.employeePhone.$invalid && submitted,
-              }"
+              v-model="abroad_direction"
               :autoResize="true"
-              rows="5"
-              cols="30"
+              rows="1"
             />
           </div>
           <div class="col-12">
-            <h6 class="mb-2 pl-2">Mablag'lashtirish</h6>
+            <h6 class="mb-2 pl-2 text-500">Mablag'lashtirish:</h6>
             <Dropdown
-              id="employeeLanguage"
-              v-model="v$.employeeLanguage.$model"
-              :class="{
-                'p-invalid': v$.employeeLanguage.$invalid && submitted,
-              }"
-              :options="Languages"
-              optionLabel="name"
-              placeholder="Oligohni tanlang"
-              class="w-full"
-            />
+                id="academic"
+                v-model="abroad_abroad_id"
+                :options="abroadList"
+                optionLabel="name"
+                optionValue="id"
+                placeholder="Tanlang"
+                class="w-full font-semibold"
+              />
           </div>
         </div>
 
@@ -664,7 +663,7 @@
               <Button
                 label="Saqlash"
                 class="p-button-secondary p-button-sm"
-                @click="controlForeignDialog(false)"
+                @click="addAndEditAbroad()"
               />
             </div>
           </div>
@@ -755,17 +754,23 @@ import { globalValidate } from "../../validation/vuevalidate";
 import { minLength, required } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
 import employeeService from "../../service/servises/employeeService";
+import employeeAbroad from "../../service/servises/employeeAbroad";
+import employeeAcademy from '../../service/servises/employeeAcademy'
 import EditButton from "../buttons/EditButton.vue";
+import ProgressBarLoader from "../loaders/ProgressBarLoader.vue";
 
 export default {
   components: {
     DeleteButton,
     EditButton,
+    ProgressBarLoader,
   },
   setup: () => ({ v$: useVuelidate() }),
 
   data() {
     return {
+      barLoader:false,
+
       academic: null,
       academicDegree: null,
       academicTitle: null,
@@ -806,14 +811,25 @@ export default {
       academyname:"",
       academyspeciality:"",
       submitted: false,
-     
+      
+      abroadDialog:false,
+      abroadDialogType:true,
+      abroadList:[],
+      abroad_date1:"",
+      abroad_date2:"",
+      abroad_institute:"",
+      abroad_direction:"",
+      abroad_abroad_id:null,
+      abroad_id:null,
+
+
+
       submitted: false,
 
-      foreignCampus: null,
       academicCampus: null,
 
       academyDialog: false,
-      foreignDialog: false,
+
     };
   },
 
@@ -841,23 +857,7 @@ export default {
       this.$router.push("/admin/partemployee");
     },
 
-    getCadry(id) {
-      employeeService
-        .get_CadryInfo({ id: id })
-        .then((res) => {
-          this.academic = res.data.cadry.education_id.id;
-          this.academicDegree = res.data.cadry.academicdegree_id.id
-          this.academicTitle = res.data.cadry.academictitle_id.id
-          this.employeeNation = res.data.cadry.nationality_id.id
-          this.employeeLanguage = res.data.cadry.languages
-          this.employeeMilitaryTitle = res.data.cadry.military_rank
-          this.employeeSelectedOrgan = res.data.cadry.deputy;
-          this.employeeParty = res.data.cadry.party_id.id   
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
+  
 
     // Cadry university Action
     get_universityList(){
@@ -898,15 +898,8 @@ export default {
 
 
     get_CadryAcademy(id) {
-      employeeService.get_CadryAcademy({ cadry_id: id }).then((res) => {
+      employeeAcademy.get_CadryAcademy({id }).then((res) => {
         this.cadryAcademyList = res.data;
-      });
-    },
-
-    get_CadryAbroad(id) {
-      employeeService.get_CadryAbroad({cadry_id: id}).then((res) => {
-        console.log(res.data);
-        this.cadryAbroadList = res.data;
       });
     },
 
@@ -924,6 +917,27 @@ export default {
       }).catch((error)=>{
         console.log(error);
       })
+    },
+
+    getCadry(id, loader) {
+      this.controlLoader(loader)
+      employeeService
+        .get_CadryInfo({id})
+        .then((res) => {
+          this.academic = res.data.cadry.education_id.id;
+          this.academicDegree = res.data.cadry.academicdegree_id.id
+          this.academicTitle = res.data.cadry.academictitle_id.id
+          this.employeeNation = res.data.cadry.nationality_id.id
+          this.employeeLanguage = res.data.cadry.languages
+          this.employeeMilitaryTitle = res.data.cadry.military_rank
+          this.employeeSelectedOrgan = res.data.cadry.deputy;
+          this.employeeParty = res.data.cadry.party_id.id  
+          this.controlLoader(false) 
+        })
+        .catch((error) => {
+          console.log(error);
+          this.controlLoader(false) 
+        });
     },
 
     update_Info(){
@@ -947,7 +961,7 @@ export default {
       console.log(data);
       employeeService.update_Info({id:this.$route.params.id, data,}).then((res)=>{
         console.log(res.data);
-        this.get_Info();
+        this.getCadry(this.$route.params.id, false);
       }).catch((error)=>{
         console.log(error);
       })
@@ -999,14 +1013,99 @@ export default {
       // this.updateCadryUniversity()
       console.log(valid);
     },
+    changeUniversityList(event){
+      this.universityItemname = event.value.name
+    },
+
+    get_CadryAbroad(id) {
+      employeeAbroad.get_CadryAbroad({id}).then((res) => {
+        console.log(res.data);
+        this.cadryAbroadList = res.data;
+      }).catch((error)=>{
+        console.log(error);
+      })
+    },
+
+    get_AbroadList(){
+      employeeAbroad.get_AbroadList().then((res) => {
+        console.log(res.data);
+        this.abroadList = res.data;
+      }).catch((error)=>{
+        console.log(error);
+      })
+    },
+
+    addItemAbroad(){
+      this.abroadDialogType=true
+      this.abroad_date1=""
+      this.abroad_date2=""
+      this.abroad_institute=""
+      this.abroad_direction=""
+      this.abroad_abroad_id=null
+      this.controlAbroadDialog(true)
+    },
+
+    editItemAbroad(event){
+      this.abroadDialogType=false
+      this.abroad_date1=event.date1;
+      this.abroad_date2=event.date2;
+      this.abroad_institute=event.institute;
+      this.abroad_direction=event.direction;
+      this.abroad_abroad_id=event.abroad_id.id;
+      this.abroad_id = event.id
+      this.controlAbroadDialog(true)
+    },
+
+    addAndEditAbroad(){
+      this.controlAbroadDialog(false)
+      let data ={
+        date1: this.abroad_date1,
+        date2: this.abroad_date2,
+        institute:this.abroad_institute,
+        direction: this.abroad_direction,
+        abroad_id: this.abroad_abroad_id
+      }
+      if(this.abroadDialogType){
+        employeeAbroad.create_CadryAbroad({id:this.$route.params.id, data}).then((res) => {
+        console.log(res.data);
+        this.get_CadryAbroad(this.$route.params.id)
+       
+      }).catch((error)=>{
+        console.log(error);
+      })
+      }else{
+        employeeAbroad.update_CadryAbroad({id:this.abroad_id, data}).then((res) => {
+        console.log(res.data);
+        this.get_CadryAbroad(this.$route.params.id)
+       
+      }).catch((error)=>{
+        console.log(error);
+      })
+      }
+
+
+
+    },
+
+    deleteAbroad(id){
+      employeeAbroad.delete_CadryAbroad({id}).then((res) => {
+        console.log(res.data);
+        this.get_CadryAbroad(this.$route.params.id)
+       
+      }).catch((error)=>{
+        console.log(error);
+      })
+    },
+
+
+
+
 
     onImageRightClick(event) {
       this.$refs.menu.show(event);
     },
 
-    changeUniversityList(event){
-      this.universityItemname = event.value.name
-    },
+    
     controlUniversityDialog(item) {
       this.universityDialog = item;
     },
@@ -1017,8 +1116,11 @@ export default {
     controlAcademyDialog(item) {
       this.academyDialog = item;
     },
-    controlForeignDialog(item) {
-      this.foreignDialog = item;
+    controlAbroadDialog(item) {
+      this.abroadDialog = item;
+    },
+    controlLoader(item){
+      this.barLoader = item;
     },
   },
   created() {
@@ -1027,8 +1129,9 @@ export default {
     this.get_CadryAbroad(this.$route.params.id)
     this.get_universityList()
     this.get_Info()
+    this.get_AbroadList()
 
-    this.getCadry(this.$route.params.id);
+    this.getCadry(this.$route.params.id, true);
    
   },
 };

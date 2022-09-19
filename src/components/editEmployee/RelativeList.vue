@@ -37,7 +37,7 @@
           </div>
         </template>
         <Column :rowReorder="true" style="min-width:30px; width:50px;" class="text-center" :reorderableColumn="false" />
-        <Column style="min-width:100px; width:100px;">
+        <Column style="min-width:100px; width:150px;">
           <template #header>
             <div class="text-800 font-semibold">Qarindoshligi</div>
           </template>
@@ -45,7 +45,7 @@
             <div
               class="text-center cursor-pointer font-semibold"
             >
-              {{ slotProps.data.relative }}
+              {{  relativeName(slotProps.data.relative) }}
             </div>
           </template>
         </Column>
@@ -274,7 +274,7 @@ export default {
     },
     editRelative(event){
       this.cadry_relative_id = event.id
-      this.relative_id = 3,
+      this.relative_id = event.relative,
       this.relative_fullName=event.fullname
       this.relative_birthday = event.birth_place
       this.relative_job=event.post
@@ -319,18 +319,20 @@ export default {
         })
     },
 
-
+    relativeName(id){
+      return this.relativeList.filter((item)=> item.id == id)[0].name
+    },
 
     onRowReorder(event){
       this.cadryRelativeList = event.value;
-      let data = []
+      let orders = []
       event.value.forEach((item, index)=>{
-        data.push({
+        orders.push({
           cadry_relative_id: item.id,
           position:index+1
         })
       })
-      employeeRelative.sortable_CadryRelative({data}).then((res)=>{
+      employeeRelative.sortable_CadryRelative({orders}).then((res)=>{
         console.log(res);
       }).catch((error)=>{
         console.log(error);

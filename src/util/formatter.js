@@ -8,4 +8,9 @@ const outDateFormatter = function (time) {
   return newFormatDate;
 };
 
-export default { interDateFormatter, outDateFormatter };
+const textDateFormat = function (time){
+  let textFormat = new Date(time).toLocaleDateString("en-GB")
+  return textFormat
+}
+
+export default { interDateFormatter, outDateFormatter,textDateFormat };

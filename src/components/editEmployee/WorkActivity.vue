@@ -208,14 +208,15 @@ export default {
 
     onRowReorder(event){
       this.careerList = event.value;
-      let data = []
+      let orders = []
       event.value.forEach((item, index)=>{
-        data.push({
+        orders.push({
           career_id: item.id,
           position:index+1
         })
       })
-      employeeCarreer.sortable_CadryCareers({data}).then((res)=>{
+      console.log(orders);
+      employeeCarreer.sortable_CadryCareers({orders}).then((res)=>{
         console.log(res);
       }).catch((error)=>{
         console.log(error);
