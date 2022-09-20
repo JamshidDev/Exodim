@@ -10,11 +10,11 @@ const create_CadryAcademy = (payload)=>{
 }
 
 const update_CadryAcademy = (payload)=>{
-    return axios.put(`/api/organization/cadry/${payload.id}/academicStudies`, payload.data)
+    return axios.put(`/api/organization/cadry/academicStudies/${payload.id}/update`, payload.data)
 }
 
 const delete_CadryAcademy = (payload)=>{
-    return axios.delte(`/api/organization/cadry/academicStudies/${payload.id}/update`, payload.data)
+    return axios.delete(`/api/organization/cadry/academicStudies/${payload.id}/delete`)
 }
 
 const get_AcademyList = (payload)=>{

@@ -383,6 +383,7 @@
                 icon="pi pi-plus-circle"
                 class="p-button-info p-button-sm"
                 label="Qo'shish"
+                @click="addItemAcademy()"
                 v-tooltip.bottom="`Bilim yurtini qo'shish`"
               />
             </div>
@@ -435,10 +436,11 @@
             <div class="flex gap-2">
               <edit-button
                 :editItem="slotProps.data"
+                @editEvent="editItemAcademy($event)"
               ></edit-button>
               <delete-button
                 :deleteItem="slotProps.data.id"
-               
+                @deleteAcceptEvent="deleteAcademy($event)"
               ></delete-button>
             </div>
           </template>
@@ -684,50 +686,50 @@
         }"
         :style="{ width: '50vw' }"
         :modal="true"
-        header="Ma'lumot qo'shish"
       >
+        <template #header>
+          <h6 class="uppercase text-lg text-blue-500 font-medium">
+            {{
+              abroadDialogType
+                ? "Ma'lumot qo'shish"
+                : "Ma'lumotni tahrirlash"
+            }}
+          </h6>
+        </template>
         <div class="grid pt-2">
           <div class="col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6">
-            <h6 class="mb-2 pl-2">Qachondan</h6>
+            <h6 class="mb-2 pl-2 text-500">Qachondan</h6>
             <InputText
               type="text"
-              class="w-full"
+              class="w-full font-semibold"
               placeholder="Yilni kiriting"
               id="employeePhone"
-              v-model="v$.employeePhone.$model"
+              v-model="academydate1"
               v-maska="'####'"
-              :class="{
-                'p-invalid': v$.employeePhone.$invalid && submitted,
-              }"
             />
           </div>
           <div class="col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6">
-            <h6 class="mb-2 pl-2">Qachongacha</h6>
+            <h6 class="mb-2 pl-2 text-500">Qachongacha</h6>
             <InputText
               type="text"
-              class="w-full"
+              class="w-full font-semibold"
               placeholder="Yilni kiriting"
               id="employeePhone"
-              v-model="v$.employeePhone.$model"
+              v-model="academydate2"
               v-maska="'####'"
-              :class="{
-                'p-invalid': v$.employeePhone.$invalid && submitted,
-              }"
             />
           </div>
           <div class="col-12">
-            <h6 class="mb-2 pl-2">Akademiya nomi</h6>
+            <h6 class="mb-2 pl-2 text-500">Akademiya nomi</h6>
             <Dropdown
-              id="employeeLanguage"
-              v-model="v$.employeeLanguage.$model"
-              :class="{
-                'p-invalid': v$.employeeLanguage.$invalid && submitted,
-              }"
-              :options="Languages"
-              optionLabel="name"
-              placeholder="Oligohni tanlang"
-              class="w-full"
-            />
+                id="academic"
+                v-model="academy_id"
+                :options="AcademyList"
+                optionLabel="name"
+                optionValue="id"
+                placeholder="Tanlang"
+                class="w-full font-semibold"
+              />
           </div>
         </div>
 
@@ -737,7 +739,7 @@
               <Button
                 label="Saqlash"
                 class="p-button-secondary p-button-sm"
-                @click="controlAcademyDialog(false)"
+                @click="addAndEditAcademy()"
               />
             </div>
           </div>
@@ -806,10 +808,12 @@ export default {
       academyDialogType:true,
       academyDialog:false,
       AcademyList: [],
+      cadryAcademyList:[],
       academydate1:"",
       academydate2:"",
-      academyname:"",
-      academyspeciality:"",
+      academy_id:null,
+      cadry_academy_id:null,
+
       submitted: false,
       
       abroadDialog:false,
@@ -821,14 +825,6 @@ export default {
       abroad_direction:"",
       abroad_abroad_id:null,
       abroad_id:null,
-
-
-
-      submitted: false,
-
-      academicCampus: null,
-
-      academyDialog: false,
 
     };
   },
@@ -897,11 +893,7 @@ export default {
 
 
 
-    get_CadryAcademy(id) {
-      employeeAcademy.get_CadryAcademy({id }).then((res) => {
-        this.cadryAcademyList = res.data;
-      });
-    },
+   
 
     
 
@@ -1099,6 +1091,69 @@ export default {
 
 
 
+    get_CadryAcademy(id) {
+      employeeAcademy.get_CadryAcademy({id }).then((res) => {
+        this.cadryAcademyList = res.data;
+      });
+    },
+
+    get_AcademyList(){
+      employeeAcademy.get_AcademyList().then((res) => {
+        this.AcademyList = res.data;
+      });
+    },
+    addItemAcademy(){
+      this.academyDialogType = true
+      this.academydate1 = ""
+      this.academydate2 = ""
+      this.academy_id = null
+      this.controlAcademyDialog(true)
+
+    },
+
+    editItemAcademy(event){
+      this.cadry_academy_id = event.id
+      this.academyDialogType = false
+      this.academydate1 = event.date1
+      this.academydate2 = event.date2
+      this.academy_id = event.academic_id.id
+      this.controlAcademyDialog(true)
+    },
+    addAndEditAcademy(){
+      this.controlAcademyDialog(false)
+      let data ={
+        date1:this.academydate1,
+        date2:this.academydate2,
+        academic_id:this.academy_id
+      }
+      if(this.academyDialogType){
+        employeeAcademy.create_CadryAcademy({id:this.$route.params.id, data}).then((res)=>{
+          this.get_CadryAcademy(this.$route.params.id);
+        }).catch((error)=>{
+          console.log(error);
+        })
+      }else{
+        employeeAcademy.update_CadryAcademy({id:this.cadry_academy_id, data}).then((res)=>{
+          this.get_CadryAcademy(this.$route.params.id);
+        }).catch((error)=>{
+          console.log(error);
+        })
+      }
+
+
+
+    },
+
+    deleteAcademy(id){
+      employeeAcademy.delete_CadryAcademy({id}).then((res)=>{
+          this.get_CadryAcademy(this.$route.params.id);
+        }).catch((error)=>{
+          console.log(error);
+        })
+    },
+
+
+
 
 
     onImageRightClick(event) {
@@ -1130,6 +1185,7 @@ export default {
     this.get_universityList()
     this.get_Info()
     this.get_AbroadList()
+    this.get_AcademyList()
 
     this.getCadry(this.$route.params.id, true);
    

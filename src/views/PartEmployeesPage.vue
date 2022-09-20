@@ -365,10 +365,8 @@
                 lg:text-lg
                 xl:text-lg
                 font-medium
-                text-blue-600
-                hover:text-green-500
+                hover:text-blue-500
                 cursor-pointer
-                uppercase
               "
               v-tooltip.bottom="`Tahrirlash`"
               @click="goPush(slotProps.data.id)"
@@ -387,7 +385,6 @@
                 md:text-md
                 lg:text-lg
                 xl:text-lg
-                text-yellow-700
               "
             >
               {{
@@ -408,7 +405,6 @@
                 lg:text-lg
                 xl:text-lg
                 font-medium
-                text-indigo-700
               "
             >
               <span>{{ slotProps.data.department }}</span>

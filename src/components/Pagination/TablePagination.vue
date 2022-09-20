@@ -4,7 +4,7 @@
       v-model:first="currentPage"
       v-model:rows="page_count"
       :totalRecords="total_page"
-      class="py-0 w-full"
+      class="py-0 w-full "
       template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport"
       @page="changePagination($event)"
     >

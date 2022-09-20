@@ -830,8 +830,8 @@ let id = this.$route.params.id
   .img-box {
     position: relative;
     margin-top: 20px;
-    width: 160px;
-    height: 180px;
+    width: 150px;
+    height: 200px;
     overflow: hidden;
     border: 2px solid #767b8338;
     border-radius: 10px;
@@ -841,7 +841,7 @@ let id = this.$route.params.id
       opacity: 1;
     }
     .employee-avatar {
-      width: 160px;
+      width: 150px;
       height: 100%;
     }
     .hover-element {

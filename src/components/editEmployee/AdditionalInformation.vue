@@ -6,6 +6,77 @@
   </div>
 
   <div class="grid card py-4" v-if="!barLoader">
+    <!-- Med table -->
+    <div class="col-12 py-1 px-0">
+      <DataTable
+        :value="medList"
+        dataKey="id"
+        :paginator="false"
+        responsiveLayout="scroll"
+        showGridlines
+        class="pb-6 p-datatable-sm"
+      >
+        <template #header>
+          <div class="grid">
+            <div class="col-6">
+              <h5
+                class="text-base md:m-0 p-as-md-center uppercase text-blue-600"
+              >
+                Tibbiy ko'rik
+              </h5>
+            </div>
+            <div
+              class="col-6 flex justify-content-end align-items-center"
+            ></div>
+          </div>
+        </template>
+        <Column>
+          <template #header>
+            <div class="text-800 font-semibold">Tibbiy ko'rik xulosasi</div>
+          </template>
+          <template #body="slotProps">
+            <div class="text-left cursor-pointer font-semibold">
+              {{ slotProps.data.result }}
+            </div>
+          </template>
+        </Column>
+        <Column style="min-width: 50px; width: 300px">
+          <template #header>
+            <div class="text-800 font-semibold">O'tgan sanasi</div>
+          </template>
+          <template #body="slotProps">
+            <div class="font-semibold flex justify-content-center">
+              {{ formatter.textDateFormat(slotProps.data.date1) }}
+            </div>
+          </template>
+        </Column>
+        <Column style="min-width: 50px; width: 300px">
+          <template #header>
+            <div class="text-800 font-semibold">Keyingi o'tish sanasi</div>
+          </template>
+          <template #body="slotProps">
+            <div class="font-semibold flex justify-content-center">
+              {{ formatter.textDateFormat(slotProps.data.date2) }}
+            </div>
+          </template>
+        </Column>
+
+        <Column :exportable="false" style="min-width: 100px; width: 150px">
+          <template #header>
+            <div class="text-800 font-semibold">Amallar</div>
+          </template>
+          <template #body="slotProps">
+            <div class="flex gap-2">
+              <delete-button
+                :deleteItem="slotProps.data.id"
+                @deleteAcceptEvent="deleteItemMed($event)"
+              ></delete-button>
+            </div>
+          </template>
+        </Column>
+      </DataTable>
+    </div>
+
     <!--Punishment table -->
     <div class="col-12 py-1 px-0">
       <DataTable
@@ -464,39 +535,41 @@
         <template #header>
           <h6 class="uppercase text-lg text-blue-500 font-medium">
             {{
-              stuffDialogType
-                ? "Ma'lumot qo'shish"
-                : "Ma'lumotni tahrirlash"
+              stuffDialogType ? "Ma'lumot qo'shish" : "Ma'lumotni tahrirlash"
             }}
           </h6>
         </template>
         <div class="grid pt-2">
           <div class="col-12">
-            <h6 class="mb-2 pl-2 text-500">Izoh</h6>
-            <Textarea
-              class="w-full font-semibold"
-              placeholder="Kiriting"
-              v-model="stuff_Comment"
-              :autoResize="true"
-              rows="1"
-            />
+              <h6 class="mb-2 pl-2 text-500">Izoh</h6>
+              <Textarea
+                class="w-full font-semibold"
+                placeholder="Kiriting"
+                :autoResize="true"
+                rows="1"
+                v-model="stuff_Comment"
+
+              />
+         
           </div>
           <div class="col-12">
             <h6 class="mb-2 pl-2 text-500">Fayl (.Pdf)</h6>
             <Button
-                label="Fayl yuklash"
-                icon="pi pi-cloud-upload"
-                class="p-button-info p-button-sm w-full"
-                @click="$refs.file.click()"
-              />
-              <input
-          v-show="false"
-          type="file"
-          ref="file"
-          @change="uploadFile($event)"
-          accept="application/pdf"
-        />
-        <h6 class="text-sm my-1 text-green-600" v-if="stuff_fileName">{{stuff_fileName}}</h6>
+              label="Fayl yuklash"
+              icon="pi pi-cloud-upload"
+              class="p-button-info p-button-sm w-full"
+              @click="$refs.file.click()"
+            />
+            <input
+              v-show="false"
+              type="file"
+              ref="file"
+              @change="uploadFile($event)"
+              accept="application/pdf"
+            />
+            <h6 class="text-sm my-1 text-green-600" v-if="stuff_fileName">
+              {{ stuff_fileName }}
+            </h6>
           </div>
         </div>
 
@@ -524,6 +597,8 @@ import ProgressBarLoader from "../loaders/ProgressBarLoader.vue";
 import employeeAdditionalService from "../../service/servises/employeeAdditionalService";
 import employeeIncentiveService from "../../service/servises/employeeIncentiveService";
 import employeeStuff from "../../service/servises/employeeStuff";
+import employeeMed from "../../service/servises/employeeMed";
+
 export default {
   components: {
     DeleteButton,
@@ -531,6 +606,7 @@ export default {
     ViewButton,
     ProgressBarLoader,
   },
+
   data() {
     return {
       formatter,
@@ -558,11 +634,12 @@ export default {
       stuffList: [],
       stuffDialogType: true,
       stuffDialog: false,
-      stuff_Comment:"",
-      stuff_file:null,
-      stuff_id:null,
-      stuff_fileName:null,
+      stuff_Comment: "",
+      stuff_file: null,
+      stuff_id: null,
+      stuff_fileName: null,
 
+      medList: [],
     };
   },
   methods: {
@@ -721,7 +798,6 @@ export default {
         });
     },
 
-
     get_Stuff(id) {
       employeeStuff
         .get_CadryStuff({ id })
@@ -733,73 +809,100 @@ export default {
         });
     },
 
-    addItemStuff(){
-      this.stuffDialogType = true
-      this.stuff_Comment = ""
-      this.stuff_file=""
-      this.stuff_fileName = null,
-      this.controlStuffDialog(true)
+    addItemStuff() {
+      this.stuffDialogType = true;
+      this.stuff_Comment = "";
+      this.stuff_file = "";
+      (this.stuff_fileName = null), this.controlStuffDialog(true);
     },
 
-    editItemStuff(event){
-      this.stuffDialogType = false
-      this.stuff_id = event.id
-      this.stuff_Comment = event.comment
-      this.stuff_file=null,
-      this.controlStuffDialog(true)
+    editItemStuff(event) {
+      this.stuffDialogType = false;
+      this.stuff_id = event.id;
+      this.stuff_Comment = event.comment;
+      (this.stuff_file = null), this.controlStuffDialog(true);
     },
 
-    uploadFile(event){
+    uploadFile(event) {
       console.log(event);
       const { files } = event.target;
-      let fileArray =files[0].name.split(".")
-      let extention = fileArray[fileArray.length-1]
-      if(extention=="pdf"){
+      let fileArray = files[0].name.split(".");
+      let extention = fileArray[fileArray.length - 1];
+      if (extention == "pdf") {
         this.stuff_file = files[0];
-        this.stuff_fileName = files[0].name
+        this.stuff_fileName = files[0].name;
         console.log(files[0]);
-      }else{
-
+      } else {
       }
     },
 
-    addAndEditStuff(){
-      this.controlStuffDialog(false)
-      let form = new FormData()
-      form.append("comment", this.stuff_Comment)
-      form.append("file_staff", this.stuff_file)
+    addAndEditStuff() {
+      this.controlStuffDialog(false);
+      let form = new FormData();
+      form.append("comment", this.stuff_Comment);
+      form.append("file_staff", this.stuff_file);
 
-      if(this.stuffDialogType){
-        employeeStuff.create_CadryStuff({id:this.$route.params.id, form}).then((res)=>{
-          this.get_Stuff(this.$route.params.id);
-        }).catch((error)=>{
-          console.log(error);
-        })
-      }else{
-        employeeStuff.create_CadryStuff({id:this.stuff_id, form}).then((res)=>{
-          this.get_Stuff(this.$route.params.id);
-        }).catch((error)=>{
-          console.log(error);
-        })
+      if (this.stuffDialogType) {
+        employeeStuff
+          .create_CadryStuff({ id: this.$route.params.id, form })
+          .then((res) => {
+            this.get_Stuff(this.$route.params.id);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        employeeStuff
+          .create_CadryStuff({ id: this.stuff_id, form })
+          .then((res) => {
+            this.get_Stuff(this.$route.params.id);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
-
-
     },
 
-    deleteStuff(id){
-      employeeStuff.delete_CadryStuff({id}).then((res)=>{
-        this.get_Stuff(this.$route.params.id);
-      }).catch((error)=>{
-        console.log(error);
-      })
+    deleteStuff(id) {
+      employeeStuff
+        .delete_CadryStuff({ id })
+        .then((res) => {
+          this.get_Stuff(this.$route.params.id);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
+
+    get_cadryMed(id) {
+      employeeMed
+        .get_CadryMed({ id })
+        .then((res) => {
+          this.medList = res.data.meds;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    deleteItemMed(id) {
+      employeeMed
+        .delete_CadryMed({ id })
+        .then((res) => {
+          this.get_cadryMed(this.$route.params.id);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
     controlPunishmentDialog(item) {
       this.punishmentDialog = item;
     },
     controlIncentiveDialog(item) {
       this.incentiveDialog = item;
     },
-    controlStuffDialog(item){
+    controlStuffDialog(item) {
       this.stuffDialog = item;
     },
     controlLoader(item) {
@@ -808,6 +911,7 @@ export default {
   },
 
   created() {
+    this.get_cadryMed(this.$route.params.id);
     this.get_Stuff(this.$route.params.id);
     this.get_Incentive(this.$route.params.id);
     this.get_punishment(this.$route.params.id, true);

@@ -322,6 +322,7 @@
         showGridlines
         class="p-datatable-sm"
         v-show="totalCadries"
+        stripedRows
       >
         <template #header>
           <div class="flex w-full">

@@ -52,7 +52,6 @@
                 xl:text-lg
                 font-medium
                 cursor-pointer
-                text-blue-500
               "
               v-tooltip.top="`Tahrirlash`"
             >
@@ -64,10 +63,6 @@
         <Column field="rating" header="Lavozimi" style="min-width: 20rem">
           <template #body="slotProps">
             <div class="text-sm sm:text-sm md:text-md lg:text-lg xl:text-lg">
-              O'zbekiston temir yo'llari Aksiyadorlik jamiyati Personalni
-              boshqarish va kadrlar tayyorlash boshqarmasida ish yurituvchi
-              O'zbekiston temir yo'llari Aksiyadorlik jamiyati Personalni
-              boshqarish va kadrlar tayyorlash boshqarmasida ish yurituvchi
               {{ slotProps.data.name }}
             </div>
           </template>

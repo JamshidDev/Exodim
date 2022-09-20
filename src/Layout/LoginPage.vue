@@ -47,6 +47,7 @@
           placeholder="Parol kiriting"
           class="w-full mb-3"
           inputClass="w-full"
+          toggleMask
           :feedback="false"
         ></Password>
       </div>
@@ -88,21 +89,33 @@ export default {
       authService
         .loginAdmin(this.user)
         .then((res) => {
-          console.log(res.data.user.roles);
-          let permissions = [];
+          console.log(res.data);
+          localStorage.setItem("access_token", res.data.access_token);
+
+          authService.get_AdminDetails().then((res)=>{
+            console.log(res.data);
+              let permissions = [];
           if (
-            res.data.user.roles.permissions &&
-            res.data.user.roles.permissions.length
+            res.data.roles.permissions &&
+            res.data.roles.permissions.length
           ) {
-            res.data.user.roles.permissions.forEach((item) => {
+            res.data.roles.permissions.forEach((item) => {
               permissions.push(item.name)
             });
           }
           this.set_adminPermissions(permissions)
           localStorage.setItem("Adminpermissions", JSON.stringify(permissions) )
-          localStorage.setItem("access_token", res.data.access_token);
+          
           this.$router.push("/");
-          this.controlLoader(false);
+
+
+            this.controlLoader(false);
+          }).catch((error)=>{
+            console.log(error);
+          })
+          
+        
+          
         })
         .catch((error) => {
           this.controlLoader(false);
