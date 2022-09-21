@@ -4,6 +4,7 @@
 import "primevue/resources/primevue.min.css"              //core css
 import "primeicons/primeicons.css"  //primeicons
 import "/node_modules/primeflex/primeflex.css"
+// import Vuelidate from 'vuelidate'
 
 import "./assets/style/layouts.scss"
 import { createApp, reactive } from 'vue'
@@ -73,8 +74,9 @@ app.use(PrimeVue, { ripple: true, inputStyle: 'outlined' })
 app.use(ToastService);
 app.use(store)
 app.use(router)
-app.use(Maska);
-app.use(ConfirmationService);
+app.use(Maska)
+app.use(ConfirmationService)
+// app.use(Vuelidate)
 
 
 

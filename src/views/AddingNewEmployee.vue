@@ -13,7 +13,7 @@
             />
             <Button
               icon="pi pi-save"
-              @click="handleSubmit(!v$.$invalid)"
+              @click="addEmployee()"
               class="p-button-secondary p-button-sm"
               label="Saqlash"
             />
@@ -60,9 +60,8 @@
                 class="w-full font-semibold"
                 placeholder="Familiyani kiriting"
                 id="firstName"
-                v-model="v$.firstName.$model"
-                v-maska="'S*'"
-                :class="{ 'p-invalid': v$.firstName.$invalid && submitted }"
+                v-model="v$.lastName.$model"
+                :class="{ 'p-invalid': v$.lastName.$invalid && submitted }"
               />
             </div>
             <div class="col-12">
@@ -72,9 +71,8 @@
                 class="w-full font-semibold"
                 placeholder="Ismni kiriting"
                 id="lastName"
-                v-model="v$.lastName.$model"
-                v-maska="'S*'"
-                :class="{ 'p-invalid': v$.lastName.$invalid && submitted }"
+                v-model="v$.firstName.$model"
+                :class="{ 'p-invalid': v$.firstName.$invalid && submitted }"
               />
             </div>
             <div class="col-12">
@@ -83,9 +81,8 @@
                 type="text"
                 id="thirdName"
                 v-model="v$.thirdName.$model"
-                v-maska="'S*'"
                 :class="{ 'p-invalid': v$.thirdName.$invalid && submitted }"
-                class="w-full"
+                class="w-full font-semibold"
                 placeholder="Sharifni kiriting"
               />
             </div>
@@ -115,8 +112,9 @@
                 id="bornRegion"
                 v-model="v$.bornRegion.$model"
                 :class="{ 'p-invalid': v$.bornRegion.$invalid && submitted }"
-                :options="Regions"
+                :options="RegionsList"
                 optionLabel="name"
+                optionValue="id"
                 placeholder="Viloyatni tanlang"
                 class="w-full font-semibold"
               />
@@ -125,13 +123,13 @@
               <h6 class="mb-2">Tug'ilgan tumani</h6>
               <Dropdown
                 id="bornDistric"
-                v-model="v$.bornDistric.$model"
-                :class="{ 'p-invalid': v$.bornDistric.$invalid && submitted }"
-                :options="Districts"
+                v-model="v$.born_district.$model"
+                :class="{ 'p-invalid': v$.born_district.$invalid && submitted }"
+                :options="DistrictList"
                 optionLabel="name"
                 :filter="true"
                 placeholder="Tumanni tanlang"
-                :showClear="true"
+                @change="changeBornDistrict"
                 class="w-full font-semibold"
               >
                 <template #value="slotProps">
@@ -159,31 +157,32 @@
         <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
           <div class="grid">
             <div class="col-12 p-fluid">
-              <h6 class="mb-2">Yashash manzili</h6>
+              <h6 class="mb-2">Yashash viloyati</h6>
               <Dropdown
                 id="adressRegion"
                 v-model="v$.adressRegion.$model"
                 :class="{ 'p-invalid': v$.adressRegion.$invalid && submitted }"
-                :options="Regions"
+                :options="RegionsList"
                 optionLabel="name"
+                optionValue="id"
                 placeholder="Viloyatni tanlang"
                 class="w-full"
               />
             </div>
             <div class="col-12 p-fluid">
-              <h6 class="mb-2">Yashash manzili</h6>
+              <h6 class="mb-2">Yashash tumani</h6>
               <Dropdown
                 id="adressDistrict"
-                v-model="v$.adressDistrict.$model"
+                v-model="v$.adress_district.$model"
                 :class="{
-                  'p-invalid': v$.adressDistrict.$invalid && submitted,
+                  'p-invalid': v$.adress_district.$invalid && submitted,
                 }"
-                :options="Districts"
+                :options="DistrictList"
                 optionLabel="name"
                 :filter="true"
                 placeholder="Tumanni tanlang"
-                :showClear="true"
                 class="w-full"
+                @change="changeAdressDistrict"
               >
                 <template #value="slotProps">
                   <div
@@ -247,7 +246,7 @@
             placeholder="JSHR raqami"
             id="passportJSHR"
             v-model="v$.passportJSHR.$model"
-            v-maska="'##-##-##-##-##-##-##'"
+            v-maska="'##############'"
             :class="{ 'p-invalid': v$.passportJSHR.$invalid && submitted }"
           />
         </div>
@@ -258,8 +257,9 @@
             id="passportRegion"
             v-model="v$.passportRegion.$model"
             :class="{ 'p-invalid': v$.passportRegion.$invalid && submitted }"
-            :options="Regions"
+            :options="RegionsList"
             optionLabel="name"
+            optionValue="id"
             placeholder="Viloyatni tanlang"
             class="w-full"
           />
@@ -269,13 +269,13 @@
           <h6 class="mb-2 pl-2">Berilgan tuman</h6>
           <Dropdown
             id="passportDistrict"
-            v-model="v$.passportDistrict.$model"
-            :class="{ 'p-invalid': v$.passportDistrict.$invalid && submitted }"
-            :options="Districts"
+            v-model="v$.pass_districy.$model"
+            :class="{ 'p-invalid': v$.pass_districy.$invalid && submitted }"
+            :options="DistrictList"
             optionLabel="name"
             :filter="true"
             placeholder="Tumanni tanlang"
-            :showClear="true"
+            @change="changePassDistrict"
             class="w-full"
           >
             <template #value="slotProps">
@@ -339,14 +339,14 @@
           <h6 class="mb-2 pl-2">Bo'lim nomi</h6>
           <Dropdown
             id="positionPart"
-            v-model="v$.positionPart.$model"
-            :class="{ 'p-invalid': v$.positionPart.$invalid && submitted }"
-            :options="FactoryPart"
+            v-model="v$.position_department.$model"
+            :class="{ 'p-invalid': v$.position_department.$invalid && submitted }"
+            :options="DepartmentList"
             optionLabel="name"
             :filter="true"
             placeholder="Bo'limni tanlang"
-            :showClear="true"
             class="w-full"
+            @change="changeDepartment"
           >
             <template #value="slotProps">
               <div
@@ -370,21 +370,21 @@
           <h6 class="mb-2 pl-2">Shtat lavozimi</h6>
           <Dropdown
             id="positionName"
-            v-model="v$.positionName.$model"
-            :class="{ 'p-invalid': v$.positionName.$invalid && submitted }"
-            :options="FactoryTitle"
-            optionLabel="name"
+            v-model="v$.position_stuff.$model"
+            :class="{ 'p-invalid': v$.position_stuff.$invalid && submitted }"
+            :options="StuffList"
+            optionLabel="staff_fullname"
             :filter="true"
             placeholder="Shtat lavozimni tanlang"
-            :showClear="true"
             class="w-full"
+            @change="changeStuff"
           >
             <template #value="slotProps">
               <div
                 class="country-item country-item-value"
                 v-if="slotProps.value"
               >
-                <div>{{ slotProps.value.name }}</div>
+                <div>{{ slotProps.value.staff_fullname }}</div>
               </div>
               <span v-else>
                 {{ slotProps.placeholder }}
@@ -392,22 +392,10 @@
             </template>
             <template #option="slotProps">
               <div class="country-item">
-                <div>{{ slotProps.option.name }}</div>
+                <div>{{ slotProps.option.staff_fullname }}</div>
               </div>
             </template>
           </Dropdown>
-        </div>
-        <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
-          <h6 class="mb-2 pl-2">Ish stavkasi</h6>
-          <Dropdown
-            id="positionAmount"
-            v-model="v$.positionAmount.$model"
-            :class="{ 'p-invalid': v$.positionAmount.$invalid && submitted }"
-            :options="FactoryAmount"
-            optionLabel="name"
-            placeholder="Stavkani tanlang"
-            class="w-full"
-          />
         </div>
         <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
           <h6 class="mb-2 pl-2">Birinchi lavozim sanasi (O'TY)</h6>
@@ -428,8 +416,9 @@
             id="positionDegree"
             v-model="v$.positionDegree.$model"
             :class="{ 'p-invalid': v$.positionDegree.$invalid && submitted }"
-            :options="FactoryDegree"
+            :options="PositionDegreeList"
             optionLabel="name"
+            optionValue="id"
             placeholder="Darajani tanlang"
             class="w-full"
           />
@@ -452,8 +441,9 @@
                 id="academic"
                 v-model="v$.academic.$model"
                 :class="{ 'p-invalid': v$.academic.$invalid && submitted }"
-                :options="AcademicDegree"
+                :options="EducationList"
                 optionLabel="name"
+                optionValue="id"
                 placeholder="Malumoti tanlang"
                 class="w-full"
               />
@@ -466,8 +456,9 @@
                 :class="{
                   'p-invalid': v$.academicDegree.$invalid && submitted,
                 }"
-                :options="FactoryDegree"
+                :options="AcademicDegreeList"
                 optionLabel="name"
+                optionValue="id"
                 placeholder="Darajani tanlang"
                 class="w-full"
               />
@@ -479,8 +470,9 @@
                 id="academicTitle"
                 v-model="v$.academicTitle.$model"
                 :class="{ 'p-invalid': v$.academicTitle.$invalid && submitted }"
-                :options="AcademicDegree"
+                :options="AcademicList"
                 optionLabel="name"
+                optionValue="id"
                 placeholder="Unvonni tanlang"
                 class="w-full"
               />
@@ -498,25 +490,17 @@
                 :class="{
                   'p-invalid': v$.employeeNation.$invalid && submitted,
                 }"
-                :options="Nations"
+                :options="NationalityList"
                 optionLabel="name"
+                optionValue="id"
                 placeholder="Millatni tanlang"
                 class="w-full"
               />
             </div>
             <div class="col-12">
-              <h6 class="mb-2 pl-2">Chet tillari</h6>
-              <Dropdown
-                id="employeeLanguage"
-                v-model="v$.employeeLanguage.$model"
-                :class="{
-                  'p-invalid': v$.employeeLanguage.$invalid && submitted,
-                }"
-                :options="Languages"
-                optionLabel="name"
-                placeholder="Tilni tanlang"
-                class="w-full"
-              />
+              <h6 class="mb-2 pl-2 text-500">Chet tillari</h6>
+              <MultiSelect class="w-full font-semibold"  v-model="v$.employeeLanguage.$model"
+                :class="{ 'p-invalid': v$.employeeLanguage.$invalid && submitted }" :options="LanguageList"  optionLabel="name" placeholder="Tilni tanlang" />
             </div>
             <div class="col-12">
               <h6 class="mb-2 pl-2">Partiyaviyligi</h6>
@@ -524,8 +508,9 @@
                 id="employeeParty"
                 v-model="v$.employeeParty.$model"
                 :class="{ 'p-invalid': v$.employeeParty.$invalid && submitted }"
-                :options="Party"
+                :options="PartList"
                 optionLabel="name"
+                optionValue="id"
                 placeholder="Partiyani tanlang"
                 class="w-full"
               />
@@ -543,8 +528,9 @@
                 :class="{
                   'p-invalid': v$.employeeGender.$invalid && submitted,
                 }"
-                :options="Genders"
+                :options="genderList"
                 optionLabel="name"
+                optionValue="id"
                 placeholder="Jinsini tanlang"
                 class="w-full"
               />
@@ -714,27 +700,24 @@
   </div>
 </template>
 <script>
+  import employeeAdd from '@/service/servises/employeeAdd'
 import { globalValidate } from "../validation/vuevalidate";
-import {
-  Regions,
-  Districts,
-  Genders,
-  Nations,
-  Languages,
-  FactoryPart,
-  FactoryTitle,
-  FactoryDegree,
-  FactoryAmount,
-  AcademicDegree,
-  Party,
-} from "../enum/enums.js";
+import Formatter from "../util/formatter"
 import { minLength, required } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
 export default {
-  setup: () => ({ v$: useVuelidate() }),
+
+  setup() {
+    const v$ =useVuelidate()
+    return { v$  }
+  },
 
   data() {
     return {
+
+      Formatter,
+
+
       firstName: "",
       lastName: "",
       thirdName: "",
@@ -769,20 +752,39 @@ export default {
       employeeMilitaryTitle: "",
       employeeSelectedOrgan: "",
 
+      RegionsList:[],
+      DistrictList:[],
+      DepartmentList:[],
+      NationalityList:[],
+      LanguageList:[],
+      AcademicList:[],
+      AcademicDegreeList:[],
+      PartList:[],
+      EducationDegreeList:[],
+      EducationList:[],
+      PositionDegreeList:[],
+      StuffList:[],
+      genderList: [
+        {
+          name: "Erkak",
+          id: 1,
+        },
+        {
+          name: "Ayol",
+          id: 0,
+        },
+      ],
+
+
       submitted: false,
       displayResponsive: false,
       succesDialog:false,
-      Regions,
-      Districts,
-      Genders,
-      Nations,
-      Languages,
-      FactoryPart,
-      FactoryTitle,
-      FactoryDegree,
-      FactoryAmount,
-      AcademicDegree,
-      Party,
+
+      pass_districy:"",
+      born_district:"",
+      adress_district:"",
+      position_department:"",
+      position_stuff:"",
     };
   },
   countryService: null,
@@ -794,20 +796,20 @@ export default {
       thirdName: globalValidate.thirdName,
       bornDate: globalValidate.bornDate,
       bornRegion: globalValidate.bornRegion,
-      bornDistric: globalValidate.bornDistric,
+      born_district: globalValidate.bornDistric,
       adressRegion: globalValidate.adressRegion,
-      adressDistrict: globalValidate.adressDistrict,
+      adress_district: globalValidate.adressDistrict,
       adressStreet: globalValidate.adressStreet,
 
       passportSeriya: globalValidate.passportSeriya,
       passportJSHR: globalValidate.passportJSHR,
       passportRegion: globalValidate.passportRegion,
-      passportDistrict: globalValidate.passportDistrict,
+      pass_districy: globalValidate.passportDistrict,
       passportDate: globalValidate.passportDate,
 
       positionDate: globalValidate.positionDate,
-      positionPart: globalValidate.positionPart,
-      positionName: globalValidate.positionName,
+      position_department: globalValidate.positionPart,
+      position_stuff: globalValidate.positionName,
       positionAmount: globalValidate.positionAmount,
       positionFirstDate: globalValidate.positionFirstDate,
       positionDegree: globalValidate.positionDegree,
@@ -831,15 +833,107 @@ export default {
   },
 
   methods: {
-    handleSubmit(isFormValid) {
-      this.submitted = true;
-      console.log(isFormValid);
-      if (!isFormValid) {
-        return;
-      }
 
-      this.toggleDialog();
+    get_AddInfo(){
+      employeeAdd.get_AddInfo().then((res)=>{
+        this.RegionsList = res.data.regions;
+        this.DistrictList = res.data.cities;
+        this.DepartmentList = res.data.departments;
+        this.NationalityList = res.data.nationalities;
+        this.AcademicDegreeList = res.data.academicdegree;
+        this.AcademicList = res.data.academictitlies;
+        this.EducationDegreeList = res.data.worklevels;
+        this.PartList = res.data.parties;
+        this.LanguageList = res.data.languages;
+        this.PositionDegreeList = res.data.worklevels
+        this.EducationList = res.data.educations
+
+      }).catch((error)=>{
+        console.log(error);
+      })
     },
+
+    addEmployee(){
+      let language_ids = []
+     if(this.employeeLanguage){
+      this.employeeLanguage.forEach((item)=>{
+        language_ids.push(item.id)
+      })
+     }
+      this.submitted = true;
+      if(this.v$.$invalid){}
+      let data ={
+        last_name: this.lastName,
+        first_name: this.firstName,
+        middle_name: this.thirdName,
+        birht_date:Formatter.outDateFormatter(this.bornDate) ,
+        birth_city_id:this.bornDistric,
+        birth_region_id:this.bornRegion,
+        address_region_id:this.adressRegion,
+        address_city_id:this.adressDistrict,
+        address:this.adressStreet,
+        pass_region_id:this.passportRegion,
+        pass_city_id:this.passportDistrict,
+        jshshir:this.passportJSHR,
+        passport:this.passportSeriya,
+        pass_date:Formatter.outDateFormatter(this.passportDate),
+        job_date: Formatter.outDateFormatter(this.positionFirstDate),
+        post_date: Formatter.outDateFormatter(this.positionDate),
+        worklevel_id:this.positionDegree,
+        department_id:this.positionPart,
+        staff_id:this.positionName,
+
+        education_id:this.academic,
+        academictitle_id:this.academicTitle,
+        academicdegree_id:this.academicDegree,
+        nationality_id:this.employeeNation,
+        language:language_ids,
+        party_id:this.employeeParty,
+        military_rank:this.employeeMilitaryTitle,
+        deputy:this.employeeSelectedOrgan,
+        phone:this.employeePhone,
+      }
+      console.table(data);
+
+
+    },
+
+    get_Stuff(id){
+      employeeAdd.get_Stuff({department_id:id}).then((res)=>{
+        console.log(res.data);
+        this.StuffList = res.data
+      }).catch((error)=>{
+        console.log(error);
+      })
+    },
+
+    changeBornDistrict(event){
+      this.bornDistric = event.value.id
+    },
+
+    changeAdressDistrict(event){
+      this.adressDistrict = event.value.id
+    },
+
+    changePassDistrict(event){
+      this.passportDistrict = event.value.id
+    },
+
+    changeDepartment(event){
+      this.StuffList = []
+      this.position_stuff =""
+
+      this.get_Stuff(event.value.id)
+      this.positionPart = event.value.id
+    },
+
+    changeStuff(event){
+      this.positionName = event.value.id
+    },
+
+
+
+
     goPush() {
       this.$router.push("/admin/partemployee");
     },
@@ -849,23 +943,10 @@ export default {
     controlSuccessDialog(){
       this.succesDialog=! this.succesDialog
     },
-    toggleDialog() {
-      this.showMessage = !this.showMessage;
-
-      if (!this.showMessage) {
-        this.resetForm();
-      }
-    },
-    resetForm() {
-      this.name = "";
-      this.email = "";
-      this.password = "";
-      this.date = null;
-      this.country = null;
-      this.accept = null;
-      this.submitted = false;
-    },
   },
+  created(){
+    this.get_AddInfo()
+  }
 };
 </script>
 <style lang="scss" scoped>
