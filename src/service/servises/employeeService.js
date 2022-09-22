@@ -10,7 +10,7 @@ const get_Department = (payload)=>{
 }
 
 const get_Stuffs = (payload)=>{
-    return axios.get(`/api/organization/filter/staffs`, {params:payload},)
+    return axios.get(`/api/organization/filter/staffs`, {params:payload})
 }
 
 const get_employeeDetails = (payload)=>{

@@ -3,257 +3,325 @@
     <h6 class="text-base p-2 uppercase">Shtat lavozimlari jadvali</h6>
     <div class="col-12">
       <DataTable
-      contextMenu 
-      v-model:contextMenuSelection="selectedProduct"
         ref="dt"
         :value="positionList"
-        @rowContextmenu="onRowContextMenu"
-        dataKey="positionName"
-        :paginator="true"
-        :rows="10"
-        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-        :rowsPerPageOptions="[5, 10, 25]"
-        currentPageReportTemplate="Ko'rish {first} dan {last} gacha {totalRecords} dan"
+        dataKey="id"
         responsiveLayout="scroll"
         showGridlines
-        class="pb-6 pt-2 p-datatable-sm"
+        class="p-datatable-sm"
+        stripedRows
       >
         <template #header>
           <div class="grid">
-            <div class="col-12 md:col-6 lg:col-6 xl:col-6">
-              <span class="p-input-icon-left">
-                <i class="pi pi-search" />
-                <InputText
-                  type="text"
-                  v-model="searchValue"
-                  placeholder="Qidiruv"
-                  class="p-inputtext-sm "
-                />
-              </span>
+            <div class="col-6">
+              <InputText
+                type="text"
+                v-model="searchPositionName"
+                placeholder="Nomi orqali qidiruv"
+                class="p-inputtext-sm"
+                @keyup.enter="searchByName()"
+              />
             </div>
-            <div
-              class="col-12 md:col-6 lg:col-6 xl:col-6 flex xl:justify-content-end lg:justify-content-end md:justify-content-end justify-content-center"
-            >
-              <SplitButton
-                label="Eksport"
-                :model="items"
-                class="p-button-sm p-button-secondary mr-2"
-              ></SplitButton>
+            <div class="col-6 flex justify-content-end">
               <Button
                 icon="pi pi-plus"
                 label="Qo'shish"
-                class="p-button-secondary p-button-sm"
+                class="p-button-info p-button-sm"
+                @click="addItem()"
               ></Button>
             </div>
           </div>
         </template>
-
-        <Column
-          field="positionName"
-          header="Shtat lavozim nomi"
-          style="min-width: 16rem"
-        >
+        <Column header="" style="min-width: 30px; width: 40px">
+          <template #body="slotProps">
+            <div class="w-full text-center text-lg font-semibold">
+              {{ slotProps.data.number }}
+            </div>
+          </template>
+        </Column>
+        <Column style="min-width: 16rem">
+          <template #header>
+            <div class="text-800 font-semibold">Shtat lavozim nomi</div>
+          </template>
           <template #body="slotProps">
             <div
-              class="flex font-medium"
+              class="
+                text-sm
+                sm:text-sm
+                md:text-md
+                lg:text-lg
+                xl:text-lg
+                font-medium
+              "
             >
-              {{ slotProps.data.positionName }}
+              {{ slotProps.data.name }}
             </div>
           </template>
         </Column>
 
-        <Column
-          field="positionCategory"
-          header="Kategoriya"
-          style="min-width: 4rem"
-        >
+        <Column class="py-0" style="min-width: 200px; width: 300px">
+          <template #header>
+            <div class="text-800 font-semibold">Biriktirilgan bo'limlar</div>
+          </template>
           <template #body="slotProps">
-            <div class="flex font-medium">
-              {{ slotProps.data.positionCategory }}
+            <Dropdown
+              class="w-full p-inputtext-sm py-0"
+              v-model="selectParty[`${slotProps.data.id}`]"
+              :options="paryList"
+              optionLabel="name"
+            />
+          </template>
+        </Column>
+        <Column style="min-width: 100px; width: 100px">
+          <template #header>
+            <div class="text-800 font-semibold">Kategoriya</div>
+          </template>
+          <template #body="slotProps">
+            <div
+              class="
+                text-sm
+                sm:text-sm
+                md:text-md
+                lg:text-lg
+                xl:text-lg
+                font-medium
+                text-center text-blue-600
+              "
+            >
+              {{ slotProps.data.category_id }}
             </div>
           </template>
         </Column>
-        <Column field="positionCount" header="Xodimlar" style="min-width: 4rem">
+        <Column style="min-width: 100px; width: 150px">
+          <template #header>
+            <div class="text-800 font-semibold">Xodimlar soni</div>
+          </template>
           <template #body="slotProps">
-            <div class="flex font-medium">
-              {{ slotProps.data.positionCount }}
+            <div
+              class="
+                text-sm
+                sm:text-sm
+                md:text-md
+                lg:text-lg
+                xl:text-lg
+                font-medium
+                text-center
+              "
+            >
+              {{ slotProps.data.cadries_count }}
             </div>
           </template>
         </Column>
+
+        <Column :exportable="false" style="min-width: 150px; width: 150px">
+          <template #header>
+            <div class="text-800 font-semibold">Amallar</div>
+          </template>
+          <template #body="slotProps">
+            <div class="flex gap-2">
+              <view-button :icon="'pi-users'"></view-button>
+              <edit-button :editItem="slotProps.data"  @editEvent="editItem($event)"></edit-button>
+              <delete-button :deleteItem="slotProps.data.id"></delete-button>
+            </div>
+          </template>
+        </Column>
+        <template #footer>
+          <table-pagination
+            v-show="totalPosition > 10"
+            :total_page="totalPosition"
+            @pagination="changePagination($event)"
+          ></table-pagination>
+        </template>
       </DataTable>
-      <ContextMenu :model="menuModel" ref="cm" class="font-medium" />
+    </div>
+    <div class="col-12">
+      <Dialog
+        v-model:visible="dialogPos"
+        :breakpoints="{
+          '1960px': '30vw',
+          '1600px': '40vw',
+          '1200px': '70vw',
+          '960px': '80vw',
+          '640px': '90vw',
+        }"
+        :style="{ width: '50vw' }"
+        :modal="true"
+      >
+        <template #header>
+          <h6 class="uppercase text-lg text-blue-500 font-medium">
+            {{
+              posDialogType ? "Ma'lumot qo'shish" : "Ma'lumotni tahrirlash"
+            }}
+          </h6>
+        </template>
+        <div class="grid pt-2">
+          <div class="col-12">
+            <h6 class="mb-2 pl-2 text-500">Shtat lavozim nomi</h6>
+            <InputText
+              type="text"
+              class="w-full font-semibold"
+              placeholder="Kiriting"
+              v-model="positionDialog.name"
+            />
+          </div>
+          <div class="col-12">
+            <h6 class="mb-2 pl-2 text-500">Kategoriyasi</h6>
+            <Dropdown
+                v-model="positionDialog.category"
+                :options="positionCategoryList"
+                optionLabel="name"
+                optionValue="id"
+                placeholder="Tanlang"
+                class="w-full font-semibold"
+              />
+          </div>
+        </div>
+
+        <template #footer>
+          <div class="col-12 pt-2">
+            <div class="flex justify-content-end">
+              <Button
+                label="Saqlash"
+                class="p-button-secondary p-button-sm"
+                @click="addAndEdit()"
+              />
+            </div>
+          </div>
+        </template>
+      </Dialog>
     </div>
   </div>
 </template>
 <script>
+import TablePagination from "../components/Pagination/TablePagination.vue";
+import DeleteButton from "../components/buttons/DeleteButton.vue";
+import EditButton from "../components/buttons/EditButton.vue";
+import ViewButton from "../components/buttons/ViewButton.vue";
+import positionService from "@/service/servises/positionService";
 export default {
+  components: {
+    DeleteButton,
+    EditButton,
+    ViewButton,
+    TablePagination,
+  },
   data() {
     return {
-      searchValue: null,
-      positionList: [
+      searchPositionName: null,
+      positionList: [],
+      positionCategoryList:[],
+      totalPosition: 0,
+      selectParty: {},
+      paryList: [
         {
-          positionName: `Boshqaruv raisi`,
-          positionCategory: `БХ`,
-          positionCount: 1,
-          positionFakt: 1,
+          name: "Bo'lim 1",
         },
         {
-          positionName: `Boshqarma boshlig'i`,
-          positionCategory: `БХ`,
-          positionCount: 2,
-          positionFakt: 1,
+          name: "Bo'lim 2",
         },
         {
-          positionName: `Boshqarma boshlig'i o'rinbosari`,
-          positionCategory: `БХ`,
-          positionCount: 1,
-          positionFakt: 1,
+          name: "Bo'lim 3",
         },
         {
-          positionName: `Raxbar kadrlar bo'lim boshlig'i`,
-          positionCategory: `М`,
-          positionCount: 1,
-          positionFakt: 1,
+          name: "Bo'lim 4",
         },
         {
-          positionName: `Bosh mutaxasis`,
-          positionCategory: `М`,
-          positionCount: 1,
-          positionFakt: 1,
-        },
-        {
-          positionName: `Boshqaruv raisisning yordamchisi`,
-          positionCategory: `М`,
-          positionCount: 1,
-          positionFakt: 1,
-        },
-        {
-          positionName: `Boshqaruv raisisning 1-o'rinbosari yordamchisi`,
-          positionCategory: `М`,
-          positionCount: 1,
-          positionFakt: 5,
-        },
-        {
-          positionName: `Ishchi kadrlar bo'lim boshlig'i`,
-          positionCategory: `БХ`,
-          positionCount: 1,
-          positionFakt: 1,
-        },
-        {
-          positionName: `Bosh mutaxassis`,
-          positionCategory: `БХ`,
-          positionCount: 2,
-          positionFakt: 1,
-        },
-        {
-          positionName: `Muxandis`,
-          positionCategory: `М`,
-          positionCount: 1,
-          positionFakt: 1,
-        },
-        {
-          positionName: `Muxandis`,
-          positionCategory: `М`,
-          positionCount: 1,
-          positionFakt: 1,
-        },
-        {
-          positionName: `Muxandis`,
-          positionCategory: `М`,
-          positionCount: 1,
-          positionFakt: 1,
-        },
-        {
-          positionName: `Muxandis`,
-          positionCategory: `М`,
-          positionCount: 1,
-          positionFakt: 1,
-        },
-        {
-          positionName: `Muxandis`,
-          positionCategory: `М`,
-          positionCount: 1,
-          positionFakt: 1,
-        },
-        {
-          positionName: `Muxandis`,
-          positionCategory: `М`,
-          positionCount: 1,
-          positionFakt: 1,
-        },
-        {
-          positionName: `Muxandis`,
-          positionCategory: `М`,
-          positionCount: 1,
-          positionFakt: 1,
-        },
-        {
-          positionName: `Muxandis`,
-          positionCategory: `М`,
-          positionCount: 1,
-          positionFakt: 1,
-        },
-        {
-          positionName: `Muxandis`,
-          positionCategory: `М`,
-          positionCount: 1,
-          positionFakt: 1,
+          name: "Bo'lim 5",
         },
       ],
-      items: [
-        {
-          label: "Pdf",
-          icon: "pi pi pi-copy",
-          command: () => {
-            this.$toast.add({
-              severity: "success",
-              summary: "Updated",
-              detail: "Data Updated",
-              life: 3000,
-            });
-          },
-        },
-        {
-          label: "Exel",
-          icon: "pi pi pi-copy",
-          command: () => {
-            this.$toast.add({
-              severity: "success",
-              summary: "Updated",
-              detail: "Data Updated",
-              life: 3000,
-            });
-          },
-        },
-        {
-          label: "Printer",
-          icon: "pi pi-print",
-          command: () => {
-            this.$toast.add({
-              severity: "success",
-              summary: "Updated",
-              detail: "Data Updated",
-              life: 3000,
-            });
-          },
-        },
-      ],
-      selectedProduct: null,
-            menuModel: [
-            {label: "Xodimlarni ko'rish", icon: 'pi pi-users', command: () => this.logItem(this.selectedProduct) },
-                {label: 'Tahrirlash', icon: 'pi pi-pencil', command: () => this.logItem(this.selectedProduct) },
-                {label: "O'chirish", icon: 'pi pi-trash', command: () =>  this.logItem(this.selectedProduct)}
-            ]
+      position: {
+        per_page: 10,
+        page: 1,
+        name: null,
+      },
+      dialogPos:false,
+      posDialogType:true,
+      positionDialog:{
+        name:null,
+        category:null,
+      }
     };
   },
-  methods:{
-    onRowContextMenu(event) {
-            this.$refs.cm.show(event.originalEvent);
-        },
-        logItem(item){
-          console.log(item);
-        }
-  }
+  methods: {
+    get_positions(params) {
+      positionService
+        .get_Positions(params)
+        .then((res) => {
+          console.log(res.data);
+
+          this.totalPosition = res.data.staffs.pagination.total;
+          let cadrList = [];
+          let number = (this.position.page - 1) * this.position.per_page;
+          res.data.staffs.data.forEach((item) => {
+            number++;
+            item.number = number;
+            cadrList.push(item);
+          });
+          this.positionList = res.data.staffs.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    get_positionCategory(){
+      positionService.get_postionCategory().then((res)=>{
+        console.log(res.data);
+        this.positionCategoryList = res.data.categories
+      }).catch((error)=>{
+        console.log(error);
+      })
+    },
+
+    addItem(){
+      this.posDialogType = true
+      this.positionDialog.name = null,
+      this.positionDialog.category = null,
+      this.controlPosDialog(true)
+    },
+
+    editItem(event){
+      console.log(event);
+      this.posDialogType = false
+      this.positionDialog.name = event.name
+      this.positionDialog.category = event.category_id,
+      this.controlPosDialog(true)
+    },
+
+    addAndEdit(){
+      this.controlPosDialog(false)
+      let data = {
+        name: this.position.name,
+        category_id:this.position.category,
+      }
+      if(this.posDialogType){
+        console.log(date);
+      }
+    },
+
+
+
+
+    changePagination(event) {
+      console.log(event);
+      this.position.page = event.page;
+      this.position.per_page = event.per_page;
+      this.get_positions(this.position);
+    },
+
+    searchByName() {
+      this.position.name = this.searchPositionName;
+      this.position.page = 1;
+      this.get_positions(this.position);
+    },
+    controlPosDialog(item){
+      this.dialogPos = item;
+    }
+  },
+  created() {
+    this.get_positionCategory()
+    this.get_positions(this.position);
+  },
 };
 </script>
 <style lang="scss">

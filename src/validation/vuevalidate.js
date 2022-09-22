@@ -42,7 +42,7 @@ export const globalValidate = {
 // Passport validate
   passportSeriya:{
     required,
-    minLength: minLength(9),
+    minLength: minLength(10),
   },
   passportJSHR:{
     required,

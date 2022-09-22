@@ -15,12 +15,12 @@
       :href="file_Link"
       download
     >
-      <i class="pi pi-cloud-download text-white text-lg"></i>
+      <i :class="['pi',icon? icon: 'pi-cloud-download' ]" class="text-white text-lg"></i>
     </a>
   </template>
   <script>
   export default {
-      props:["file_Link"],
+      props:["file_Link", "icon"],
   };
   </script>
   <style lang="">
