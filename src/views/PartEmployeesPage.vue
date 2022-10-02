@@ -537,6 +537,7 @@ export default {
         .then((res) => {
           console.log(res.data.cadries);
           this.totalCadries = res.data.cadries.pagination.total;
+          console.log(this.totalCadries);
           let cadrList = [];
           let number =
             (this.organization.page - 1) * this.organization.per_page;

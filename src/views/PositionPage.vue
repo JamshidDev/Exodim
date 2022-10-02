@@ -1,7 +1,10 @@
 <template >
   <div class="grid card surface-0 shadow-1 py-2 px-2">
     <h6 class="text-base p-2 uppercase">Shtat lavozimlari jadvali</h6>
-    <div class="col-12">
+    <div class="col-12" v-show="loader">
+      <position-loader ></position-loader>
+    </div>
+    <div class="col-12" v-show="!loader">
       <DataTable
         ref="dt"
         :value="positionList"
@@ -28,6 +31,7 @@
                 label="Qo'shish"
                 class="p-button-info p-button-sm"
                 @click="addItem()"
+                v-tooltip.bottom="`Yangi shtat qo'shish`"
               ></Button>
             </div>
           </div>
@@ -88,7 +92,7 @@
                 text-center text-blue-600
               "
             >
-              {{ slotProps.data.category_id }}
+              {{positionCategoryName(slotProps.data.category_id)  }}
             </div>
           </template>
         </Column>
@@ -119,9 +123,9 @@
           </template>
           <template #body="slotProps">
             <div class="flex gap-2">
-              <view-button :icon="'pi-users'"></view-button>
+              <view-button-v @click="goPositionCadry(slotProps.data)" v-tooltip.bottom="`Xodimlarni ko'rish`" :icon="'pi-users'"></view-button-v>
               <edit-button :editItem="slotProps.data"  @editEvent="editItem($event)"></edit-button>
-              <delete-button :deleteItem="slotProps.data.id"></delete-button>
+              <delete-button  :deleteItem="slotProps.data.id" @deleteAcceptEvent="deletePosition($event)"></delete-button>
             </div>
           </template>
         </Column>
@@ -132,9 +136,14 @@
             @pagination="changePagination($event)"
           ></table-pagination>
         </template>
+       
       </DataTable>
     </div>
+
+
     <div class="col-12">
+      <Toast position="bottom-right" />
+
       <Dialog
         v-model:visible="dialogPos"
         :breakpoints="{
@@ -161,7 +170,8 @@
               type="text"
               class="w-full font-semibold"
               placeholder="Kiriting"
-              v-model="positionDialog.name"
+              v-model.trim="positionDialog.name"
+              :class="{ 'p-invalid': postionNameError && submitPosition }"
             />
           </div>
           <div class="col-12">
@@ -173,6 +183,7 @@
                 optionValue="id"
                 placeholder="Tanlang"
                 class="w-full font-semibold"
+                :class="{ 'p-invalid': postionCategoryError && submitPosition }"
               />
           </div>
         </div>
@@ -196,17 +207,22 @@
 import TablePagination from "../components/Pagination/TablePagination.vue";
 import DeleteButton from "../components/buttons/DeleteButton.vue";
 import EditButton from "../components/buttons/EditButton.vue";
-import ViewButton from "../components/buttons/ViewButton.vue";
+import ViewButtonV from "../components/buttons/ViewButtonV.vue";
 import positionService from "@/service/servises/positionService";
+import positionLoader from "../components/loaders/positionLoader.vue";
+
 export default {
   components: {
     DeleteButton,
     EditButton,
-    ViewButton,
+    ViewButtonV,
     TablePagination,
+    positionLoader,
   },
   data() {
     return {
+      loader:true,
+      submitPosition:false,
       searchPositionName: null,
       positionList: [],
       positionCategoryList:[],
@@ -228,6 +244,21 @@ export default {
         {
           name: "Bo'lim 5",
         },
+        {
+          name: "Bo'lim 6",
+        },
+        {
+          name: "Bo'lim 7",
+        },
+        {
+          name: "Bo'lim 8",
+        },
+        {
+          name: "Bo'lim 9",
+        },
+        {
+          name: "Bo'lim 10",
+        },
       ],
       position: {
         per_page: 10,
@@ -239,17 +270,35 @@ export default {
       positionDialog:{
         name:null,
         category:null,
-      }
+      }, 
+      position_id:null,
     };
   },
+  computed:{
+    postionNameError(){
+      if(!this.positionDialog.name){
+        return true
+      }else{
+        return false
+      }
+    },
+    postionCategoryError(){
+      if(!this.positionDialog.category){
+        return true
+      }else{
+        return false
+      }
+    }
+  },
   methods: {
-    get_positions(params) {
+    get_positions(params, loader) {
+      this.controlLoader(loader)
       positionService
         .get_Positions(params)
         .then((res) => {
-          console.log(res.data);
 
           this.totalPosition = res.data.staffs.pagination.total;
+          console.log(this.totalPosition);
           let cadrList = [];
           let number = (this.position.page - 1) * this.position.per_page;
           res.data.staffs.data.forEach((item) => {
@@ -258,6 +307,7 @@ export default {
             cadrList.push(item);
           });
           this.positionList = res.data.staffs.data;
+          this.controlLoader(false)
         })
         .catch((error) => {
           console.log(error);
@@ -274,6 +324,7 @@ export default {
     },
 
     addItem(){
+      this.submitPosition=false;
       this.posDialogType = true
       this.positionDialog.name = null,
       this.positionDialog.category = null,
@@ -281,7 +332,8 @@ export default {
     },
 
     editItem(event){
-      console.log(event);
+      this.submitPosition=false;
+      this.position_id= event.id
       this.posDialogType = false
       this.positionDialog.name = event.name
       this.positionDialog.category = event.category_id,
@@ -289,38 +341,100 @@ export default {
     },
 
     addAndEdit(){
-      this.controlPosDialog(false)
+      this.submitPosition=true;
+      if(!this.postionNameError &&  !this.postionCategoryError){
+        this.controlPosDialog(false)
       let data = {
-        name: this.position.name,
-        category_id:this.position.category,
+        name:  this.positionDialog.name,
+        category_id:this.positionDialog.category,
       }
+
       if(this.posDialogType){
-        console.log(date);
+        positionService.create_Positions({data}).then((res)=>{
+          this.get_positions(this.position, false);
+          this.$toast.add({
+        severity: "success",
+        summary: "Muvofaqqiyatli bajarildi",
+        detail: "Yaratildi",
+        life: 2000,
+      });
+        }).catch((error)=>{
+          console.log(error);
+        })
+      }else{
+        positionService.update_Positions({id:this.position_id, data}).then((res)=>{
+          this.get_positions(this.position, false);
+          this.$toast.add({
+        severity: "success",
+        summary: "Muvofaqqiyatli bajarildi",
+        detail: "Tahrirlandi",
+        life: 2000,
+      });
+        }).catch((error)=>{
+          console.log(error);
+        })
       }
+
+      }
+      
+      
+    },
+    deletePosition(id){
+      positionService.delete_Positions({id}).then((res)=>{
+          this.get_positions(this.position, false);
+          this.$toast.add({
+        severity: "success",
+        summary: "Muvofaqqiyatli bajarildi",
+        detail: "O'chirildi",
+        life: 2000,
+      });
+        }).catch((error)=>{
+          console.log(error);
+          this.$toast.add({
+        severity: "warn",
+        summary: "Ruxsat etilmadi",
+        detail: "Xodimlar mavjud",
+        life: 2000,
+      });
+        })
     },
 
 
 
 
     changePagination(event) {
-      console.log(event);
       this.position.page = event.page;
       this.position.per_page = event.per_page;
-      this.get_positions(this.position);
+      this.get_positions(this.position, true);
     },
 
     searchByName() {
       this.position.name = this.searchPositionName;
       this.position.page = 1;
-      this.get_positions(this.position);
+      this.get_positions(this.position, true);
+    },
+
+    positionCategoryName(id){
+      if(this.positionCategoryList.length){
+        return this.positionCategoryList.filter((item)=>item.id ==id)[0].name
+      }
+      
+    },
+
+    goPositionCadry(item){
+      this.$router.push({ name: 'positionList', params: { position_id: item.id, position_name:item.name } })
     },
     controlPosDialog(item){
       this.dialogPos = item;
+    },
+    controlLoader(item){
+      this.loader = item
     }
   },
+
   created() {
     this.get_positionCategory()
-    this.get_positions(this.position);
+    this.get_positions(this.position, true);
   },
 };
 </script>

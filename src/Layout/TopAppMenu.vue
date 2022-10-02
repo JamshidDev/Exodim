@@ -320,73 +320,77 @@ export default {
             },
           ],
         },
-        // {
-        //   label: "Xabarlar",
-        //   icon: "pi pi-th-large",
-        //   items: [
-        //     {
-        //       label: "Takliflar",
-        //       icon: "pi pi-comment",
-        //     },
-        //     {
-        //       label: "Murojatlar",
-        //       icon: "pi pi-comment",
-        //     },
-        //     {
-        //       label: "Xatlar",
-        //       icon: "pi pi-fw pi-users",
-        //       items: [
-        //         {
-        //           label: "Kiruvchi xatlar",
-        //           icon: "pi pi-envelope",
-        //         },
-        //         {
-        //           label: "Chiquvchi xatlar",
-        //           icon: "pi pi-envelope",
-        //         },
-        //       ],
-        //     },
-        //   ],
-        // },
-        // {
-        //   label: "Platforma",
-        //   icon: "pi pi-prime",
-        //   items: [
-        //     {
-        //       label: "Qo'shimchalar",
-        //       icon: "pi pi-inbox",
-        //       items: [
-        //         {
-        //           label: "Masullar",
-        //           icon: "pi pi-folder",
-        //         },
-        //         {
-        //           label: "Kirishlar",
-        //           icon: "pi pi-folder",
-        //         },
-        //         {
-        //           label: "Amallar",
-        //           icon: "pi pi-folder",
-        //         },
-        //       ],
-        //     },
-        //     {
-        //       label: "Sozlamalaar",
-        //       icon: "pi pi-cog",
-        //       command: () => {
-        //         this.$router.push("/admin/setting");
-        //       },
-        //     },
-        //     {
-        //       label: "Qo'llanma",
-        //       icon: "pi pi-book",
-        //     },
-        //     {
-        //       label: "Versiya",
-        //       icon: "pi pi-prime",
-        //     },
-        //   ],
-        // },
+        {
+          label: "Monitoring",
+          icon: "pi pi-th-large",
+          items: [
+            {
+              label: "Ta'tillar",
+              icon: "pi pi-th-large",
+              visible: () =>this.get_adminPermissions("management_organizations"),
+              to: '/admin/vacation',
+            },
+            {
+              label: "Tibbiy ko'rik",
+              icon: "pi pi-th-large",
+              visible: () =>this.get_adminPermissions("management_organizations"),
+              to: '/admin/meds',
+            },
+            {
+              label: "Boshqalar",
+              icon: "pi pi-th-large",
+              items: [
+                {
+                  label: "Hududlar",
+                  icon: "pi pi-th-large",
+                },
+                {
+                  label: "Mukofot",
+                  icon: "pi pi-th-large",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          label: "Platforma",
+          icon: "pi pi-prime",
+          items: [
+            {
+              label: "Qo'shimchalar",
+              icon: "pi pi-inbox",
+              items: [
+                {
+                  label: "Masullar",
+                  icon: "pi pi-folder",
+                },
+                {
+                  label: "Kirishlar",
+                  icon: "pi pi-folder",
+                },
+                {
+                  label: "Amallar",
+                  icon: "pi pi-folder",
+                },
+              ],
+            },
+            {
+              label: "Sozlamalaar",
+              icon: "pi pi-cog",
+              command: () => {
+                this.$router.push("/admin/setting");
+              },
+            },
+            {
+              label: "Qo'llanma",
+              icon: "pi pi-book",
+            },
+            {
+              label: "Versiya",
+              icon: "pi pi-prime",
+            },
+          ],
+        },
       ],
       customBarRouter: [],
     };

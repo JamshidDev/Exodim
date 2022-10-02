@@ -10,6 +10,7 @@
       cursor-pointer
       border-1 border-blue-500 border-round
     "
+    v-tooltip.bottom="`Tahrirlash`"
     @click="updateBtn"
     style="max-width: 40px"
   >

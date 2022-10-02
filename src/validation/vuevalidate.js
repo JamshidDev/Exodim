@@ -71,6 +71,7 @@ export const globalValidate = {
   },
   positionAmount:{
     required,
+    minLength: minLength(4)
   },
   positionFirstDate:{
     required,
@@ -128,6 +129,27 @@ academic:{
   universityItemspeciality:{
     required,
   },
+
+  // vacation dialog  validate 
+  date1:{
+    required,
+  },
+  date2:{
+    required,
+  },
+  period_date1:{
+    required,
+  },
+  period_date2:{
+    required,
+  },
+  status_decret:{
+    required,
+  },
+  cadry:{
+    required,
+  },
+
   
 
 

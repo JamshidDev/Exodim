@@ -24,7 +24,7 @@
          <top-app-menu></top-app-menu>
         </div>
         <!-- Router main -->
-       <div class="pb-2 card  min-h-screen  px-2 mb-3">
+       <div class="pb-2 card px-2 mb-3">
          <router-view ></router-view>
        </div>
        <div class="pb-2 card px-2 mb-3 ">

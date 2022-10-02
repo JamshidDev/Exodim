@@ -433,7 +433,20 @@
             optionValue="id"
             placeholder="Darajani tanlang"
             class="w-full"
+            
           />
+        </div>
+        <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
+          <h6 class="mb-2 pl-2">Stavkasi</h6>
+          <InputText
+                type="text"
+                class="w-full"
+                placeholder="Stavkani kiriting"
+                id="adressStreet"
+                v-maska="'#.##'"
+                v-model="v$.positionAmount.$model"
+                :class="{ 'p-invalid': v$.positionAmount.$invalid && submitted }"
+              />
         </div>
       </div>
     </div>
@@ -742,6 +755,7 @@ export default {
       positionName: globalValidate.positionName,
       positionFirstDate: globalValidate.positionFirstDate,
       positionDegree: globalValidate.positionDegree,
+      positionAmount:globalValidate.positionAmount,
 
       academic: globalValidate.academic,
       academicDegree: globalValidate.academicDegree,
@@ -805,6 +819,7 @@ export default {
           worklevel_id: this.positionDegree,
           department_id: this.positionPart.id,
           staff_id: this.positionName.id,
+          stavka:this.positionAmount,
 
           education_id: this.academic,
           academictitle_id: this.academicTitle,
@@ -819,7 +834,11 @@ export default {
         console.table(data);
 
         employeeAdd.create_Cadry({data}).then((res)=>{
-          console.log(res.data);
+          if(res.data.status){
+            this.$refs.warning_alert.controlDialog(true, "Muvofaqqiyatli bajarildi", 'Yangi xodim ishga qabul qilindi.', "",)
+          }else{
+            this.$refs.warning_alert.controlDialog(true, "Mavjud xodim", res.data.organization, res.data.fullname,)
+          }
         }).catch((error)=>{
           console.log(error);
         })
@@ -842,10 +861,14 @@ export default {
      
       if(this.passportJSHR.length==14){
         employeeAdd.check_Cadry({pinfl:this.passportJSHR}).then((res)=>{
-          console.log(res.data);
-          this.$refs.warning_alert.controlDialog(true)
+          if(res.data.status){
+             this.$toast.add({severity:'warn', summary: "JSHR noto'g'ri", detail:"JSHR 14 ta raqamdan iborat bo'lishi shart", group: 'br', life: 3000});
+          }else{
+            this.$refs.warning_alert.controlDialog(true, "Mavjud xodim", res.data.organization, res.data.fullname,)
+          }
         }).catch((error)=>{
           console.log(error);
+         
         })
       }else{
         this.$toast.add({severity:'warn', summary: "JSHR noto'g'ri", detail:"JSHR 14 ta raqamdan iborat bo'lishi shart", group: 'br', life: 3000});

@@ -21,20 +21,18 @@
             text-2xl
           "
         >
-          Xodim muvofaqiyatli qo'shildi
+          {{title}}
         </p>
       </div>
     </template>
     <div class="grid">
-      <!-- <div class="col-12">
-              <div class="text-left font-medium text-lg">Korxona nomi - <span class="pl-2 text-yellow-600">Arvix</span> </div>
-            </div> -->
+      <div class="col-12">
+              <div class="text-left font-medium text-lg">{{company}} </div>
+            </div>
       <div class="col-12">
         <div class="text-left font-medium text-lg">
-          Xodim F.I.SH -
-          <span class="pl-2 text-green-600"
-            >Jamshid Raximov Shuxrat o'g'li</span
-          >
+         {{fullName}}
+          
         </div>
       </div>
     </div>
@@ -57,11 +55,17 @@ export default {
     data(){
         return{
             dialogSuccess:false,
+            title:"",
+            company:"",
+            fullName:"",
         }
     },
     methods:{
-        controlDialog(item){
+        controlDialog(item, title, company, fullName){
             this.dialogSuccess = item;
+            this.title =title;
+            this.company = company;
+            this.fullName = fullName;
         }
     }
 };

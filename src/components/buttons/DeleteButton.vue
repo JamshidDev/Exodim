@@ -10,6 +10,7 @@
       border-1 border-red-500 border-round
       active:bg-red-400
     "
+    v-tooltip.bottom="`O'chirish`"
     @click="showTemplate($event)"
     style="max-width: 40px"
   >

@@ -83,6 +83,17 @@ const routes = [
         
       },
       {
+        path: '/admin/position/userList/:position_id/:position_name',
+        name: 'positionList',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: function () {
+          return import(/* webpackChunkName: "about" */ '../components/userList/PositionUserList.vue')
+        },
+        
+      },
+      {
         path: '/admin/partfactory',
         name: 'partfactory',
         // route level code-splitting
@@ -92,6 +103,48 @@ const routes = [
           return import(/* webpackChunkName: "about" */ '../views/PartFactory.vue')
         },
         
+      },
+      {
+        path: '/admin/department/cadry/:id/:name',
+        name: 'departmentcadry',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: function () {
+          return import(/* webpackChunkName: "about" */ '../components/userList/DepartmentCadryList.vue')
+        },
+        
+      },
+      {
+        path: '/admin/department/stuff/:id/:name',
+        name: 'departmentstuff',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: function () {
+          return import(/* webpackChunkName: "about" */ '../views/DepartmentStuff.vue')
+        },
+        
+      },
+      {
+        path: '/admin/meds',
+        name: 'med',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: function () {
+          return import(/* webpackChunkName: "about" */ '../views/MegPage.vue')
+        }
+      },
+      {
+        path: '/admin/vacation',
+        name: 'vacation',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: function () {
+          return import(/* webpackChunkName: "about" */ '../views/VacationPage.vue')
+        }
       },
       {
         path: '/admin/map',

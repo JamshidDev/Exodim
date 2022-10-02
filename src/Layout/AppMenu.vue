@@ -50,9 +50,8 @@ export default {
             {
               label: "Xodimlar",
               icon: "pi pi-users",
-              command: () => {
-                window.location.hash = "/fileupload";
-              },
+              to: '/admin/partemployee',
+             
             },
             {
               label: "Shtat lavozimlari",

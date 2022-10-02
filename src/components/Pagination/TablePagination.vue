@@ -37,21 +37,21 @@ export default {
       default: 0,
     },
   },
-  watch:{
-    total_page(value){
-      if(value<30){
-        this.row_page_drop={
-          name: "20",
-          count: 20,
-        }
-      }else if(value<20){
-        this.row_page_drop={
-          name: "10",
-          count: 10,
-        }
-      }
-    }
-  },
+  // watch:{
+  //   total_page(value){
+  //     if(value<30){
+  //       this.row_page_drop={
+  //         name: "20",
+  //         count: 20,
+  //       }
+  //     }else if(value<20){
+  //       this.row_page_drop={
+  //         name: "10",
+  //         count: 10,
+  //       }
+  //     }
+  //   }
+  // },
   data() {
     return {
       pageDetails: {
@@ -100,14 +100,14 @@ export default {
       this.currentPage = 1;
       this.enter_page_value = 1;
       this.pageEmit();
-      console.log(this.pageDetails);
     },
     changePagination(event) {
+      console.log(event);
       this.pageDetails.per_page = event.rows;
       this.pageDetails.page = (event.first + event.rows) / event.rows;
       this.enter_page_value = (event.first + event.rows) / event.rows;
       this.pageEmit();
-      console.log(this.pageDetails);
+      
     },
     pageEmit() {
       this.$emit("pagination", this.pageDetails);

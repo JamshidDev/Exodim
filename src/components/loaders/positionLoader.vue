@@ -1,3 +1,4 @@
+
 <template>
     <div class="grid">
         <div class="col-12">
@@ -7,31 +8,47 @@
                         <Skeleton size="2rem" class="mr-2"></Skeleton>
                     </template>
                 </Column>
-                <Column field="avatar" header="Rasm" style="min-width: 2rem">
-                    <template #body>
-                        <Skeleton size="3rem"></Skeleton>
-                    </template>
-                </Column>
-                <Column field="fullname" header="F.I.SH" style="min-width: 16rem">
+                <Column  >
+                    <template #header>
+            <div class="text-800 font-semibold">Shtat lavozim nomi</div>
+          </template>
                     <template #body>
                         <Skeleton></Skeleton>
                     </template>
                 </Column>
-                <Column field="factory" header="Lavozimi" style="min-width: 20rem">
+                <Column style="min-width: 200px; width: 300px">
+                    <template #header>
+            <div class="text-800 font-semibold">Biriktirilgan bo'limlar</div>
+          </template>
                     <template #body>
                         <Skeleton></Skeleton>
                     </template>
                 </Column>
-                <Column field="factory" header="Korxona nomi" style="min-width: 16rem">
+                <Column  style="min-width: 100px; width: 100px">
+                    <template #header>
+            <div class="text-800 font-semibold">Kategoriya</div>
+          </template>
                     <template #body>
                         <Skeleton></Skeleton>
                     </template>
                 </Column>
-                <Column field="action "  style="width: 3rem">
+                <Column  style="min-width: 100px; width: 150px">
+                    <template #header>
+            <div class="text-800 font-semibold">Xodimlar soni</div>
+          </template>
+                    <template #body>
+                        <Skeleton></Skeleton>
+                    </template>
+                </Column>
+                <Column  style="min-width: 150px; width: 150px">
+                    <template #header>
+            <div class="text-800 font-semibold">Amallar</div>
+          </template>
                     <template #body>
                       <div class="flex">
-                        <Skeleton shape="circle" size="3rem" class="mr-2"></Skeleton>
-                        <Skeleton shape="circle" size="3rem" class="mr-2"></Skeleton>
+                        <Skeleton size="3rem" class="mr-2"></Skeleton>
+                        <Skeleton size="3rem" class="mr-2"></Skeleton>
+                        <Skeleton size="3rem" class="mr-2"></Skeleton>
                       </div>
                     </template>
                 </Column>
@@ -52,4 +69,3 @@ export default {
 <style lang="">
     
 </style>
-

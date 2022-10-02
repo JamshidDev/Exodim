@@ -1,272 +1,575 @@
 <template >
   <div class="grid card surface-0 shadow-1 py-2 px-2">
     <h6 class="text-base p-2 uppercase">Bo'limlar</h6>
-    <div class="col-12">
+
+    <div class="col-12" v-show="!loader">
       <DataTable
-        contextMenu
-        v-model:contextMenuSelection="selectedProduct"
         ref="dt"
-        :value="positionList"
-        @rowContextmenu="onRowContextMenu"
-        dataKey="positionName"
-        :paginator="true"
-        :rows="10"
-        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-        :rowsPerPageOptions="[5, 10, 25]"
-        currentPageReportTemplate="Ko'rish {first} dan {last} gacha {totalRecords} dan"
+        :value="departmentList"
+        dataKey="id"
         responsiveLayout="scroll"
         showGridlines
-        class="pb-6 pt-2 p-datatable-sm"
+        class="p-datatable-sm"
+        stripedRows
       >
         <template #header>
           <div class="grid">
-            <div class="col-12 md:col-6 lg:col-6 xl:col-6">
-              <span class="p-input-icon-left">
-                <i class="pi pi-search" />
-                <InputText
-                  type="text"
-                  v-model="searchValue"
-                  placeholder="Qidiruv"
-                  class="p-inputtext-sm"
-                />
-              </span>
+            <div class="col-6">
+              <InputText
+                type="text"
+                v-model="searchPartName"
+                placeholder="Nomi orqali qidiruv"
+                class="p-inputtext-sm"
+                @keyup.enter="searchByName()"
+              />
             </div>
-            <div
-              class="
-                col-12
-                md:col-6
-                lg:col-6
-                xl:col-6
-                flex
-                xl:justify-content-end
-                lg:justify-content-end
-                md:justify-content-end
-                justify-content-center
-              "
-            >
-              <SplitButton
-                label="Saralash"
-                :model="items"
-                class="p-button-sm p-button-secondary mr-2"
-              ></SplitButton>
+            <div class="col-6 flex justify-content-end">
+              <Button
+                icon="pi pi-sitemap"
+                label="Biriktirish"
+                class="p-button-warning p-button-sm mr-2"
+                @click="addStuff()"
+                v-tooltip.bottom="`Bo'limga shtat lavozim biriktirish`"
+              ></Button>
               <Button
                 icon="pi pi-plus"
                 label="Qo'shish"
-                class="p-button-secondary p-button-sm"
+                class="p-button-info p-button-sm"
+                @click="addItemPart()"
+                v-tooltip.bottom="`Yangi bo'lim qo'shish`"
               ></Button>
             </div>
           </div>
         </template>
+        <Column header="" style="min-width: 30px; width: 40px">
+          <template #body="slotProps">
+            <div class="w-full text-center text-lg font-semibold">
+              {{ slotProps.data.number }}
+            </div>
+          </template>
+        </Column>
+        <Column style="min-width: 16rem">
+          <template #header>
+            <div class="text-800 font-semibold">Bo'lim nomi</div>
+          </template>
+          <template #body="slotProps">
+            <div
+              class="
+                text-sm
+                sm:text-sm
+                md:text-md
+                lg:text-lg
+                xl:text-lg
+                font-medium
+              "
+            >
+              {{ slotProps.data.name }}
+            </div>
+          </template>
+        </Column>
 
-        <Column
-          field="positionName"
-          header="Bo'lim nomi"
-          style="min-width: 16rem"
-        >
+        <Column class="py-0" style="min-width: 200px; width: 200px">
+          <template #header>
+            <div class="text-800 font-semibold">
+              Bo'sh/Ortiqcha ish o'rinlari
+            </div>
+          </template>
           <template #body="slotProps">
-            <div class="flex text-base font-medium" :class="[slotProps.data.positionFakt >slotProps.data.positionCount? 'text-green-500' : slotProps.data.positionFakt <slotProps.data.positionCount? 'text-red-500': '' ]">
-              {{ slotProps.data.positionName }}
+            <div class="grid">
+              <div
+                class="
+                  col-6
+                  text-sm
+                  sm:text-sm
+                  md:text-md
+                  lg:text-lg
+                  xl:text-lg
+                  font-medium
+                "
+              >
+                <div  class="text-center" v-show="slotProps.data.vakan !=0">
+                  <Chip
+                    :label="slotProps.data.vakan.toString()"
+                    class=" custom-chip"
+                  />
+                </div>
+                <div
+                v-show="slotProps.data.vakan ==0"
+                  class="text-center "
+                >
+                  {{ slotProps.data.vakan }}
+                </div>
+              </div>
+              <div
+                class="
+                  col-6
+                  text-center text-sm
+                  sm:text-sm
+                  md:text-md
+                  lg:text-lg
+                  xl:text-lg
+                  font-medium
+                "
+               
+              >
+              <div  class="text-center" v-show="slotProps.data.sverx !=0">
+                  <Chip
+                    :label="slotProps.data.sverx.toString()"
+                    class="custom-chip-red"
+                  />
+                </div>
+                <div
+                v-show="slotProps.data.sverx ==0"
+                  class="text-center "
+                >
+                  {{ slotProps.data.sverx }}
+                </div>
+               
+              </div>
             </div>
           </template>
         </Column>
-        <Column field="positionCount" header="Ish o'rinlari (Plan)" style="min-width: 8rem">
+        <Column style="min-width: 50px; width: 80px">
+          <template #header>
+            <div class="text-800 font-semibold">Plan</div>
+          </template>
           <template #body="slotProps">
-            <div class="flex font-medium text-base">
-              {{ slotProps.data.positionFakt }}
+            <div
+              class="
+                text-sm
+                sm:text-sm
+                md:text-md
+                lg:text-lg
+                xl:text-lg
+                font-medium
+                text-center text-blue-500
+              "
+            >
+              {{ slotProps.data.plan }}
+            </div>
+          </template>
+        </Column>
+        <Column style="min-width: 150px; width: 180px">
+          <template #header>
+            <div class="text-800 font-semibold">Xodimlar soni</div>
+          </template>
+          <template #body="slotProps">
+            <div
+              class="
+                text-sm
+                sm:text-sm
+                md:text-md
+                lg:text-lg
+                xl:text-lg
+                font-medium
+                text-center
+              "
+            >
+              {{ slotProps.data.cadries_count }}
             </div>
           </template>
         </Column>
 
-        <Column
-          field="positionCategory"
-          header="Vakant / Sverx"
-          style="min-width: 8rem"
-        >
+        <Column :exportable="false" style="min-width: 150px; width: 150px">
+          <template #header>
+            <div class="text-800 font-semibold">Amallar</div>
+          </template>
           <template #body="slotProps">
-            <div class="flex font-medium">
-
-              <span class="text-medium text-base pr-1" :class="[slotProps.data.positionFakt >slotProps.data.positionCount? 'text-green-500' : ' ']"> {{slotProps.data.positionFakt >slotProps.data.positionCount ? slotProps.data.positionFakt - slotProps.data.positionCount : '0'  }}</span> /
-              <span class="text-medium text-base pl-1" :class="[slotProps.data.positionCount >slotProps.data.positionFakt? 'text-red-500' : ' ']" > {{slotProps.data.positionCount >slotProps.data.positionFakt ? slotProps.data.positionCount - slotProps.data.positionFakt : '0'  }}</span> 
+            <div class="flex gap-2">
+              <view-button-v
+                v-tooltip.bottom="`Biriktirilgan shtatlarni ko'rish`"
+                :icon="'pi-eye'"
+                @click="
+                  goDepartmentStuff(slotProps.data.id, slotProps.data.name)
+                "
+              ></view-button-v>
+              <view-button-v
+                v-tooltip.bottom="`Xodimlarni ko'rish`"
+                :icon="'pi-users'"
+                @click="
+                  goDepartmentCadry(slotProps.data.id, slotProps.data.name)
+                "
+              ></view-button-v>
+              <edit-button
+                :editItem="slotProps.data"
+                @editEvent="editItemPart($event)"
+              ></edit-button>
+              <delete-button
+                :deleteItem="slotProps.data.id"
+                @deleteAcceptEvent="deleteItemPart($event)"
+              ></delete-button>
             </div>
           </template>
         </Column>
-        <Column field="positionCount" header="Xodimlar" style="min-width: 4rem">
-          <template #body="slotProps">
-            <div class="flex font-medium text-base">
-              {{ slotProps.data.positionCount }}
-            </div>
-          </template>
-        </Column>
+        <template #footer>
+          <table-pagination
+            v-show="totalDepartment > 10"
+            :total_page="totalDepartment"
+            @pagination="changePagination($event)"
+          ></table-pagination>
+        </template>
       </DataTable>
-      <ContextMenu :model="menuModel" ref="cm" class="font-medium" />
+    </div>
+
+    <div class="col-12" v-show="loader">
+      <department-loader></department-loader>
+    </div>
+    <div class="col-12">
+      <Toast position="bottom-right" />
+      <Dialog
+        v-model:visible="partDialog"
+        :breakpoints="{
+          '1960px': '30vw',
+          '1600px': '40vw',
+          '1200px': '70vw',
+          '960px': '80vw',
+          '640px': '90vw',
+        }"
+        :style="{ width: '50vw' }"
+        :modal="true"
+      >
+        <template #header>
+          <h6 class="uppercase text-lg text-blue-500 font-medium">
+            {{ partDialogType ? "Ma'lumot qo'shish" : "Ma'lumotni tahrirlash" }}
+          </h6>
+        </template>
+        <div class="grid pt-2">
+          <div class="col-12">
+            <h6 class="mb-2 pl-2 text-500">Bo'lim nomi</h6>
+            <InputText
+              type="text"
+              class="w-full font-semibold"
+              placeholder="Kiriting"
+              v-model="partDetails.name"
+              :class="{ 'p-invalid': errorInput && submitPart }"
+            />
+          </div>
+        </div>
+
+        <template #footer>
+          <div class="col-12 pt-2">
+            <div class="flex justify-content-end">
+              <Button
+                label="Saqlash"
+                class="p-button-secondary p-button-sm"
+                @click="addAndEdit()"
+              />
+            </div>
+          </div>
+        </template>
+      </Dialog>
+
+      <Dialog
+        v-model:visible="stuffDialog"
+        :breakpoints="{
+          '1960px': '30vw',
+          '1600px': '40vw',
+          '1200px': '70vw',
+          '960px': '80vw',
+          '640px': '90vw',
+        }"
+        :style="{ width: '50vw' }"
+        :modal="true"
+      >
+        <template #header>
+          <h6 class="uppercase text-lg text-blue-500 font-medium">
+            Bo'limga shtat lavozim biriktirish
+          </h6>
+        </template>
+        <div class="grid pt-2">
+          <div class="col-12">
+            <h6 class="mb-2 pl-2 text-500">Shtat lavozimni tanlang</h6>
+            <Dropdown
+              v-model="stuff"
+              :options="StuffList"
+              optionLabel="name"
+              :filter="true"
+              placeholder="Tanlang"
+              class="w-full"
+              :class="{ 'p-invalid': errorStuff && stuffsubmited }"
+            >
+              <template #value="slotProps">
+                <div
+                  class="country-item country-item-value"
+                  v-if="slotProps.value"
+                >
+                  <div>{{ slotProps.value.name }}</div>
+                </div>
+                <span v-else>
+                  {{ slotProps.placeholder }}
+                </span>
+              </template>
+              <template #option="slotProps">
+                <div class="country-item">
+                  <div>{{ slotProps.option.name }}</div>
+                </div>
+              </template>
+            </Dropdown>
+          </div>
+          <div class="col-12">
+            <h6 class="mb-2 pl-2 text-500">To'liq shtat lavozim nomi</h6>
+            <Textarea
+              class="w-full font-semibold"
+              placeholder="Kiriting"
+              v-model.trim="full_stuff"
+              :autoResize="true"
+              rows="1"
+              :class="{ 'p-invalid': errorFullStuff && stuffsubmited }"
+            />
+          </div>
+          <div class="col-12">
+            <h6 class="mb-2 pl-2 text-500">Plan</h6>
+            <InputText
+              type="text"
+              class="w-full"
+              placeholder="Kiriting"
+              id="adressStreet"
+              v-model="stuf_plan"
+              :class="{ 'p-invalid': errorPlan && stuffsubmited }"
+            />
+          </div>
+        </div>
+
+        <template #footer>
+          <div class="col-12 pt-2">
+            <div class="flex justify-content-end">
+              <Button
+                label="Saqlash"
+                class="p-button-secondary p-button-sm"
+                @click="addStuffItem()"
+              />
+            </div>
+          </div>
+        </template>
+      </Dialog>
     </div>
   </div>
 </template>
 <script>
+import TablePagination from "../components/Pagination/TablePagination.vue";
+import DeleteButton from "../components/buttons/DeleteButton.vue";
+import EditButton from "../components/buttons/EditButton.vue";
+import ViewButtonV from "../components/buttons/ViewButtonV.vue";
+import DepartmentService from "../service/servises/DepartmentService";
+import DepartmentStuffService from "@/service/servises/DepartmentStuffService";
+import DepartmentLoader from "../components/loaders/DepartmentLoader.vue";
 export default {
+  components: {
+    DeleteButton,
+    EditButton,
+    ViewButtonV,
+    TablePagination,
+    DepartmentLoader,
+  },
   data() {
     return {
-      searchValue: null,
-      positionList: [
-        {
-          positionName: `Boshqaruv raisi`,
-          positionCategory: `БХ`,
-          positionCount: 1,
-          positionFakt: 1,
-        },
-        {
-          positionName: `Boshqarma boshlig'i`,
-          positionCategory: `БХ`,
-          positionCount: 2,
-          positionFakt: 1,
-        },
-        {
-          positionName: `Boshqarma boshlig'i o'rinbosari`,
-          positionCategory: `БХ`,
-          positionCount: 1,
-          positionFakt: 1,
-        },
-        {
-          positionName: `Raxbar kadrlar bo'lim boshlig'i`,
-          positionCategory: `М`,
-          positionCount: 1,
-          positionFakt: 1,
-        },
-        {
-          positionName: `Bosh mutaxasis`,
-          positionCategory: `М`,
-          positionCount: 1,
-          positionFakt: 1,
-        },
-        {
-          positionName: `Boshqaruv raisisning yordamchisi`,
-          positionCategory: `М`,
-          positionCount: 1,
-          positionFakt: 1,
-        },
-        {
-          positionName: `Boshqaruv raisisning 1-o'rinbosari yordamchisi`,
-          positionCategory: `М`,
-          positionCount: 1,
-          positionFakt: 5,
-        },
-        {
-          positionName: `Ishchi kadrlar bo'lim boshlig'i`,
-          positionCategory: `БХ`,
-          positionCount: 1,
-          positionFakt: 1,
-        },
-        {
-          positionName: `Bosh mutaxassis`,
-          positionCategory: `БХ`,
-          positionCount: 2,
-          positionFakt: 1,
-        },
-        {
-          positionName: `Muxandis`,
-          positionCategory: `М`,
-          positionCount: 1,
-          positionFakt: 1,
-        },
-        {
-          positionName: `Muxandis`,
-          positionCategory: `М`,
-          positionCount: 1,
-          positionFakt: 1,
-        },
-        {
-          positionName: `Muxandis`,
-          positionCategory: `М`,
-          positionCount: 1,
-          positionFakt: 1,
-        },
-        {
-          positionName: `Muxandis`,
-          positionCategory: `М`,
-          positionCount: 1,
-          positionFakt: 1,
-        },
-        {
-          positionName: `Muxandis`,
-          positionCategory: `М`,
-          positionCount: 1,
-          positionFakt: 1,
-        },
-        {
-          positionName: `Muxandis`,
-          positionCategory: `М`,
-          positionCount: 1,
-          positionFakt: 1,
-        },
-        {
-          positionName: `Muxandis`,
-          positionCategory: `М`,
-          positionCount: 1,
-          positionFakt: 1,
-        },
-        {
-          positionName: `Muxandis`,
-          positionCategory: `М`,
-          positionCount: 1,
-          positionFakt: 1,
-        },
-        {
-          positionName: `Muxandis`,
-          positionCategory: `М`,
-          positionCount: 1,
-          positionFakt: 1,
-        },
-      ],
-      items: [
-        {
-          label: "Vakant",
-          icon: "pi pi-sort-amount-down",
-          command: () => {
+      loader: false,
+      searchPartName: null,
+      totalDepartment: 0,
+      partDialog: false,
+      partDialogType: true,
+      part_id: null,
+      partDetails: {
+        name: "",
+      },
+      params: {
+        per_page: 10,
+        page: 1,
+      },
+      departmentList: [],
+      submitPart: false,
 
-          },
-        },
+      stuffDialog: false,
+      stuff: "",
+      full_stuff: "",
+      stuf_plan: null,
+      StuffList: [
         {
-          label: "Sverx",
-          icon: "pi pi-sort-amount-down",
-          command: () => {
-            
-          },
+          name: "Test",
+          id: 2,
         },
       ],
-      selectedProduct: null,
-      menuModel: [
-      {
-          label: "Shtat lavozimlari",
-          icon: "pi pi-align-center",
-          command: () => this.logItem(this.selectedProduct),
-        },
-        {
-          label: "Xodimlarni ko'rish",
-          icon: "pi pi-users",
-          command: () => this.logItem(this.selectedProduct),
-        },
-        {
-          label: "Tahrirlash",
-          icon: "pi pi-pencil",
-          command: () => this.logItem(this.selectedProduct),
-        },
-        {
-          label: "O'chirish",
-          icon: "pi pi-trash",
-          command: () => this.logItem(this.selectedProduct),
-        },
-      ],
+      stuffsubmited: false,
     };
   },
   methods: {
-    onRowContextMenu(event) {
-      this.$refs.cm.show(event.originalEvent);
+    get_Department(params, loader) {
+      this.controlLoader(loader);
+      DepartmentService.get_Department(params)
+        .then((res) => {
+          this.totalDepartment = res.data.departments.pagination.total;
+          let cadrList = [];
+          let number = (this.params.page - 1) * this.params.per_page;
+          res.data.departments.data.forEach((item) => {
+            number++;
+            item.number = number;
+            cadrList.push(item);
+          });
+          this.departmentList = res.data.departments.data;
+          this.controlLoader(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          this.controlLoader(false);
+        });
     },
-    logItem(item) {
-      console.log(item);
+    addItemPart() {
+      this.submitPart = false;
+      this.partDialogType = true;
+      this.partDetails.name = "";
+      this.controlPartDialog(true);
     },
+    editItemPart(event) {
+      this.submitPart = false;
+      this.partDialogType = false;
+      this.part_id = event.id;
+      (this.partDetails.name = event.name), this.controlPartDialog(true);
+    },
+
+    addAndEdit() {
+      this.submitPart = true;
+      if (this.partDetails.name.length) {
+        let data = {
+          name: this.partDetails.name,
+        };
+        this.controlPartDialog(false);
+        if (this.partDialogType) {
+          console.log(this.partDetails.name);
+          DepartmentService.create_Department({ data })
+            .then((res) => {
+              this.get_Department(this.params, false);
+              this.$toast.add({
+                severity: "success",
+                summary: "Muvofaqqiyatli bajarildi",
+                detail: "Yaratildi",
+                life: 2000,
+              });
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        } else {
+          DepartmentService.update_Department({
+            id: this.part_id,
+            data,
+          })
+            .then((res) => {
+              this.get_Department(this.params, false);
+              this.$toast.add({
+                severity: "success",
+                summary: "Muvofaqqiyatli bajarildi",
+                detail: "Tahrirlandi",
+                life: 2000,
+              });
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      }
+    },
+
+    deleteItemPart(id) {
+      DepartmentService.delete_Department({ id })
+        .then((res) => {
+          this.get_Department(this.params, false);
+          this.$toast.add({
+            severity: "success",
+            summary: "Muvofaqqiyatli bajarildi",
+            detail: "O'chirildi",
+            life: 2000,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    changePagination(event) {
+      this.params.page = event.page;
+      this.params.per_page = event.per_page;
+      this.get_Department(this.params, true);
+    },
+    goDepartmentStuff(id, name) {
+      this.$router.push({ name: "departmentstuff", params: { id, name } });
+    },
+    goDepartmentCadry(id, name) {
+      this.$router.push({ name: "departmentcadry", params: { id, name } });
+    },
+
+    addStuff() {
+      this.stuffsubmited = false;
+      this.stuff = "";
+      (this.stuf_plan = ""), (this.full_stuff = "");
+      this.controlstuffDialog(true);
+    },
+    addStuffItem() {
+      this.stuffsubmited = true;
+      if (
+        this.stuff &&
+        this.full_stuff.length > 0 &&
+        this.stuf_plan.length == 4
+      ) {
+        this.controlstuffDialog(false);
+      }
+    },
+
+    checkStuff(item){
+
+    },
+
+    controlPartDialog(item) {
+      this.partDialog = item;
+    },
+    controlstuffDialog(item) {
+      this.stuffDialog = item;
+    },
+    controlLoader(item) {
+      this.loader = item;
+    },
+  },
+  computed: {
+    errorInput() {
+      if (this.partDetails.name.length == 0) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    errorStuff() {
+      if (!this.stuff) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    errorFullStuff() {
+      if (this.full_stuff.length == 0) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    errorPlan() {
+      if (this.stuf_plan.length == 0 || this.stuf_plan.length > 4) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+  },
+  created() {
+    this.get_Department(this.params, true);
   },
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
+.p-chip.custom-chip {
+  background: var(--green-500);
+  color: var(--primary-color-text);
+}
+.p-chip.custom-chip-red {
+  background: var(--red-500);
+  color: var(--primary-color-text);
+}
 </style>
