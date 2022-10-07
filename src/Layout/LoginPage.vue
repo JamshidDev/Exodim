@@ -39,7 +39,7 @@
               <div class="logo_title mt-2  btn-shine font-bold uppercase text-5xl ">
                 O'zbekiston temir yo'llari
               </div>
-              <div class="logo_subtitle  btn-shine  mt-6 font-bold uppercase text-3xl ">
+              <div class="logo_subtitle  btn-shine2  mt-6 font-bold uppercase text-3xl ">
                 Aksiyadorlik jamiyati
               </div>
             </div>
@@ -233,7 +233,7 @@ export default {
   background-position: 0;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: shine 4s infinite linear;
+  animation: shine 3s infinite linear;
   animation-fill-mode: forwards;
   -webkit-text-size-adjust: none;
   font-weight: 600;
@@ -252,7 +252,7 @@ export default {
   background-position: 0;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: shine 4s infinite linear;
+  animation: shine2 3s infinite linear;
   animation-fill-mode: forwards;
   -webkit-text-size-adjust: none;
   font-weight: 600;
@@ -275,6 +275,23 @@ export default {
   }
   100% {
     background-position: 600px;
+  }
+}
+@keyframes shine2 {
+  0% {
+    background-position: 0;
+  }
+  25% {
+    background-position: 100px;
+  }
+  50% {
+    background-position: 200px;
+  }
+  75% {
+    background-position: 300px;
+  }
+  100% {
+    background-position: 400px;
   }
 }
 .min_height_screen {
