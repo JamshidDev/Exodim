@@ -87,16 +87,13 @@
                   font-medium
                 "
               >
-                <div  class="text-center" v-show="slotProps.data.vakan !=0">
+                <div class="text-center" v-show="slotProps.data.vakan != 0">
                   <Chip
                     :label="slotProps.data.vakan.toString()"
-                    class=" custom-chip"
+                    class="custom-chip"
                   />
                 </div>
-                <div
-                v-show="slotProps.data.vakan ==0"
-                  class="text-center "
-                >
+                <div v-show="slotProps.data.vakan == 0" class="text-center">
                   {{ slotProps.data.vakan }}
                 </div>
               </div>
@@ -110,21 +107,16 @@
                   xl:text-lg
                   font-medium
                 "
-               
               >
-              <div  class="text-center" v-show="slotProps.data.sverx !=0">
+                <div class="text-center" v-show="slotProps.data.sverx != 0">
                   <Chip
                     :label="slotProps.data.sverx.toString()"
                     class="custom-chip-red"
                   />
                 </div>
-                <div
-                v-show="slotProps.data.sverx ==0"
-                  class="text-center "
-                >
+                <div v-show="slotProps.data.sverx == 0" class="text-center">
                   {{ slotProps.data.sverx }}
                 </div>
-               
               </div>
             </div>
           </template>
@@ -149,7 +141,7 @@
             </div>
           </template>
         </Column>
-        <Column style="min-width: 150px; width: 180px">
+        <Column style="min-width: 110px; width: 110px">
           <template #header>
             <div class="text-800 font-semibold">Xodimlar soni</div>
           </template>
@@ -278,6 +270,36 @@
         </template>
         <div class="grid pt-2">
           <div class="col-12">
+            <h6 class="mb-2 pl-2 text-500">Bo'limni tanlang</h6>
+            <Dropdown
+              v-model="department"
+              :options="Dep_List"
+              optionLabel="name"
+              :filter="true"
+              placeholder="Tanlang"
+              class="w-full"
+              :class="{ 'p-invalid': errorDepartment && stuffsubmited }"
+            >
+              <template #value="slotProps">
+                <div
+                  class="country-item country-item-value"
+                  v-if="slotProps.value"
+                >
+                  <div>{{ slotProps.value.name }}</div>
+                </div>
+                <span v-else>
+                  {{ slotProps.placeholder }}
+                </span>
+              </template>
+              <template #option="slotProps">
+                <div class="country-item">
+                  <div>{{ slotProps.option.name }}</div>
+                </div>
+              </template>
+            </Dropdown>
+          </div>
+
+          <div class="col-12">
             <h6 class="mb-2 pl-2 text-500">Shtat lavozimni tanlang</h6>
             <Dropdown
               v-model="stuff"
@@ -302,6 +324,37 @@
               <template #option="slotProps">
                 <div class="country-item">
                   <div>{{ slotProps.option.name }}</div>
+                </div>
+              </template>
+            </Dropdown>
+          </div>
+          <div class="col-12">
+            <h6 class="mb-2 pl-2 text-500">
+              Lavozimga mos klassifikatorni tanlang
+            </h6>
+            <Dropdown
+              v-model="classic"
+              :options="Class_List"
+              optionLabel="name_uz"
+              :filter="true"
+              @filter="get_Classifikator"
+              placeholder="Tanlang"
+              class="w-full"
+            >
+              <template #value="slotProps">
+                <div
+                  class=""
+                  v-if="slotProps.value"
+                >
+                  <div>{{ slotProps.value.name_uz }}</div>
+                </div>
+                <span v-else>
+                  {{ slotProps.placeholder }}
+                </span>
+              </template>
+              <template #option="slotProps">
+                <div >
+                  <div>{{ slotProps.option.name_uz }}</div>
                 </div>
               </template>
             </Dropdown>
@@ -376,21 +429,38 @@ export default {
         per_page: 10,
         page: 1,
       },
+
       departmentList: [],
       submitPart: false,
 
       stuffDialog: false,
       stuff: "",
+      department: "",
       full_stuff: "",
       stuf_plan: null,
-      StuffList: [
-        {
-          name: "Test",
-          id: 2,
-        },
-      ],
+
+      StuffList: [],
+      stuff_params: {
+        search: null,
+        page: 1,
+        per_page: 1000,
+      },
+      Class_List: [],
+      classic: "",
+      Dep_List: [],
+      department_params: {
+        search: null,
+        page: 1,
+        per_page: 1000,
+      },
+
       stuffsubmited: false,
     };
+  },
+  watch:{
+    Class_List(value){
+      console.log(value);
+    }
   },
   methods: {
     get_Department(params, loader) {
@@ -438,6 +508,7 @@ export default {
           DepartmentService.create_Department({ data })
             .then((res) => {
               this.get_Department(this.params, false);
+              this.get_DepartmentList(this.department_params);
               this.$toast.add({
                 severity: "success",
                 summary: "Muvofaqqiyatli bajarildi",
@@ -473,6 +544,7 @@ export default {
       DepartmentService.delete_Department({ id })
         .then((res) => {
           this.get_Department(this.params, false);
+          this.get_DepartmentList(this.department_params);
           this.$toast.add({
             severity: "success",
             summary: "Muvofaqqiyatli bajarildi",
@@ -499,23 +571,77 @@ export default {
 
     addStuff() {
       this.stuffsubmited = false;
-      this.stuff = "";
-      (this.stuf_plan = ""), (this.full_stuff = "");
+      this.department = null;
+      (this.classificator = null), (this.stuff = null);
+      this.stuf_plan = "";
+      this.full_stuff = "";
       this.controlstuffDialog(true);
     },
     addStuffItem() {
       this.stuffsubmited = true;
       if (
+        this.department &&
         this.stuff &&
         this.full_stuff.length > 0 &&
-        this.stuf_plan.length == 4
+        this.stuf_plan.length <= 4
       ) {
+        let id = this.department.id;
+        let data = {
+          staff_id: this.stuff.id,
+          rate: this.stuf_plan,
+          classification_id: null,
+          staff_full: this.full_stuff,
+        };
+
+        DepartmentStuffService.create_DepartmentStuff({ id, data })
+          .then((res) => {
+            this.get_Department(this.params, false);
+            this.$toast.add({
+              severity: "success",
+              summary: "Muvofaqqiyatli bajarildi",
+              detail: "Biriktirildi",
+              life: 2000,
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
         this.controlstuffDialog(false);
       }
     },
 
-    checkStuff(item){
+    checkStuff(item) {},
 
+    get_StuffList() {
+      DepartmentService.get_StuffList(this.stuff_params)
+        .then((res) => {
+          this.StuffList = res.data.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    get_DepartmentList(params) {
+      DepartmentService.get_Department(params)
+        .then((res) => {
+          this.Dep_List = res.data.departments.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    get_Classifikator(search = "1") {
+     search = search.value? search.value : "1", 
+        DepartmentService.get_Classifikator({ search })
+          .then((res) => {
+            console.log(res.data);
+            this.Class_List = res.data;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      
     },
 
     controlPartDialog(item) {
@@ -543,6 +669,13 @@ export default {
         return false;
       }
     },
+    errorDepartment() {
+      if (!this.department) {
+        return true;
+      } else {
+        return false;
+      }
+    },
     errorFullStuff() {
       if (this.full_stuff.length == 0) {
         return true;
@@ -559,7 +692,10 @@ export default {
     },
   },
   created() {
+    this.get_StuffList();
     this.get_Department(this.params, true);
+    this.get_DepartmentList(this.department_params);
+    this.get_Classifikator();
   },
 };
 </script>

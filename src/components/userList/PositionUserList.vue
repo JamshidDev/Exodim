@@ -138,11 +138,13 @@
   </div>
 </template>
 <script>
+  import ViewButtonV from "../buttons/ViewButtonV.vue";
 import employeeService from "../../service/servises/employeeService";
 import UserListLoader from "../loaders/UserListLoader.vue";
 export default {
   components:{
     UserListLoader,
+    ViewButtonV,
   },
   data() {
     return {

@@ -127,6 +127,14 @@ const routes = [
         
       },
       {
+        path: '/admin/department/stuff/cadry/:id/:name/:depId/:depName',
+        name: 'departmentstuffcadry',
+        component: function () {
+          return import(/* webpackChunkName: "about" */ '../components/userList/StuffCadry.vue')
+        },
+        
+      },
+      {
         path: '/admin/meds',
         name: 'med',
         // route level code-splitting

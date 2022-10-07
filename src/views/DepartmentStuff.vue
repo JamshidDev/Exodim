@@ -134,6 +134,7 @@
               <view-button-v
                 v-tooltip.bottom="`Xodimlarni ko'rish`"
                 :icon="'pi-users'"
+                @click="goCadry(slotProps.data.id, slotProps.data.staff_fullname )"
               ></view-button-v>
               <edit-button
                 :editItem="slotProps.data"
@@ -191,17 +192,17 @@
           >
             <template #value="slotProps">
               <div
-                class="country-item country-item-value"
+                class="font-semibold"
                 v-if="slotProps.value"
               >
-                <div>{{ slotProps.value.name }}</div>
+                <div class="font-semibold">{{ slotProps.value.name }}</div>
               </div>
-              <span v-else>
+              <span class="font-semibold" v-else>
                 {{ slotProps.placeholder }}
               </span>
             </template>
             <template #option="slotProps">
-              <div class="country-item">
+              <div class="font-semibold">
                 <div>{{ slotProps.option.name }}</div>
               </div>
             </template>
@@ -222,7 +223,7 @@
             <h6 class="mb-2 pl-2 text-500">Plan</h6>
             <InputText
                 type="text"
-                class="w-full"
+                class="w-full font-semibold"
                 placeholder="Kiriting"
                 id="adressStreet"
                 v-model="stuf_plan"
@@ -253,6 +254,7 @@ import EditButton from "../components/buttons/EditButton.vue";
 import ViewButtonV from "../components/buttons/ViewButtonV.vue";
 import DepartmentStuffService from "../service/servises/DepartmentStuffService";
 import DepartmentStuffLoader from "../components/loaders/DepartmentStuffLoader.vue";
+import DepartmentService from "../service/servises/DepartmentService";
 export default {
   components: {
     DeleteButton,
@@ -275,11 +277,13 @@ export default {
       stuff:"",
       full_stuff:"",
       stuf_plan:null,
-      StuffList:[{
-        name:"Test",
-        id:2,
-      }],
+      StuffList:[],
       stuffsubmited:false,
+      stuff_params:{
+        search:null,
+        page:1,
+        per_page:1000
+      }
 
 
     };
@@ -332,8 +336,9 @@ export default {
     
 
     editStuff(event){
+      console.log(event);
       this.stuffsubmited = false
-      this.stuff=""
+      this.stuff=event.staff_id
       this.stuf_plan=event.rate,
       this.full_stuff=event.staff_fullname
       this.controlstuffDialog(true)
@@ -342,17 +347,37 @@ export default {
     addStuffItem(){
       console.log(this.stuf_plan.toString().length ==0);
       this.stuffsubmited = true
-      if(this.stuff && this.full_stuff.length>0 && !this.stuf_plan.toString().length==0 && this.stuf_plan.toString().length<5  ){
+      if(this.stuff && this.full_stuff.length>0 && !this.stuf_plan.toString().length==0 && this.stuf_plan.toString().length<=4  ){
         this.controlstuffDialog(false)
       }
 
     },
     deleteItemDepStuff(id) {
-      console.log(id);
+      DepartmentStuffService.delete_DepartmentStuff({id}).then((res)=>{
+        this.get_DepartmentStuff(this.$route.params.id, false);
+      }).catch((error)=>{
+        console.log(error);
+      })
+    },
+    get_StuffList(){
+      DepartmentService.get_StuffList(this.stuff_params).then((res)=>{
+        console.log(res.data.data);
+        this.StuffList = res.data.data
+      }).catch((error)=>{
+        console.log(error);
+      })
     },
 
     goPush(){
       this.$router.push("/admin/partfactory");
+    },
+
+    goCadry(id, name){
+      this.$router.push({name:"departmentstuffcadry", params:{
+        id, name,
+        depId:this.$route.params.id,
+        depName:this.$route.params.name,
+      }});
     },
 
     controlLoader(item) {
@@ -365,6 +390,7 @@ export default {
   created() {
     this.department_name = this.$route.params.name;
     this.get_DepartmentStuff(this.$route.params.id, true);
+    this.get_StuffList()
   },
 };
 </script>

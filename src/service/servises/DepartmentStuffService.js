@@ -22,7 +22,13 @@ const search_klassificator = (payload)=>{
     return axios.get(`/api/organization/classifications`, {params:payload})
 }
 
+const get_StuffCadry = (payload)=>{
+    return axios.get(`/api/organization/departmentStaffCadries/${payload.id}`, {params: payload.params})
+}
 
 
 
-export default {get_DepartmentStuff ,create_DepartmentStuff ,update_DepartmentStuff, delete_DepartmentStuff, search_klassificator}
+
+
+
+export default {get_DepartmentStuff ,create_DepartmentStuff ,update_DepartmentStuff, delete_DepartmentStuff, search_klassificator,get_StuffCadry}

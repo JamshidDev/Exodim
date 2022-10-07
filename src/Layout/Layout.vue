@@ -10,7 +10,7 @@
       </div>
 
       <!-- Layout main -->
-      <div class="layout_main_section px-3 pb-2"  >
+      <div class="layout_main_section xl:px-2 lg:px-2 px-1 pb-2"  >
         <!-- Top breadcrumb -->
         <div v-if="breadcrumb" class="grid py-1 card surface-0  px-2 mb-3">
           <Breadcrumb

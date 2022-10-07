@@ -1,5 +1,5 @@
 <template>
-  <div class="grid card surface-0 shadow-1 py-4 px-3">
+  <div class="grid card surface-0 shadow-1 py-4 px-1">
     <div class="col-12">
       <div class="grid">
         <div class="col-12">
