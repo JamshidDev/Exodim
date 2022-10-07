@@ -338,6 +338,7 @@
               optionLabel="name_uz"
               :filter="true"
               @filter="get_Classifikator"
+              :filterFields="['code_staff']"
               placeholder="Tanlang"
               class="w-full"
             >
