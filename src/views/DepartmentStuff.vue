@@ -209,6 +209,38 @@
           </Dropdown>
           </div>
           <div class="col-12">
+            <h6 class="mb-2 pl-2 text-500">
+              Lavozimga mos klassifikatorni tanlang
+            </h6>
+            <Dropdown
+              v-model="classic"
+              :options="Class_List"
+              optionLabel="name_uz"
+              :filter="true"
+              @filter="get_Classifikator"
+              :filterFields="['code_staff']"
+              placeholder="Tanlang"
+              class="w-full"
+            >
+              <template #value="slotProps">
+                <div
+                  class=""
+                  v-if="slotProps.value"
+                >
+                  <div>{{ slotProps.value.name_uz }}</div>
+                </div>
+                <span v-else>
+                  {{ slotProps.placeholder }}
+                </span>
+              </template>
+              <template #option="slotProps">
+                <div >
+                  <div>{{ slotProps.option.name_uz }}</div>
+                </div>
+              </template>
+            </Dropdown>
+          </div>
+          <div class="col-12">
             <h6 class="mb-2 pl-2 text-500">To'liq shtat lavozim nomi</h6>
             <Textarea
               class="w-full font-semibold"
@@ -277,6 +309,8 @@ export default {
       stuff:"",
       full_stuff:"",
       stuf_plan:null,
+      Class_List: [],
+      classic: "",
       StuffList:[],
       stuffsubmited:false,
       stuff_params:{
@@ -340,6 +374,7 @@ export default {
       this.stuffsubmited = false
       this.stuff=event.staff_id
       this.stuf_plan=event.rate,
+      this.classic = event.classification_id
       this.full_stuff=event.staff_fullname
       this.controlstuffDialog(true)
 
@@ -379,6 +414,18 @@ export default {
         depName:this.$route.params.name,
       }});
     },
+    get_Classifikator(search = "1") {
+     search = search.value? search.value : "1", 
+        DepartmentService.get_Classifikator({ search })
+          .then((res) => {
+            console.log(res.data);
+            this.Class_List = res.data;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      
+    },
 
     controlLoader(item) {
       this.loader = item;
@@ -391,6 +438,7 @@ export default {
     this.department_name = this.$route.params.name;
     this.get_DepartmentStuff(this.$route.params.id, true);
     this.get_StuffList()
+    this.get_Classifikator();
   },
 };
 </script>

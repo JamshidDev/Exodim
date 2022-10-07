@@ -69,10 +69,12 @@
           </template>
           <template #body="slotProps">
             <Dropdown
-              class="w-full p-inputtext-sm py-0"
+              class="w-full p-inputtext-sm py-0 font-medium"
               v-model="selectParty[`${slotProps.data.id}`]"
-              :options="paryList"
+              :options="slotProps.data.departments"
               optionLabel="name"
+              emptyMessage="Biriktirilgan bo'limlar yo'q"
+              placeholder="Bo'limlarni ko'rish"
             />
           </template>
         </Column>

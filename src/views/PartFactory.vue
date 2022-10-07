@@ -458,11 +458,6 @@ export default {
       stuffsubmited: false,
     };
   },
-  watch:{
-    Class_List(value){
-      console.log(value);
-    }
-  },
   methods: {
     get_Department(params, loader) {
       this.controlLoader(loader);
@@ -573,7 +568,8 @@ export default {
     addStuff() {
       this.stuffsubmited = false;
       this.department = null;
-      (this.classificator = null), (this.stuff = null);
+      this.classic = ""; 
+      this.stuff = null;
       this.stuf_plan = "";
       this.full_stuff = "";
       this.controlstuffDialog(true);
@@ -590,10 +586,10 @@ export default {
         let data = {
           staff_id: this.stuff.id,
           rate: this.stuf_plan,
-          classification_id: null,
+          classification_id: this.classic? this.classic.code_staff : null,
           staff_full: this.full_stuff,
         };
-
+        console.table(data);
         DepartmentStuffService.create_DepartmentStuff({ id, data })
           .then((res) => {
             this.get_Department(this.params, false);
