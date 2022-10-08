@@ -161,6 +161,7 @@
       <department-stuff-loader></department-stuff-loader>
     </div>
     <div class="col-12">
+      <Toast position="bottom-right" />
       <Dialog
         v-model:visible="stuffDialog"
         :breakpoints="{
@@ -306,6 +307,7 @@ export default {
       },
 
       stuffDialog:false,
+      dep_stuff_id:null,
       stuff:"",
       full_stuff:"",
       stuf_plan:null,
@@ -350,7 +352,6 @@ export default {
       this.controlLoader(loader);
       DepartmentStuffService.get_DepartmentStuff({ id })
         .then((res) => {
-          console.log(res);
           let cadrList = [];
           let number = (this.params.page - 1) * this.params.per_page;
           res.data.department.forEach((item) => {
@@ -371,6 +372,7 @@ export default {
 
     editStuff(event){
       console.log(event);
+      this.dep_stuff_id = event.id
       this.stuffsubmited = false
       this.stuff=event.staff_id
       this.stuf_plan=event.rate,
@@ -380,23 +382,44 @@ export default {
 
     },
     addStuffItem(){
-      console.log(this.stuf_plan.toString().length ==0);
       this.stuffsubmited = true
       if(this.stuff && this.full_stuff.length>0 && !this.stuf_plan.toString().length==0 && this.stuf_plan.toString().length<=4  ){
+        let id = this.dep_stuff_id;
+        let data = {
+          staff_id:this.stuff.id,
+          staff_full: this.full_stuff,
+          classification_id: this.classic?.id,
+          rate: this.stuf_plan
+        }
+        DepartmentStuffService.update_DepartmentStuff({id, data}).then((res)=>{
+          this.get_DepartmentStuff(this.$route.params.id, false);
+          this.$toast.add({
+              severity: "success",
+              summary: "Muvofaqqiyatli bajarildi",
+              detail: "Tahrirlandi",
+              life: 2000,
+            });
+        })
         this.controlstuffDialog(false)
       }
 
     },
     deleteItemDepStuff(id) {
       DepartmentStuffService.delete_DepartmentStuff({id}).then((res)=>{
+
         this.get_DepartmentStuff(this.$route.params.id, false);
+        this.$toast.add({
+              severity: "success",
+              summary: "Muvofaqqiyatli bajarildi",
+              detail: "O'chirildi",
+              life: 2000,
+            });
       }).catch((error)=>{
         console.log(error);
       })
     },
     get_StuffList(){
       DepartmentService.get_StuffList(this.stuff_params).then((res)=>{
-        console.log(res.data.data);
         this.StuffList = res.data.data
       }).catch((error)=>{
         console.log(error);
@@ -418,7 +441,6 @@ export default {
      search = search.value? search.value : "1", 
         DepartmentService.get_Classifikator({ search })
           .then((res) => {
-            console.log(res.data);
             this.Class_List = res.data;
           })
           .catch((error) => {

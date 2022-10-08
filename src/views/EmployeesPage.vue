@@ -409,13 +409,13 @@
             <div class="flex w-full">
               <Button
                 icon="pi pi-id-card"
-                class="p-button-rounded p-button-secondary mr-2"
+                class="p-button-rounded p-button-info mr-2"
                 v-tooltip.left="`Ma'lumotlarni ko'rish`"
                 @click="openResume(slotProps.data.id)"
               />
               <Button
                 icon="pi pi-cloud-download"
-                class="p-button-rounded p-button-secondary"
+                class="p-button-rounded p-button-success"
                 v-tooltip.left="`Ma'lumotnomani yuklash`"
                 @click="DowloadResume(slotProps.data.id)"
               />

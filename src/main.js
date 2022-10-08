@@ -63,6 +63,7 @@ import ProgressSpinner from 'primevue/progressspinner';
 import SelectButton from 'primevue/selectbutton';
 import MultiSelect from 'primevue/multiselect';
 import Chip from 'primevue/chip';
+import Message from 'primevue/message';
 
 
 
@@ -149,6 +150,8 @@ app.component('ProgressSpinner', ProgressSpinner);
 app.component('SelectButton', SelectButton);
 app.component('MultiSelect', MultiSelect);
 app.component('Chip', Chip);
+app.component('Message', Message);
+
 
 
 

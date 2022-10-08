@@ -18,7 +18,7 @@
               <div class="text-800 font-semibold"></div>
             </template>
             <template #body>
-                <Skeleton size="4rem" class="mr-2"></Skeleton>
+                <Skeleton size="2rem" class="mr-2"></Skeleton>
             </template>
           </Column>
            <Column style="min-width: 16rem">

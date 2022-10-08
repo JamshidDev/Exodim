@@ -4,7 +4,7 @@
         flex
         w-full
         justify-content-center
-        py-2
+        py-1
         text-white
         bg-green-500
         active:bg-green-400

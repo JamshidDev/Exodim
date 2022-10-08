@@ -18,6 +18,7 @@
         showGridlines
         class="p-datatable-sm"
         stripedRows
+        v-show="totalPage"
       >
         <template #header>
           <div class="grid">
@@ -147,7 +148,7 @@
         <div class="grid">
           <div class="col-12">
             <h6 class="font-medium text-lg">
-              <span class="text-blue-600">{{ department_name }}</span>
+              <span class="text-blue-600">{{ stuff_name }}</span>
               bo'limidagi xodimlar ro'yhati
             </h6>
           </div>
