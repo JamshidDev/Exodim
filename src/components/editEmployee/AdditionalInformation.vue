@@ -7,7 +7,10 @@
 
   <div class="grid card py-4" v-if="!barLoader">
     <!-- Med table -->
-    <div class="col-12 py-1 px-0">
+    <div class="col-12 py-1 px-0 mb-6" v-show="medList.length==0">
+      <add-button :title="'Tibbiy ko\'rik'" :text="true"></add-button>
+    </div>
+    <div class="col-12 py-1 px-0" v-show="!medList.length==0">
       <DataTable
         :value="medList"
         dataKey="id"
@@ -76,9 +79,13 @@
         </Column>
       </DataTable>
     </div>
+    
 
     <!--Punishment table -->
-    <div class="col-12 py-1 px-0">
+    <div class="col-12 py-1 px-0 mb-6" v-show="punishmentList.length==0">
+      <add-button :title="'Intizomiy jazo qo\'shish'" @click="addItemPunishment()"></add-button>
+    </div>
+    <div class="col-12 py-1 px-0" v-show="!punishmentList.length==0">
       <DataTable
         :value="punishmentList"
         dataKey="id"
@@ -167,8 +174,14 @@
         </Column>
       </DataTable>
     </div>
+
+
+
     <!-- Incentive table -->
-    <div class="col-12 py-1 px-0">
+    <div class="col-12 py-1 px-0 mb-6" v-show="incentiveList.length==0">
+      <add-button :title="'Rag\'batlantirish qo\'shish'" @click="addItemIncentive()"></add-button>
+    </div>
+    <div class="col-12 py-1 px-0" v-show="!incentiveList.length==0">
       <DataTable
         :value="incentiveList"
         dataKey="id"
@@ -268,8 +281,14 @@
       </DataTable>
     </div>
 
+
+
+
     <!-- Stuff table -->
-    <div class="col-12 py-1 px-0">
+    <div class="col-12 py-1 px-0 mb-6" v-show="stuffList.length==0">
+      <add-button :title="'Lavozim yo\'riqnomasi qo\'shish'" @click="addItemStuff()"></add-button>
+    </div>
+    <div class="col-12 py-1 px-0" v-show="!stuffList.length==0">
       <DataTable
         :value="stuffList"
         dataKey="id"
@@ -599,12 +618,15 @@ import employeeIncentiveService from "../../service/servises/employeeIncentiveSe
 import employeeStuff from "../../service/servises/employeeStuff";
 import employeeMed from "../../service/servises/employeeMed";
 
+import AddButton from '../buttons/AddButton.vue';
+
 export default {
   components: {
     DeleteButton,
     EditButton,
     ViewButton,
     ProgressBarLoader,
+    AddButton,
   },
 
   data() {

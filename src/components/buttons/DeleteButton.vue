@@ -18,7 +18,7 @@
   </div>
   <ConfirmPopup group="demo">
     <template #message="slotProps">
-      <div class="flex p-4">
+      <div class="flex p-2">
         <i :class="slotProps.message.icon" style="font-size: 1.5rem"></i>
         <p class="pl-2">{{ slotProps.message.message }}</p>
       </div>
