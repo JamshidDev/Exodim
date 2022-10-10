@@ -12,19 +12,19 @@
       <!-- Layout main -->
       <div class="layout_main_section xl:px-2 lg:px-2 px-1 pb-2"  >
         <!-- Top breadcrumb -->
-        <div v-if="breadcrumb" class="grid py-1 card surface-0  px-2 mb-3">
+        <!-- <div v-if="breadcrumb" class="grid py-1 card surface-0  px-2 pb-3">
           <Breadcrumb
           :home="home"
           :model="items"
           class="border-none border-noround mb-3"
         />
-        </div>
+        </div> -->
         <!-- Top menuBar -->
-        <div class="pb-2 card mb-3">
+        <div class="pb-2">
          <top-app-menu></top-app-menu>
         </div>
         <!-- Router main -->
-       <div class="pb-2 card px-2 mb-3">
+       <div class="pb-2  px-2 mt-1 min_main">
          <router-view ></router-view>
        </div>
        <div class="pb-2 card px-2 mb-3 ">
@@ -111,5 +111,8 @@ export default {
   },
 };
 </script>
-<style lang="">
+<style lang="scss" >
+.min_main{
+  min-height: calc(100vh - 176px) !important;
+}
 </style>

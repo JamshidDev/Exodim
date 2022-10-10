@@ -340,12 +340,16 @@ export default {
               label: "Boshqalar",
               icon: "pi pi-th-large",
               items: [
-                {
-                  label: "Hududlar",
+              {
+                  label: "Jazolar",
                   icon: "pi pi-th-large",
                 },
                 {
                   label: "Mukofot",
+                  icon: "pi pi-th-large",
+                },
+                {
+                  label: "Hududlar",
                   icon: "pi pi-th-large",
                 },
               ],

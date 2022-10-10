@@ -243,7 +243,10 @@
 
 
     <!-- Foreign table -->
-    <div class="col-12 py-1 px-0">
+    <div class="col-12 py-1 px-0 mb-6" v-show="cadryAbroadList.length==0">
+      <add-button :title="'Xorijda ta\'lim olganligini qo\'shish'" @click="addItemAbroad()"></add-button>
+    </div>
+    <div class="col-12 py-1 px-0" v-show="!cadryAbroadList.length==0">
       <DataTable
         :value="cadryAbroadList"
         dataKey="id"
@@ -360,7 +363,10 @@
     </div>
 
     <!-- Academy table -->
-    <div class="col-12 py-1 px-0">
+    <div class="col-12 py-1 px-0 mb-6" v-show="cadryAcademyList.length==0">
+      <add-button :title="'Akademiyada ta\'lim olganligini qo\'shish'" @click="addItemAcademy()"></add-button>
+    </div>
+    <div class="col-12 py-1 px-0" v-show="!cadryAcademyList.length==0">
       <DataTable
         :value="cadryAcademyList"
         dataKey="id"
@@ -760,12 +766,14 @@ import employeeAbroad from "../../service/servises/employeeAbroad";
 import employeeAcademy from '../../service/servises/employeeAcademy'
 import EditButton from "../buttons/EditButton.vue";
 import ProgressBarLoader from "../loaders/ProgressBarLoader.vue";
+import AddButton from '../buttons/AddButton.vue';
 
 export default {
   components: {
     DeleteButton,
     EditButton,
     ProgressBarLoader,
+    AddButton,
   },
   setup: () => ({ v$: useVuelidate() }),
 

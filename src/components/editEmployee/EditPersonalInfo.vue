@@ -221,7 +221,7 @@
               placeholder="Seriyani kiriting"
               id="passportSeriya"
               v-model="v$.passportSeriya.$model"
-              v-maska="'AA ######'"
+              v-maska="'AA #######'"
               :class="{
                 'p-invalid': v$.passportSeriya.$invalid && submitted,
               }"
@@ -372,9 +372,10 @@
       <!-- Position information details -->
       <div class="col-12 mb-4 border-1 border-300 border-round-sm py-4">
         <div class="grid xl:px-4 xl:mx-4 lg:px-2 xl:mx-2">
-          <!-- <div class="col-12 text-left text-lg font-medium uppercase mb-4">
-            Lavozim ma'lumotlari
-          </div> -->
+          <div class="col-12 xl:col-6"></div>
+          <div class="col-12 xl:col-6 flex justify-content-end">
+            <text-button class="w-16rem" :text="'Yangi lavozimga tayinlash'" ></text-button>
+          </div>
           <div class="col-12">
             <div class="w-full overflow-x-auto">
               <table class="w-full" style="min-width: 900px">
@@ -420,18 +421,21 @@
                     class="border-1 border-300 my-1 w-full"
                   >
                     <td class="text-lg font-semibold text-blue-600 text-center">
-                      {{ item.staff_date }}
+                      {{ formatter.arrowDateFormat(item.staff_date) }}
                     </td>
                     <td class="text-lg font-semibold text-blue-600 text-left">
                       {{ item.staff_full }}
                     </td>
                     <td class="text-lg font-semibold text-blue-600 text-center">
-                      {{ item.stavka }}
+                      {{ item.rate }}
                     </td>
                     <td class="text-lg font-semibold text-blue-600 text-center">
                       {{ item.staff_status }}
                     </td>
-                    <td></td>
+                    <td class="flex gap-2">
+                      <edit-button></edit-button>
+                      <delete-button></delete-button>
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -500,11 +504,18 @@ import employeeService from "../../service/servises/employeeService";
 import organizationsService from "../../service/servises/organizationsService";
 import { minLength, required } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
+import EditButton from "@/components/buttons/EditButton";
+import DeleteButton from "@/components/buttons/DeleteButton";
+import TextButton from "@/components/buttons/TextButton";
 
 export default {
   components: {
     Cropper,
     ProgressBarLoader,
+    EditButton,
+    DeleteButton,
+    TextButton,
+    TextButton,
   },
   setup: () => ({ v$: useVuelidate() }),
 
@@ -514,6 +525,7 @@ export default {
         src: null,
         type: "image/jpg",
       },
+      formatter,
       defaulAvatar: null,
       cropperDialog: false,
       default_avatar,
@@ -660,7 +672,6 @@ export default {
           this.controlLoader(false);
         });
     },
-
 
     // update cadry details
     updateEmployee(isFormValid) {

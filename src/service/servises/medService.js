@@ -6,7 +6,7 @@ const get_CadryMed = (payload)=>{
 }
 
 const create_CadryMed = (payload)=>{
-    return axios.post(`//api/organization/create-med`, payload.data)
+    return axios.post(`/api/organization/create-med`, payload.data)
 }
 
 const update_CadryMed = (payload)=>{
