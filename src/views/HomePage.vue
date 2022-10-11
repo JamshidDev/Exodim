@@ -6,12 +6,6 @@
             </div>
             <div class="col-12 font-semibold uppercase text-lg text-center">"O'zbekiston temir yo'llari"</div>
             <div class="col-12 font-semibold uppercase text-base text-center">Aksiyadorlik Jamiyati</div>
-            <div class="col-12 font-medium  text-base text-center">Platformadagi barcha ma'lumotlarning to'g'ri kiritilishi bo'yicha korxonaning masul xodimi javobgar hisoblanadi. </div>
-            <div class="col-12 font-medium  text-base text-center">Korxona nimi - NOK</div>
-            <div class="col-12 font-medium  text-base text-center">Ma'sul xodim - Jamshid Raximov Shuxrat o'g'li</div>
-
-
-            
         </div>
     </div>
 </template>

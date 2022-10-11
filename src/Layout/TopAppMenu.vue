@@ -1,6 +1,6 @@
 <template>
   <div class="w-full">
-    <Menubar :model="menuBarRouter" class=" font-medium" />
+    <Menubar :model="menuBarRouter" class=" font-medium " />
   </div>
 </template>
 <script>
@@ -343,14 +343,17 @@ export default {
               {
                   label: "Jazolar",
                   icon: "pi pi-th-large",
+                  to:"/admin/punishment",
                 },
                 {
                   label: "Mukofot",
                   icon: "pi pi-th-large",
+                  to:"/admin/incentive",
                 },
                 {
                   label: "Hududlar",
                   icon: "pi pi-th-large",
+                  to:"/admin/punishment",
                 },
               ],
             },

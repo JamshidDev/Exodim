@@ -346,8 +346,8 @@
               <Image
                 :src="slotProps.data.photo"
                 :alt="slotProps.data.fullname"
-                width="40"
-                height="40"
+                width="30"
+                height="30"
                 preview
               />
             </div>
@@ -404,21 +404,23 @@
           </template>
         </Column>
 
-        <Column :exportable="false" style="min-width: 6rem">
+        <Column :exportable="false" style="min-width:100px; width: 120px;">
           <template #body="slotProps">
-            <div class="flex w-full">
-              <Button
+            <div class="flex w-full align-items-center gap-2">
+              <!-- <Button
                 icon="pi pi-id-card"
                 class="p-button-rounded p-button-info mr-2"
-                v-tooltip.left="`Ma'lumotlarni ko'rish`"
+               
                 @click="openResume(slotProps.data.id)"
-              />
-              <Button
+              /> -->
+              <download-button  v-tooltip.left="`Ma'lumotlarni ko'rish`" :icon="'pi pi-id-card'"   @click="openResume(slotProps.data.id)"></download-button>
+              <download-button  v-tooltip.left="`Ma'lumotlarni ko'rish`" :icon="'pi pi-cloud-download'" @click="openResume(slotProps.data.id)"></download-button>
+              <!-- <Button
                 icon="pi pi-cloud-download"
                 class="p-button-rounded p-button-success"
                 v-tooltip.left="`Ma'lumotnomani yuklash`"
                 @click="DowloadResume(slotProps.data.id)"
-              />
+              /> -->
             </div>
           </template>
         </Column>
@@ -450,8 +452,9 @@ import EmployeeLoader from "../components/loaders/EmployeeLoader.vue";
 import SearchNotFoundPage from "../components/EmptyComponent/SearchNotFoundPage.vue";
 import WordTemplate from "../components/Eksport/WordTemplate.vue";
 import EmployeeDetails from "../components/partEmployee/EmployeeDetails.vue";
+import DownloadButton from '@/components/buttons/DownloadButton'
 export default {
-  components: { EmployeeLoader, TablePagination, SearchNotFoundPage,WordTemplate,EmployeeDetails },
+  components: { EmployeeLoader, TablePagination, SearchNotFoundPage,WordTemplate,EmployeeDetails,DownloadButton },
   data() {
     return {
       displayBasic: true,

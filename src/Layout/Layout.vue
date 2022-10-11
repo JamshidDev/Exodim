@@ -5,7 +5,7 @@
     <div class="layout_main_container">
 
       <!-- Layout sidebar -->
-      <div class="layout_sidebar card shadow-1 border-1 border-white border-round-xs">
+      <div class="layout_sidebar border-round-xs">
         <app-menu></app-menu>
       </div>
 
@@ -20,9 +20,12 @@
         />
         </div> -->
         <!-- Top menuBar -->
+
         <div class="pb-2">
-         <top-app-menu></top-app-menu>
+         <top-app-menu v-show="get_menuType"></top-app-menu>
         </div>
+
+
         <!-- Router main -->
        <div class="pb-2  px-2 mt-1 min_main">
          <router-view ></router-view>
@@ -45,6 +48,7 @@
 import AppMenu from "./AppMenu.vue";
 import Toolbar from "./Toolbar.vue";
 import TopAppMenu from "./TopAppMenu.vue";
+import {mapGetters} from "vuex"
 export default {
   components: {
     Toolbar,
@@ -77,6 +81,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(["get_menuType"]),
     layoutClass() {
       return [
         "layout-wrapper",
@@ -99,6 +104,11 @@ export default {
         this.sidebar = true;
       }
     },
+    get_menuType(type){
+      if(type){
+        this.sidebar= false
+      }
+    }
   },
 
   methods: {

@@ -1,7 +1,7 @@
 // import Vue from "vue";
 import Vuex from "vuex";
 
-// import appModules from "./modules/appModules";
+import appModules from "./Modules/appModules";
 // import newsModules from "./modules/newsModules";
 import adminModules from './Modules/adminModules'
 
@@ -9,7 +9,7 @@ import adminModules from './Modules/adminModules'
 
 export default new Vuex.Store({
   modules: {
-    // appModules,
+    appModules,
     // newsModules,
     adminModules,
   },

@@ -155,6 +155,26 @@ const routes = [
         }
       },
       {
+        path: '/admin/punishment',
+        name: 'punishment',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: function () {
+          return import(/* webpackChunkName: "about" */ '../views/PunishmentPage.vue')
+        }
+      },
+      {
+        path: '/admin/incentive',
+        name: 'incentive',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: function () {
+          return import(/* webpackChunkName: "about" */ '../views/IncentivePage.vue')
+        }
+      },
+      {
         path: '/admin/map',
         name: 'map',
         // route level code-splitting

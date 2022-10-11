@@ -61,16 +61,37 @@
         <InputSwitch v-model="darkMode" @change="customChangetheme($event)" />
       </div>
     </div>
+    <div
+      class="
+        col-12
+        sm:col-12
+        md:col-12
+        lg:col-12
+        xl:col-12
+        card
+        shadow-1
+        surface-0
+        my-1
+        border-round-xl
+      "
+    >
+      <div class="flex justify-content-between p-4">
+        <div class="font-medium text-base uppercase">Gorizantal menyu</div>
+        <InputSwitch v-model="menuType" @change="changeMenu()" />
+      </div>
+    </div>
   </div>
 </template>
 <script>
 import EventBus from "../util/appEventBus.js";
+import {mapActions, mapGetters} from "vuex"
 export default {
   data() {
     return {
       scale: 14,
       scales: [12, 13, 14, 15, 16],
       darkMode: false,
+      menuType:this.get_menuType,
     };
   },
   themeChangeListener: null,
@@ -85,6 +106,13 @@ export default {
     EventBus.on("theme-change", this.themeChangeListener);
   },
   methods: {
+    ...mapActions(["actionMenu"]),
+    changeMenu(){
+      console.log(this.menuType);
+      this.actionMenu(this.menuType)
+    },
+
+
     customChangetheme($event) {
       if (this.darkMode) {
         this.changeTheme($event, "lara-dark-blue", true);
@@ -108,6 +136,12 @@ export default {
       event.preventDefault();
     },
   },
+  computed:{
+    ...mapGetters(["get_menuType"])
+  },
+  created(){
+    this.menuType = this.get_menuType
+  }
 };
 </script>
 <style lang="scss">

@@ -1,14 +1,15 @@
 <template >
-  <div class="fixed top-0 w-full z_index_top">
-    <Toolbar class="border-noround  px-4  pb-2 pt-2">
+  <div class="fixed top-0 left-0 w-full z_index_top">
+    <Toolbar class="custom_bg px-4  pb-2 pt-2">
       <template #start>
-        <!-- <Button
+        <Button
+        v-show="!get_menuType"
           icon="pi pi-bars"
           class="p-button-rounded p-button-outlined p-button-secondary p-button-sm p-0"
           @click="controlNavbar()"
           
-        /> -->
-        <img @click="poshGo()" class="logo-picture cursor-pointer" src="https://railway.uz/local/templates/main_v2/img/logo.webp" alt="">
+        />
+        <img @click="poshGo()" class="logo-picture cursor-pointer pl-2" src="https://railway.uz/local/templates/main_v2/img/logo.webp" alt="">
       </template>
 
       <template #end>
@@ -96,6 +97,7 @@
   </div>
 </template>
 <script>
+import {mapGetters} from "vuex"
 export default {
   data() {
     return {
@@ -264,6 +266,9 @@ export default {
       ],
     };
   },
+  computed:{
+    ...mapGetters(["get_menuType"]),
+  },
   methods: {
     toggle(event) {
       this.$refs.menu.toggle(event);
@@ -281,6 +286,10 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.custom_bg{
+  background-color: #313a46 !important;
+  border-radius:0px !important
+}
 .z_index_top {
   z-index: 998 !important;
 }
@@ -288,6 +297,6 @@ export default {
   width: 1px;
 }
 .logo-picture{
-        width: 30px;
+        width: 39px;
     }
 </style>

@@ -1,5 +1,5 @@
 <template >
-  <div class="grid card surface-0 shadow-1 py-2 px-2">
+  <div class="grid  surface-0  py-2 px-2">
     <h6 class="text-base p-2 uppercase">Shtat lavozimlari jadvali</h6>
     <div class="col-12" v-show="loader">
       <position-loader ></position-loader>
