@@ -64,6 +64,7 @@ import SelectButton from 'primevue/selectbutton';
 import MultiSelect from 'primevue/multiselect';
 import Chip from 'primevue/chip';
 import Message from 'primevue/message';
+import Checkbox from 'primevue/checkbox';
 
 
 
@@ -151,6 +152,8 @@ app.component('SelectButton', SelectButton);
 app.component('MultiSelect', MultiSelect);
 app.component('Chip', Chip);
 app.component('Message', Message);
+app.component('Checkbox', Checkbox);
+
 
 
 

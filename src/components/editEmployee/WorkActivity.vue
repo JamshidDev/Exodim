@@ -5,7 +5,10 @@
     </div>
   </div>
   <div  class="grid card py-4" v-if="!barLoader">
-    <div class="col-12 py-1 px-0">
+    <div class="col-12 py-1 px-0 mb-6" v-show="careerList.length==0">
+      <add-button :title="'Mehnat faoliyatini qo\'shish'" @click="addingCaarres()"></add-button>
+    </div>
+    <div class="col-12 py-1 px-0" v-show="!careerList.length==0">
       <DataTable
         :value="careerList"
         dataKey="id"
@@ -175,9 +178,10 @@
   import EditButton from '../buttons/EditButton.vue';
   import employeeCarreer from '../../service/servises/employeeCarreer';
   import ProgressBarLoader from "../loaders/ProgressBarLoader.vue";
+  import AddButton from '../buttons/AddButton.vue';
 export default {
   components:{
-    DeleteButton, EditButton,ProgressBarLoader,
+    DeleteButton, EditButton,ProgressBarLoader,AddButton,
   },
   data(){
     return{

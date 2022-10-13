@@ -139,7 +139,10 @@
 
 
     <!-- Uneversity table -->
-    <div class="col-12 py-1 px-0">
+    <div class="col-12 py-1 px-0 mb-6" v-show="universityList.length==0">
+      <add-button :title="'Oligoh ma\'lumotlarni qo\'shish'" @click="addItemUniversity()"></add-button>
+    </div>
+    <div class="col-12 py-1 px-0" v-show="!universityList.length==0">
       <DataTable
         :value="universityList"
         dataKey="id"

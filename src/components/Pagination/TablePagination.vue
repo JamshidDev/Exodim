@@ -38,21 +38,6 @@ export default {
       default: 0,
     },
   },
-  // watch:{
-  //   total_page(value){
-  //     if(value<30){
-  //       this.row_page_drop={
-  //         name: "20",
-  //         count: 20,
-  //       }
-  //     }else if(value<20){
-  //       this.row_page_drop={
-  //         name: "10",
-  //         count: 10,
-  //       }
-  //     }
-  //   }
-  // },
   data() {
     return {
       pageDetails: {

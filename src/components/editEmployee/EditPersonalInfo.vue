@@ -9,7 +9,7 @@
       <div class="flex justify-content-end">
         <Button
           icon="pi pi-trash"
-          @click="handleSubmit(!v$.$invalid)"
+          @click="controFinishDialog(true)"
           class="p-button-danger p-button-sm mx-2"
           label="Yakunlash"
           v-tooltip.bottom="`Xodim mehnat faoliyatini yakunlash`"
@@ -374,7 +374,11 @@
         <div class="grid xl:px-4 xl:mx-4 lg:px-2 xl:mx-2">
           <div class="col-12 xl:col-6"></div>
           <div class="col-12 xl:col-6 flex justify-content-end">
-            <text-button class="w-16rem" :text="'Yangi lavozimga tayinlash'" ></text-button>
+            <text-button
+              class="w-16rem"
+              :text="'Yangi lavozimga tayinlash'"
+              @click="addItemStuff()"
+            ></text-button>
           </div>
           <div class="col-12">
             <div class="w-full overflow-x-auto">
@@ -433,7 +437,7 @@
                       {{ item.staff_status }}
                     </td>
                     <td class="flex gap-2">
-                      <edit-button></edit-button>
+                      <edit-button @click="editItemStuff(item.id)"></edit-button>
                       <delete-button></delete-button>
                     </td>
                   </tr>
@@ -489,9 +493,185 @@
             </div>
           </template>
         </Dialog>
+
+        <Dialog
+        v-model:visible="finishDialog"
+        :breakpoints="{
+          '1960px': '30vw',
+          '1600px': '40vw',
+          '1200px': '70vw',
+          '960px': '80vw',
+          '640px': '90vw',
+        }"
+        :style="{ width: '50vw' }"
+        :modal="true"
+      >
+        <template #header>
+          <h6 class="uppercase text-lg text-red-500 font-medium">
+            Mehnat faoliyatini yakunlash
+          </h6>
+        </template>
+        <div class="grid">
+          <div class="col-12">
+            <h6 class="mb-2 pl-2 text-500">Prikaz raqami</h6>
+              <InputText
+                type="text"
+                class="w-full font-semibold"
+                placeholder="Kiriting"
+                v-model.trim="prikaz_number"
+                :class="{ 'p-invalid': prikaz_num_err && prikaz_submitted }"
+              />
+          </div>
+          <div class="col-12">
+            <h6 class="mb-2 pl-2 text-500">Izoh</h6>
+            <Textarea
+              class="w-full font-semibold"
+              :class="{ 'p-invalid': prikaz_comment_err && prikaz_submitted }"
+              placeholder="Kiriting"
+              id="employeePhone"
+              v-model.trim="prikaz_comment"
+              :autoResize="true"
+              rows="1"
+            />
+          </div>
+          <div class="col-12">
+            <Checkbox inputId="binary" v-model="isBanCadry" :binary="true" /> <span class="pl-2 text-500">Mehnat faoliyati davrida yo'l qo'ygan qo'pol xatolari munosabati bilan</span>
+          </div>
+        </div>
+
+        <template #footer>
+          <div class="col-12 pt-2">
+            <div class="flex justify-content-end">
+              <Button
+                label="Yakunlash"
+                icon="pi pi-trush"
+                class="p-button-danger p-button-sm"
+                @click="removeCadry()"
+              
+              />
+            </div>
+          </div>
+        </template>
+      </Dialog>
+
+      <Dialog
+        v-model:visible="stuffDialog"
+        :breakpoints="{
+          
+          '640px': '90vw',
+        }"
+        :style="{ width: '50vw' }"
+        :modal="true"
+      >
+        <template #header>
+          <h6 class="uppercase text-lg text-blue-500 font-medium">
+           {{stuffDialogType? "Yangi lavozimga tayinlash" : "Lavozimni tahrirlash"}}
+          </h6>
+        </template>
+        <div class="grid">
+          <div class="col-12 xl:col-6">
+            <h6 class="mb-2 pl-2 text-500">Bo'limni tanlang  ({{stuff_departmentList.length}})</h6>
+            <Dropdown
+              v-model="stuff_department"
+              :options="stuff_departmentList"
+              optionLabel="name"
+              :filter="true"
+              placeholder="Tanlang"
+              class="w-full  p-input-sm"
+              @change="changeDepartment"
+            >
+              <template #value="slotProps">
+                <div class="font-semibold" v-if="slotProps.value">
+                  <div>{{ slotProps.value.name }}</div>
+                </div>
+                <span v-else class="font-semibold">
+                  {{ slotProps.placeholder }}
+                </span>
+              </template>
+              <template #option="slotProps">
+                <div class="country-item">
+                  <div>{{ slotProps.option.name }}</div>
+                </div>
+              </template>
+            </Dropdown>
+          </div>
+          <div class="col-12 xl:col-6">
+            <h6 class="mb-2 pl-2 text-500">Lavozimni tanlang  ({{stuff_stuffList.length}})</h6>
+            <Dropdown
+              v-model="stuff_stuff"
+              :options="stuff_stuffList"
+              optionLabel="staff_fullname"
+              :filter="true"
+              placeholder="Tanlang"
+              class="w-full p-input-sm"
+            >
+              <template #value="slotProps">
+                <div class="font-semibold" v-if="slotProps.value">
+                  <div>{{ slotProps.value.staff_fullname }}</div>
+                </div>
+                <span v-else class="font-semibold">
+                  {{ slotProps.placeholder }}
+                </span>
+              </template>
+              <template #option="slotProps">
+                <div class="country-item">
+                  <div>{{ slotProps.option.staff_fullname }}</div>
+                </div>
+              </template>
+            </Dropdown>
+          </div>
+
+          <div class="col-12 xl:col-4 lg:col-4">
+            <h6 class="mb-2 pl-2 text-500">Faoliyat turi</h6>
+          <Dropdown
+                v-model="stuff_status"
+                :options="stuff_statusList"
+                optionLabel="name"
+                placeholder="Tanlang"
+                class="w-full font-semibold"
+              />
+        </div>
+        <div class="col-12 xl:col-4 lg:col-4">
+          <h6 class="mb-2 pl-2 text-500">Lavozim sanasi</h6>
+          <Calendar
+                class="w-full font-semibold"
+                :manualInput="true"
+                v-model="stuff_date"
+                v-maska="'##/##/####'"
+                dateFormat="dd/mm/yy"
+                :showButtonBar="true"
+                placeholder="Sanani tanlang"
+              />
+        </div>
+        <div class="col-12 xl:col-4 lg:col-4">
+            <h6 class="mb-2 pl-2 text-500">Plan</h6>
+            <InputText
+                type="text"
+                class="w-full font-semibold"
+                placeholder="Kiriting"
+                id="adressStreet"
+                v-model="stuff_plan"
+              />
+          </div>
+        </div>
+
+        <template #footer>
+          <div class="col-12 pt-2">
+            <div class="flex justify-content-end">
+              <Button
+                label="Saqlash"
+                icon="pi pi-trush"
+                class="p-button-info p-button-sm"
+              
+              />
+            </div>
+          </div>
+        </template>
+      </Dialog>
       </div>
     </div>
   </div>
+  
 </template>
 <script>
 import ProgressBarLoader from "../loaders/ProgressBarLoader.vue";
@@ -580,7 +760,13 @@ export default {
         job_date: null,
       },
 
+      finishDialog: false,
+      prikaz_number:null,
+      prikaz_comment:null,
+      prikaz_submitted:false,
+      isBanCadry:false,
       submitted: false,
+
       genderList: [
         {
           name: "Erkak",
@@ -591,6 +777,18 @@ export default {
           id: 0,
         },
       ],
+
+      stuffDialog:false,
+      stuffDialogType:true,
+      stuff_departmentList:[],
+      stuff_department:null,
+      stuff_stuffList:[],
+      stuff_stuff:null,
+      stuff_statusList:[],
+      stuff_status:null,
+      stuff_plan:0,
+      stuff_date:"",
+
 
       barLoader: false,
     };
@@ -620,6 +818,22 @@ export default {
       positionDegree: globalValidate.positionDegree,
     };
   },
+  computed:{
+    prikaz_num_err(){
+      if (!this.prikaz_number) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    prikaz_comment_err(){
+      if (!this.prikaz_comment) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  },
 
   created() {
     this.getEmployee(this.$route.params.id);
@@ -636,7 +850,6 @@ export default {
         .get_employeeDetails({ id })
 
         .then((res) => {
-          console.table(res.data.cadry);
           let cadry = res.data.cadry;
           this.defaulAvatar = cadry.photo;
           this.firstName = cadry.first_name;
@@ -743,6 +956,24 @@ export default {
     goPush() {
       this.$router.push("/admin/partemployee");
     },
+    removeCadry(){
+      this.prikaz_submitted =true;
+      if( !this.prikaz_comment_err && !this.prikaz_num_err ){
+        let data = {
+          command_number:this.prikaz_number,
+          comment:this.prikaz_comment,
+          blackStatus:this.isBanCadry
+        }
+        let id = this.$route.params.id
+       
+        employeeService.remove_Cadry({id,data}).then((res)=>{
+          this.$router.push({name:"partemployee"})
+        }).catch((error)=>{
+          console.log(error);
+        })
+        this.controFinishDialog(false)
+      }
+    },
 
     changeBornDistrict(event) {
       this.cadry.birth_city_id = event.value.id;
@@ -798,6 +1029,32 @@ let id = this.$route.params.id
       this.cropperDialog = item;
     },
 
+    addItemStuff(){
+      this.stuffDialogType = true;
+
+      this.controlstuffDialog(true)
+    },
+
+    editItemStuff(id){
+      this.stuffDialogType = false;
+      employeeService.update_CadryStuff({id}).then((res)=>{
+        console.log(res.data);
+        this.stuff_departmentList = res.data.departments;
+        this.stuff_statusList = res.data.staff_statuts;
+        this.stuff_status = res.data.staff_status
+        this.stuff_date = formatter.interDateFormatter(res.data.staff_date) 
+        this.controlstuffDialog(true)
+      })
+
+
+    },
+
+
+
+    controlstuffDialog(item){
+      this.stuffDialog = item
+    },
+
     uploadImage(event) {
       /// Reference to the DOM input element
 
@@ -819,16 +1076,15 @@ let id = this.$route.params.id
         this.cropperDialog = true;
       }
     },
+    controFinishDialog(item) {
+      this.prikaz_submitted =false;
+      this.finishDialog = item;
+    },
 
     controlLoader(item) {
       this.barLoader = item;
     },
   },
-  // unmounted() {
-  //   // if (this.image.src) {
-  //   //   URL.revokeObjectURL(this.image.src);
-  //   // }
-  // },
 };
 </script>
 <style lang="scss">

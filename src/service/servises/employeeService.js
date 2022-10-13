@@ -74,6 +74,13 @@ const delete_CadryUniversity = (payload)=>{
     return axios.delete(`/api/organization/cadry/instituts/${payload.id}/delete`)
 }
 
+const remove_Cadry = (payload)=>{
+    return axios.delete(`/api/organization/cadry/${payload.id}/delete`, payload.data)
+}
+
+const update_CadryStuff= (payload)=>{
+    return axios.get(`/api/organization/cadry-staff/${payload.id}`)
+}
 
 
 
@@ -91,4 +98,4 @@ const delete_CadryUniversity = (payload)=>{
 
 
 
-export default {get_Employees,get_Department,get_Stuffs,get_employeeDetails, get_employeeAvatar,update_empolyee,get_workLevel, get_CadryUniversity,get_CadryInfo,get_Languages,get_Party,get_universityList, update_CadryUniversity, adding_CadryUniversity, delete_CadryUniversity, get_Info, update_Info}
+export default {get_Employees,get_Department,get_Stuffs,get_employeeDetails, get_employeeAvatar,update_empolyee,get_workLevel, get_CadryUniversity,get_CadryInfo,get_Languages,get_Party,get_universityList, update_CadryUniversity, adding_CadryUniversity, delete_CadryUniversity, get_Info, update_Info,remove_Cadry, update_CadryStuff}

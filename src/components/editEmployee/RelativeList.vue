@@ -6,7 +6,10 @@
   </div>
 
   <div  class="grid card py-4" v-if="!barLoader">
-    <div class="col-12 py-1 px-0">
+    <div class="col-12 py-1 px-0 mb-6" v-show="cadryRelativeList.length==0">
+      <add-button :title="'Yaqin qarindoshlarini qo\'shish'" @click="addItem()"></add-button>
+    </div>
+    <div class="col-12 py-1 px-0" v-show="!cadryRelativeList.length==0">
       <DataTable
         :value="cadryRelativeList"
         dataKey="id"
@@ -45,7 +48,7 @@
             <div
               class="text-center cursor-pointer font-semibold"
             >
-              {{  relativeName(slotProps.data.relative) }}
+              {{ slotProps.data.relative.name}}
             </div>
           </template>
         </Column>
@@ -123,6 +126,7 @@
         </Column>
       </DataTable>
     </div>
+    
     <div class="col-12">
      
       <Dialog
@@ -226,9 +230,10 @@
   import EditButton from '../buttons/EditButton.vue';
 import employeeRelative from '../../service/servises/employeeRelative';
   import ProgressBarLoader from "../loaders/ProgressBarLoader.vue";
+  import AddButton from '../buttons/AddButton.vue';
 export default {
   components:{
-    DeleteButton, EditButton,ProgressBarLoader,
+    DeleteButton, EditButton,ProgressBarLoader,AddButton,
   },
   data(){
     return{
@@ -252,6 +257,7 @@ export default {
     get_cadryRelative(id, loader){
       this.controlLoader(loader)
       employeeRelative.get_CadryRelative({id}).then((res)=>{
+        console.log(res.data.relatives);
         console.log(res.data.cadryRelatives);
         this.cadryRelativeList = res.data.cadryRelatives;
         this.relativeList = res.data.relatives;
@@ -274,7 +280,7 @@ export default {
     },
     editRelative(event){
       this.cadry_relative_id = event.id
-      this.relative_id = event.relative,
+      this.relative_id = event.relative.id,
       this.relative_fullName=event.fullname
       this.relative_birthday = event.birth_place
       this.relative_job=event.post
@@ -318,11 +324,6 @@ export default {
           console.log(error);
         })
     },
-
-    relativeName(id){
-      return this.relativeList.filter((item)=> item.id == id)[0].name
-    },
-
     onRowReorder(event){
       this.cadryRelativeList = event.value;
       let orders = []

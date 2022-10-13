@@ -551,7 +551,7 @@ export default {
         education_id: null,
         age_start: null,
         age_end: null,
-        region_id:null,
+        birth_region_id:null,
       },
     };
   },
@@ -713,7 +713,7 @@ export default {
       this.organization.education_id = event.value.id;
     },
     changeRegion(event) {
-      this.organization.region_id = event.value.id
+      this.organization.birth_region_id = event.value.id
 
     },
 
@@ -767,7 +767,7 @@ export default {
       this.organization.age_end = null;
       this.organization.age_start = null;
       this.organization.sex =null;
-      this.organization.region_id = null,
+      this.organization.birth_region_id = null,
       this.regionValue = null,
       this.genderValue = null;
       this.selectedAge = [10,80]
