@@ -9,7 +9,7 @@
           @click="controlNavbar()"
           
         />
-        <img @click="poshGo()" class="logo-picture cursor-pointer pl-2" src="https://railway.uz/local/templates/main_v2/img/logo.webp" alt="">
+        <img v-show="get_menuType"   @click="poshGo()" class="logo-picture cursor-pointer pl-2" src="https://railway.uz/local/templates/main_v2/img/logo.webp" alt="">
       </template>
 
       <template #end>

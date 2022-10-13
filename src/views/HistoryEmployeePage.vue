@@ -67,7 +67,7 @@
               icon="pi pi-check-circle"
               label="Ishga qabul qilish"
               class="p-button-success w-full mt-4"
-              @click="searchFromArchive"
+              @click="controlDialog(true)"
             ></Button>
 
 
@@ -75,6 +75,30 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="col-12">
+      <Dialog
+        v-model:visible="dialog"
+        :breakpoints="{
+          '1960px': '30vw',
+          '1600px': '40vw',
+          '1200px': '70vw',
+          '960px': '80vw',
+          '640px': '90vw',
+        }"
+        :style="{ width: '50vw' }"
+        :modal="true"
+      >
+        <template #header>
+          <h6 class="uppercase text-lg text-red-500 font-medium">
+            Rag'batlantirishlar
+          </h6>
+        </template>
+        <div class="grid">
+          
+        </div>
+        <template #footer> </template>
+      </Dialog>
     </div>
   </div>
 </template>
@@ -90,6 +114,7 @@ export default {
       searchValue:null,
       archiveCadry:null,
       loader:false,
+      dialog:false,
     }
   },
   methods:{
@@ -97,6 +122,9 @@ export default {
       Archive.findCadryByJSHR({pinfl: this.searchValue}).then((res)=>{
         this.archiveCadry = res.data.cadries?.data[0]
       })
+    },
+    controlDialog(item){
+      this.dialog = item
     }
   }
 };

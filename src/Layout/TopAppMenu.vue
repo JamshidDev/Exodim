@@ -279,7 +279,7 @@ export default {
               label: "Xodimlar",
               icon: "pi pi-users",
               to: '/admin/partemployee',
-              visible: () =>this.get_adminPermissions("organization_cadries"),
+              visible: () =>this.get_adminPermissions("role-list"),
             },
             {
               label: "Bo'limlar",

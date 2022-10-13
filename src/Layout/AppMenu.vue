@@ -107,7 +107,7 @@ export default {
               label: "Jazolanganlar",
               icon: "pi pi-th-large",
               visible: () =>this.get_adminPermissions("management_organizations"),
-              to: '/admin/meds',
+              to: '/admin/punishment',
             },
             {
               label: "Mukofatlanganlar",
