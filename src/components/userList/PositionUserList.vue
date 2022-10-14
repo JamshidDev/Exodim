@@ -27,7 +27,7 @@
             <div class="col-12 xl:col-6 lg:col-6 md:col-6">
               <h6 class="font-medium text-lg">
                 <span class="text-blue-600">{{ positionName }}</span>
-                lavozimidagi xodimlar ro'yhati
+                shtat lavozimidagi xodimlar ro'yhati
               </h6>
             </div>
             <div
@@ -55,6 +55,22 @@
           <template #body="slotProps">
             <div class="w-full text-center font-medium">
               {{ slotProps.data.number }}
+            </div>
+          </template>
+        </Column>
+        <Column style="min-width: 60px; width: 60px">
+          <template #header>
+            <div class="text-800 font-semibold">Rasm</div>
+          </template>
+          <template #body="slotProps">
+            <div class="flex justify-content-center">
+              <Image
+                :src="slotProps.data.photo"
+                :alt="slotProps.data.fullname"
+                width="40"
+                height="40"
+                preview
+              />
             </div>
           </template>
         </Column>

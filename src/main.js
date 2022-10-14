@@ -12,6 +12,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store/index'
 import Maska from 'maska'
+import Vue3SimpleHtml2pdf from "vue3-simple-html2pdf";
 
 
 
@@ -65,6 +66,9 @@ import MultiSelect from 'primevue/multiselect';
 import Chip from 'primevue/chip';
 import Message from 'primevue/message';
 import Checkbox from 'primevue/checkbox';
+import Accordion from 'primevue/accordion';
+import AccordionTab from 'primevue/accordiontab';
+import Fieldset from 'primevue/fieldset';
 
 
 
@@ -79,6 +83,7 @@ app.use(store)
 app.use(router)
 app.use(Maska)
 app.use(ConfirmationService)
+app.use(Vue3SimpleHtml2pdf);
 // app.use(Vuelidate)
 
 
@@ -153,6 +158,12 @@ app.component('MultiSelect', MultiSelect);
 app.component('Chip', Chip);
 app.component('Message', Message);
 app.component('Checkbox', Checkbox);
+app.component('Accordion', Accordion);
+app.component('AccordionTab', AccordionTab);
+app.component('Fieldset', Fieldset);
+
+
+
 
 
 

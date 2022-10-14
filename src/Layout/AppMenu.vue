@@ -29,6 +29,12 @@ export default {
               visible: () =>this.get_adminPermissions("management_organizations"),
               to: '/admin/employees',
             },
+            {
+              label: "Analitika",
+              icon: "pi pi-slack",
+              visible: () =>this.get_adminPermissions("management_organizations"),
+              to: '/admin/exel',
+            },
           ],
         },
         {

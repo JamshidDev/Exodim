@@ -288,7 +288,8 @@ export default {
 <style lang="scss" scoped>
 .custom_bg{
   background-color: #313a46 !important;
-  border-radius:0px !important
+  border-radius:0px !important;
+  border: 1px solid #313a46;
 }
 .z_index_top {
   z-index: 998 !important;
