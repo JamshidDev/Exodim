@@ -33,7 +33,7 @@
             ></div>
           </div>
         </template>
-        <Column>
+        <Column style="min-width: 200px;">
           <template #header>
             <div class="text-800 font-semibold">Tibbiy ko'rik xulosasi</div>
           </template>
@@ -43,23 +43,23 @@
             </div>
           </template>
         </Column>
-        <Column style="min-width: 50px; width: 300px">
+        <Column style="min-width: 100px; width: 120px">
           <template #header>
             <div class="text-800 font-semibold">O'tgan sanasi</div>
           </template>
           <template #body="slotProps">
             <div class="font-semibold flex justify-content-center">
-              {{ formatter.textDateFormat(slotProps.data.date1) }}
+              {{ formatter.arrowDateFormat(slotProps.data.date1) }}
             </div>
           </template>
         </Column>
-        <Column style="min-width: 50px; width: 300px">
+        <Column style="min-width: 100px; width: 120px">
           <template #header>
-            <div class="text-800 font-semibold">Keyingi o'tish sanasi</div>
+            <div class="text-800 font-semibold">Keyingi sanasi</div>
           </template>
           <template #body="slotProps">
             <div class="font-semibold flex justify-content-center">
-              {{ formatter.textDateFormat(slotProps.data.date2) }}
+              {{ formatter.arrowDateFormat(slotProps.data.date2) }}
             </div>
           </template>
         </Column>
@@ -70,9 +70,98 @@
           </template>
           <template #body="slotProps">
             <div class="flex gap-2">
+              <edit-button
+                :editItem="slotProps.data"
+                @editEvent="editItemMed($event)"
+              ></edit-button>
               <delete-button
                 :deleteItem="slotProps.data.id"
                 @deleteAcceptEvent="deleteItemMed($event)"
+              ></delete-button>
+            </div>
+          </template>
+        </Column>
+      </DataTable>
+    </div>
+
+     <!-- Vacation table -->
+     <div class="col-12 py-1 px-0 mb-6" v-show="VacationList.length==0">
+      <add-button :title="'Ta\'tillar'" :text="true"></add-button>
+    </div>
+    <div class="col-12 py-1 px-0" v-show="!VacationList.length==0">
+      <DataTable
+        :value="VacationList"
+        dataKey="id"
+        :paginator="false"
+        responsiveLayout="scroll"
+        showGridlines
+        class="pb-6 p-datatable-sm"
+      >
+        <template #header>
+          <div class="grid">
+            <div class="col-6">
+              <h5
+                class="text-base md:m-0 p-as-md-center uppercase text-blue-600"
+              >
+                Ta'tillar
+              </h5>
+            </div>
+            <div
+              class="col-6 flex justify-content-end align-items-center"
+            ></div>
+          </div>
+        </template>
+        <Column style="min-width: 200px;">
+          <template #header>
+            <div class="text-800 font-semibold">Ta'til turi</div>
+          </template>
+          <template #body="slotProps">
+            <div class="text-left cursor-pointer font-semibold">
+              {{ slotProps.data.status_decret==0? "Mehnat ta'tili" : "Bola parvarishlash ta'tili" }}
+            </div>
+          </template>
+        </Column>
+        <Column style="min-width: 100px; width: 120px">
+          <template #header>
+            <div class="text-800 font-semibold">Qachondan</div>
+          </template>
+          <template #body="slotProps">
+            <div class="font-semibold flex justify-content-center">
+              {{ formatter.arrowDateFormat(slotProps.data.date1) }}
+            </div>
+          </template>
+        </Column>
+        <Column style="min-width: 100px; width: 120px">
+          <template #header>
+            <div class="text-800 font-semibold">Qachongacha</div>
+          </template>
+          <template #body="slotProps">
+            <div class="font-semibold flex justify-content-center">
+              {{ formatter.arrowDateFormat(slotProps.data.date2) }}
+            </div>
+          </template>
+        </Column>
+        <Column style="min-width: 200px; width: 240px">
+          <template #header>
+            <div class="text-800 font-semibold">Ta'til davri</div>
+          </template>
+          <template #body="slotProps">
+            <div class="font-semibold flex justify-content-center">
+              {{slotProps.data.period1? formatter.arrowDateFormat(slotProps.data.period1) : ""}} <span class="mx-3"></span> {{slotProps.data.period2? formatter.arrowDateFormat(slotProps.data.period2) : ""}}
+             </div>
+          </template>
+        </Column>
+
+        <Column :exportable="false" style="min-width: 100px; width: 150px">
+          <template #header>
+            <div class="text-800 font-semibold">Amallar</div>
+          </template>
+          <template #body="slotProps">
+            <div class="flex gap-2">
+            
+              <delete-button
+                :deleteItem="slotProps.data.id"
+                @deleteAcceptEvent="deleteVacation($event)"
               ></delete-button>
             </div>
           </template>
@@ -114,27 +203,16 @@
             </div>
           </div>
         </template>
-        <Column>
+        <Column  style="min-width: 200px;">
           <template #header>
-            <div class="text-800 font-semibold">Prikaz nomer</div>
+            <div class="text-800 font-semibold"> Jazo sababi</div>
           </template>
           <template #body="slotProps">
-            <div class="text-center cursor-pointer font-semibold">
-              {{ slotProps.data.command_number }}
+            <div class="text-left pl-2 cursor-pointer font-semibold">
+              {{ slotProps.data.reason_punishment }}
             </div>
           </template>
         </Column>
-        <Column style="min-width: 100px; width: 300px">
-          <template #header>
-            <div class="text-800 font-semibold">Sanasi</div>
-          </template>
-          <template #body="slotProps">
-            <div class="text-center cursor-pointer font-semibold">
-              {{ formatter.textDateFormat(slotProps.data.date_punishment) }}
-            </div>
-          </template>
-        </Column>
-
         <Column style="min-width: 200px; width: 300px">
           <template #header>
             <div class="text-800 font-semibold">Jazo turi</div>
@@ -145,13 +223,23 @@
             </div>
           </template>
         </Column>
-        <Column style="min-width: 200px; width: 300px">
+        <Column style="min-width: 100px; width: 120px">
           <template #header>
-            <div class="text-800 font-semibold">Jazo sababi</div>
+            <div class="text-800 font-semibold">Sanasi</div>
+          </template>
+          <template #body="slotProps">
+            <div class="text-center cursor-pointer font-semibold">
+              {{ formatter.arrowDateFormat(slotProps.data.date_punishment) }}
+            </div>
+          </template>
+        </Column>
+        <Column style="min-width: 100px; width: 120px">
+          <template #header>
+            <div class="text-800 font-semibold"> Prikaz nomer</div>
           </template>
           <template #body="slotProps">
             <div class="font-semibold">
-              {{ slotProps.data.reason_punishment }}
+              {{ slotProps.data.command_number }}
             </div>
           </template>
         </Column>
@@ -210,7 +298,7 @@
             </div>
           </div>
         </template>
-        <Column>
+        <Column style="min-width: 200px;">
           <template #header>
             <div class="text-800 font-semibold">Kim tomonidan</div>
           </template>
@@ -221,26 +309,17 @@
           </template>
         </Column>
 
-        <Column style="min-width: 200px; width: 300px">
+        <Column style="min-width: 200px; width: 500px">
           <template #header>
-            <div class="text-800 font-semibold">Buyruq raqami</div>
+            <div class="text-800 font-semibold">Rag'bat sababi</div>
           </template>
           <template #body="slotProps">
             <div class="font-semibold">
-              {{ slotProps.data.command_number }}
+              {{ slotProps.data.reason_incentive }}
             </div>
           </template>
         </Column>
-        <Column style="min-width: 100px; width: 300px">
-          <template #header>
-            <div class="text-800 font-semibold">Sanasi</div>
-          </template>
-          <template #body="slotProps">
-            <div class="text-center cursor-pointer font-semibold">
-              {{ formatter.textDateFormat(slotProps.data.incentive_date) }}
-            </div>
-          </template>
-        </Column>
+       
         <Column style="min-width: 200px; width: 300px">
           <template #header>
             <div class="text-800 font-semibold">Rag'bat turi</div>
@@ -251,13 +330,24 @@
             </div>
           </template>
         </Column>
-        <Column style="min-width: 200px; width: 300px">
+      
+        <Column style="min-width: 100px; width: 120px">
           <template #header>
-            <div class="text-800 font-semibold">Rag'bat sababi</div>
+            <div class="text-800 font-semibold">Sanasi</div>
+          </template>
+          <template #body="slotProps">
+            <div class="text-center cursor-pointer font-semibold">
+              {{ formatter.textDateFormat(slotProps.data.incentive_date) }}
+            </div>
+          </template>
+        </Column>
+        <Column style="min-width: 100px; width: 120px">
+          <template #header>
+            <div class="text-800 font-semibold">Buyruq raqami</div>
           </template>
           <template #body="slotProps">
             <div class="font-semibold">
-              {{ slotProps.data.reason_incentive }}
+              {{ slotProps.data.command_number }}
             </div>
           </template>
         </Column>
@@ -327,7 +417,7 @@
             </div>
           </template>
         </Column>
-        <Column style="min-width: 50px; width: 300px">
+        <Column style="min-width: 100px; width: 120px">
           <template #header>
             <div class="text-800 font-semibold">Ko'rish</div>
           </template>
@@ -344,10 +434,6 @@
           </template>
           <template #body="slotProps">
             <div class="flex gap-2">
-              <edit-button
-                :editItem="slotProps.data"
-                @editEvent="editItemStuff($event)"
-              ></edit-button>
               <delete-button
                 :deleteItem="slotProps.data.id"
                 @deleteAcceptEvent="deleteStuff($event)"
@@ -537,8 +623,79 @@
         </template>
       </Dialog>
     </div>
+
+    <div class="col-12">
+      <!-- Med dialog -->
+      <Dialog
+        v-model:visible="med_dialog"
+        :breakpoints="{
+          '1960px': '30vw',
+          '1600px': '40vw',
+          '1200px': '70vw',
+          '960px': '80vw',
+          '640px': '90vw',
+        }"
+        :style="{ width: '50vw' }"
+        :modal="true"
+      >
+        <template #header>
+          <h6 class="uppercase text-lg text-blue-500 font-medium">
+            Tibbiy ko'rik hulosasini tahrilash
+          </h6>
+        </template>
+        <div class="grid pt-2">
+          <div class="col-6">
+            <h6 class="mb-2 pl-2 text-500">Oxirgi o'tgan sanasi</h6>
+            <Calendar
+              class="w-full font-semibold"
+              :manualInput="true"
+              id="positionFirstDate"
+              v-model="med_date1"
+              dateFormat="dd/mm/yy"
+              v-maska="'##/##/####'"
+              placeholder="Sanani tanlang"
+            />
+          </div>
+          <div class="col-6">
+            <h6 class="mb-2 pl-2 text-500">Keyingi o'tish sanasi</h6>
+            <Calendar
+              class="w-full font-semibold"
+              :manualInput="true"
+              v-model="med_date2"
+              dateFormat="dd/mm/yy"
+              v-maska="'##/##/####'"
+              placeholder="Sanani tanlang"
+            />
+          </div>
+          <div class="col-12">
+            <h6 class="mb-2 pl-2 text-500">Izoh</h6>
+            <Textarea
+              class="w-full font-semibold"
+              placeholder="Kiriting"
+              id="employeePhone"
+              v-model="med_comment"
+              :autoResize="true"
+              rows="1"
+            />
+          </div>
+        </div>
+
+        <template #footer>
+          <div class="col-12 pt-2">
+            <div class="flex justify-content-end">
+              <Button
+                label="Saqlash"
+                class="p-button-secondary p-button-sm"
+                @click="updateMed()"
+              />
+            </div>
+          </div>
+        </template>
+      </Dialog>
+    </div>
     <!-- Stuff Dialog -->
     <div class="col-12">
+      <Toast position="bottom-right" />
       <Dialog
         v-model:visible="stuffDialog"
         :breakpoints="{
@@ -617,6 +774,7 @@ import employeeAdditionalService from "../../service/servises/employeeAdditional
 import employeeIncentiveService from "../../service/servises/employeeIncentiveService";
 import employeeStuff from "../../service/servises/employeeStuff";
 import employeeMed from "../../service/servises/employeeMed";
+import VacationService from '@/service/servises/VacationService'
 
 import AddButton from '../buttons/AddButton.vue';
 
@@ -661,7 +819,14 @@ export default {
       stuff_id: null,
       stuff_fileName: null,
 
+      med_dialog:false,
+      med_id:null,
+      med_date1:null,
+      med_date2:null,
+      med_comment:null,
       medList: [],
+
+      VacationList:[],
     };
   },
   methods: {
@@ -714,6 +879,12 @@ export default {
           .create_CadryPunishment({ id: this.$route.params.id, data })
           .then((res) => {
             this.get_punishment(this.$route.params.id, false);
+            this.$toast.add({
+            severity: "success",
+            summary: "Muvofaqqiyatli bajarildi",
+            detail: "Qo'shildi",
+            life: 2000,
+          });
           })
           .catch((error) => {
             console.log(error);
@@ -723,6 +894,12 @@ export default {
           .update_CadryPunishment({ id: this.punishment_id, data })
           .then((res) => {
             this.get_punishment(this.$route.params.id, false);
+            this.$toast.add({
+            severity: "success",
+            summary: "Muvofaqqiyatli bajarildi",
+            detail: "Tahrirlandi",
+            life: 2000,
+          });
           })
           .catch((error) => {
             console.log(error);
@@ -735,6 +912,12 @@ export default {
         .delete_CadryPunishment({ id })
         .then((res) => {
           this.get_punishment(this.$route.params.id, false);
+          this.$toast.add({
+            severity: "success",
+            summary: "Muvofaqqiyatli bajarildi",
+            detail: "O'chirildi",
+            life: 2000,
+          });
         })
         .catch((error) => {
           console.log(error);
@@ -745,6 +928,7 @@ export default {
       employeeIncentiveService
         .get_CadryIncentive({ id })
         .then((res) => {
+          console.log(res.data);
           this.incentiveList = res.data.incentives;
         })
         .catch((error) => {
@@ -792,6 +976,12 @@ export default {
         employeeIncentiveService
           .create_CadryIncentive({ id: this.$route.params.id, data })
           .then((res) => {
+            this.$toast.add({
+            severity: "success",
+            summary: "Muvofaqqiyatli bajarildi",
+            detail: "Qo'shildi",
+            life: 2000,
+          });
             this.get_Incentive(this.$route.params.id);
           })
           .catch((error) => {
@@ -801,6 +991,12 @@ export default {
         employeeIncentiveService
           .update_CadryIncentive({ id: this.incentive_id, data })
           .then((res) => {
+            this.$toast.add({
+            severity: "success",
+            summary: "Muvofaqqiyatli bajarildi",
+            detail: "Tahrirlandi",
+            life: 2000,
+          });
             this.get_Incentive(this.$route.params.id);
           })
           .catch((error) => {
@@ -813,6 +1009,12 @@ export default {
       employeeIncentiveService
         .delete_CadryIncentive({ id })
         .then((res) => {
+          this.$toast.add({
+            severity: "success",
+            summary: "Muvofaqqiyatli bajarildi",
+            detail: "O'chirildi",
+            life: 2000,
+          });
           this.get_Incentive(this.$route.params.id);
         })
         .catch((error) => {
@@ -868,6 +1070,12 @@ export default {
         employeeStuff
           .create_CadryStuff({ id: this.$route.params.id, form })
           .then((res) => {
+            this.$toast.add({
+            severity: "success",
+            summary: "Muvofaqqiyatli bajarildi",
+            detail: "Qo'shildi",
+            life: 2000,
+          });
             this.get_Stuff(this.$route.params.id);
           })
           .catch((error) => {
@@ -877,6 +1085,12 @@ export default {
         employeeStuff
           .create_CadryStuff({ id: this.stuff_id, form })
           .then((res) => {
+            this.$toast.add({
+            severity: "success",
+            summary: "Muvofaqqiyatli bajarildi",
+            detail: "Tahrirlandi",
+            life: 2000,
+          });
             this.get_Stuff(this.$route.params.id);
           })
           .catch((error) => {
@@ -889,6 +1103,12 @@ export default {
       employeeStuff
         .delete_CadryStuff({ id })
         .then((res) => {
+          this.$toast.add({
+            severity: "success",
+            summary: "Muvofaqqiyatli bajarildi",
+            detail: "O'chirildi",
+            life: 2000,
+          });
           this.get_Stuff(this.$route.params.id);
         })
         .catch((error) => {
@@ -907,26 +1127,80 @@ export default {
         });
     },
 
+    editItemMed(event){
+      this.med_id = event.id;
+      this.med_date1 =formatter.interDateFormatter(event.date1);
+      this.med_date2 =formatter.interDateFormatter(event.date2);
+      this.med_comment = event.result;
+      this.med_dialog= true;
+    },
+
+    updateMed(){
+      this.med_dialog= false;
+      let data ={
+        date1:formatter.outDateFormatter(this.med_date1),
+        date2:formatter.outDateFormatter(this.med_date2),
+        result:this.med_comment,
+      }
+      employeeMed.update_CadryMed({id:this.med_id, data}).then((res)=>{
+        this.get_cadryMed(this.$route.params.id);
+        this.$toast.add({
+            severity: "success",
+            summary: "Muvofaqqiyatli bajarildi",
+            detail: "Tahrirlandi",
+            life: 2000,
+          });
+      })
+    },
+
     deleteItemMed(id) {
       employeeMed
         .delete_CadryMed({ id })
         .then((res) => {
           this.get_cadryMed(this.$route.params.id);
+          this.$toast.add({
+            severity: "success",
+            summary: "Muvofaqqiyatli bajarildi",
+            detail: "O'chirildi",
+            life: 2000,
+          });
         })
         .catch((error) => {
           console.log(error);
         });
     },
 
+    get_vacationList(id){
+      VacationService.get_CadryVacationList({id}).then((res)=>{
+        console.log(res.data.vacations);
+        this.VacationList = res.data.vacations
+      })
+    },
+
+    deleteVacation(id){
+      VacationService.delete_CadryVacationList({id}).then((res)=>{
+        this.get_vacationList(this.$route.params.id)
+        this.$toast.add({
+            severity: "success",
+            summary: "Muvofaqqiyatli bajarildi",
+            detail: "O'chirildi",
+            life: 2000,
+          });
+      })
+    },
+
     controlPunishmentDialog(item) {
       this.punishmentDialog = item;
     },
+
     controlIncentiveDialog(item) {
       this.incentiveDialog = item;
     },
+
     controlStuffDialog(item) {
       this.stuffDialog = item;
     },
+
     controlLoader(item) {
       this.barLoader = item;
     },
@@ -936,6 +1210,7 @@ export default {
     this.get_cadryMed(this.$route.params.id);
     this.get_Stuff(this.$route.params.id);
     this.get_Incentive(this.$route.params.id);
+    this.get_vacationList(this.$route.params.id)
     this.get_punishment(this.$route.params.id, true);
   },
 };

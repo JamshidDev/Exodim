@@ -754,6 +754,7 @@
           </div>
         </template>
       </Dialog>
+      <Toast position="bottom-right" />
     </div>
   </div>
 
@@ -882,6 +883,12 @@ export default {
     updateCadryUniversity(id, data){
       employeeService.update_CadryUniversity({id, data }).then((res) => {
         this.getCadryUniversity(this.$route.params.id);
+        this.$toast.add({
+        severity: "success",
+        summary: "Muvofaqqiyatli bajarildi",
+        detail: "Tahrirlandi",
+        life: 2000,
+      });
         this.submitted = false;
       }).catch((error)=>{
         console.log(error);
@@ -891,12 +898,24 @@ export default {
     addingCadryUniversity(id, data){
       employeeService.adding_CadryUniversity({id, data }).then((res) => {
         this.getCadryUniversity(this.$route.params.id);
+        this.$toast.add({
+        severity: "success",
+        summary: "Muvofaqqiyatli bajarildi",
+        detail: "Yaratildi",
+        life: 2000,
+      });
       });
     },
 
     deleteCadryUniversity(id){
       employeeService.delete_CadryUniversity({id }).then((res) => {
         this.getCadryUniversity(this.$route.params.id);
+        this.$toast.add({
+        severity: "success",
+        summary: "Muvofaqqiyatli bajarildi",
+        detail: "O'chirildi",
+        life: 2000,
+      });
       });
     },
 
@@ -965,6 +984,12 @@ export default {
       employeeService.update_Info({id:this.$route.params.id, data,}).then((res)=>{
         console.log(res.data);
         this.getCadry(this.$route.params.id, false);
+        this.$toast.add({
+        severity: "success",
+        summary: "Muvofaqqiyatli bajarildi",
+        detail: "Tahrirlandi",
+        life: 2000,
+      });
       }).catch((error)=>{
         console.log(error);
       })
@@ -1070,7 +1095,12 @@ export default {
       }
       if(this.abroadDialogType){
         employeeAbroad.create_CadryAbroad({id:this.$route.params.id, data}).then((res) => {
-        console.log(res.data);
+          this.$toast.add({
+        severity: "success",
+        summary: "Muvofaqqiyatli bajarildi",
+        detail: "Qo'shildi",
+        life: 2000,
+      });
         this.get_CadryAbroad(this.$route.params.id)
        
       }).catch((error)=>{
@@ -1078,7 +1108,12 @@ export default {
       })
       }else{
         employeeAbroad.update_CadryAbroad({id:this.abroad_id, data}).then((res) => {
-        console.log(res.data);
+          this.$toast.add({
+        severity: "success",
+        summary: "Muvofaqqiyatli bajarildi",
+        detail: "Tahrirlandi",
+        life: 2000,
+      });
         this.get_CadryAbroad(this.$route.params.id)
        
       }).catch((error)=>{
@@ -1092,7 +1127,12 @@ export default {
 
     deleteAbroad(id){
       employeeAbroad.delete_CadryAbroad({id}).then((res) => {
-        console.log(res.data);
+        this.$toast.add({
+        severity: "success",
+        summary: "Muvofaqqiyatli bajarildi",
+        detail: "O'chirildi",
+        life: 2000,
+      });
         this.get_CadryAbroad(this.$route.params.id)
        
       }).catch((error)=>{
@@ -1139,12 +1179,24 @@ export default {
       }
       if(this.academyDialogType){
         employeeAcademy.create_CadryAcademy({id:this.$route.params.id, data}).then((res)=>{
+          this.$toast.add({
+        severity: "success",
+        summary: "Muvofaqqiyatli bajarildi",
+        detail: "Qo'shildi",
+        life: 2000,
+      });
           this.get_CadryAcademy(this.$route.params.id);
         }).catch((error)=>{
           console.log(error);
         })
       }else{
         employeeAcademy.update_CadryAcademy({id:this.cadry_academy_id, data}).then((res)=>{
+          this.$toast.add({
+        severity: "success",
+        summary: "Muvofaqqiyatli bajarildi",
+        detail: "Tahrirlandi",
+        life: 2000,
+      });
           this.get_CadryAcademy(this.$route.params.id);
         }).catch((error)=>{
           console.log(error);
@@ -1157,6 +1209,12 @@ export default {
 
     deleteAcademy(id){
       employeeAcademy.delete_CadryAcademy({id}).then((res)=>{
+        this.$toast.add({
+        severity: "success",
+        summary: "Muvofaqqiyatli bajarildi",
+        detail: "O'chirildi",
+        life: 2000,
+      });
           this.get_CadryAcademy(this.$route.params.id);
         }).catch((error)=>{
           console.log(error);

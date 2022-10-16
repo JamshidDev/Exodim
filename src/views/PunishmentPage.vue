@@ -60,7 +60,7 @@
                 "
               >
                 <i class="pi pi-info-circle text-yellow-500 pr-1"></i>
-                {{cuteString(cadry.staff.staff_full)  }}
+                {{cuteString(cadry.staff? cadry.staff.staff_full : "")  }}
 
               </h6>
             </div>

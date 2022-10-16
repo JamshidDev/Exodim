@@ -25,4 +25,12 @@ const search_Cadry = (payload)=>{
     return axios.get(`/api/organization/search/cadries`, {params:payload})
 }
 
-export default {get_CadryVacation,create_CadryVacation,update_CadryVacation,delete_CadryVacation,get_VacationList,search_Cadry}
+const get_CadryVacationList = (payload)=>{
+    return axios.get(`/api/organization/cadry/${payload.id}/vacations`)
+}
+const delete_CadryVacationList = (payload)=>{
+    return axios.delete(`/api/organization/cadry/vacations/${payload.id}/delete`)
+}
+
+
+export default {get_CadryVacation,create_CadryVacation,update_CadryVacation,delete_CadryVacation,get_VacationList,search_Cadry, get_CadryVacationList, delete_CadryVacationList}

@@ -128,7 +128,7 @@
     </div>
     
     <div class="col-12">
-     
+      <Toast position="bottom-right" />
       <Dialog
         v-model:visible="relativeDialog"
         :breakpoints="{
@@ -303,14 +303,25 @@ export default {
       if(this.relativeDialogType){
         employeeRelative.create_CadryRelative({id:this.$route.params.id, data}).then((res)=>{
           this.get_cadryRelative(this.$route.params.id, false)
+          this.$toast.add({
+              severity: "success",
+              summary: "Muvofaqqiyatli bajarildi",
+              detail: "Qo'shildi",
+              life: 2000,
+            });
         }).catch((error)=>{
           console.log(error);
         })
        
       }else{
-        console.log(data);
         employeeRelative.update_CadryRelative({relative_id:this.cadry_relative_id, data }).then((res)=>{
           this.get_cadryRelative(this.$route.params.id, false)
+          this.$toast.add({
+              severity: "success",
+              summary: "Muvofaqqiyatli bajarildi",
+              detail: "Tahrirlandi",
+              life: 2000,
+            });
         }).catch((error)=>{
           console.log(error);
         })
@@ -320,6 +331,12 @@ export default {
     deleteRelative(id){
       employeeRelative.delete_CadryRelative({relative_id:id}).then((res)=>{
         this.get_cadryRelative(this.$route.params.id, false)
+        this.$toast.add({
+              severity: "success",
+              summary: "Muvofaqqiyatli bajarildi",
+              detail: "O'chirildi",
+              life: 2000,
+            });
         }).catch((error)=>{
           console.log(error);
         })

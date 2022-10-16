@@ -438,7 +438,7 @@
                     </td>
                     <td class="flex gap-2">
                       <edit-button @click="editItemStuff(item.id)"></edit-button>
-                      <delete-button></delete-button>
+                      <delete-button v-if="item.staff_status!=='Asosiy'"></delete-button>
                     </td>
                   </tr>
                 </tbody>
@@ -565,7 +565,7 @@
       >
         <template #header>
           <h6 class="uppercase text-lg text-blue-500 font-medium">
-           {{stuffDialogType? "Yangi lavozimga tayinlash" : "Lavozimni tahrirlash"}}
+           {{stuffDialogType? "Yangi lavozimga tayinlash" : "Lavozimni o'zgartirish"}}
           </h6>
         </template>
         <div class="grid">
@@ -652,6 +652,15 @@
                 id="adressStreet"
                 v-model="stuff_plan"
               />
+          </div>
+          <div class="col-6">
+            <Checkbox inputId="binary" v-model="status_sverx" :binary="true" /> <span class="pl-2 text-500">Ortiqcha ish o'rni</span>
+          </div>
+          <div class="col-6">
+            <Checkbox inputId="binary" v-model="status_decret" :binary="true" /> <span class="pl-2 text-500">Dekretdagi xodim o'rniga</span>
+          </div>
+          <div class="col-12">
+            <Checkbox inputId="binary" v-model="isBanCadry" :binary="true" /> <span class="pl-2 text-500">Xodim mehnat faoliyatiga yangi lavozim nomi qo'shilsinmi</span>
           </div>
         </div>
 
@@ -788,6 +797,8 @@ export default {
       stuff_status:null,
       stuff_plan:0,
       stuff_date:"",
+      status_sverx:false,
+      status_decret:false,
 
 
       barLoader: false,
@@ -1040,8 +1051,13 @@ let id = this.$route.params.id
       employeeService.update_CadryStuff({id}).then((res)=>{
         console.log(res.data);
         this.stuff_departmentList = res.data.departments;
+        this.stuff_department = res.data.department_id;
+        this.stuff_stuffList = res.data.department_staffs;
         this.stuff_statusList = res.data.staff_statuts;
-        this.stuff_status = res.data.staff_status
+        this.stuff_status = res.data.staff_status;
+        this.stuff_plan = res.data.rate;
+        this.status_sverx = res.data.status_decret==1; 
+        this.status_decret = res.data.status_for_decret==1;
         this.stuff_date = formatter.interDateFormatter(res.data.staff_date) 
         this.controlstuffDialog(true)
       })

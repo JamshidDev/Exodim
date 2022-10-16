@@ -495,7 +495,7 @@ export default {
         let data = {
           cadry_id: this.med_fullName.id,
           date1: formatter.outDateFormatter(this.med_date1),
-          date2: formatter.outDateFormatter(this.med_date1),
+          date2: formatter.outDateFormatter(this.med_date2),
           result: this.med_comment,
         };
         medService.create_CadryMed({ data }).then((res) => {

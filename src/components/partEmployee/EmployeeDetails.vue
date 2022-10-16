@@ -44,7 +44,7 @@
                         text-black-alpha-90
                       "
                     >
-                      {{ cadry.post_name }}
+                      {{cadry.post_name }}
                     </h6>
                   </div>
                   <div class="col-6">
@@ -529,7 +529,7 @@
                         border-top-none
                       "
                     >
-                      {{item.relative}}
+                      {{item.relative.name}}
                     </div>
                     <div
                       class="
@@ -653,8 +653,8 @@ export default {
           this.cadry.phote = res.data.cadry.photo;
           this.cadry.birth_place = res.data.cadry.birth_place;
           this.cadry.birth_date = res.data.cadry.birth_date;
-          this.cadry.post_name = res.data.cadry.staff.post_name;
-          this.cadry.post_date = res.data.cadry.staff.post_date;
+          this.cadry.post_name = res.data.cadry.staff.staff_full;
+          this.cadry.post_date = res.data.cadry.staff.staff_date;
           this.cadry.relatives = res.data.relatives;
           this.cadry.carers = res.data.carers;
           this.cadry.educations = res.data.educations;

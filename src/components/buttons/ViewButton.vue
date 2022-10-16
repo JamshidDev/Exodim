@@ -13,6 +13,7 @@
       @click="updateBtn"
       style="max-width: 40px"
       :href="file_Link"
+      target="_blank"
       download
     >
       <i :class="['pi',icon? icon: 'pi-cloud-download' ]" class="text-white text-lg"></i>
