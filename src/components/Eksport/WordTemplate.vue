@@ -257,7 +257,7 @@
 
               <tr v-for="item in cadry.relatives" :key="item.id">
                 <td style="border: solid black 1pt">
-                  <b>{{ item.relative }}</b>
+                  <b>{{ item.relative.name }}</b>
                 </td>
                 <td style="border: solid black 1pt">
                   {{ item.fullname }}
@@ -337,8 +337,8 @@ export default {
       this.cadry.phote = item.cadry.photo;
       this.cadry.birth_place = item.cadry.birth_place;
       this.cadry.birth_date = item.cadry.birth_date;
-      this.cadry.post_name = item.cadry.staff.post_name;
-      this.cadry.post_date = item.cadry.staff.post_date;
+      this.cadry.post_name = item.cadry.staff.staff_full;
+      this.cadry.post_date = item.cadry.staff.staff_date;
       this.cadry.relatives = item.relatives;
       this.cadry.carers = item.carers;
       this.cadry.educations = item.educations;

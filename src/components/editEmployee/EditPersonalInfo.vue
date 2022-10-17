@@ -437,8 +437,13 @@
                       {{ item.staff_status }}
                     </td>
                     <td class="flex gap-2">
-                      <edit-button @click="editItemStuff(item.id)"></edit-button>
-                      <delete-button v-if="item.staff_status!=='Asosiy'"></delete-button>
+                      <edit-button
+                        @click="editItemStuff(item.id)"
+                      ></edit-button>
+                      <delete-button
+                        :deleteItem="item.id"
+                        @deleteAcceptEvent="deleteStuffItem($event)"
+                      ></delete-button>
                     </td>
                   </tr>
                 </tbody>
@@ -495,25 +500,25 @@
         </Dialog>
 
         <Dialog
-        v-model:visible="finishDialog"
-        :breakpoints="{
-          '1960px': '30vw',
-          '1600px': '40vw',
-          '1200px': '70vw',
-          '960px': '80vw',
-          '640px': '90vw',
-        }"
-        :style="{ width: '50vw' }"
-        :modal="true"
-      >
-        <template #header>
-          <h6 class="uppercase text-lg text-red-500 font-medium">
-            Mehnat faoliyatini yakunlash
-          </h6>
-        </template>
-        <div class="grid">
-          <div class="col-12">
-            <h6 class="mb-2 pl-2 text-500">Prikaz raqami</h6>
+          v-model:visible="finishDialog"
+          :breakpoints="{
+            '1960px': '30vw',
+            '1600px': '40vw',
+            '1200px': '70vw',
+            '960px': '80vw',
+            '640px': '90vw',
+          }"
+          :style="{ width: '50vw' }"
+          :modal="true"
+        >
+          <template #header>
+            <h6 class="uppercase text-lg text-red-500 font-medium">
+              Mehnat faoliyatini yakunlash
+            </h6>
+          </template>
+          <div class="grid">
+            <div class="col-12">
+              <h6 class="mb-2 pl-2 text-500">Prikaz raqami</h6>
               <InputText
                 type="text"
                 class="w-full font-semibold"
@@ -521,119 +526,199 @@
                 v-model.trim="prikaz_number"
                 :class="{ 'p-invalid': prikaz_num_err && prikaz_submitted }"
               />
+            </div>
+            <div class="col-12">
+              <h6 class="mb-2 pl-2 text-500">Izoh</h6>
+              <Textarea
+                class="w-full font-semibold"
+                :class="{ 'p-invalid': prikaz_comment_err && prikaz_submitted }"
+                placeholder="Kiriting"
+                id="employeePhone"
+                v-model.trim="prikaz_comment"
+                :autoResize="true"
+                rows="1"
+              />
+            </div>
+            <div class="col-12">
+              <Checkbox inputId="binary" v-model="isBanCadry" :binary="true" />
+              <span class="pl-2 text-500"
+                >Mehnat faoliyati davrida yo'l qo'ygan qo'pol xatolari
+                munosabati bilan</span
+              >
+            </div>
           </div>
-          <div class="col-12">
-            <h6 class="mb-2 pl-2 text-500">Izoh</h6>
-            <Textarea
-              class="w-full font-semibold"
-              :class="{ 'p-invalid': prikaz_comment_err && prikaz_submitted }"
-              placeholder="Kiriting"
-              id="employeePhone"
-              v-model.trim="prikaz_comment"
-              :autoResize="true"
-              rows="1"
-            />
-          </div>
-          <div class="col-12">
-            <Checkbox inputId="binary" v-model="isBanCadry" :binary="true" /> <span class="pl-2 text-500">Mehnat faoliyati davrida yo'l qo'ygan qo'pol xatolari munosabati bilan</span>
-          </div>
-        </div>
 
-        <template #footer>
-          <div class="col-12 pt-2">
-            <div class="flex justify-content-end">
-              <Button
-                label="Yakunlash"
-                icon="pi pi-trush"
-                class="p-button-danger p-button-sm"
-                @click="removeCadry()"
-              
+          <template #footer>
+            <div class="col-12 pt-2">
+              <div class="flex justify-content-end">
+                <Button
+                  label="Yakunlash"
+                  icon="pi pi-trush"
+                  class="p-button-danger p-button-sm"
+                  @click="removeCadry()"
+                />
+              </div>
+            </div>
+          </template>
+        </Dialog>
+
+        <Dialog
+          v-model:visible="deleteStuffDialog"
+          :breakpoints="{
+            '1960px': '30vw',
+            '1600px': '40vw',
+            '1200px': '70vw',
+            '960px': '80vw',
+            '640px': '90vw',
+          }"
+          :style="{ width: '50vw' }"
+          :modal="true"
+        >
+          <template #header>
+            <h6 class="uppercase text-lg text-red-500 font-medium">
+              Mehnat faoliyatini yakunlash
+            </h6>
+          </template>
+          <div class="grid">
+            <div class="col-12">
+              <h6 class="mb-2 pl-2 text-500">Prikaz raqami</h6>
+              <InputText
+                type="text"
+                class="w-full font-semibold"
+                placeholder="Kiriting"
+                v-model.trim="delete_prikaz_number"
+                :class="{ 'p-invalid': delete_prikaz && delete_submitted }"
+              />
+            </div>
+            <div class="col-12">
+              <h6 class="mb-2 pl-2 text-500">Sana</h6>
+              <Calendar
+                class="w-full font-semibold"
+                :manualInput="true"
+                v-model="delete_date"
+                v-maska="'##/##/####'"
+                placeholder="Sanani tanlang"
+                dateFormat="dd/mm/yy"
+                :showButtonBar="true"
+                :class="{ 'p-invalid': delete_prikaz_date && delete_submitted }"
+              />
+            </div>
+            <div class="col-12">
+              <h6 class="mb-2 pl-2 text-500">Mehnat faoliyati</h6>
+              <Dropdown
+                v-model="delete_career_id"
+                :options="careerList"
+                optionLabel="staff"
+                placeholder="Tanlang"
+                option-value="id"
+                class="w-full"
+                :class="{ 'p-invalid': delete_careerId && delete_submitted }"
               />
             </div>
           </div>
-        </template>
-      </Dialog>
 
-      <Dialog
-        v-model:visible="stuffDialog"
-        :breakpoints="{
-          
-          '640px': '90vw',
-        }"
-        :style="{ width: '50vw' }"
-        :modal="true"
-      >
-        <template #header>
-          <h6 class="uppercase text-lg text-blue-500 font-medium">
-           {{stuffDialogType? "Yangi lavozimga tayinlash" : "Lavozimni o'zgartirish"}}
-          </h6>
-        </template>
-        <div class="grid">
-          <div class="col-12 xl:col-6">
-            <h6 class="mb-2 pl-2 text-500">Bo'limni tanlang  ({{stuff_departmentList.length}})</h6>
-            <Dropdown
-              v-model="stuff_department"
-              :options="stuff_departmentList"
-              optionLabel="name"
-              :filter="true"
-              placeholder="Tanlang"
-              class="w-full  p-input-sm"
-              @change="changeDepartment"
-            >
-              <template #value="slotProps">
-                <div class="font-semibold" v-if="slotProps.value">
-                  <div>{{ slotProps.value.name }}</div>
-                </div>
-                <span v-else class="font-semibold">
-                  {{ slotProps.placeholder }}
-                </span>
-              </template>
-              <template #option="slotProps">
-                <div class="country-item">
-                  <div>{{ slotProps.option.name }}</div>
-                </div>
-              </template>
-            </Dropdown>
-          </div>
-          <div class="col-12 xl:col-6">
-            <h6 class="mb-2 pl-2 text-500">Lavozimni tanlang  ({{stuff_stuffList.length}})</h6>
-            <Dropdown
-              v-model="stuff_stuff"
-              :options="stuff_stuffList"
-              optionLabel="staff_fullname"
-              :filter="true"
-              placeholder="Tanlang"
-              class="w-full p-input-sm"
-            >
-              <template #value="slotProps">
-                <div class="font-semibold" v-if="slotProps.value">
-                  <div>{{ slotProps.value.staff_fullname }}</div>
-                </div>
-                <span v-else class="font-semibold">
-                  {{ slotProps.placeholder }}
-                </span>
-              </template>
-              <template #option="slotProps">
-                <div class="country-item">
-                  <div>{{ slotProps.option.staff_fullname }}</div>
-                </div>
-              </template>
-            </Dropdown>
-          </div>
+          <template #footer>
+            <div class="col-12 pt-2">
+              <div class="flex justify-content-end">
+                <Button
+                  label="Yakunlash"
+                  icon="pi pi-trush"
+                  class="p-button-danger p-button-sm"
+                  @click="deleteStuff()"
+                />
+              </div>
+            </div>
+          </template>
+        </Dialog>
 
-          <div class="col-12 xl:col-4 lg:col-4">
-            <h6 class="mb-2 pl-2 text-500">Faoliyat turi</h6>
-          <Dropdown
+        <!-- Change stuff dialog -->
+        <Dialog
+          v-model:visible="stuffDialog"
+          :breakpoints="{
+            '640px': '90vw',
+          }"
+          :style="{ width: '50vw' }"
+          :modal="true"
+        >
+          <template #header>
+            <h6 class="uppercase text-lg text-blue-500 font-medium">
+              {{
+                stuffDialogType
+                  ? "Yangi lavozimga tayinlash"
+                  : "Lavozimni o'zgartirish"
+              }}
+            </h6>
+          </template>
+          <div class="grid">
+            <div class="col-12 xl:col-6">
+              <h6 class="mb-2 pl-2 text-500">
+                Bo'limni tanlang ({{ stuff_departmentList.length }})
+              </h6>
+              <Dropdown
+                v-model="stuff_department"
+                :options="stuff_departmentList"
+                optionLabel="name"
+                :filter="true"
+                placeholder="Tanlang"
+                class="w-full p-input-sm"
+                @change="changeDepartment"
+              >
+                <template #value="slotProps">
+                  <div class="font-semibold" v-if="slotProps.value">
+                    <div>{{ slotProps.value.name }}</div>
+                  </div>
+                  <span v-else class="font-semibold">
+                    {{ slotProps.placeholder }}
+                  </span>
+                </template>
+                <template #option="slotProps">
+                  <div class="country-item">
+                    <div>{{ slotProps.option.name }}</div>
+                  </div>
+                </template>
+              </Dropdown>
+            </div>
+            <div class="col-12 xl:col-6">
+              <h6 class="mb-2 pl-2 text-500">
+                Lavozimni tanlang ({{ stuff_stuffList.length }})
+              </h6>
+              <Dropdown
+                v-model="stuff_stuff"
+                :options="stuff_stuffList"
+                optionLabel="staff_fullname"
+                :filter="true"
+                placeholder="Tanlang"
+                class="w-full p-input-sm"
+              >
+                <template #value="slotProps">
+                  <div class="font-semibold" v-if="slotProps.value">
+                    <div>{{ slotProps.value.staff_fullname }}</div>
+                  </div>
+                  <span v-else class="font-semibold">
+                    {{ slotProps.placeholder }}
+                  </span>
+                </template>
+                <template #option="slotProps">
+                  <div class="country-item">
+                    <div>{{ slotProps.option.staff_fullname }}</div>
+                  </div>
+                </template>
+              </Dropdown>
+            </div>
+
+            <div class="col-12 xl:col-4 lg:col-4">
+              <h6 class="mb-2 pl-2 text-500">Faoliyat turi</h6>
+              <Dropdown
                 v-model="stuff_status"
                 :options="stuff_statusList"
                 optionLabel="name"
                 placeholder="Tanlang"
                 class="w-full font-semibold"
               />
-        </div>
-        <div class="col-12 xl:col-4 lg:col-4">
-          <h6 class="mb-2 pl-2 text-500">Lavozim sanasi</h6>
-          <Calendar
+            </div>
+            <div class="col-12 xl:col-4 lg:col-4">
+              <h6 class="mb-2 pl-2 text-500">Lavozim sanasi</h6>
+              <Calendar
                 class="w-full font-semibold"
                 :manualInput="true"
                 v-model="stuff_date"
@@ -642,45 +727,76 @@
                 :showButtonBar="true"
                 placeholder="Sanani tanlang"
               />
-        </div>
-        <div class="col-12 xl:col-4 lg:col-4">
-            <h6 class="mb-2 pl-2 text-500">Plan</h6>
-            <InputText
+            </div>
+            <div class="col-12 xl:col-4 lg:col-4">
+              <h6 class="mb-2 pl-2 text-500">Plan</h6>
+              <InputText
                 type="text"
                 class="w-full font-semibold"
                 placeholder="Kiriting"
                 id="adressStreet"
                 v-model="stuff_plan"
               />
-          </div>
-          <div class="col-6">
-            <Checkbox inputId="binary" v-model="status_sverx" :binary="true" /> <span class="pl-2 text-500">Ortiqcha ish o'rni</span>
-          </div>
-          <div class="col-6">
-            <Checkbox inputId="binary" v-model="status_decret" :binary="true" /> <span class="pl-2 text-500">Dekretdagi xodim o'rniga</span>
-          </div>
-          <div class="col-12">
-            <Checkbox inputId="binary" v-model="isBanCadry" :binary="true" /> <span class="pl-2 text-500">Xodim mehnat faoliyatiga yangi lavozim nomi qo'shilsinmi</span>
-          </div>
-        </div>
-
-        <template #footer>
-          <div class="col-12 pt-2">
-            <div class="flex justify-content-end">
-              <Button
-                label="Saqlash"
-                icon="pi pi-trush"
-                class="p-button-info p-button-sm"
-              
+            </div>
+            <div class="xl:col-4 lg:col-4 md:col-4 col-12">
+              <Checkbox
+                inputId="binary"
+                v-model="status_sverx"
+                :binary="true"
+              />
+              <span class="pl-2 text-500">Ortiqcha ish o'rni</span>
+            </div>
+            <div class="xl:col-4 lg:col-4 md:col-4 col-12">
+              <Checkbox
+                inputId="binary"
+                v-model="status_decret"
+                :binary="true"
+              />
+              <span class="pl-2 text-500">Dekretdagi xodim o'rniga</span>
+            </div>
+            <div class="xl:col-4 lg:col-4 md:col-4 col-12">
+              <Checkbox
+                inputId="binary"
+                v-model="status_for_decret"
+                :binary="true"
+              />
+              <span class="pl-2 text-500">Dekretdagi xodim?</span>
+            </div>
+            <div class="col-12">
+              <Checkbox inputId="binary" v-model="add_career" :binary="true" />
+              <span class="pl-2 text-500"
+                >Xodim mehnat faoliyatiga yangi lavozim nomi qo'shilsinmi</span
+              >
+            </div>
+            <div class="col-12" v-show="add_career && !stuffDialogType">
+              <h6 class="mb-2 pl-2 text-500">Mehnat faoliyati</h6>
+              <Dropdown
+                v-model="update_career"
+                :options="check_career_list"
+                optionLabel="staff"
+                placeholder="Tanlang"
+                option-value="id"
+                class="w-full"
               />
             </div>
           </div>
-        </template>
-      </Dialog>
+
+          <template #footer>
+            <div class="col-12 pt-2">
+              <div class="flex justify-content-end">
+                <Button
+                  label="Saqlash"
+                  icon="pi pi-trush"
+                  class="p-button-info p-button-sm"
+                  @click="editStuff()"
+                />
+              </div>
+            </div>
+          </template>
+        </Dialog>
       </div>
     </div>
   </div>
-  
 </template>
 <script>
 import ProgressBarLoader from "../loaders/ProgressBarLoader.vue";
@@ -696,6 +812,7 @@ import { useVuelidate } from "@vuelidate/core";
 import EditButton from "@/components/buttons/EditButton";
 import DeleteButton from "@/components/buttons/DeleteButton";
 import TextButton from "@/components/buttons/TextButton";
+import DepartmentStuffService from "../../service/servises/DepartmentStuffService";
 
 export default {
   components: {
@@ -770,11 +887,19 @@ export default {
       },
 
       finishDialog: false,
-      prikaz_number:null,
-      prikaz_comment:null,
-      prikaz_submitted:false,
-      isBanCadry:false,
+      prikaz_number: null,
+      prikaz_comment: null,
+      prikaz_submitted: false,
+      isBanCadry: false,
       submitted: false,
+
+      deleteStuffDialog: false,
+      careerList: [],
+      delete_career_id: null,
+      delete_prikaz_number: null,
+      delete_date: null,
+      delete_submitted: false,
+      delete_stuff_id:null,
 
       genderList: [
         {
@@ -787,18 +912,23 @@ export default {
         },
       ],
 
-      stuffDialog:false,
-      stuffDialogType:true,
-      stuff_departmentList:[],
-      stuff_department:null,
-      stuff_stuffList:[],
-      stuff_stuff:null,
-      stuff_statusList:[],
-      stuff_status:null,
-      stuff_plan:0,
-      stuff_date:"",
-      status_sverx:false,
-      status_decret:false,
+      stuffDialog: false,
+      stuffDialogType: true,
+      stuff_departmentList: [],
+      stuff_department: null,
+      stuff_stuffList: [],
+      cadry_stuff_id:null,
+      stuff_stuff: null,
+      stuff_statusList: [],
+      stuff_status: null,
+      stuff_plan: 0,
+      stuff_date: "",
+      status_sverx: false,
+      status_for_decret:false,
+      status_decret: false,
+      add_career:false,
+      check_career_list:[],
+      update_career:null,
 
 
       barLoader: false,
@@ -829,21 +959,42 @@ export default {
       positionDegree: globalValidate.positionDegree,
     };
   },
-  computed:{
-    prikaz_num_err(){
+  computed: {
+    prikaz_num_err() {
       if (!this.prikaz_number) {
         return true;
       } else {
         return false;
       }
     },
-    prikaz_comment_err(){
+    prikaz_comment_err() {
       if (!this.prikaz_comment) {
         return true;
       } else {
         return false;
       }
-    }
+    },
+    delete_prikaz() {
+      if (!this.delete_prikaz_number) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    delete_prikaz_date() {
+      if (!this.delete_date) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    delete_careerId() {
+      if (!this.delete_career_id) {
+        return true;
+      } else {
+        return false;
+      }
+    },
   },
 
   created() {
@@ -967,23 +1118,78 @@ export default {
     goPush() {
       this.$router.push("/admin/partemployee");
     },
-    removeCadry(){
-      this.prikaz_submitted =true;
-      if( !this.prikaz_comment_err && !this.prikaz_num_err ){
+    removeCadry() {
+      this.prikaz_submitted = true;
+      if (!this.prikaz_comment_err && !this.prikaz_num_err) {
         let data = {
-          command_number:this.prikaz_number,
-          comment:this.prikaz_comment,
-          blackStatus:this.isBanCadry
-        }
-        let id = this.$route.params.id
-       
-        employeeService.remove_Cadry({id,data}).then((res)=>{
-          this.$router.push({name:"partemployee"})
-        }).catch((error)=>{
-          console.log(error);
-        })
-        this.controFinishDialog(false)
+          command_number: this.prikaz_number,
+          comment: this.prikaz_comment,
+          blackStatus: this.isBanCadry,
+        };
+        let id = this.$route.params.id;
+
+        employeeService
+          .remove_Cadry({ id, data })
+          .then((res) => {
+            this.$router.push({ name: "partemployee" });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        this.controFinishDialog(false);
       }
+    },
+    deleteStuffItem(id) {
+      console.log(id);
+      this.delete_stuff_id =id;
+      this.delete_submitted = false;
+      employeeService
+        .get_checkCarrer({ cadry_id: this.$route.params.id })
+        .then((res) => {
+          console.log(res.data);
+          this.careerList = res.data;
+          this.controldeleteStuffDialog(true);
+        });
+    },
+
+    get_check_career(){
+      employeeService
+        .get_checkCarrer({ cadry_id: this.$route.params.id })
+        .then((res) => {
+          this.check_career_list = res.data;
+        });
+    },
+
+    
+    deleteStuff() {
+      this.delete_submitted = true;
+      if (
+        !this.delete_prikaz &&
+        !this.delete_prikaz_date &&
+        !this.delete_careerId
+      ) {
+        let id = this.delete_stuff_id
+        let data = {
+          command_number: this.delete_prikaz_number,
+          date: formatter.outDateFormatter(this.delete_date),
+          career_id: this.delete_career_id,
+        };
+        console.log(data);
+        employeeService.delete_CadryStuff({id, data}).then((res)=>{
+          console.log(res.data);
+        })
+        this.controldeleteStuffDialog(false);
+      }
+    },
+
+    changeDepartment() {
+      let id = this.stuff_department.id;
+      this.stuff_stuffList = [];
+      DepartmentStuffService.get_DepartmentStuff({ id }).then((res) => {
+        this.stuff_stuff = null;
+        console.log(res.data.department);
+        this.stuff_stuffList = res.data.department;
+      });
     },
 
     changeBornDistrict(event) {
@@ -1040,35 +1246,78 @@ let id = this.$route.params.id
       this.cropperDialog = item;
     },
 
-    addItemStuff(){
+    addItemStuff() {
       this.stuffDialogType = true;
-
-      this.controlstuffDialog(true)
+      this.add_career = false;
+      this.update_career = null;
+      let id = this.$route.params.id
+      employeeService.get_newStuffDetails({id}).then((res)=>{
+        console.log(res.data);
+        this.stuff_departmentList = res.data.departments;
+        this.stuff_stuffList = []
+        this.stuff_stuff = null
+        this.stuff_statusList = res.data.staff_statuts;
+        this.stuff_status = null;
+        this.stuff_plan = 1;
+        this.status_sverx = false;
+        this.status_decret = false;
+        this.status_for_decret = false;
+        this.stuff_date = null;
+        this.controlstuffDialog(true);
+      })
     },
 
-    editItemStuff(id){
+    editItemStuff(id) {
+      this.cadry_stuff_id = id;
       this.stuffDialogType = false;
-      employeeService.update_CadryStuff({id}).then((res)=>{
-        console.log(res.data);
+      employeeService.update_CadryStuff({ id }).then((res) => {
         this.stuff_departmentList = res.data.departments;
         this.stuff_department = res.data.department_id;
         this.stuff_stuffList = res.data.department_staffs;
+        this.stuff_stuff = res.data.staff_id;
         this.stuff_statusList = res.data.staff_statuts;
         this.stuff_status = res.data.staff_status;
         this.stuff_plan = res.data.rate;
-        this.status_sverx = res.data.status_decret==1; 
-        this.status_decret = res.data.status_for_decret==1;
-        this.stuff_date = formatter.interDateFormatter(res.data.staff_date) 
-        this.controlstuffDialog(true)
-      })
-
-
+        this.status_sverx = res.data.status_decret == 1;
+        this.status_decret = res.data.status_for_decret == 1;
+        this.stuff_date = formatter.interDateFormatter(res.data.staff_date);
+        this.controlstuffDialog(true);
+        this.get_check_career()
+      });
     },
 
 
+    editStuff() {
+      this.controlstuffDialog(false);
+      let data = {
+        department_id: this.stuff_department.id,
+        staff_id: this.stuff_stuff.id,
+        rate: this.stuff_plan,
+        staff_status: this.stuff_status.id,
+        staff_date: formatter.outDateFormatter(this.stuff_date),
+        status_sverx: this.status_sverx,
+        status_for_decret: this.status_for_decret,
+        status_decret: this.status_decret,
+        careerCheck:this.add_career,
+        career_id:this.update_career,
 
-    controlstuffDialog(item){
-      this.stuffDialog = item
+      };
+      
+      if(this.stuffDialogType){
+        let id = this.$route.params.id 
+        delete data.career_id;
+        employeeService.create_CadryStuff({id,data})
+      }else{
+        let id = this.cadry_stuff_id
+        employeeService.edit_CadryStuff({id,data}).then((res)=>{
+          console.log(res);
+          this.getEmployee(this.$route.params.id);
+        })
+      }
+    },
+
+    controlstuffDialog(item) {
+      this.stuffDialog = item;
     },
 
     uploadImage(event) {
@@ -1093,8 +1342,11 @@ let id = this.$route.params.id
       }
     },
     controFinishDialog(item) {
-      this.prikaz_submitted =false;
+      this.prikaz_submitted = false;
       this.finishDialog = item;
+    },
+    controldeleteStuffDialog(item) {
+      this.deleteStuffDialog = item;
     },
 
     controlLoader(item) {

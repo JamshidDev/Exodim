@@ -861,6 +861,7 @@ export default {
      
       if(this.passportJSHR.length==14){
         employeeAdd.check_Cadry({pinfl:this.passportJSHR}).then((res)=>{
+          console.log(res.data);
           if(res.data.status){
              this.$toast.add({severity:'warn', summary: "JSHR noto'g'ri", detail:"JSHR 14 ta raqamdan iborat bo'lishi shart", group: 'br', life: 3000});
           }else{

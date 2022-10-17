@@ -1,6 +1,6 @@
 <template >
   <div class="grid card surface-0 shadow-1 py-2 px-2">
-    <h6 class="text-base p-2 uppercase">Tibbiy ko'rik</h6>
+    <h6 class="text-base p-2 uppercase">Ma'sul xodimlar</h6>
     <div class="col-12" v-show="!loader">
       <DataTable
         ref="dt"
@@ -17,7 +17,7 @@
               <InputText
                 type="text"
                 v-model="searchCadryName"
-                placeholder="Ism orqali qidiruv"
+                placeholder="Ism yoki Id qidiruv"
                 class="p-inputtext-sm"
                 @keyup.enter="searchByName()"
               />
@@ -75,10 +75,58 @@
             </div>
           </template>
         </Column>
+        <Column style="min-width: 100px; width: 150px">
+          <template #header>
+            <div class="text-800 font-semibold">Korxona nomi</div>
+          </template>
+          <template #body>
+            <div
+              class="
+                text-sm
+                sm:text-sm
+                md:text-md
+                lg:text-lg
+                xl:text-lg
+                font-medium
+              "
+            >
+              NOK
+            </div>
+          </template>
+        </Column>
+        <Column style="min-width: 80px; width: 100px">
+          <template #header>
+            <div class="text-800 font-semibold">Status</div>
+          </template>
+          <template #body>
+            <div
+              class="
+                text-sm
+                sm:text-sm
+                md:text-md
+                lg:text-lg
+                xl:text-lg
+                font-medium
+              "
+            >
+              <div
+                class="w-full text-center text-red-500"
+              >
+                <Tag
+                  class="mr-2"
+                  icon="pi pi-info-circle"
+                  severity="success"
+                  value="Active"
+                ></Tag>
+              </div>
+             
+            </div>
+          </template>
+        </Column>
 
         <Column style="min-width: 100px; width: 150px">
           <template #header>
-            <div class="text-800 font-semibold">Status</div>
+            <div class="text-800 font-semibold">Huquqlar</div>
           </template>
           <template #body="slotProps">
             <div
@@ -98,8 +146,8 @@
                 <Tag
                   class="mr-2"
                   icon="pi pi-info-circle"
-                  severity="danger"
-                  value="Tugagan"
+                  severity="unfo"
+                  value="Admin"
                 ></Tag>
               </div>
               <div
@@ -117,9 +165,35 @@
             </div>
           </template>
         </Column>
+        <Column style="min-width: 150px; width: 200px">
+          <template #header>
+            <div class="text-800 font-semibold">Login</div>
+          </template>
+          <template #body="slotProps">
+            <div
+              class="
+                text-sm
+                xl:text-base
+                text-left
+                font-medium
+                flex
+                justify-content-between
+              "
+              :class="[slotProps.data.isFinished ? 'text-red-500' : '']"
+            >
+              <span id="myLogin"> raximov@jamshid.ajk </span>
+              <span>
+                <i
+                  @click="copyFunction('raximov@jamshid.ajk ')"
+                  class="pi pi-copy pl-2 cursor-pointer"
+                ></i>
+              </span>
+            </div>
+          </template>
+        </Column>
         <Column style="min-width: 100px; width: 100px">
           <template #header>
-            <div class="text-800 font-semibold">Oxirgi sana</div>
+            <div class="text-800 font-semibold">Parol</div>
           </template>
           <template #body="slotProps">
             <div
@@ -134,31 +208,33 @@
               "
               :class="[slotProps.data.isFinished ? 'text-red-500' : '']"
             >
-              {{ formatter.arrowDateFormat(slotProps.data.date1) }}
+              ************
             </div>
           </template>
         </Column>
-        <Column style="min-width: 100px; width: 100px">
+        <Column style="min-width: 80px; width: 80px">
           <template #header>
-            <div class="text-800 font-semibold">Keyingi sana</div>
+            <div class="text-800 font-semibold">E-id</div>
           </template>
-          <template #body="slotProps">
+          <template #body>
             <div
               class="
                 text-sm
                 sm:text-sm
                 md:text-md
-                lg:text-lg
-                xl:text-lg
+                lg:text-base
+                xl:text-base
                 text-center
                 font-medium
+                text-red-600
               "
-              :class="[slotProps.data.isFinished ? 'text-red-500' : '']"
+              
             >
-              {{ formatter.arrowDateFormat(slotProps.data.date2) }}
+              112231
             </div>
           </template>
         </Column>
+
 
         <Column style="min-width: 120px; width: 120px">
           <template #header>
@@ -166,10 +242,14 @@
           </template>
           <template #body="slotProps">
             <div class="flex gap-2">
-              <text-button
-                :text="'Yangilash'"
-                @click="refreshItem(slotProps.data)"
-              ></text-button>
+              <edit-button
+                :editItem="slotProps.data"
+                @editEvent="editStuff($event)"
+              ></edit-button>
+              <delete-button
+                :deleteItem="slotProps.data.id"
+                @deleteAcceptEvent="deleteItemDepStuff($event)"
+              ></delete-button>
             </div>
           </template>
         </Column>
@@ -356,8 +436,10 @@
     </div>
   </div>
 </template>
-<script>
+  <script>
 import TextButton from "../components/buttons/TextButton.vue";
+import DeleteButton from "@/components/buttons/DeleteButton";
+import EditButton from "@/components/buttons/EditButton";
 import TablePagination from "../components/Pagination/TablePagination.vue";
 import medService from "../service/servises/medService";
 import VacationService from "@/service/servises/VacationService";
@@ -368,6 +450,8 @@ export default {
     TextButton,
     TablePagination,
     MedLoader,
+    DeleteButton,
+    EditButton,
   },
   data() {
     return {
@@ -394,7 +478,7 @@ export default {
       params: {
         page: 1,
         per_page: 10,
-        search:null,
+        search: null,
       },
       searchCadryName: null,
       search: {
@@ -456,6 +540,19 @@ export default {
     },
   },
   methods: {
+    copyFunction(text) {
+      // Get the text field
+      var copyText = text;
+      // Copy the text inside the text field
+      navigator.clipboard.writeText(copyText);
+
+      this.$toast.add({
+            severity: "success",
+            summary: "Muvofaqqiyatli bajarildi",
+            detail: "Nusxalandi",
+            life: 2000,
+          });
+    },
     get_MedList(params, loader) {
       this.controlLoader(loader);
       medService
@@ -567,7 +664,6 @@ export default {
       this.params.search = this.searchCadryName;
       console.log(this.searchCadryName);
       this.get_MedList(this.params, false);
-
     },
 
     controlDialog(item) {
@@ -586,5 +682,5 @@ export default {
   },
 };
 </script>
-<style lang="">
+  <style lang="">
 </style>

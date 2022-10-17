@@ -167,6 +167,16 @@ const routes = [
         }
       },
       {
+        path: '/admin/superadmin',
+        name: 'superadmin',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: function () {
+          return import(/* webpackChunkName: "about" */ '../views/AdminPages.vue')
+        }
+      },
+      {
         path: '/admin/vacation',
         name: 'vacation',
         // route level code-splitting
@@ -196,16 +206,7 @@ const routes = [
           return import(/* webpackChunkName: "about" */ '../views/IncentivePage.vue')
         }
       },
-      {
-        path: '/admin/map',
-        name: 'map',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: function () {
-          return import(/* webpackChunkName: "about" */ '../views/MapPage.vue')
-        }
-      },
+      
       {
         path: '/admin/partemployee',
         name: 'partemployee',

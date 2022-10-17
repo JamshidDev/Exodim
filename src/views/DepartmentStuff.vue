@@ -41,7 +41,7 @@
         </template>
         <Column header="" style="min-width: 30px; width: 40px">
           <template #body="slotProps">
-            <div class="w-full text-center text-lg font-semibold">
+            <div class="w-full text-center text-lg">
               {{ slotProps.data.number }}
             </div>
           </template>
@@ -58,7 +58,6 @@
                 md:text-md
                 lg:text-lg
                 xl:text-lg
-                font-medium
               "
             >
               {{ slotProps.data.staff_fullname }}

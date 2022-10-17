@@ -365,19 +365,20 @@ export default {
           items: [
             {
               label: "Qo'shimchalar",
-              icon: "pi pi-inbox",
+              icon: "pi pi-shield",
               items: [
                 {
                   label: "Masullar",
-                  icon: "pi pi-folder",
+                  icon: "pi pi-shield",
+                  to:"/admin/superadmin",
                 },
                 {
                   label: "Kirishlar",
-                  icon: "pi pi-folder",
+                  icon: "pi pi-shield",
                 },
                 {
                   label: "Amallar",
-                  icon: "pi pi-folder",
+                  icon: "pi pi-shield",
                 },
               ],
             },
