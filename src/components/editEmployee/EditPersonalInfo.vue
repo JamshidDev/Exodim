@@ -1171,7 +1171,7 @@ export default {
         let id = this.delete_stuff_id
         let data = {
           command_number: this.delete_prikaz_number,
-          date: formatter.outDateFormatter(this.delete_date),
+          delete_date: formatter.outDateFormatter(this.delete_date),
           career_id: this.delete_career_id,
         };
         console.log(data);

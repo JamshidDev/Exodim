@@ -45,7 +45,7 @@ export default {
             {
               label: "Statistika",
               icon: "pi pi-slack",
-              to: '/admin/statistic',
+              to: '/admin/partstatistic',
               visible: () =>this.get_adminPermissions("role-list"),
             },
             {

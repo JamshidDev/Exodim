@@ -79,9 +79,8 @@ const remove_Cadry = (payload)=>{
 }
 
 const delete_CadryStuff = (payload)=>{
-    return axios.delete(`/api/organization/cadry-staff/${payload.id}`, payload.data)
+    return axios.post(`/api/organization/cadry-staff/${payload.id}`, payload.data)
 }
-
 
 const update_CadryStuff= (payload)=>{
     return axios.get(`/api/organization/cadry-staff/${payload.id}`)

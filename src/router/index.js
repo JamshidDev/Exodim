@@ -43,6 +43,13 @@ const routes = [
         }
       },
       {
+        path: '/admin/partstatistic',
+        name: 'partstatistic',
+        component: function () {
+          return import(/* webpackChunkName: "about" */ '../views/FactoryStatistic.vue')
+        }
+      },
+      {
         path: '/admin/setting',
         name: 'setting',
         component: function () {
