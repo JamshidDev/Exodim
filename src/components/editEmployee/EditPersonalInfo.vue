@@ -4,7 +4,8 @@
       <progress-bar-loader></progress-bar-loader>
     </div>
   </div>
-  <div v-if="!barLoader" class="grid card surface-0 py-4">
+ <div class="col-12"></div>
+ <div v-if="!barLoader" class="grid card surface-0 py-4">
     <div class="col-12">
       <div class="flex justify-content-end">
         <Button
@@ -221,7 +222,7 @@
               placeholder="Seriyani kiriting"
               id="passportSeriya"
               v-model="v$.passportSeriya.$model"
-              v-maska="'AA #######'"
+              v-maska="'SS #######'"
               :class="{
                 'p-invalid': v$.passportSeriya.$invalid && submitted,
               }"
@@ -441,6 +442,7 @@
                         @click="editItemStuff(item.id)"
                       ></edit-button>
                       <delete-button
+                        v-if="item.staff_status !== 'Asosiy'"
                         :deleteItem="item.id"
                         @deleteAcceptEvent="deleteStuffItem($event)"
                       ></delete-button>
@@ -733,7 +735,7 @@
               <InputText
                 type="text"
                 class="w-full font-semibold"
-                placeholder="Kiriting"
+                placeholder="Kiriting 1"
                 id="adressStreet"
                 v-model="stuff_plan"
               />
@@ -794,8 +796,13 @@
             </div>
           </template>
         </Dialog>
+
+       
       </div>
     </div>
+  </div>
+  <div class="col-12">
+    <Toast position="bottom-right" />
   </div>
 </template>
 <script>
@@ -899,7 +906,7 @@ export default {
       delete_prikaz_number: null,
       delete_date: null,
       delete_submitted: false,
-      delete_stuff_id:null,
+      delete_stuff_id: null,
 
       genderList: [
         {
@@ -917,19 +924,18 @@ export default {
       stuff_departmentList: [],
       stuff_department: null,
       stuff_stuffList: [],
-      cadry_stuff_id:null,
+      cadry_stuff_id: null,
       stuff_stuff: null,
       stuff_statusList: [],
       stuff_status: null,
       stuff_plan: 0,
       stuff_date: "",
       status_sverx: false,
-      status_for_decret:false,
+      status_for_decret: false,
       status_decret: false,
-      add_career:false,
-      check_career_list:[],
-      update_career:null,
-
+      add_career: false,
+      check_career_list: [],
+      update_career: null,
 
       barLoader: false,
     };
@@ -1010,8 +1016,9 @@ export default {
       this.controlLoader(true);
       employeeService
         .get_employeeDetails({ id })
-
+     
         .then((res) => {
+          console.table(res.data.cadry);
           let cadry = res.data.cadry;
           this.defaulAvatar = cadry.photo;
           this.firstName = cadry.first_name;
@@ -1141,7 +1148,7 @@ export default {
     },
     deleteStuffItem(id) {
       console.log(id);
-      this.delete_stuff_id =id;
+      this.delete_stuff_id = id;
       this.delete_submitted = false;
       employeeService
         .get_checkCarrer({ cadry_id: this.$route.params.id })
@@ -1152,7 +1159,7 @@ export default {
         });
     },
 
-    get_check_career(){
+    get_check_career() {
       employeeService
         .get_checkCarrer({ cadry_id: this.$route.params.id })
         .then((res) => {
@@ -1160,7 +1167,6 @@ export default {
         });
     },
 
-    
     deleteStuff() {
       this.delete_submitted = true;
       if (
@@ -1168,16 +1174,16 @@ export default {
         !this.delete_prikaz_date &&
         !this.delete_careerId
       ) {
-        let id = this.delete_stuff_id
+        let id = this.delete_stuff_id;
         let data = {
           command_number: this.delete_prikaz_number,
           delete_date: formatter.outDateFormatter(this.delete_date),
           career_id: this.delete_career_id,
         };
         console.log(data);
-        employeeService.delete_CadryStuff({id, data}).then((res)=>{
+        employeeService.delete_CadryStuff({ id, data }).then((res) => {
           console.log(res.data);
-        })
+        });
         this.controldeleteStuffDialog(false);
       }
     },
@@ -1187,7 +1193,6 @@ export default {
       this.stuff_stuffList = [];
       DepartmentStuffService.get_DepartmentStuff({ id }).then((res) => {
         this.stuff_stuff = null;
-        console.log(res.data.department);
         this.stuff_stuffList = res.data.department;
       });
     },
@@ -1250,12 +1255,11 @@ let id = this.$route.params.id
       this.stuffDialogType = true;
       this.add_career = false;
       this.update_career = null;
-      let id = this.$route.params.id
-      employeeService.get_newStuffDetails({id}).then((res)=>{
-        console.log(res.data);
+      let id = this.$route.params.id;
+      employeeService.get_newStuffDetails({ id }).then((res) => {
         this.stuff_departmentList = res.data.departments;
-        this.stuff_stuffList = []
-        this.stuff_stuff = null
+        this.stuff_stuffList = [];
+        this.stuff_stuff = null;
         this.stuff_statusList = res.data.staff_statuts;
         this.stuff_status = null;
         this.stuff_plan = 1;
@@ -1263,8 +1267,8 @@ let id = this.$route.params.id
         this.status_decret = false;
         this.status_for_decret = false;
         this.stuff_date = null;
-        this.controlstuffDialog(true);
-      })
+        (this.stuff_department = null), this.controlstuffDialog(true);
+      });
     },
 
     editItemStuff(id) {
@@ -1282,10 +1286,9 @@ let id = this.$route.params.id
         this.status_decret = res.data.status_for_decret == 1;
         this.stuff_date = formatter.interDateFormatter(res.data.staff_date);
         this.controlstuffDialog(true);
-        this.get_check_career()
+        this.get_check_career();
       });
     },
-
 
     editStuff() {
       this.controlstuffDialog(false);
@@ -1298,21 +1301,48 @@ let id = this.$route.params.id
         status_sverx: this.status_sverx,
         status_for_decret: this.status_for_decret,
         status_decret: this.status_decret,
-        careerCheck:this.add_career,
-        career_id:this.update_career,
-
+        careerCheck: this.add_career,
+        career_id: this.update_career,
       };
-      
-      if(this.stuffDialogType){
-        let id = this.$route.params.id 
+
+      if (this.stuffDialogType) {
+        let id = this.$route.params.id;
         delete data.career_id;
-        employeeService.create_CadryStuff({id,data})
-      }else{
-        let id = this.cadry_stuff_id
-        employeeService.edit_CadryStuff({id,data}).then((res)=>{
-          console.log(res);
-          this.getEmployee(this.$route.params.id);
-        })
+        employeeService
+          .create_CadryStuff({ id, data })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((error) => {
+            if (error.response.status == 400) {
+              this.$toast.add({
+                severity: "warn",
+                summary: "Xatolik",
+                detail: "Xodimda asosiy faoliyat turi mavjud",
+                life: 2000,
+              });
+            }
+          });
+      } else {
+        let id = this.cadry_stuff_id;
+        employeeService.edit_CadryStuff({ id, data }).then((res) => {
+          this.$toast.add({
+                severity: "success",
+                summary: "Muvofaqiyatli bajarildi",
+                detail: "Lavozim o'zgartirildi",
+                life: 2000,
+              });
+          this.getEmployee(this.$route.params.id)
+        }).catch((error)=>{
+            if (error.response.status == 400) {
+              this.$toast.add({
+                severity: "warn",
+                summary: "Xatolik",
+                detail: "Xodimda asosiy faoliyat turi mavjud",
+                life: 2000,
+              });
+            }
+          })
       }
     },
 

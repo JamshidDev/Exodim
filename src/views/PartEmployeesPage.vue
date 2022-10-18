@@ -1,6 +1,6 @@
 <template >
   <div class="grid card surface-0 shadow-1 py-4 px-3">
-    <div class="col-12 flex justify-content-end">
+    <!-- <div class="col-12 flex justify-content-end">
       <Button
               icon="pi pi-plus"
               @click="goNewPush()"
@@ -8,22 +8,24 @@
               label="Xodim qo'shish"
               v-tooltip.bottom="`Yangi xodim qo'shish`"
             />
-    </div>
-    <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3 p-fluid">
+    </div> -->
+    <div class="col-12 sm:col-6 md:col-6 lg:col-2 xl:col-2 p-fluid">
       <InputText
         type="text"
         v-model="organization.first_name"
         class="w-full font-semibold"
         placeholder="Ismni kiriting"
+        @keyup.enter="searchBtn()"
       />
     </div>
 
-    <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3 p-fluid">
+    <div class="col-12 sm:col-6 md:col-6 lg:col-2 xl:col-2 p-fluid">
       <InputText
         type="text"
         v-model="organization.last_name"
         class="w-full font-semibold"
         placeholder="Familiya kiriting"
+        @keyup.enter="searchBtn()"
       />
     </div>
       <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3 p-fluid">
@@ -54,85 +56,6 @@
         </template>
       </Dropdown>
     </div>
-
-    <!-- <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
-      <h6>
-        Korxonalar -
-        {{
-          organizations.length ? organizations.length - 1 : organizations.length
-        }}
-      </h6>
-      <Dropdown
-        id="adressDistrict"
-        v-model="orgValue"
-        :options="organizations"
-        optionLabel="name"
-        @change="changeOrganization"
-        :filter="true"
-        placeholder=" Tanlang"
-        class="w-full"
-        emptyMessage="Hech narsa topilmadi"
-        emptyFilterMessage="Tizmda ma'lumot topilmadi..."
-      >
-        <template #value="slotProps">
-          <div
-            class="country-item country-item-value w-full"
-            v-if="slotProps.value"
-          >
-            <div>{{ slotProps.value.name }}</div>
-          </div>
-          <span v-else>
-            {{ slotProps.placeholder }}
-          </span>
-        </template>
-        <template #option="slotProps">
-          <div class="country-item w-full">
-            <div>{{ slotProps.option.name }}</div>
-          </div>
-        </template>
-      </Dropdown>
-    </div> -->
-
-    <!-- <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
-      <h6>
-        Bo'limlar va bekatlar -
-        {{
-          departmentList.length
-            ? departmentList.length - 1
-            : departmentList.length
-        }}
-      </h6>
-      <Dropdown
-        id="adressDistrict"
-        v-model="departmentValue"
-        :options="departmentList"
-        optionLabel="name"
-        :filter="true"
-        placeholder="Tanlang"
-        class="w-full"
-        @change="changeDepartment"
-        emptyMessage="Hech narsa topilmadi"
-        emptyFilterMessage="Tizmda ma'lumot topilmadi..."
-      >
-        <template #value="slotProps">
-          <div
-            class="country-item country-item-value w-full"
-            v-if="slotProps.value"
-          >
-            <div>{{ slotProps.value.name }}</div>
-          </div>
-          <span v-else>
-            {{ slotProps.placeholder }}
-          </span>
-        </template>
-        <template #option="slotProps">
-          <div class="country-item w-full">
-            <div>{{ slotProps.option.name }}</div>
-          </div>
-        </template>
-      </Dropdown>
-    </div> -->
-
     <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
       <Button
         icon="pi pi-search "
@@ -311,6 +234,15 @@
           </div>
         </div>
       </OverlayPanel>
+    </div>
+    <div class="col-12 sm:col-6 md:col-6 lg:col-2 xl:col-2 p-fluid">
+      <Button
+              icon="pi pi-plus"
+              @click="goNewPush()"
+              class="p-button-info p-button-sm"
+              label="Xodim qo'shish"
+              v-tooltip.bottom="`Yangi xodim qo'shish`"
+            />
     </div>
 
     <!-- Employees table ---start -->

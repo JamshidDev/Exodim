@@ -429,6 +429,7 @@ export default {
       params: {
         per_page: 10,
         page: 1,
+        search: null,
       },
 
       departmentList: [],
@@ -552,6 +553,10 @@ export default {
           console.log(error);
         });
     },
+    searchByName(){
+      this.params.search = this.searchPartName;
+      this.get_Department(this.params, true);
+    },
 
     changePagination(event) {
       this.params.page = event.page;
@@ -640,6 +645,7 @@ export default {
           });
       
     },
+    
 
     controlPartDialog(item) {
       this.partDialog = item;

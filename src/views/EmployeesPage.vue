@@ -380,7 +380,6 @@
                 md:text-md
                 lg:text-lg
                 xl:text-lg
-                font-medium
               "
             >
               {{ slotProps.data.staff? slotProps.data.staff.staff_full : `Tizimda ma'lumot yo'q` }}
@@ -407,20 +406,8 @@
         <Column :exportable="false" style="min-width:100px; width: 120px;">
           <template #body="slotProps">
             <div class="flex w-full align-items-center gap-2">
-              <!-- <Button
-                icon="pi pi-id-card"
-                class="p-button-rounded p-button-info mr-2"
-               
-                @click="openResume(slotProps.data.id)"
-              /> -->
               <download-button  v-tooltip.left="`Ma'lumotlarni ko'rish`" :icon="'pi pi-id-card'"   @click="openResume(slotProps.data.id)"></download-button>
-              <download-button  v-tooltip.left="`Ma'lumotlarni ko'rish`" :icon="'pi pi-cloud-download'" @click="openResume(slotProps.data.id)"></download-button>
-              <!-- <Button
-                icon="pi pi-cloud-download"
-                class="p-button-rounded p-button-success"
-                v-tooltip.left="`Ma'lumotnomani yuklash`"
-                @click="DowloadResume(slotProps.data.id)"
-              /> -->
+              <download-button  v-tooltip.left="`Ma'lumotlarni yuklash`" :icon="'pi pi-cloud-download'" @click="DowloadResume(slotProps.data.id)"></download-button>
             </div>
           </template>
         </Column>

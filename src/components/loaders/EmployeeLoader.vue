@@ -7,9 +7,9 @@
                         <Skeleton size="2rem" class="mr-2"></Skeleton>
                     </template>
                 </Column>
-                <Column field="avatar" header="Rasm" style="min-width: 2rem">
+                <Column field="avatar" header="Rasm" style="min-width: 60px; width: 60px">
                     <template #body>
-                        <Skeleton size="3rem"></Skeleton>
+                        <Skeleton size="3rem" class="mr-1"></Skeleton>
                     </template>
                 </Column>
                 <Column field="fullname" header="F.I.SH" style="min-width: 16rem">

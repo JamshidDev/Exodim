@@ -5,7 +5,7 @@
       w-full
       justify-content-center
       align-items-center
-      py-1
+      py-2
       bg-blue-500
       active:bg-blue-400
       cursor-pointer
