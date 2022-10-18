@@ -211,7 +211,7 @@
                     <div class="flex justify-content-center">
                       <Knob
                         size="180"
-                        v-model="pensionsManChart"
+                        v-model="alleducation_ortaMaxsusChart"
                         valueTemplate="{value}%"
                         readonly
                         valueColor="MediumTurquoise"
@@ -219,14 +219,14 @@
                         textColor="MediumTurquoise"
                       />
                     </div>
-                    <h5 class="text-center my-0">{{ pensionsMan }}</h5>
-                    <h6 class="text-center mt-0">Nafaqa yoshidagi erkaklar</h6>
+                    <h5 class="text-center my-0">{{ alleducation_ortaMaxsus }}</h5>
+                    <h6 class="text-center mt-0">O'rta-maxsus ma'lumotli</h6>
                   </div>
                   <div class="col-12 xl:col-6">
                     <div class="flex justify-content-center">
                       <Knob
                         size="180"
-                        v-model="pensionWomanChart"
+                        v-model="alleducation_ortaChart"
                         valueTemplate="{value}%"
                         readonly
                         valueColor="MediumTurquoise"
@@ -234,8 +234,8 @@
                         textColor="MediumTurquoise"
                       />
                     </div>
-                    <h5 class="text-center my-0">{{ pensionWoman }}</h5>
-                    <h6 class="text-center mt-0">Nafaqa yoshidagi ayollar</h6>
+                    <h5 class="text-center my-0">{{ alleducation_orta }}</h5>
+                    <h6 class="text-center mt-0">O'rta ma'lumotli</h6>
                   </div>
                 </div>
               </div>
@@ -561,10 +561,10 @@
                     "
                     @click="statisticShow(102)"
                   >
-                    Ilmiy darajali xodimlar
+                  Nafaqa yoshidagi erkaklar
                   </div>
                   <div class="text-xl text-600 font-semibold pr-1">
-                    <span class="text-yellow-500">00</span>/{{ allCadries }}
+                    <span class="text-yellow-500">{{pensionsMan}}</span>/{{ allCadries }}
                   </div>
                 </div>
                 <div
@@ -587,10 +587,10 @@
                     "
                     @click="statisticShow(102)"
                   >
-                  Ilmiy unvonli xodimlar
+                  Nafaqa yoshidagi ayollar
                   </div>
                   <div class="text-xl text-600 font-semibold pr-1">
-                    <span class="text-yellow-500">00</span>/{{ allCadries }}
+                    <span class="text-yellow-500">{{pensionWoman}}</span>/{{ allCadries }}
                   </div>
                 </div>
                 <div
@@ -688,6 +688,9 @@
         allCadry3045: 0,
         allCadry45: 0,
         alleducation_oliy: 0,
+        alleducation_orta: 0,
+        alleducation_ortaMaxsus: 0,
+
         medical_examinations: 0,
         medical_not_examinations:0,
         vacations: 0,
@@ -700,8 +703,8 @@
         // Chart Details
         allManChart: 0,
         allWomanChart: 0,
-        pensionsManChart: 0,
-        pensionWomanChart: 0,
+        alleducation_ortaChart: 0,
+        alleducation_ortaMaxsusChart: 0,
         allCadry30Chart: 0,
         allCadry3045Chart: 0,
         allCadry45Chart: 0,
@@ -736,6 +739,9 @@
             this.allCadry45 = res.data.all_cadries_count - res.data.cadry45 
             
             this.alleducation_oliy = res.data.highly_special_educations;
+            this.alleducation_orta = res.data.secondary_special_cadries;
+            this.alleducation_ortaMaxsus = res.data.medium_special_cadries;
+
             this.medical_examinations = res.data.meds;
             this.medical_not_examinations = res.data.mednotCount
             this.vacations = res.data.vacations;
@@ -744,28 +750,25 @@
             this.relativesCount = res.data.relativesCount;
             this.careersCount = res.data.careersCount;
   
-            this.allManChart = Math.floor(
+            this.allManChart = Math.round(
               (res.data.all_man_cadries / res.data.all_cadries_count) * 100
             );
             this.allWomanChart = 100 - this.allManChart;
-            this.pensionsManChart = Math.floor(
-              (res.data.retired_Man / res.data.all_cadries_count) * 100
-            );
-            this.pensionWomanChart = Math.floor(
-              (res.data.retired_Woman / res.data.all_cadries_count) * 100
-            );
-            this.allCadry30Chart = Math.floor(
+            
+            this.allCadry30Chart = Math.round(
               (res.data.cadry30 / res.data.all_cadries_count) * 100
             );
-            this.allCadry3045Chart =  Math.floor(
+            this.allCadry3045Chart =  Math.round(
               (this.allCadry3045/ res.data.all_cadries_count) * 100
             );
-            this.allCadry45Chart = Math.floor(
-              (res.data.cadry45 / res.data.all_cadries_count) * 100
+            this.allCadry45Chart = 100 - this.allCadry30Chart -this.allCadry3045Chart;
+            this.alleducation_ortaMaxsusChart = Math.round(
+              (res.data.medium_special_cadries / res.data.all_cadries_count) * 100
             );
-            this.alleducation_oliyChart = Math.floor(
-              (res.data.highly_special_educations / res.data.all_cadries_count) * 100
+            this.alleducation_ortaChart =Math.round(
+              (res.data.secondary_special_cadries / res.data.all_cadries_count) * 100
             );
+            this.alleducation_oliyChart = 100 - this.alleducation_ortaMaxsusChart - this.alleducation_ortaChart;
   
             this.controlLoader(false);
         })
