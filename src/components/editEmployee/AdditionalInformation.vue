@@ -608,6 +608,10 @@
               rows="1"
             />
           </div>
+          <div class="col-12">
+            <Checkbox inputId="binary" v-model="incentive_status" :binary="true" />
+            <label class="pl-2" for="binary">Davlat mukofati sifatida qo'shilsin </label>
+          </div>
         </div>
 
         <template #footer>
@@ -810,6 +814,8 @@ export default {
       incentive_type_incentive: "",
       incentive_reason_incentive: "",
       incentive_id: null,
+      incentive_status: false,
+
 
       stuffList: [],
       stuffDialogType: true,
@@ -943,6 +949,7 @@ export default {
       this.incentive_incentive_date = "";
       this.incentive_type_incentive = "";
       this.incentive_reason_incentive = "";
+      this.incentive_status =false;
       this.controlIncentiveDialog(true);
     },
 
@@ -956,6 +963,7 @@ export default {
       );
       this.incentive_type_incentive = event.type_incentive;
       this.incentive_reason_incentive = event.reason_incentive;
+      this.incentive_status =event.status==1;
       this.controlIncentiveDialog(true);
     },
 
@@ -969,7 +977,7 @@ export default {
         ),
         type_incentive: this.incentive_type_incentive,
         reason_incentive: this.incentive_reason_incentive,
-        status: false,
+        status: this.incentive_status,
       };
 
       if (this.incentiveDialogType) {
