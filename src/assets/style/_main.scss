@@ -34,8 +34,8 @@ a {
     min-height: calc(100vh - 58px);
 }
 .layout_sidebar{
+    margin-left: 0px !important;
     min-width: 250px;
-    margin-left: -250px !important;
     transition: all .2s ease-in-out ;
     min-height: 100%;
     top: 58px;
@@ -46,9 +46,15 @@ a {
 .layout_main_section{
     width: 100%;
     min-height: calc(100vh - 72px);
-    margin-left: 0px ;
+    margin-left:0px ;
     margin-top: 65px;
     transition: all .2s ease-in-out ;
+}
+
+.open_sidebar{
+    .layout_sidebar{
+        margin-left: -250px !important;
+    }
 }
 
 .close_sidebar {

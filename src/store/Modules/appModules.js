@@ -1,6 +1,7 @@
 
 const state ={
     activeHorizantal: JSON.parse(localStorage.getItem("menu")) || false,
+    activeSidebar:JSON.parse(localStorage.getItem("sidebar")) || false,
 
     page:1,
     per_page:10,
@@ -13,12 +14,9 @@ const getters ={
     get_menuType(state){
         return state.activeHorizantal
     },
-    get_PageDetails(state){
-        return{
-            page:state.page,
-            per_page:state.per_page,
-        }
-    }
+    get_Sidebar(state){
+        return state.activeSidebar
+    },
 }
 
 const actions ={
@@ -27,20 +25,23 @@ const actions ={
         localStorage.setItem("menu", JSON.stringify(payload))
         ctx.commit("update_Menu", payload)
     },
-
-    sinxronPagination(ctx, payload){
-        ctx.commit("updatePage", payload)
+    actionSidebar(ctx, payload){
+        console.log(payload);
+        localStorage.setItem("sidebar", JSON.stringify(payload))
+        ctx.commit("update_Sidebar", payload)
     },
+
+   
 }
 
 const mutations={
     update_Menu(state, item){
         state.activeHorizantal = item
     },
-    updatePage(state, item){
-        state.page = item.page;
-        state.per_page =item.per_page;
-    }
+    update_Sidebar(state, item){
+        state.activeSidebar = item
+    },
+  
 }
 
 export default { state, actions, getters, mutations}

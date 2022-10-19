@@ -5,7 +5,7 @@
       v-model:rows="page_count"
       :totalRecords="total_page"
       class="py-0 w-full"
-      style="background:transparent"
+      style="background: transparent"
       template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport"
       @page="changePagination($event)"
     >
@@ -13,7 +13,7 @@
       <template #start>
         <InputText
           type="text"
-          v-model.number="enter_page_value"
+          v-model.trim="enter_page_value"
           v-maska="'####'"
           class="w-5rem"
           @keyup.enter="enter_page()"
@@ -37,18 +37,26 @@ export default {
       type: Number,
       default: 0,
     },
+    page: {
+      type: Number,
+      default: 1,
+    },
+    per_page: {
+      type: Number,
+      default: 10,
+    },
   },
   data() {
     return {
       pageDetails: {
-        page: 1,
-        per_page: 10,
+        page: this.page,
+        per_page: this.per_page,
       },
 
-      currentPage: 1,
-      page_count: 10,
+      currentPage: this.page,
+      page_count: this.per_page,
 
-      enter_page_value: 1,
+      enter_page_value: this.page,
 
       row_per_page: [
         {
@@ -65,7 +73,7 @@ export default {
         },
       ],
       row_page_drop: {
-        name: "10",
+        name: 10,
         count: 10,
       },
     };
@@ -73,11 +81,13 @@ export default {
 
   methods: {
     enter_page() {
-      this.pageDetails.page = this.enter_page_value;
-      this.currentPage =
-        (this.enter_page_value - 1) * this.pageDetails.per_page;
-      this.pageEmit();
-      console.log(this.pageDetails);
+      if (this.enter_page_value && this.enter_page_value<= Math.ceil(this.total_page /this.per_page)) {
+        this.pageDetails.page = this.enter_page_value;
+        this.currentPage =
+          (this.enter_page_value - 1) * this.pageDetails.per_page;
+        this.pageEmit();
+      }
+      this.enter_page_value;
     },
     changeRowPage(event) {
       this.page_count = event.value.count;
@@ -88,16 +98,20 @@ export default {
       this.pageEmit();
     },
     changePagination(event) {
-      console.log(event);
-      this.pageDetails.per_page = event.rows;
-      this.pageDetails.page = (event.first + event.rows) / event.rows;
-      this.enter_page_value = (event.first + event.rows) / event.rows;
+      this.pageDetails.per_page = Number(event.rows);
+      this.pageDetails.page = (event.first + Number(event.rows)) / event.rows;
+      this.enter_page_value = (event.first + Number(event.rows)) / event.rows;
       this.pageEmit();
-      
     },
     pageEmit() {
       this.$emit("pagination", this.pageDetails);
     },
+  },
+  created() {
+    console.log(this.page);
+    this.row_page_drop = this.row_per_page[this.per_page / 10 - 1];
+    this.currentPage = (this.page - 1) * this.per_page;
+    this.page_count = this.per_page;
   },
 };
 </script>

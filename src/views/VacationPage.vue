@@ -67,8 +67,8 @@
               <Image
                 :src="slotProps.data.cadry.photo"
                 :alt="slotProps.data.cadry.fullname"
-                width="20"
-                height="20"
+                width="30"
+                height="30"
                 preview
               />
             </div>

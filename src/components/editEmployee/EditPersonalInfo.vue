@@ -108,7 +108,7 @@
                 :class="{ 'p-invalid': v$.bornRegion.$invalid && submitted }"
                 :options="regionList"
                 optionLabel="name"
-                optionValue="id"
+               
                 placeholder="Viloyatni tanlang"
                 class="w-full font-semibold"
               />
@@ -1025,18 +1025,18 @@ export default {
           this.lastName = cadry.last_name;
           this.thirdName = cadry.middle_name;
           this.bornDate = formatter.interDateFormatter(cadry.birth_date);
-          this.bornRegion = cadry.address_region_id.id;
+          this.bornRegion = cadry.birth_region_id;
           this.bornDistric = cadry.birth_city_id;
-          this.cadry.birth_city_id = cadry.birth_city_id.id;
+          this.birth_city_id = cadry.birth_city_id.id;
           this.adressRegion = cadry.address_region_id.id;
           this.adressDistrict = cadry.address_city_id;
-          this.cadry.address_city_id = cadry.address_city_id.id;
+          this.address_city_id = cadry.address_city_id.id;
           this.adressStreet = cadry.address;
           this.passportSeriya = cadry.passport;
           this.passportJSHR = cadry.jshshir;
           this.passportRegion = cadry.pass_region_id.id;
           this.passportDistrict = cadry.pass_city_id;
-          this.cadry.pass_city_id = cadry.pass_city_id.id;
+          this.pass_city_id = cadry.pass_city_id.id;
           this.passportDate = formatter.interDateFormatter(cadry.pass_date);
           this.positionFirstDate = formatter.interDateFormatter(cadry.job_date);
           formatter.outDateFormatter(cadry.job_date);
@@ -1058,14 +1058,18 @@ export default {
     // update cadry details
     updateEmployee(isFormValid) {
       this.submitted = true;
+      console.log(this.bornRegion);
       this.cadry.first_name = this.firstName;
       this.cadry.last_name = this.lastName;
       this.cadry.middle_name = this.thirdName;
       this.cadry.birth_date = formatter.outDateFormatter(this.bornDate);
-      this.cadry.birth_region_id = this.bornRegion;
+      this.cadry.birth_region_id = this.bornRegion.id;
+      this.cadry.birth_city_id = this.bornDistric.id;
       this.cadry.address_region_id = this.adressRegion;
+      this.cadry.address_city_id = this.adressDistrict.id;
       this.cadry.address = this.adressStreet;
       this.cadry.pass_region_id = this.passportRegion;
+      this.cadry.pass_city_id = this.passportDistrict.id
       this.cadry.pass_date = formatter.outDateFormatter(this.passportDate);
       this.cadry.passport = this.passportSeriya;
       this.cadry.jshshir = this.passportJSHR;
@@ -1158,7 +1162,6 @@ export default {
           this.controldeleteStuffDialog(true);
         });
     },
-
     get_check_career() {
       employeeService
         .get_checkCarrer({ cadry_id: this.$route.params.id })
@@ -1166,7 +1169,6 @@ export default {
           this.check_career_list = res.data;
         });
     },
-
     deleteStuff() {
       this.delete_submitted = true;
       if (
@@ -1187,7 +1189,6 @@ export default {
         this.controldeleteStuffDialog(false);
       }
     },
-
     changeDepartment() {
       let id = this.stuff_department.id;
       this.stuff_stuffList = [];

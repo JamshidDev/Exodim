@@ -11,16 +11,6 @@
 
       <!-- Layout main -->
       <div class="layout_main_section xl:px-2 lg:px-2 px-1 pb-2"  >
-        <!-- Top breadcrumb -->
-        <!-- <div v-if="breadcrumb" class="grid py-1 card surface-0  px-2 pb-3">
-          <Breadcrumb
-          :home="home"
-          :model="items"
-          class="border-none border-noround mb-3"
-        />
-        </div> -->
-        <!-- Top menuBar -->
-
         <div class="pb-2">
          <top-app-menu v-show="get_menuType"></top-app-menu>
         </div>
@@ -48,7 +38,7 @@
 import AppMenu from "./AppMenu.vue";
 import Toolbar from "./Toolbar.vue";
 import TopAppMenu from "./TopAppMenu.vue";
-import {mapGetters} from "vuex"
+import {mapActions, mapGetters} from "vuex"
 export default {
   components: {
     Toolbar,
@@ -57,22 +47,11 @@ export default {
   },
   data() {
     return {
-      sidebar: false,
+      sidebar: true,
       sidebar_statsic: true,
       sidebar_overall: false,
       mobile_active: false,
-      breadcrumb: false,
       menuBar:true,
-
-      home: {
-        icon: "pi pi-home",
-        to: "/",
-      },
-      items: [{ label: "Statistika" }],
-
-
-      
-
     };
   },
   created() {
@@ -81,22 +60,23 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["get_menuType"]),
+    ...mapGetters(["get_menuType", "get_Sidebar"]),
     layoutClass() {
       return [
         "layout-wrapper",
         {
+          open_sidebar:!this.sidebar,
           close_sidebar: this.sidebar,
           sidebar_static: this.sidebar_statsic,
           sidebar_overall: this.SCREEN_WIDTH > 991 && this.sidebar,
         },
       ];
     },
-    sidebar_bg() {
-      if (this.sidebar && this.sidebar_overall) {
-        return true;
-      }
-    },
+    // sidebar_bg() {
+    //   if (this.sidebar && this.sidebar_overall) {
+    //     return true;
+    //   }
+    // },
   },
   watch: {
     SCREEN_WIDTH(width) {
@@ -112,13 +92,18 @@ export default {
   },
 
   methods: {
+    ...mapActions(["actionSidebar"]),
     changeNavbar() {
+      this.actionSidebar(this.sidebar)
       if (this.SCREEN_WIDTH < 991) {
         this.mobile_active = !this.sidebar;
       }
       this.sidebar = !this.sidebar;
     },
   },
+  created(){
+    this.sidebar = this.get_Sidebar; 
+  }
 };
 </script>
 <style lang="scss" >

@@ -197,6 +197,8 @@
           <table-pagination
             v-show="totalDepartment > 10"
             :total_page="totalDepartment"
+            :page="params.page"
+            :per_page="params.per_page"
             @pagination="changePagination($event)"
           ></table-pagination>
         </template>
@@ -427,8 +429,8 @@ export default {
         name: "",
       },
       params: {
-        per_page: 10,
-        page: 1,
+        page:localStorage.getItem("page_4")? Number(localStorage.getItem("page_4")) : 1,
+        per_page:localStorage.getItem("per_page_4")? Number(localStorage.getItem("per_page_4")) : 10,
         search: null,
       },
 
@@ -562,6 +564,8 @@ export default {
       this.params.page = event.page;
       this.params.per_page = event.per_page;
       this.get_Department(this.params, true);
+      localStorage.setItem("page_4", event.page)
+      localStorage.setItem("per_page_4", event.per_page)
     },
     goDepartmentStuff(id, name) {
       this.$router.push({ name: "departmentstuff", params: { id, name } });

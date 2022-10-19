@@ -135,6 +135,8 @@
           <table-pagination
             v-show="totalPosition > 10"
             :total_page="totalPosition"
+            :page="position.page"
+            :per_page="position.per_page"
             @pagination="changePagination($event)"
           ></table-pagination>
         </template>
@@ -230,41 +232,9 @@ export default {
       positionCategoryList:[],
       totalPosition: 0,
       selectParty: {},
-      paryList: [
-        {
-          name: "Bo'lim 1",
-        },
-        {
-          name: "Bo'lim 2",
-        },
-        {
-          name: "Bo'lim 3",
-        },
-        {
-          name: "Bo'lim 4",
-        },
-        {
-          name: "Bo'lim 5",
-        },
-        {
-          name: "Bo'lim 6",
-        },
-        {
-          name: "Bo'lim 7",
-        },
-        {
-          name: "Bo'lim 8",
-        },
-        {
-          name: "Bo'lim 9",
-        },
-        {
-          name: "Bo'lim 10",
-        },
-      ],
       position: {
-        per_page: 10,
-        page: 1,
+        page:localStorage.getItem("page_3")? Number(localStorage.getItem("page_3")) : 1,
+        per_page:localStorage.getItem("per_page_3")? Number(localStorage.getItem("per_page_3")) : 10,
         name: null,
       },
       dialogPos:false,
@@ -408,6 +378,8 @@ export default {
       this.position.page = event.page;
       this.position.per_page = event.per_page;
       this.get_positions(this.position, true);
+      localStorage.setItem("page_3", event.page)
+      localStorage.setItem("per_page_3", event.per_page)
     },
 
     searchByName() {

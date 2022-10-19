@@ -415,6 +415,8 @@
           <table-pagination
           v-show="totalCadries>10"
             :total_page="totalCadries"
+            :page="organization.page"
+            :per_page="organization.per_page"
             @pagination="changePagination($event)"
           ></table-pagination>
         </template>
@@ -527,8 +529,8 @@ export default {
         railway_id: null,
         organization_id: null,
         department_id: null,
-        per_page: 10,
-        page: 1,
+        page:localStorage.getItem("page_2")? Number(localStorage.getItem("page_2")) : 1,
+        per_page:localStorage.getItem("per_page_2")? Number(localStorage.getItem("per_page_2")) : 10,
         last_name: null,
         first_name: null,
         middle_name: null,
@@ -718,6 +720,8 @@ export default {
     changePagination(event) {
       this.organization.page = event.page;
       this.organization.per_page = event.per_page;
+      localStorage.setItem("page_2", event.page)
+      localStorage.setItem("per_page_2", event.per_page)
       this.getOrg(this.organization);
     },
 

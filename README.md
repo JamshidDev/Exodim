@@ -17,3 +17,10 @@ npm run build
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+<!-- PartEmployee page_1 -->
+<!-- EmployeePage page_2 -->
+<!-- PositionPage page_3 -->
+<!-- FactoryPart page_4 -->
+

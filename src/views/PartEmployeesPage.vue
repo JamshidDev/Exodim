@@ -1,14 +1,5 @@
 <template >
   <div class="grid card surface-0 shadow-1 py-4 px-3">
-    <!-- <div class="col-12 flex justify-content-end">
-      <Button
-              icon="pi pi-plus"
-              @click="goNewPush()"
-              class="p-button-info p-button-sm"
-              label="Xodim qo'shish"
-              v-tooltip.bottom="`Yangi xodim qo'shish`"
-            />
-    </div> -->
     <div class="col-12 sm:col-6 md:col-6 lg:col-2 xl:col-2 p-fluid">
       <InputText
         type="text"
@@ -366,6 +357,8 @@
           <table-pagination
             v-show="totalCadries > 10"
             :total_page="totalCadries"
+            :page="organization.page"
+            :per_page="organization.per_page"
             @pagination="changePagination($event)"
           ></table-pagination>
         </template>
@@ -439,13 +432,16 @@ export default {
 
       totalCadries: 0,
 
+      page:localStorage.getItem("page_1") || 1,
+      per_page:localStorage.getItem("per_page_1") || 10,
+
       // Organization params
       organization: {
         railway_id: null,
         organization_id: null,
         department_id: null,
-        per_page: 10,
-        page: 1,
+        page:localStorage.getItem("page_1")? Number(localStorage.getItem("page_1")) : 1,
+        per_page:localStorage.getItem("per_page_1")? Number(localStorage.getItem("per_page_1")) : 10,
         last_name: null,
         first_name: null,
         middle_name: null,
@@ -463,13 +459,10 @@ export default {
     // get Employee function
     getEmployee(params) {
       this.controlLoading(true);
-      console.table(params);
       employeeService
         .get_Employees(params)
         .then((res) => {
-          console.log(res.data.cadries);
           this.totalCadries = res.data.cadries.pagination.total;
-          console.log(this.totalCadries);
           let cadrList = [];
           let number =
             (this.organization.page - 1) * this.organization.per_page;
@@ -572,8 +565,11 @@ export default {
       this.organization.vacation_id = event.value.id;
     },
     changePagination(event) {
+      console.log(event);
       this.organization.page = event.page;
       this.organization.per_page = event.per_page;
+      localStorage.setItem("page_1", event.page)
+      localStorage.setItem("per_page_1", event.per_page)
       this.getEmployee(this.organization);
     },
 

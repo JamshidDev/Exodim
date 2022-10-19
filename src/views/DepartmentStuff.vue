@@ -299,6 +299,7 @@ export default {
     return {
       loader: false,
       DepStuffList: [],
+      searchPartName:null,
       department_name: "",
       params: {
         page: 1,
@@ -446,6 +447,9 @@ export default {
             console.log(error);
           });
       
+    },
+    searchByName(){
+      console.log(this.searchPartName);
     },
 
     controlLoader(item) {
