@@ -20,17 +20,20 @@
     "primeflex": "^3.2.1",
     "primeicons": "^5.0.0",
     "primevue": "^3.15.0",
+    "table2excel": "^1.0.4",
     "vee-validate": "^4.6.9",
     "vue": "^3.2.13",
     "vue-advanced-cropper": "^2.8.1",
     "vue-html2pdf": "^1.8.0",
     "vue-i18n": "^9.2.2",
+    "vue-json-excel3": "^0.0.3",
     "vue-router": "^4.0.3",
     "vue3-html2pdf": "^1.1.2",
     "vue3-simple-html2pdf": "^0.0.7",
     "vue3-xlsx": "^1.1.2",
     "vuelidate": "^0.7.7",
-    "vuex": "^4.0.0"
+    "vuex": "^4.0.0",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@vue/cli-plugin-router": "~5.0.0",

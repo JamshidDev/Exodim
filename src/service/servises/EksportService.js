@@ -5,5 +5,12 @@ const get_ResumeDetails = (payload)=>{
     return axios.get(`/api/cadry/ExportToWord/${payload.id}`)
 }
 
+const get_exportAnyDetails = (payload)=>{
+    return axios.get(`/api/organization/cadry/ExportToExcel`, {params:payload})
+}
 
-export default {get_ResumeDetails}
+
+
+
+
+export default {get_ResumeDetails, get_exportAnyDetails}

@@ -29,12 +29,6 @@ export default {
               visible: () =>this.get_adminPermissions("management_organizations"),
               to: '/admin/employees',
             },
-            {
-              label: "Analitika",
-              icon: "pi pi-slack",
-              visible: () =>this.get_adminPermissions("management_organizations"),
-              to: '/admin/exel',
-            },
           ],
         },
         {
@@ -128,29 +122,14 @@ export default {
           icon: "pi pi-prime",
           items: [
             {
-              label: "Qo'shimchalar",
+              label: "Eksport",
               icon: "pi pi-inbox",
-              items: [
-                {
-                  label: "Masullar",
-                  icon: "pi pi-folder",
-                },
-                {
-                  label: "Kirishlar",
-                  icon: "pi pi-folder",
-                },
-                {
-                  label: "Amallar",
-                  icon: "pi pi-folder",
-                },
-              ],
+              to: '/admin/exel',
             },
             {
               label: "Sozlamalaar",
               icon: "pi pi-cog",
-              command: () => {
-                this.$router.push("/admin/setting");
-              },
+              to: '/admin/setting',
             },
             {
               label: "Qo'llanma",
@@ -164,133 +143,7 @@ export default {
         },
         
       ],
-      items: [
-        {
-          label: "Global",
-          items: [
-            {
-              label: "Statistika",
-              icon: "pi pi-slack",
-              command: () => {
-              this.$router.push("/admin/statistic");
-              },
-            },
-            {
-              label: "Xodimlar",
-              icon: "pi pi-search",
-              command: () => {
-              this.$router.push("/admin/employees")
-              },
-            },
-            {
-              label: "Korxonalar",
-              icon: "pi pi-building",
-              command: () => {
-                this.$router.push("/admin/companies")
-              },
-            },
-          ],
-        },
-        {
-          label: "Asosiy",
-          items: [
-            {
-              label: "Statistika",
-              icon: "pi pi-slack",
-             command:()=>{
-              this.$router.push("/admin/statistic");
-             }
-            },
-            {
-              label: "Xodimlar",
-              icon: "pi pi-users",
-              to: '/admin/partemployee',
-             
-            },
-            {
-              label: "Shtat lavozimlari",
-              icon: "pi pi-align-center",
-              command: () => {
-               this.$router.push("/admin/position")
-              },
-            },
-            {
-              label: `Bo'limlar`,
-              icon: "pi pi-sitemap",
-              command: () => {
-                window.location.hash = "/fileupload";
-              },
-            },
-            {
-              label: "Hududlar",
-              icon: "pi pi-map",
-              command: () => {
-                this.$router.push("/admin/map");
-              },
-            },
-            {
-              label: "Taklif va murojatlar",
-              icon: "pi pi-upload",
-              command: () => {
-                window.location.hash = "/fileupload";
-              },
-            },
-            {
-              label: "Arxiv",
-              icon: "pi pi-shield",
-              command: () => {
-                window.location.hash = "/fileupload";
-              },
-            },
-          ],
-        },
-        {
-          label: "Xabarlar",
-          items: [
-            {
-              label: "Chiquvchi xatlar",
-              icon: "pi pi-comment",
-              command: () => {
-                window.location.hash = "/fileupload";
-              },
-            },
-            {
-              label: "Kiruvchi xatlar",
-              icon: "pi pi-comments",
-              command: () => {
-                window.location.hash = "/fileupload";
-              },
-            },
-          ],
-        },
 
-        {
-          label: "Dastur haqida",
-          items: [
-            {
-              label: "Sozlamalar",
-              icon: "pi pi-comments",
-              command: () => {
-                this.$router.push("/admin/setting");
-              },
-            },
-            {
-              label: "Qo'llanma",
-              icon: "pi pi-comment",
-              command: () => {
-                window.location.hash = "/fileupload";
-              },
-            },
-            {
-              label: "Dastur versiyasi",
-              icon: "pi pi-comments",
-              command: () => {
-                window.location.hash = "/fileupload";
-              },
-            },
-          ],
-        },
-      ],
     };
   },
   computed:{

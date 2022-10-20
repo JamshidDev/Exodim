@@ -86,6 +86,7 @@ export default {
     },
     get_menuType(type){
       if(type){
+        this.actionSidebar(false)
         this.sidebar= false
       }
     }
@@ -94,7 +95,7 @@ export default {
   methods: {
     ...mapActions(["actionSidebar"]),
     changeNavbar() {
-      this.actionSidebar(this.sidebar)
+      this.actionSidebar(!this.sidebar)
       if (this.SCREEN_WIDTH < 991) {
         this.mobile_active = !this.sidebar;
       }
