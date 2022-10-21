@@ -81,7 +81,7 @@ export default {
 
   methods: {
     enter_page() {
-      if (this.enter_page_value && this.enter_page_value<= Math.ceil(this.total_page /this.per_page)) {
+      if (this.enter_page_value && this.enter_page_value<= Math.ceil(this.total_page /this.per_page) && this.enter_page_value>=1) {
         this.pageDetails.page = this.enter_page_value;
         this.currentPage =
           (this.enter_page_value - 1) * this.pageDetails.per_page;

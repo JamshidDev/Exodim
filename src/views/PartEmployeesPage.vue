@@ -19,7 +19,7 @@
         @keyup.enter="searchBtn()"
       />
     </div>
-      <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3 p-fluid">
+    <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3 p-fluid">
       <Dropdown
         id="adressDistrict"
         v-model="departmentValue"
@@ -50,14 +50,18 @@
     <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
       <Button
         icon="pi pi-search "
-        class=" w-10 p-button-secondary"
+        class="w-2 p-button-danger"
         @click="searchBtn()"
       />
-
       <Button
         icon="pi pi-filter"
-        class=" w-2 p-button-text p-button-secondary"
+        class="w-2 p-button-text p-button-secondary mx-2"
         @click="openFilterPanel"
+      />
+      <Button
+        label="Yuklash"
+        class="w-6 p-button-secondary font-medium"
+        @click="controlExportDialog(true)"
       />
       <!-- Additional filter menu -->
       <OverlayPanel
@@ -228,12 +232,12 @@
     </div>
     <div class="col-12 sm:col-6 md:col-6 lg:col-2 xl:col-2 p-fluid">
       <Button
-              icon="pi pi-plus"
-              @click="goNewPush()"
-              class="p-button-info p-button-sm"
-              label="Xodim qo'shish"
-              v-tooltip.bottom="`Yangi xodim qo'shish`"
-            />
+        icon="pi pi-plus"
+        @click="goNewPush()"
+        class="p-button-info font-medium"
+        label="Xodim"
+        v-tooltip.bottom="`Yangi xodim qo'shish`"
+      />
     </div>
 
     <!-- Employees table ---start -->
@@ -301,15 +305,7 @@
 
         <Column header="Lavozimi" style="min-width: 20rem">
           <template #body="slotProps">
-            <div
-              class="
-                text-sm
-                sm:text-sm
-                md:text-md
-                lg:text-lg
-                xl:text-lg
-              "
-            >
+            <div class="text-sm sm:text-sm md:text-md lg:text-lg xl:text-lg">
               {{
                 slotProps.data.staff
                   ? slotProps.data.staff.staff_full
@@ -318,7 +314,7 @@
             </div>
           </template>
         </Column>
-        <Column  header="Bo'lim nomi" style="min-width: 16rem">
+        <Column header="Bo'lim nomi" style="min-width: 16rem">
           <template #body="slotProps">
             <div
               class="
@@ -340,13 +336,13 @@
             <div class="flex w-full">
               <Button
                 icon="pi pi-id-card"
-                class="p-button-rounded p-button-secondary mr-2"
+                class="p-button-rounded p-button-info mr-2"
                 v-tooltip.left="`Ma'lumotlarni ko'rish`"
                 @click="openResume(slotProps.data.id)"
               />
               <Button
                 icon="pi pi-cloud-download"
-                class="p-button-rounded p-button-secondary"
+                class="p-button-rounded p-button-success"
                 v-tooltip.left="`Ma'lumotnomani yuklash`"
                 @click="DowloadResume(slotProps.data.id)"
               />
@@ -376,6 +372,55 @@
         ref="word_resume"
       ></word-template>
       <employee-details ref="show_resume"></employee-details>
+      <Dialog
+        v-model:visible="exportDialog"
+        :breakpoints="{
+          '1960px': '50vw',
+          '1600px': '50vw',
+          '1200px': '70vw',
+          '960px': '80vw',
+          '640px': '90vw',
+        }"
+        :style="{ width: '50vw' }"
+        :modal="true"
+      >
+        <template #header>
+          <h6 class="uppercase text-base text-blue-500 font-medium">
+            Yuklash sozlamalarini
+          </h6>
+        </template>
+        <div class="grid">
+          <div class="col-6">
+            <div class="field-checkbox">
+              <Checkbox :value="exporOption[0]" v-model="exportOptions" />
+              <label>F.I.SH</label>
+            </div>
+            <div class="field-checkbox">
+              <Checkbox :value="exporOption[1]" v-model="exportOptions" />
+              <label>Lavozim</label>
+            </div>
+            <div class="field-checkbox">
+              <Checkbox :value="exporOption[2]" v-model="exportOptions" />
+              <label>Stavka</label>
+            </div>
+           
+           
+            
+          </div>
+        </div>
+
+        <template #footer>
+          <div class="col-12 pt-2">
+            <div class="flex justify-content-center">
+              <Button
+                label="Saqlash"
+                icon="pi pi-cloud-download"
+                class="p-button-success p-button-rounded"
+              />
+            </div>
+          </div>
+        </template>
+      </Dialog>
     </div>
   </div>
 </template>
@@ -401,9 +446,7 @@ export default {
       loadingtable: false,
       selectedCadries: null,
       cadries: [],
-
       Dowload_cadry_id: null,
-
       selectedAge: [10, 80],
 
       // Organization
@@ -432,16 +475,20 @@ export default {
 
       totalCadries: 0,
 
-      page:localStorage.getItem("page_1") || 1,
-      per_page:localStorage.getItem("per_page_1") || 10,
+      page: localStorage.getItem("page_1") || 1,
+      per_page: localStorage.getItem("per_page_1") || 10,
 
       // Organization params
       organization: {
         railway_id: null,
         organization_id: null,
         department_id: null,
-        page:localStorage.getItem("page_1")? Number(localStorage.getItem("page_1")) : 1,
-        per_page:localStorage.getItem("per_page_1")? Number(localStorage.getItem("per_page_1")) : 10,
+        page: localStorage.getItem("page_1")
+          ? Number(localStorage.getItem("page_1"))
+          : 1,
+        per_page: localStorage.getItem("per_page_1")
+          ? Number(localStorage.getItem("per_page_1"))
+          : 10,
         last_name: null,
         first_name: null,
         middle_name: null,
@@ -453,7 +500,33 @@ export default {
         age_end: null,
         birth_region_id: null,
       },
+
+      exportDialog: false,
+      exportOptions: [],
+      exporOption: [
+        {
+          id: 1,
+          name: "'F.I.SH'",
+          key: "key",
+        },
+        {
+          id: 2,
+          name: "'Lavozim'",
+          key: "key",
+        },
+        {
+          id: 3,
+          name: "'Stavka'",
+          key: "key",
+        },
+      ],
     };
+  },
+  watch:{
+    exportOptions(value){
+      console.log(value);
+    }
+
   },
   methods: {
     // get Employee function
@@ -568,16 +641,16 @@ export default {
       console.log(event);
       this.organization.page = event.page;
       this.organization.per_page = event.per_page;
-      localStorage.setItem("page_1", event.page)
-      localStorage.setItem("per_page_1", event.per_page)
+      localStorage.setItem("page_1", event.page);
+      localStorage.setItem("per_page_1", event.per_page);
       this.getEmployee(this.organization);
     },
 
-    goPush(id){
-      this.$router.push(`/admin/editemployee/${id}`)
+    goPush(id) {
+      this.$router.push(`/admin/editemployee/${id}`);
     },
-    goNewPush(){
-      this.$router.push("/admin/addnewemployee")
+    goNewPush() {
+      this.$router.push("/admin/addnewemployee");
     },
 
     searchBtn() {
@@ -631,14 +704,17 @@ export default {
     controlLoading(item) {
       this.loadingtable = item;
     },
+    controlExportDialog(item) {
+      this.exportDialog = item;
+    },
   },
   created() {
     this.getEmployee(this.organization);
-    this.get_Department()
+    this.get_Department();
     this.get_Education();
     this.get_getRegions();
     this.get_getVacations();
-    this.get_Stuffs()
+    this.get_Stuffs();
   },
 };
 </script>

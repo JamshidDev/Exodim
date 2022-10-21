@@ -1,7 +1,7 @@
 <template >
   <div class="grid surface-0 py-2 px-2">
     <div class="col-12">
-      <h6>Eksport bo'limi</h6>
+      <h6 class="text-base uppercase">Eksport bo'limi</h6>
     </div>
     <div class="col-12">
       <div class="grid">
@@ -86,68 +86,43 @@
             </template>
           </Dropdown>
         </div>
-        <div class="col-12 xl:col-3 p-fluid">
-          <Dropdown
-            id="adressDistrict"
-            v-model="department"
-            :options="departmentList"
-            optionLabel="name"
-            class="xl:p-inputtext-sm"
-            :filter="true"
-            placeholder="Jinsni tanlang"
-            emptyMessage="Izlash uchun yozing"
-            emptyFilterMessage="Tizmda ma'lumot topilmadi..."
-          >
-            <template #value="slotProps" class="custop_dropdown">
-              <div class="max-w-100" v-if="slotProps.value">
-                <div>{{ slotProps.value.name }}</div>
-              </div>
-              <span v-else>
-                {{ slotProps.placeholder }}
-              </span>
-            </template>
-            <template #option="slotProps">
-              <div class="max-w-100">
-                <div>{{ slotProps.option.name }}</div>
-              </div>
-            </template>
-          </Dropdown>
+        <div class="col-12 xl:col-3">
+        
         </div>
       </div>
     </div>
     <div class="col-12">
-      <div class="grid">
-        <div class="col-12 p-fluid">
-          <h5 class="uppercase text-base">Eksport sozlamalari</h5>
+      <h5 class="uppercase text-sm mb-1">Eksport sozlamalari</h5>
+        <div class="grid">
+          <div class="col-10 p-fluid max-w-full" >
           <TreeSelect
             v-model="selectedNodes2"
             :options="option"
             display="chip"
             selectionMode="checkbox"
             placeholder="Sozlamalarni o'rnatish"
+            class="max-w-full"
+            :change="changeSelect"
           ></TreeSelect>
         </div>
-      </div>
+        </div>
     </div>
     <div class="col-12"></div>
-    <div class="col-12  mt-8" v-show="false">
+    <div class="col-12 mt-8" v-show="false">
       <download-excel
         :data="jsonData"
         :fields="json_fields"
-        :before-generate = "startDownload"
-      :before-finish= "finishDownload"
         name="exodim.xls"
         ref="excel_table"
       >
-
       </download-excel>
     </div>
     <div class="col-12 flex justify-content-center">
       <Button
         type="button"
-        class="p-button p-button-rounded "
-        @click="onexport()"
-        :class="[loadingData? 'p-button-secondary': 'p-button-success']"
+        class="p-button p-button-rounded"
+        @click="filterDetails()"
+        :class="[loadingData ? 'p-button-secondary' : 'p-button-success']"
       >
         <span class="ml-2 uppercase font-medium">Eksport</span>
       </Button>
@@ -156,11 +131,12 @@
 </template>
 
 <script>
-import EksportService from '@/service/servises/EksportService'
+import EksportService from "@/service/servises/EksportService";
+import formatter from "../util/formatter";
 export default {
   data() {
     return {
-      loadingData:true,
+      loadingData: true,
       selectedNodes2: null,
       departmentList: [],
       department: null,
@@ -173,7 +149,7 @@ export default {
           children: [
             {
               key: "0-0",
-              label: "Lavozim",
+              label: "Millati",
               icon: "pi pi-user",
               data: "folder",
             },
@@ -201,6 +177,66 @@ export default {
               icon: "pi pi-user",
               data: "folder",
             },
+            {
+              key: "0-5",
+              label: "Pasport seriya",
+              icon: "pi pi-user",
+              data: "folder",
+            },
+            {
+              key: "0-6",
+              label: "Pasport JSHR",
+              icon: "pi pi-user",
+              data: "folder",
+            },
+            {
+              key: "0-7",
+              label: "Pasport (Viloyat)",
+              icon: "pi pi-user",
+              data: "folder",
+            },
+            {
+              key: "0-8",
+              label: "Pasport (Tuman)",
+              icon: "pi pi-user",
+              data: "folder",
+            },
+            {
+              key: "0-9",
+              label: "Pasport (Sana)",
+              icon: "pi pi-user",
+              data: "folder",
+            },
+            {
+              key: "0-10",
+              label: "Yashash (Tuman)",
+              icon: "pi pi-user",
+              data: "folder",
+            },
+            {
+              key: "0-11",
+              label: "Yashash (Viloyat)",
+              icon: "pi pi-user",
+              data: "folder",
+            },
+            {
+              key: "0-12",
+              label: "Yashash manzili",
+              icon: "pi pi-user",
+              data: "folder",
+            },
+            {
+              key: "0-13",
+              label: "Ma'lumoti",
+              icon: "pi pi-user",
+              data: "folder",
+            },
+            {
+              key: "0-14",
+              label: "Jinsi",
+              icon: "pi pi-user",
+              data: "folder",
+            },
           ],
         },
         {
@@ -211,14 +247,68 @@ export default {
           children: [
             {
               key: "1-0",
+              label: "Lavozim",
+              icon: "pi pi-user",
+              data: "folder",
+            },
+            {
+              key: "1-1",
               label: "Stavka",
+              icon: "pi pi-user",
+              data: "folder",
+            },
+            {
+              key: "1-2",
+              label: "Xizmat darajasi",
+              icon: "pi pi-user",
+              data: "folder",
+            },
+            {
+              key: "1-3",
+              label: "Ma'lumoti",
+              icon: "pi pi-user",
+              data: "folder",
+            },
+            {
+              key: "1-4",
+              label: "Ilmiy unvoni",
+              icon: "pi pi-user",
+              data: "folder",
+            },
+            {
+              key: "1-5",
+              label: "Ilmiy darajasi",
+              icon: "pi pi-user",
+              data: "folder",
+            },
+            {
+              key: "1-6",
+              label: "Xarbiy unvoni",
+              icon: "pi pi-user",
+              data: "folder",
+            },
+            {
+              key: "1-7",
+              label: "Chet tillari",
+              icon: "pi pi-user",
+              data: "folder",
+            },
+            {
+              key: "1-8",
+              label: "Saylangan organlarga a'zoligi",
+              icon: "pi pi-user",
+              data: "folder",
+            },
+            {
+              key: "1-9",
+              label: "Partiyaviyligi",
               icon: "pi pi-user",
               data: "folder",
             },
           ],
         },
       ],
-      jsonData:[],
+      jsonData: [],
       json_data: [
         {
           name: "Tony Peña",
@@ -242,69 +332,80 @@ export default {
         },
       ],
       json_fields: {
-        "F.I.SH": "fullName",
-        "Jinsi": "sex",
-        "Lavozim": "position",
-        "Bo'lim": "department",
-        "Ma'lumoti":"education",
-        "Ma'lumoti":"education",
-        "Parport seriyas":"passport",
-        "Pasport JSHR":"pinfl",
-        "Millati":"nationality",
-        "Yashash manzili":"now_position",
-
-        
-
-
-
       },
+      exportShowItem: [
+        {
+          id: "0-0",
+          name: "Lavozim",
+          key: "position",
+        },
+        {
+          id: "0-1",
+          name: "F.I.SH",
+          key: "fullName",
+        },
+        {
+          id: "0-2",
+          name: "Bo'lim nomi",
+          key: "department",
+        },
+        {
+          id: "0-9",
+          name: "Pasport (Sana)",
+          key: "passport_date",
+        },
+      ],
     };
   },
-  watch: {
-    selectedNodes2(value) {
-      console.table(value);
-    },
-  },
   methods: {
-    get_exportdetails(params, loader){
+    get_exportdetails(params, loader) {
       this.loadingData = true;
-      EksportService.get_exportAnyDetails().then((res)=>{
+      EksportService.get_exportAnyDetails().then((res) => {
         console.log(res.data);
-        res.data.forEach((item)=>{
-          let option ={
-            fullName:item.fullname,
-            sex:item.sex,
-            position:item.department_and_staffs[0].staff_full,
-            department:item.department,
-            education:item.education,
-            passport:item.passport,
-            pinfl:item.pinfl.toString() ,
-            nationality:item.nationality,
-            now_position:item.now_position,
-          }
-          this.jsonData.push(option)
-         
-        })
+        res.data.forEach((item) => {
+          let option = {
+            fullName: item.fullname,
+            sex: item.sex,
+            position: item.department_and_staffs[0].staff_full,
+            department: item.department,
+            education: item.education,
+            passport: item.passport,
+            pinfl: item.pinfl,
+            nationality: item.nationality,
+            now_position: item.now_position,
+            passport_date: item.passport_date,
+          };
+          this.jsonData.push(option);
+        });
         this.loadingData = false;
-      
-      })
+      });
     },
     onexport() {
-      if(!this.loadingData){
+      if (!this.loadingData) {
         console.log(this.$refs.excel_table.generate());
       }
-      
     },
-    startDownload(event){
+    changeSelect(event) {
       console.log(event);
     },
-    finishDownload(event){
-      console.log(event);
-    }
+    filterDetails() {
+      if (this.selectedNodes2) {
+        console.table(this.json_fields);
+        for (const key in this.selectedNodes2) {
+          this.exportShowItem.forEach((item) => {
+            if (item.id == key) {
+              this.json_fields[item.name] = item.key;
+            }
+          });
+        }
+        console.table(this.json_fields);
+        console.log(this.$refs.excel_table.generate());
+      }
+    },
   },
-  created(){
-   this.get_exportdetails()
-  }
+  created() {
+    this.get_exportdetails();
+  },
 };
 </script>
 <style lang="">

@@ -49,8 +49,8 @@
               <Image
                 :src="slotProps.data.photo"
                 :alt="slotProps.data.fullname"
-                width="30"
-                height="30"
+                width="40"
+                height="40"
                 preview
               />
             </div>
