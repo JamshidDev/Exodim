@@ -372,55 +372,8 @@
         ref="word_resume"
       ></word-template>
       <employee-details ref="show_resume"></employee-details>
-      <Dialog
-        v-model:visible="exportDialog"
-        :breakpoints="{
-          '1960px': '50vw',
-          '1600px': '50vw',
-          '1200px': '70vw',
-          '960px': '80vw',
-          '640px': '90vw',
-        }"
-        :style="{ width: '50vw' }"
-        :modal="true"
-      >
-        <template #header>
-          <h6 class="uppercase text-base text-blue-500 font-medium">
-            Yuklash sozlamalarini
-          </h6>
-        </template>
-        <div class="grid">
-          <div class="col-6">
-            <div class="field-checkbox">
-              <Checkbox :value="exporOption[0]" v-model="exportOptions" />
-              <label>F.I.SH</label>
-            </div>
-            <div class="field-checkbox">
-              <Checkbox :value="exporOption[1]" v-model="exportOptions" />
-              <label>Lavozim</label>
-            </div>
-            <div class="field-checkbox">
-              <Checkbox :value="exporOption[2]" v-model="exportOptions" />
-              <label>Stavka</label>
-            </div>
-           
-           
-            
-          </div>
-        </div>
-
-        <template #footer>
-          <div class="col-12 pt-2">
-            <div class="flex justify-content-center">
-              <Button
-                label="Saqlash"
-                icon="pi pi-cloud-download"
-                class="p-button-success p-button-rounded"
-              />
-            </div>
-          </div>
-        </template>
-      </Dialog>
+      <export-panel ref="export_to_excel"></export-panel>
+      
     </div>
   </div>
 </template>
@@ -432,6 +385,7 @@ import EmployeeLoader from "../components/loaders/EmployeeLoader.vue";
 import SearchNotFoundPage from "../components/EmptyComponent/SearchNotFoundPage.vue";
 import WordTemplate from "../components/Eksport/WordTemplate.vue";
 import EmployeeDetails from "../components/partEmployee/EmployeeDetails.vue";
+import ExportPanel from '@/components/Eksport/ExportPanel'
 export default {
   components: {
     EmployeeLoader,
@@ -439,6 +393,7 @@ export default {
     SearchNotFoundPage,
     WordTemplate,
     EmployeeDetails,
+    ExportPanel,
   },
   data() {
     return {
@@ -501,25 +456,7 @@ export default {
         birth_region_id: null,
       },
 
-      exportDialog: false,
-      exportOptions: [],
-      exporOption: [
-        {
-          id: 1,
-          name: "'F.I.SH'",
-          key: "key",
-        },
-        {
-          id: 2,
-          name: "'Lavozim'",
-          key: "key",
-        },
-        {
-          id: 3,
-          name: "'Stavka'",
-          key: "key",
-        },
-      ],
+     
     };
   },
   watch:{
@@ -705,7 +642,7 @@ export default {
       this.loadingtable = item;
     },
     controlExportDialog(item) {
-      this.exportDialog = item;
+      this.$refs.export_to_excel.controlPanel(true, this.organization)
     },
   },
   created() {

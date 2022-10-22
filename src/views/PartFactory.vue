@@ -204,6 +204,9 @@
         </template>
       </DataTable>
     </div>
+    <div class="col-12">
+
+    </div>
 
     <div class="col-12" v-show="loader">
       <department-loader></department-loader>

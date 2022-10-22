@@ -6,6 +6,7 @@ const get_ResumeDetails = (payload)=>{
 }
 
 const get_exportAnyDetails = (payload)=>{
+    console.log(payload);
     return axios.get(`/api/organization/cadry/ExportToExcel`, {params:payload})
 }
 
