@@ -33,11 +33,13 @@ export default {
         linkElement.nextSibling
       );
 
-      localStorage.setItem("theme", event.theme);
+      
 
       this.$appState.theme = event.theme;
       this.$appState.darkTheme = event.dark;
     };
+
+    document.documentElement.style.fontSize = localStorage.getItem("fontSize")+'px'
 
     EventBus.on("theme-change", this.themeChangeListener);
   },

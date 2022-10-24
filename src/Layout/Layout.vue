@@ -52,10 +52,11 @@ export default {
       sidebar_overall: false,
       mobile_active: false,
       menuBar:true,
+      mobile_screen_width:1200,
     };
   },
   created() {
-    if (this.SCREEN_WIDTH > 991) {
+    if (this.SCREEN_WIDTH > this.mobile_screen_width) {
       this.sidebar = false;
     }
   },
@@ -68,7 +69,7 @@ export default {
           open_sidebar:!this.sidebar,
           close_sidebar: this.sidebar,
           sidebar_static: this.sidebar_statsic,
-          sidebar_overall: this.SCREEN_WIDTH > 991 && this.sidebar,
+          sidebar_overall: this.SCREEN_WIDTH > this.mobile_screen_width && this.sidebar,
         },
       ];
     },
@@ -80,7 +81,7 @@ export default {
   },
   watch: {
     SCREEN_WIDTH(width) {
-      if (width < 991) {
+      if (width < this.mobile_screen_width) {
         this.sidebar = true;
       }
     },
@@ -96,7 +97,7 @@ export default {
     ...mapActions(["actionSidebar"]),
     changeNavbar() {
       this.actionSidebar(!this.sidebar)
-      if (this.SCREEN_WIDTH < 991) {
+      if (this.SCREEN_WIDTH < this.mobile_screen_width) {
         this.mobile_active = !this.sidebar;
       }
       this.sidebar = !this.sidebar;

@@ -682,7 +682,7 @@ export default {
           let option = {
             fullName: item.fullname,
             sex: item.sex,
-            position: item.department_and_staffs[0].staff_full,
+            position: item.department_and_staffs[0]? item.department_and_staffs[0].staff_full : ' ',
             department: item.department,
             education: item.education,
             passport: item.passport,

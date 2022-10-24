@@ -88,9 +88,9 @@ import {mapActions, mapGetters} from "vuex"
 export default {
   data() {
     return {
-      scale: 14,
+      scale: localStorage.getItem('fontSize') || 14,
       scales: [12, 13, 14, 15, 16],
-      darkMode: false,
+      darkMode:JSON.parse(localStorage.getItem('theme-dark')) || false,
       menuType:this.get_menuType,
     };
   },
@@ -116,6 +116,7 @@ export default {
     customChangetheme($event) {
       if (this.darkMode) {
         this.changeTheme($event, "lara-dark-blue", true);
+        localStorage.setItem("theme-dark", JSON.stringify(true));
       } else {
         this.changeTheme($event, "lara-light-blue", true);
       }
@@ -130,6 +131,7 @@ export default {
     },
     applyScale() {
       document.documentElement.style.fontSize = this.scale + "px";
+      localStorage.setItem('fontSize', this.scale)
     },
     changeTheme(event, theme, dark) {
       EventBus.emit("theme-change", { theme: theme, dark: dark });

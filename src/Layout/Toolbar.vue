@@ -98,6 +98,7 @@
 </template>
 <script>
 import {mapGetters} from "vuex"
+import EventBus from "../util/appEventBus.js";
 export default {
   data() {
     return {
@@ -282,7 +283,17 @@ export default {
     controlNavbar() {
       this.$emit("controlSidebar");
     },
+    changeTheme(theme, dark) {
+      EventBus.emit("theme-change", { theme: theme, dark: dark });
+    },
   },
+  created(){
+    let dark = JSON.parse(localStorage.getItem('theme-dark'))
+    if(dark){
+      this.changeTheme("lara-dark-blue", true);
+    }
+    
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -290,6 +301,7 @@ export default {
   background-color: #313a46 !important;
   border-radius:0px !important;
   border: 1px solid #313a46;
+  min-height: 62px;
 }
 .z_index_top {
   z-index: 998 !important;

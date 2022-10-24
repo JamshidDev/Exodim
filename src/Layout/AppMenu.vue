@@ -122,11 +122,6 @@ export default {
           icon: "pi pi-prime",
           items: [
             {
-              label: "Eksport",
-              icon: "pi pi-inbox",
-              to: '/admin/exel',
-            },
-            {
               label: "Sozlamalaar",
               icon: "pi pi-cog",
               to: '/admin/setting',
