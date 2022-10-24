@@ -149,6 +149,11 @@ export default {
               }
               this.set_adminPermissions(permissions);
               localStorage.setItem(
+                "admin_avatar",
+                res.data.photo
+              );
+
+              localStorage.setItem(
                 "Adminpermissions",
                 JSON.stringify(permissions)
               );

@@ -50,11 +50,11 @@
 
         <!-- avatar -->
         <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
-          <div class="employee-avatar-box">
-            <div class="img-box">
+          <div class="employee-avatar-box" @click="$refs.file.click()">
+            <div class="img-box" :class="{'img-box-invalid' : submitted_blob && !cropper_blob }">
               <img
                 class="employee-avatar"
-                src="https://w7.pngwing.com/pngs/577/307/png-transparent-human-with-circle-logo-national-cyber-security-alliance-organization-drupal-association-information-internet-icon-s-customers-free-miscellaneous-company-logo.png"
+                :src="image.src? image.src : 'https://w7.pngwing.com/pngs/577/307/png-transparent-human-with-circle-logo-national-cyber-security-alliance-organization-drupal-association-information-internet-icon-s-customers-free-miscellaneous-company-logo.png'"
                 alt=""
               />
               <div class="hover-element">
@@ -636,7 +636,52 @@
         </div>
       </div>
     </div>
+    <div class="col">
+      <Dialog
+          v-model:visible="cropperDialog"
+          :style="{ width: '380px' }"
+          :modal="true"
+          class="bg-blue-700"
+          :closable="false"
+        >
+          <template #header>
+            <h6 class="font-semibold flex uppercase">Rasmni tekislash</h6>
+          </template>
+          <cropper
+            ref="croppers"
+            class="cropper"
+            :stencil-props="{
+              aspectRatio: 3 / 4,
+            }"
+            @change="changeCropper"
+            :src="image.src"
+            :autoZoom="true"
+          />
+          <template #footer>
+            <div class="flex justify-content-between">
+              <Button
+                label="Bekor qilish"
+                @click="controlCopper(false)"
+                class="p-button-danger p-button-sm"
+              />
+              <Button
+                label="Tasdiqlash"
+                @click="uploadAvatar()"
+                class="p-button-secondary p-button-sm"
+              />
+            </div>
+          </template>
+        </Dialog>
+    </div>
     <div class="col-12">
+      <input
+          v-show="false"
+          type="file"
+          ref="file"
+          @change="uploadImage($event)"
+          accept="image/*"
+        />
+     
       <success-alert ref="success_alert"></success-alert>
       <warning-alert ref="warning_alert"></warning-alert>
       <Toast position="bottom-right" group="br" />
@@ -651,10 +696,13 @@ import { globalValidate } from "../validation/vuevalidate";
 import Formatter from "../util/formatter";
 import { minLength, required } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
+import { Cropper } from "vue-advanced-cropper";
+import "vue-advanced-cropper/dist/style.css";
 export default {
   components:{
     SuccessAlert,
     WarningAlert,
+    Cropper,
   },
   setup() {
     const v$ = useVuelidate();
@@ -664,7 +712,13 @@ export default {
   data() {
     return {
       Formatter,
-
+      cropperDialog: false,
+      image: {
+        src: null,
+        type: "image/jpg",
+      },
+      cropper_blob:null,
+      submitted_blob:false,
       firstName: "",
       lastName: "",
       thirdName: "",
@@ -769,6 +823,11 @@ export default {
       employeeSelectedOrgan: globalValidate.employeeSelectedOrgan,
     };
   },
+  watch:{
+    employeeLanguage(value){
+      console.log(value);
+    }
+  },
   methods: {
     get_AddInfo() {
       employeeAdd
@@ -793,51 +852,95 @@ export default {
 
     addEmployee(isFormValid) {
       this.submitted = true;
-      if (isFormValid) {
+      this.submitted_blob = true;
+      if (isFormValid && this.cropper_blob) {
         let language_ids = [];
         this.employeeLanguage.forEach((item) => {
           language_ids.push(item.id);
         });
+        console.log(language_ids);
+        let  form = new FormData();
+        form.append("photo", this.cropper_blob, "avatar.jpg");
+        form.append("last_name",this.lastName)
+        form.append("first_name",this.firstName)
+        form.append("middle_name",this.thirdName)
+        form.append("birht_date", Formatter.outDateFormatter(this.bornDate))
+        form.append("birth_city_id",this.bornDistric.id)
+        form.append("birth_region_id",this.bornRegion)
+        form.append("address_region_id",this.adressRegion)
+        form.append("address_city_id",this.adressDistrict.id)
+        form.append("address",this.adressStreet)
+        form.append("pass_region_id",this.passportRegion)
+        form.append("pass_city_id",this.passportDistrict.id)
+        form.append("jshshir",this.passportJSHR)
+        form.append("passport",this.passportSeriya)
+        form.append("pass_date", Formatter.outDateFormatter(this.passportDate))
+        form.append("job_date",Formatter.outDateFormatter(this.positionFirstDate))
+        form.append("post_date",Formatter.outDateFormatter(this.positionDate))
+        form.append("worklevel_id",this.positionDegree)
+        form.append("department_id",this.positionPart.id)
+        form.append("staff_id",this.positionName.id)
+        form.append("stavka",this.positionAmount)
+        form.append("education_id",this.academic)
+        form.append("academictitle_id",this.academicTitle)
+        form.append("academicdegree_id",this.academicDegree)
+        form.append("nationality_id",this.employeeNation)
+        form.append("language",language_ids)
+        form.append("party_id",this.employeeParty)
+        form.append("military_rank",this.employeeMilitaryTitle)
+        form.append("deputy",this.employeeSelectedOrgan)
+        form.append("phone",this.employeePhone)
+        form.append("last_name",this.lastName)
+        form.append("last_name",this.lastName)
 
-        let data = {
-          last_name: this.lastName,
-          first_name: this.firstName,
-          middle_name: this.thirdName,
-          birht_date: Formatter.outDateFormatter(this.bornDate),
-          birth_city_id: this.bornDistric.id,
-          birth_region_id: this.bornRegion,
-          address_region_id: this.adressRegion,
-          address_city_id: this.adressDistrict.id,
-          address: this.adressStreet,
-          pass_region_id: this.passportRegion,
-          pass_city_id: this.passportDistrict.id,
-          jshshir: this.passportJSHR,
-          passport: this.passportSeriya,
-          pass_date: Formatter.outDateFormatter(this.passportDate),
-          job_date: Formatter.outDateFormatter(this.positionFirstDate),
-          post_date: Formatter.outDateFormatter(this.positionDate),
-          worklevel_id: this.positionDegree,
-          department_id: this.positionPart.id,
-          staff_id: this.positionName.id,
-          stavka:this.positionAmount,
 
-          education_id: this.academic,
-          academictitle_id: this.academicTitle,
-          academicdegree_id: this.academicDegree,
-          nationality_id: this.employeeNation,
-          language: language_ids,
-          party_id: this.employeeParty,
-          military_rank: this.employeeMilitaryTitle,
-          deputy: this.employeeSelectedOrgan,
-          phone: this.employeePhone,
-        };
-        console.table(data);
 
-        employeeAdd.create_Cadry({data}).then((res)=>{
-          if(res.data.status){
-            this.$refs.warning_alert.controlDialog(true, "Muvofaqqiyatli bajarildi", 'Yangi xodim ishga qabul qilindi.', "",)
-          }else{
+
+        // let data = {
+        //   last_name: this.lastName,
+        //   first_name: this.firstName,
+        //   middle_name: this.thirdName,
+        //   birht_date: Formatter.outDateFormatter(this.bornDate),
+        //   birth_city_id: this.bornDistric.id,
+        //   birth_region_id: this.bornRegion,
+        //   address_region_id: this.adressRegion,
+        //   address_city_id: this.adressDistrict.id,
+        //   address: this.adressStreet,
+        //   pass_region_id: this.passportRegion,
+        //   pass_city_id: this.passportDistrict.id,
+        //   jshshir: this.passportJSHR,
+        //   passport: this.passportSeriya,
+        //   pass_date: Formatter.outDateFormatter(this.passportDate),
+        //   job_date: Formatter.outDateFormatter(this.positionFirstDate),
+        //   post_date: Formatter.outDateFormatter(this.positionDate),
+        //   worklevel_id: this.positionDegree,
+        //   department_id: this.positionPart.id,
+        //   staff_id: this.positionName.id,
+        //   stavka:this.positionAmount,
+
+        //   education_id: this.academic,
+        //   academictitle_id: this.academicTitle,
+        //   academicdegree_id: this.academicDegree,
+        //   nationality_id: this.employeeNation,
+        //   language: language_ids,
+        //   party_id: this.employeeParty,
+        //   military_rank: this.employeeMilitaryTitle,
+        //   deputy: this.employeeSelectedOrgan,
+        //   phone: this.employeePhone,
+        // };
+        console.table(form);
+
+        employeeAdd.create_Cadry({form}).then((res)=>{
+          if(res.data.status==1){
             this.$refs.warning_alert.controlDialog(true, "Mavjud xodim", res.data.organization, res.data.fullname,)
+           
+          }else if(res.data.status==2){
+            this.$refs.warning_alert.controlDialog(true, "Mavjud xodim", 'Xodim arxivda mavjud', )
+          }else if(res.data.status==3){
+            this.$refs.warning_alert.controlDialog(true, "Taqiqlangan", ' ', "Xodim mehnat faoliyati davrida qo'pol xatolari tufayli" )
+          }
+          else if(res.data.status==4){
+            this.$refs.warning_alert.controlDialog(true, "Muvofaqqiyatli bajarildi", 'Yangi xodim ishga qabul qilindi.', "",)
           }
         }).catch((error)=>{
           console.log(error);
@@ -861,11 +964,15 @@ export default {
      console.log(this.passportJSHR.length);
       if(this.passportJSHR.length==14){
         employeeAdd.check_Cadry({pinfl:this.passportJSHR}).then((res)=>{
-          console.log(res.data);
+          if(res.data.status==1){
+            this.$refs.warning_alert.controlDialog(true, "Mavjud xodim", res.data.organization, res.data.fullname,)
+          }
           if(res.data.status==2){
             this.$refs.warning_alert.controlDialog(true, "Mavjud xodim", "ARXIV",res.data.message,)
-          }else if(res.data.status==1){
-            this.$refs.warning_alert.controlDialog(true, "Mavjud xodim", res.data.organization, res.data.fullname,)
+          }else if(res.data.status==3){
+            this.$refs.warning_alert.controlDialog(true, "Taqiqlangan", ' ', "Xodim mehnat faoliyati davrida qo'pol xatolari tufayli" )
+          }else if(res.data.status==4){
+            this.$refs.warning_alert.controlDialog(true, "Topilmadi", ' ', "Tizimda mavjud bo'lmagan xodim" )
           }
         }).catch((error)=>{
           console.log(error);
@@ -879,6 +986,38 @@ export default {
       this.StuffList = [];
       this.position_stuff = "";
       this.get_Stuff(event.value.id);
+    },
+    uploadImage(event) {
+      /// Reference to the DOM input element
+
+      const { files } = event.target;
+      console.log(files);
+      // Ensure that you have a file before attempting to read it
+      if (files && files[0]) {
+        // 1. Revoke the object URL, to allow the garbage collector to destroy the uploaded before file
+        if (this.image.src) {
+          URL.revokeObjectURL(this.image.src);
+        }
+        // 2. Create the blob link to the file to optimize performance:
+        const blob = URL.createObjectURL(files[0]);
+
+        // 3. Update the image. The type will be derived from the extension and it can lead to an incorrect result:
+        this.image = {
+          src: blob,
+          type: files[0].type,
+        };
+        this.cropperDialog = true;
+      }
+    },
+    uploadAvatar() {
+      this.controlCopper(false);
+      this.image.src = this.$refs.croppers.getResult().canvas.toDataURL();
+      this.$refs.croppers.getResult().canvas.toBlob((blob) => {
+        this.cropper_blob = blob
+      });
+    },
+    controlCopper(item) {
+      this.cropperDialog = item;
     },
 
     goPush() {
@@ -903,11 +1042,14 @@ export default {
   justify-content: start;
   align-items: center;
   position: relative;
+  .img-box-invalid{
+    border: 2px solid #e24c4c !important;
+  }
   .img-box {
     position: relative;
     margin-top: 20px;
-    width: 160px;
-    height: 180px;
+    width: 180px;
+    height: 240px;
     overflow: hidden;
     border: 2px solid #767b8338;
     border-radius: 10px;
@@ -917,7 +1059,7 @@ export default {
       opacity: 1;
     }
     .employee-avatar {
-      width: 160px;
+      width: 180px;
       height: 100%;
     }
     .hover-element {

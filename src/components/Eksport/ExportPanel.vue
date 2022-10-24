@@ -538,12 +538,12 @@ export default {
         {
           id: 5,
           name: "Tug'ilgan sana",
-          key: "passport_date",
+          key: "birth_date",
         },
         {
           id: 6,
           name: "Telefon raqami",
-          key: "passport_date",
+          key: "phone",
         },
         {
           id: 7,
@@ -578,22 +578,22 @@ export default {
         {
           id: 13,
           name: "Pasport (Viloyat)",
-          key: "passport_date",
+          key: "passport_position_region",
         },
         {
           id: 14,
           name: "Pasport (Tuman)",
-          key: "passport_date",
+          key: "passport_position_city",
         },
         {
           id: 15,
           name: "Tug'ilgan (Viloyat)",
-          key: "passport_date",
+          key: "birth_region",
         },
         {
           id: 16,
           name: "Tug'ilgan (Tuman)",
-          key: "passport_date",
+          key: "birth_city",
         },
         {
           id: 17,
@@ -608,62 +608,62 @@ export default {
         {
           id: 19,
           name: "Ilmiy unvoni",
-          key: "passport_date",
+          key: "academic_title",
         },
         {
           id: 20,
           name: "Ilmiy darajasi",
-          key: "passport_date",
+          key: "academic_degree",
         },
         {
           id: 21,
           name: "Xarbiy unvoni",
-          key: "passport_date",
+          key: "academic_title",
         },
         {
           id: 22,
           name: "Chet tillari",
-          key: "passport_date",
+          key: "languages",
         },
         {
           id: 23,
-          name: "Ta'til",
-          key: "passport_date",
+          name: "Oilaviy sharoiti",
+          key: "family_status",
         },
         {
           id: 24,
-          name: "Tibbiy ko'rik",
+          name: "Stavkasi",
           key: "passport_date",
         },
         {
           id: 25,
-          name: "Jazolanganligi",
-          key: "passport_date",
+          name: "Stavka",
+          key: "rate",
         },
         {
           id: 26,
-          name: "Rag'batlantirilganligi",
-          key: "passport_date",
+          name: "Shtat kategoriya",
+          key: "category",
         },
         {
           id: 27,
-          name: "Shtat lavozimi",
-          key: "passport_date",
+          name: "Oliygohlar",
+          key: "instituts",
         },
         {
           id: 28,
-          name: "Chet tillari",
-          key: "passport_date",
+          name: "Deputatliligi",
+          key: "deputy",
         },
         {
           id: 29,
-          name: "Chet tillari",
-          key: "passport_date",
+          name: "aaaa",
+          key: "languages",
         },
         {
           id: 30,
-          name: "Chet tillari",
-          key: "passport_date",
+          name: "Xarbiy unvoni",
+          key: "military_rank",
         },
       ],
     };
@@ -671,25 +671,43 @@ export default {
   methods: {
     controlPanel(item, payload) {
       this.exportDialog = item;
-      this.get_exportdetails(payload);
+      this.get_exportdetails(payload, true);
     },
 
     get_exportdetails(params, loader) {
       this.progressActive = true;
       EksportService.get_exportAnyDetails(params).then((res) => {
         console.log(res.data);
+        this.jsonData = []
         res.data.forEach((item) => {
           let option = {
             fullName: item.fullname,
+            
+            birth_city: item.birth_city,
+            birth_region:item.birth_region,
+            now_position: item.now_position,
+            academic_title:item.academic_title,
+            academic_degree:item.academic_degree,
+            deputy:item.deputy,
+            languages:item.languages.map(a=> a.name).toString(),
             sex: item.sex,
-            position: item.department_and_staffs[0]? item.department_and_staffs[0].staff_full : ' ',
-            department: item.department,
+            position: item.department_and_staffs.map(a=> a.staff_full).toString(),
+            department: item.department_and_staffs.map(a=> a.department).toString(),
+            instituts:item.instituts? item.instituts.map(a=> a.name).toString() : '',
+            rate:item.department_and_staffs.map(a=> a.rate).toString(),
+            category:item.department_and_staffs.map(a=> a.category).toString(),
             education: item.education,
+            phone:item.phone,
+            military_rank:item.military_rank,
+            birth_date:item.birth_date,
+            nationality: item.nationality,
+            family_status:item.family_status,
+
             passport: item.passport,
             pinfl: item.pinfl,
-            nationality: item.nationality,
-            now_position: item.now_position,
             passport_date: item.passport_date,
+            passport_position_city:item.passport_position_city,
+            passport_position_region:item.passport_position_region,
           };
           this.jsonData.push(option);
         });
@@ -720,9 +738,6 @@ export default {
         return "";
       }
     },
-  },
-  created() {
-    this.get_exportdetails();
   },
 };
 </script>

@@ -6,7 +6,7 @@ const get_AddInfo = (payload)=>{
 }
 
 const create_Cadry = (payload)=>{
-    return axios.post(`/api/organization/addworker`, payload.data)
+    return axios.post(`/api/organization/addworker`, payload.form)
 }
 
 const get_Stuff = (payload)=>{

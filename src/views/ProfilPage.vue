@@ -5,7 +5,7 @@
                 <div class="col-12 flex justify-content-end px-1">
                     <Button icon="pi pi-pencil" class="p-button-sm p-button-secondary p-button-outlined"  />
                 </div>
-                <div class="flex justify-content-center pb-2"><Avatar image="https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg" size="xlarge" class="mr-2" shape="circle" /></div>
+                <div class="flex justify-content-center pb-2"><Avatar :image="admin_avatar()" size="xlarge" class="mr-2" shape="circle" /></div>
                 <h6  class="text-center xl:text-lg font-medium uppercase mb-6" >Jamshid Raximov Shuxrat o'g'li</h6>
                 <h6  class="text-left font-medium text-500 text-base mb-0" >Katta korxona nomi:</h6>
                 <h6  class="text-left xl:text-lg font-medium  mb-4 mt-0" >Personalni boshqarish va kadrlar tayorlash boshqarmasi</h6>
@@ -96,6 +96,9 @@ export default {
     toggle(event) {
       this.$refs.menu.toggle(event);
     },
+    admin_avatar(){
+      return localStorage.getItem("admin_avatar")? localStorage.getItem("admin_avatar") : 'https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg'
+    }
   },
 };
 </script>

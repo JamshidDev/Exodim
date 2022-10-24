@@ -79,7 +79,7 @@
           </template>
         </Menu>
         <Avatar
-          image="https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg"
+          :image="admin_avatar()"
           shape="circle"
           size="medium"
           @click="toggle"
@@ -247,23 +247,6 @@ export default {
             },
           ],
         },
-        // {
-        //   label: "Topshiriqlar",
-        //   subItems: [
-        //     {
-        //       label: "Xodim ma'lumotlarini kiritish",
-        //       icon: "pi pi-external-link",
-        //       url: "https://vuejs.org/",
-        //     },
-        //     {
-        //       label: "Vakant va sverxlarni ko'rish bo'yicha",
-        //       icon: "pi pi-upload",
-        //       command: () => {
-        //         this.$router.push("/login");
-        //       },
-        //     },
-        //   ],
-        // },
       ],
     };
   },
@@ -286,6 +269,9 @@ export default {
     changeTheme(theme, dark) {
       EventBus.emit("theme-change", { theme: theme, dark: dark });
     },
+    admin_avatar(){
+      return localStorage.getItem("admin_avatar")? localStorage.getItem("admin_avatar") : 'https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg'
+    }
   },
   created(){
     let dark = JSON.parse(localStorage.getItem('theme-dark'))

@@ -119,6 +119,7 @@ export default {
         localStorage.setItem("theme-dark", JSON.stringify(true));
       } else {
         this.changeTheme($event, "lara-light-blue", true);
+        localStorage.setItem("theme-dark", JSON.stringify(false));
       }
     },
     decrementScale() {

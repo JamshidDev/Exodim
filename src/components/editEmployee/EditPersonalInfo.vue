@@ -28,7 +28,7 @@
     <div class="col-12">
       <div class="grid xl:px-8 lg:px-4 py-4">
         <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
-          <div class="employee-avatar-box" @click="$refs.file.click()">
+          <div class="employee-avatar-box" @click="$refs.file_add.click()">
             <div class="img-box">
               <img
                 class="employee-avatar"
@@ -459,7 +459,7 @@
         <input
           v-show="false"
           type="file"
-          ref="file"
+          ref="file_add"
           @change="uploadImage($event)"
           accept="image/*"
         />
@@ -476,8 +476,6 @@
           <cropper
             ref="cropper"
             class="cropper"
-            @change="change"
-            @ready="readyCropper"
             :stencil-props="{
               aspectRatio: 3 / 4,
             }"

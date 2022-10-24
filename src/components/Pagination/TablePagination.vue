@@ -108,7 +108,6 @@ export default {
     },
   },
   created() {
-    console.log(this.page);
     this.row_page_drop = this.row_per_page[this.per_page / 10 - 1];
     this.currentPage = (this.page - 1) * this.per_page;
     this.page_count = this.per_page;
