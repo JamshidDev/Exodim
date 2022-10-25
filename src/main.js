@@ -72,6 +72,8 @@ import Fieldset from 'primevue/fieldset';
 import Panel from 'primevue/panel';
 import TreeSelect from 'primevue/treeselect';
 import JsonExcel from "vue-json-excel3";
+import PanelMenu from 'primevue/panelmenu';
+
 
 
 
@@ -167,6 +169,8 @@ app.component('Fieldset', Fieldset);
 app.component('Panel', Panel);
 app.component('TreeSelect', TreeSelect);
 app.component("downloadExcel", JsonExcel);
+app.component("PanelMenu", PanelMenu);
+
 
 
 

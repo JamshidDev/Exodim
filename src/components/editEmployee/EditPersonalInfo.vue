@@ -53,7 +53,6 @@
                 placeholder="Familiyani kiriting"
                 id="firstName"
                 v-model="v$.lastName.$model"
-                v-maska="'S*'"
                 :class="{ 'p-invalid': v$.lastName.$invalid && submitted }"
               />
             </div>
@@ -65,7 +64,6 @@
                 placeholder="Ismni kiriting"
                 id="lastName"
                 v-model="v$.firstName.$model"
-                v-maska="'S*'"
                 :class="{ 'p-invalid': v$.firstName.$invalid && submitted }"
               />
             </div>
@@ -363,7 +361,7 @@
               :options="workLevel"
               optionLabel="name"
               optionValue="id"
-              placeholder="Jinsini tanlang"
+              placeholder="Tanlang"
               class="w-full font-semibold"
             />
           </div>

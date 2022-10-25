@@ -19,7 +19,7 @@ export default {
           items: [
             {
               label: "Statistika",
-              icon: "pi pi-slack",
+              icon: "pi pi-chart-pie",
               to: '/admin/statistic',
               visible: () =>this.get_adminPermissions("management_statistics"),
             },
@@ -38,7 +38,7 @@ export default {
           items: [
             {
               label: "Statistika",
-              icon: "pi pi-slack",
+              icon: "pi pi-chart-pie",
               to: '/admin/partstatistic',
               visible: () =>this.get_adminPermissions("role-list"),
             },
@@ -93,13 +93,13 @@ export default {
           items: [
             {
               label: "Ta'tillar",
-              icon: "pi pi-th-large",
+              icon: "pi pi-calendar",
               visible: () =>this.get_adminPermissions("management_organizations"),
               to: '/admin/vacation',
             },
             {
               label: "Tibbiy ko'rik",
-              icon: "pi pi-th-large",
+              icon: "pi pi-id-card",
               visible: () =>this.get_adminPermissions("management_organizations"),
               to: '/admin/meds',
             },
@@ -111,7 +111,7 @@ export default {
             },
             {
               label: "Mukofatlanganlar",
-              icon: "pi pi-th-large",
+              icon: "pi pi-star",
               visible: () =>this.get_adminPermissions("management_organizations"),
               to: '/admin/incentive',
             },
@@ -195,9 +195,12 @@ export default {
       border-radius: 6px;
       background: #185491e0 !important;
     }
-    .p-menuitem-link:active{
+    .router-link-active{
       border-radius: 6px;
       background: #185491e0 !important;
+      .p-menuitem-icon, .p-menuitem-text{
+        color:#fff !important;
+      }
     }
     .p-menuitem-link:visited{
       border-radius: 6px;
