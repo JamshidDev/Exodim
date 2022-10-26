@@ -73,6 +73,11 @@ import Panel from 'primevue/panel';
 import TreeSelect from 'primevue/treeselect';
 import JsonExcel from "vue-json-excel3";
 import PanelMenu from 'primevue/panelmenu';
+import TabMenu from 'primevue/tabmenu';
+import TabView from 'primevue/tabview';
+import TabPanel from 'primevue/tabpanel';
+import Rating from 'primevue/rating';
+
 
 
 
@@ -170,6 +175,13 @@ app.component('Panel', Panel);
 app.component('TreeSelect', TreeSelect);
 app.component("downloadExcel", JsonExcel);
 app.component("PanelMenu", PanelMenu);
+app.component("TabView", TabView);
+app.component("TabPanel", TabPanel);
+app.component("TabMenu", TabMenu);
+app.component("Rating", Rating);
+
+
+
 
 
 

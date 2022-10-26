@@ -1,614 +1,791 @@
 <template>
   <div>
-    <Sidebar v-model:visible="visibleFull" :baseZIndex="10000" position="full">
-      <div class="grid">
-        <div class="col-12 flex justify-content-center">
-          <div class="document_container">
-            <div class="grid pb-8 mb-8">
-              <div class="col-12">
-                <h5
-                  class="
-                    font-bold
-                    text-2xl text-center
-                    mb-0
-                    text-black-alpha-90
-                  "
-                >
-                  MA'LUMOTNOMA
-                </h5>
-                <h6
-                  class="font-bold text-xl text-center mt-1 text-black-alpha-90"
-                >
-                  {{ cadry.fullName }}
-                </h6>
-              </div>
+    <Sidebar
+      v-model:visible="visibleFull"
+      :baseZIndex="10000"
+      position="full"
+      class="custom_sidebar"
+    >
+      <div class="grid flex justify-content-center">
+        <div class="col-10 pt-2">
+          <div
+            class="
+              grid
+              shadow-1
+              border-round-md
+              mt-4
+              border-1 border-300
+              mb-4
+              document_container
+            "
+          >
+            <div class="col-2 p-0">
+              <img
+                class="resume_picture"
+                src="https://exodim.railway.uz/storage/cadry-photos/d83fad83e045f0e3b00bb9924a9f809a.jpg"
+                alt=""
+              />
+            </div>
+            <div class="col-6 py-2">
+              <h6 class="text-2xl text-800 my-2 uppercase font-bold">
+                Raximov Jamshid Shuxrat o'g'li
+              </h6>
+              <h6 class="text-base text-800 my-3 font-bold">
+                "O'zbekiston temir yo'llari" AJ boshqaruvi raisi xuzuridagi
+                kotibiyat boshlig'ining o'rinbosari "O'zbekiston temir yo'llari"
+                AJ boshqaruvi raisi xuzuridagi kotibiyat boshlig'ining
+                o'rinbosari
+              </h6>
+              <h6 class="text-base text-800 my-3 font-bold flex">
+                <span class="pr-3">3.2</span>
+                <Rating :modelValue="3" :readonly="true" :stars="5" :cancel="false" />
+              </h6>
+              
+              <Button label="Yuklash" class="p-button-raised p-button-info " />
+           
+            </div>
+            <div class="col-4 py-4 pl-4">
+              <h6 class="text-base text-900 my-2">
+                <i class="pi pi-map-marker text-blue-500 font-bold pr-2 text-xl"></i>
+                +998(99) 501-60-04
+              </h6>
+              <h6 class="text-base text-900 my-3">
+                <i class="pi pi-calendar text-blue-500 font-bold pr-2 text-xl"></i>
+                1988-03-24
+              </h6>
+              <h6 class="text-base text-900 my-3">
+                <i class="pi pi-credit-card text-blue-500 font-bold pr-2 text-xl"></i>
+                Oliy
+              </h6>
+              <h6 class="text-base text-900 my-2">
+                <i class="pi pi-map-marker text-blue-500 font-bold pr-2 text-xl"></i>
+                Sirdaryo viloyati, Mirobod tumani
+              </h6>
+              <h6 class="text-base text-900 my-3">
+                <i class="pi pi-calendar text-blue-500 font-bold pr-2 text-xl"></i>
+                1988-03-24
+              </h6>
+             
+            </div>
+          </div>
+          <div class="grid">
+            <div
+              class="
+                col-4
+                pr-4
+                
+              "
+            >
+              <div class="grid 4 shadow-1
+                border-round-md
+                mt-3
+                border-1 border-300
+                document_container
+                py-4
+                px-4">
+                <div class="col-6 py-2 flex align-items-center">
+                  <h6 class="text-900 text-sm font-bold text-left">
+                    <i class="pi pi-exclamation-circle text-blue-500 font-bold pr-2 text-xl"></i>
+                    Partiyaviyligi:
+                  </h6>
+                </div>
+                <div class="col-6 py-2">
+                  <h6 class="text-700 text-left text-sm">Partiyasiz</h6>
+                </div>
 
-              <div class="col-10">
-                <div class="grid">
-                  <div class="col-12">
-                    <h6
-                      class="
-                        font-medium
-                        text-base text-left
-                        my-1
-                        text-black-alpha-80
-                      "
-                    >
-                      {{ cadry.post_date }} dan:
-                    </h6>
-                    <h6
-                      class="
-                        font-semibold
-                        text-lg text-left
-                        mt-0
-                        text-black-alpha-90
-                      "
-                    >
-                      {{cadry.post_name }}
-                    </h6>
-                  </div>
-                  <div class="col-6">
-                    <h6
-                      class="
-                        font-semibold
-                        text-lg text-left
-                        mb-1
-                        text-black-alpha-90
-                      "
-                    >
-                      Tug'ilgan yili:
-                    </h6>
-                    <h6
-                      class="
-                        font-medium
-                        text-base text-left
-                        my-0
-                        text-black-alpha-80
-                      "
-                    >
-                      {{ cadry.birth_date }}
-                    </h6>
-                  </div>
-                  <div class="col-6">
-                    <h6
-                      class="
-                        font-semibold
-                        text-lg text-left
-                        mb-1
-                        text-black-alpha-90
-                      "
-                    >
-                      Tug'ilgan joyi:
-                    </h6>
-                    <h6
-                      class="
-                        font-medium
-                        text-base text-left
-                        my-0
-                        text-black-alpha-80
-                      "
-                    >
-                      {{ cadry.birth_place }}
-                    </h6>
-                  </div>
-                  <div class="col-6">
-                    <h6
-                      class="
-                        font-semibold
-                        text-lg text-left
-                        mb-1
-                        text-black-alpha-90
-                      "
-                    >
-                      Millati:
-                    </h6>
-                    <h6
-                      class="
-                        font-medium
-                        text-base text-left
-                        my-0
-                        text-black-alpha-80
-                      "
-                    >
-                      {{ cadry.nationality }}
-                    </h6>
-                  </div>
-                  <div class="col-6">
-                    <h6
-                      class="
-                        font-semibold
-                        text-lg text-left
-                        mb-1
-                        text-black-alpha-90
-                      "
-                    >
-                      Partiyaviyligi:
-                    </h6>
-                    <h6
-                      class="
-                        font-medium
-                        text-base text-left
-                        my-0
-                        text-black-alpha-80
-                      "
-                    >
-                      {{ cadry.party }}
-                    </h6>
-                  </div>
+                <div class="col-6 py-2 flex align-items-center">
+                  <h6 class="text-900 font-bold text-sm text-left ">
+                    <i class="pi pi-id-card text-blue-500 font-bold pr-2 text-xl"></i>
+                    Mutaxassisligi:
+                  </h6>
+                </div>
+                <div class="col-6 py-2">
+                  <h6 class="text-700 text-left text-sm">
+                    Transport vositalarini ishlatish va tamirlash (bakalavr)
+                  </h6>
+                </div>
+
+                <div class="col-6 py-2 flex align-items-center">
+                  <h6 class="text-900 font-bold text-left text-sm">
+                    <i class="pi pi-credit-card text-blue-500 font-bold pr-2 text-xl"></i>
+                    Ilmiy darajasi:
+                  </h6>
+                </div>
+                <div class="col-6 py-2">
+                  <h6 class="text-700 text-left text-sm">Yo'q</h6>
+                </div>
+
+                <div class="col-6 py-2 flex align-items-center">
+                  <h6 class="text-900 font-bold text-left text-sm">
+                    <i class="pi pi-bookmark text-blue-500 font-bold pr-2 text-xl"></i>
+                    Ilmiy unvoni:
+                  </h6>
+                </div>
+                <div class="col-6 py-2">
+                  <h6 class="text-700 text-left text-sm">Yo'q</h6>
+                </div>
+
+                <div class="col-6 py-2 flex align-items-center">
+                  <h6 class="text-900 font-bold text-left text-sm">
+                    <i class="pi pi-globe text-blue-500 font-bold pr-2 text-xl"></i>
+                    Chet tillari:
+                  </h6>
+                </div>
+                <div class="col-6 py-2">
+                  <h6 class="text-700 text-left text-sm">Rus tili,Ingliz tili</h6>
+                </div>
+
+                <div class="col-6 py-2 flex align-items-center">
+                  <h6 class="text-900 font-bold text-sm text-left">
+                    <i class="pi pi-shield text-blue-500 font-bold pr-2 text-xl"></i>
+                    Xarbiy unvoni:
+                  </h6>
+                </div>
+                <div class="col-6 py-2">
+                  <h6 class="text-700 text-left text-sm">Oddiy askar</h6>
+                </div>
+
+                <div class="col-6 py-0 flex align-items-center">
+                  <h6 class="text-900 font-bold text-sm text-left">
+                    <i class="pi pi-flag-fill text-blue-500 font-bold pr-2 text-xl"></i>
+                    Davlat mukofotlari:
+                  </h6>
+                </div>
+                <div class="col-6 py-2 pl-2">
+                  <h6 class="text-700 text-left text-sm">Yo'q</h6>
+                </div>
+
+                <div class="col-6 py-0 flex align-items-center">
+                  <h6 class="text-900 font-bold text-sm text-left">
+                    <i class="pi pi-user text-blue-500 font-bold pr-2 text-xl"></i>
+                    Deputatliligi:
+                  </h6>
+                </div>
+                <div class="col-6 py-2 pl-2">
+                  <h6 class="text-700 text-left text-sm">Yo'q</h6>
                 </div>
               </div>
-              <div class="col-2 flex justify-content-center align-items-end">
-                <img :src="cadry.phote" width="112" height="153" />
-              </div>
-              <div class="col-5">
-                <h6
-                  class="
-                    font-semibold
-                    text-lg text-left
-                    mb-1
-                    text-black-alpha-90
-                  "
-                >
-                  Ma'lumoti:
-                </h6>
-                <h6
-                  class="
-                    font-medium
-                    text-base text-left
-                    my-0
-                    text-black-alpha-80
-                  "
-                >
-                  {{ cadry.education }}
-                </h6>
-              </div>
-              <div class="col-7">
-                <h6
-                  class="
-                    font-semibold
-                    text-lg text-left
-                    mb-1
-                    text-black-alpha-90
-                  "
-                >
-                  Tamomlagan:
-                </h6>
-                <h6
-                  v-for="item in cadry.educations"
-                  :key="item.id"
-                  class="
-                    font-medium
-                    text-base text-left
-                    my-0
-                    text-black-alpha-80
-                  "
-                >
-                  {{ item.date2 }} yil, {{ item.name }}
-                </h6>
-              </div>
+            </div>
 
-              <div class="col-5">
-                <h6
-                  class="
-                    font-semibold
-                    text-lg text-left
-                    mb-1
-                    text-black-alpha-90
-                  "
-                >
-                  Ma'lumoti bo'yicha mutaxassisligi:
-                </h6>
-              </div>
-              <div class="col-7">
-                <h6
-                  v-for="item in cadry.educations"
-                  :key="item.id"
-                  class="
-                    font-medium
-                    text-base text-left
-                    my-0
-                    text-black-alpha-80
-                  "
-                >
-                  {{ item.speciality }}
-                </h6>
-              </div>
-
-              <div class="col-5">
-                <h6
-                  class="
-                    font-semibold
-                    text-lg text-left
-                    mb-1
-                    text-black-alpha-90
-                  "
-                >
-                  Ilmiy darajasi:
-                </h6>
-                <h6
-                  class="
-                    font-medium
-                    text-base text-left
-                    my-0
-                    text-black-alpha-80
-                  "
-                >
-                  {{ cadry.academec_degree }}
-                </h6>
-              </div>
-              <div class="col-7">
-                <h6
-                  class="
-                    font-semibold
-                    text-lg text-left
-                    mb-1
-                    text-black-alpha-90
-                  "
-                >
-                  Ilmiy unvoni:
-                </h6>
-                <h6
-                  class="
-                    font-medium
-                    text-base text-left
-                    my-0
-                    text-black-alpha-80
-                  "
-                >
-                  {{ cadry.academec_title }}
-                </h6>
-              </div>
-
-              <div class="col-5">
-                <h6
-                  class="
-                    font-semibold
-                    text-lg text-left
-                    mb-1
-                    text-black-alpha-90
-                  "
-                >
-                  Qaysi chet tillarini biladi:
-                </h6>
-                <h6
-                  class="
-                    font-medium
-                    text-base text-left
-                    my-0
-                    text-black-alpha-80
-                  "
-                >
-                  {{ cadry.lan }}
-                </h6>
-              </div>
-              <div class="col-7">
-                <h6
-                  class="
-                    font-semibold
-                    text-lg text-left
-                    mb-1
-                    text-black-alpha-90
-                  "
-                >
-                  Xarbiy (maxsus) unvoni:
-                </h6>
-                <h6
-                  class="
-                    font-medium
-                    text-base text-left
-                    my-0
-                    text-black-alpha-80
-                  "
-                >
-                  {{ cadry.military_rank }}
-                </h6>
-              </div>
-
-              <div class="col-6">
-                <h6
-                  class="
-                    font-semibold
-                    text-lg text-left
-                    mb-1
-                    text-black-alpha-90
-                  "
-                >
-                  Davlat mukofotlari bilan taqdirlanganmi(qanaqa):
-                </h6>
-                <h6
-                  class="
-                    font-medium
-                    text-base text-left
-                    my-0
-                    text-black-alpha-80
-                  "
-                >
-                  Taqdirlanmagan
-                </h6>
-              </div>
-              <div class="col-6"></div>
-
-              <div class="col-12">
-                <h6
-                  class="
-                    font-semibold
-                    text-lg text-left
-                    mb-1
-                    text-black-alpha-90
-                  "
-                >
-                  Xalq deputatlari respublika, viloyat, shahar va tuman Kengashi
-                  deputatimi yoki boshqa saylanadigan organlarning
-                  a'zosimi(to'liq ko'rsatilishi lozim):
-                </h6>
-                <h6
-                  class="
-                    font-medium
-                    text-base text-left
-                    my-0
-                    text-black-alpha-80
-                  "
-                >
-                  <span
-                    v-for="(item, index) in cadry.incentives"
-                    :key="item.id"
-                    style="padding-right: 10px"
-                  >
-                    {{ item.type_action }}
-                    {{ index + 1 == cadry.incentives.length ? "" : "," }}
-                  </span>
-                </h6>
-              </div>
-
-              <div class="col-12">
-                <h6
-                  class="
-                    font-semibold
-                    text-xl text-center text-black-alpha-90
-                    pt-4
-                    pb-1
-                  "
-                >
-                  MEHNAT FAOLIYATI
-                </h6>
-              </div>
-
-              <!-- Cadry stuffs -->
-              <div class="col-12 pb-6">
-                <div class="grid" v-for="item in cadry.carers" :key="item.id">
-                  <div class="col-2">
-                    <h6
-                      class="
-                        font-semibold
-                        text-lg text-left
-                        mb-1
-                        text-black-alpha-90
-                      "
-                    >
-                      {{ item.date1 }} -{{ item.date2 }} yy
-                    </h6>
-                  </div>
-                  <div class="col-10">
-                    <h6
-                      class="
-                        font-semibold
-                        text-lg text-left
-                        mb-1
-                        text-black-alpha-90
-                      "
-                    >
-                      {{ item.staff_name }}
-                    </h6>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Cadry relatives -->
-
-              <div class="col-12">
-                <h6
-                  class="
-                    font-semibold
-                    text-xl text-center text-black-alpha-90
-                    py-0
-                    mb-0
-                  "
-                >
-                  {{ cadry.fullName }}ning yaqin qarindoshlari haqida ma'lumot
-                </h6>
-                <h6
-                  class="
-                    font-semibold
-                    text-xl text-center text-black-alpha-90
-                    mt-1
-                    py-0
-                  "
-                >
-                  MA'LUMOT
-                </h6>
+            <div
+              class="
+                col-8 
+                shadow-1
+                border-round-md
+                mt-4
+                border-1 border-300
+                document_container
+                py-4
+                px-2
+              "
+            >
+              <div class="grid">
                 <div class="col-12">
-                  <div class="grid my-0 py-0">
-                    <div
-                      class="
-                        col-2
-                        border-1 border-800
-                        font-medium font-semibold
-                        text-lg
-                        flex
-                        justify-content-center
-                        align-items-center
-                        mb-1
-                        text-black-alpha-90
-                        my-0
-                      "
-                    >
-                      Qarindoshligi
+                  
+<TabMenu :model="items" class="font-medium custom_tab" />
+                </div>
+                <div class="col-12 px-4 py-6" v-show="activeIndex == 0">
+                  <div class="grid">
+                    <div class="col-1">
+                      <h6>2003-2003</h6>
                     </div>
-                    <div
-                      class="
-                        col-2
-                        border-1 border-800
-                        font-medium font-semibold
-                        text-lg
-                        flex
-                        justify-content-center
-                        align-items-center
-                        mb-1
-                        text-black-alpha-90
-                        border-left-none
-                        my-0
-                      "
-                    >
-                      Familiyasi,ismi va otasining ismi
-                    </div>
-                    <div
-                      class="
-                        col-2
-                        border-1 border-800
-                        font-medium font-semibold
-                        text-lg
-                        flex
-                        justify-content-center
-                        align-items-center
-                        mb-1
-                        text-black-alpha-90
-                        border-left-none
-                        my-0
-                      "
-                    >
-                      Tug'ilgan yili va joyi
-                    </div>
-                    <div
-                      class="
-                        col-3
-                        border-1 border-800
-                        font-medium font-semibold
-                        text-lg
-                        flex
-                        justify-content-center
-                        align-items-center
-                        mb-1
-                        text-black-alpha-90
-                        border-left-none
-                        my-0
-                      "
-                    >
-                      Ish joyi va lavozimi
-                    </div>
-                    <div
-                      class="
-                        col-3
-                        border-1 border-800
-                        font-medium font-semibold
-                        text-lg
-                        flex
-                        justify-content-center
-                        align-items-center
-                        mb-1
-                        text-black-alpha-90
-                        border-left-none
-                        my-0
-                      "
-                    >
-                      Turar joyi
+                    <div class="col-11">
+                      <h6>
+                        - "O'zbekiston temir yo'llari" DAKT Harbiylashtirilgan
+                        qo'riqlash boshqarmasi O'zbekiston statsionar
+                        harbiylashtirilgan qo'riqlash otryadi "O'zbekiston "
+                        o'qchilik komandasi o'qchisi
+                      </h6>
                     </div>
                   </div>
-                  <div class="grid my-0 py-0" v-for="item in cadry.relatives" :key="item.id">
-                    <div
-                      class="
-                        col-2
-                        border-1 border-800
-                        font-medium font-semibold
-                        text-lg
-                        flex
-                        justify-content-center
-                        align-items-center
-                        mb-1
-                        text-black-alpha-90
-                        my-0
-                        border-top-none
-                      "
-                    >
-                      {{item.relative.name}}
-                    </div>
-                    <div
-                      class="
-                        col-2
-                        border-1 border-800
-                        font-medium font-semibold
-                        text-lg
-                        flex
-                        justify-content-center
-                        align-items-center
-                        mb-1
-                        text-black-alpha-90
-                        border-left-none
-                        border-top-none
 
-                        my-0
-                      "
-                    >
-                      {{item.fullname}}
+                  <div class="grid">
+                    <div class="col-1">
+                      <h6>2003-2003</h6>
+                    </div>
+                    <div class="col-11">
+                      <h6>
+                        - "O'zbekiston temir yo'llari" DAKT Harbiylashtirilgan
+                        qo'riqlash boshqarmasi O'zbekiston statsionar
+                        harbiylashtirilgan qo'riqlash otryadi "O'zbekiston "
+                        o'qchilik komandasi o'qchisi
+                      </h6>
+                    </div>
+                  </div>
+
+                  <div class="grid">
+                    <div class="col-1">
+                      <h6>2003-2003</h6>
+                    </div>
+                    <div class="col-11">
+                      <h6>
+                        - "O'zbekiston temir yo'llari" DAKT Harbiylashtirilgan
+                        qo'riqlash boshqarmasi O'zbekiston statsionar
+                        harbiylashtirilgan qo'riqlash otryadi "O'zbekiston "
+                        o'qchilik komandasi o'qchisi
+                      </h6>
+                    </div>
+                  </div>
+
+                  <div class="grid">
+                    <div class="col-1">
+                      <h6>2003-2003</h6>
+                    </div>
+                    <div class="col-11">
+                      <h6>
+                        - "O'zbekiston temir yo'llari" DAKT Harbiylashtirilgan
+                        qo'riqlash boshqarmasi O'zbekiston statsionar
+                        harbiylashtirilgan qo'riqlash otryadi "O'zbekiston "
+                        o'qchilik komandasi o'qchisi
+                      </h6>
+                    </div>
+                  </div>
+
+                  <div class="grid">
+                    <div class="col-1">
+                      <h6>2003-2003</h6>
+                    </div>
+                    <div class="col-11">
+                      <h6>
+                        - "O'zbekiston temir yo'llari" DAKT Harbiylashtirilgan
+                        qo'riqlash boshqarmasi O'zbekiston statsionar
+                        harbiylashtirilgan qo'riqlash otryadi "O'zbekiston "
+                        o'qchilik komandasi o'qchisi
+                      </h6>
+                    </div>
+                  </div>
+
+                  <div class="grid">
+                    <div class="col-1">
+                      <h6>2003-2003</h6>
+                    </div>
+                    <div class="col-11">
+                      <h6>
+                        - "O'zbekiston temir yo'llari" DAKT Harbiylashtirilgan
+                        qo'riqlash boshqarmasi O'zbekiston statsionar
+                        harbiylashtirilgan qo'riqlash otryadi "O'zbekiston "
+                        o'qchilik komandasi o'qchisi
+                      </h6>
+                    </div>
+                  </div>
+                  <div class="grid">
+                    <div class="col-1">
+                      <h6>2003-2003</h6>
+                    </div>
+                    <div class="col-11">
+                      <h6>
+                        - "O'zbekiston temir yo'llari" DAKT Harbiylashtirilgan
+                        qo'riqlash boshqarmasi O'zbekiston statsionar
+                        harbiylashtirilgan qo'riqlash otryadi "O'zbekiston "
+                        o'qchilik komandasi o'qchisi
+                      </h6>
+                    </div>
+                  </div>
+
+                  <div class="grid">
+                    <div class="col-1">
+                      <h6>2003-2003</h6>
+                    </div>
+                    <div class="col-11">
+                      <h6>
+                        - "O'zbekiston temir yo'llari" DAKT Harbiylashtirilgan
+                        qo'riqlash boshqarmasi O'zbekiston statsionar
+                        harbiylashtirilgan qo'riqlash otryadi "O'zbekiston "
+                        o'qchilik komandasi o'qchisi
+                      </h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 px-4 py-6" v-show="activeIndex == 1">
+                  <div class="grid">
+                    <div class="col-2 relative_border">
+                      <h6 class="font-semibold text-blue-600 my-0">
+                        Qarindoshliligi
+                      </h6>
+                    </div>
+                    <div class="col-2 relative_border">
+                      <h6 class="font-semibold text-blue-600 my-0">F.I.SH</h6>
+                    </div>
+                    <div class="col-3 relative_border">
+                      <h6 class="font-semibold text-blue-600 my-0">
+                        Tug'ilgan yili va joyi
+                      </h6>
+                    </div>
+                    <div class="col-3 relative_border">
+                      <h6 class="font-semibold text-blue-600 my-0">Ish joyi</h6>
+                    </div>
+                    <div class="col-2 relative_border">
+                      <h6 class="font-semibold text-blue-600 my-0">
+                        Yashash manzili
+                      </h6>
                     </div>
                     <div
                       class="
                         col-2
-                        border-1 border-800
-                        font-medium font-semibold
-                        text-lg
+                        relative_border
                         flex
                         justify-content-center
                         align-items-center
-                        mb-1
-                        text-black-alpha-90
-                        border-left-none
-                        border-top-none
-                        my-0
                       "
                     >
-                    {{item.birth_place}}
+                      <h6 class="font-semibold text-900 my-0">Otasi</h6>
+                    </div>
+                    <div
+                      class="
+                        col-2
+                        relative_border
+                        flex
+                        justify-content-center
+                        align-items-center
+                      "
+                    >
+                      <h6 class="font-semibold text-900 my-0">
+                        Abdurazaqov Qo'chqor Berdibayevich
+                      </h6>
                     </div>
                     <div
                       class="
                         col-3
-                        border-1 border-800
-                        font-medium font-semibold
-                        text-lg
+                        relative_border
                         flex
                         justify-content-center
                         align-items-center
-                        mb-1
-                        text-black-alpha-90
-                        border-left-none
-                        border-top-none
-                        my-0
                       "
                     >
-                    {{item.post}}
+                      <h6 class="font-semibold text-900 my-0">
+                        1956 yil Sirdaryo viloyati, Mirzaobod tumani
+                      </h6>
                     </div>
                     <div
                       class="
                         col-3
-                        border-1 border-800
-                        font-medium font-semibold
-                        text-lg
+                        relative_border
                         flex
                         justify-content-center
                         align-items-center
-                        mb-1
-                        text-black-alpha-90
-                        border-left-none
-                        border-top-none
-                        my-0
                       "
                     >
-                    {{item.address}}
+                      <h6 class="font-semibold text-900 my-0">
+                        Pensiyada ("UZTRANSGAZ" AJ sirdaryo viloyati gaz
+                        bo'yicha ta'minoti xududiy filiali haydovchisi)
+                      </h6>
+                    </div>
+                    <div
+                      class="
+                        col-2
+                        relative_border
+                        flex
+                        justify-content-center
+                        align-items-center
+                      "
+                    >
+                      <h6 class="font-semibold text-900 my-0">
+                        Sirdaryo viloyati, Mirzaobod tumani, Toshkent QFY,
+                        Navro'z MFY Orzu ko'chasi, 5 uy
+                      </h6>
+                    </div>
+
+                    <div
+                      class="
+                        col-2
+                        relative_border
+                        flex
+                        justify-content-center
+                        align-items-center
+                      "
+                    >
+                      <h6 class="font-semibold text-900 my-0">Otasi</h6>
+                    </div>
+                    <div
+                      class="
+                        col-2
+                        relative_border
+                        flex
+                        justify-content-center
+                        align-items-center
+                      "
+                    >
+                      <h6 class="font-semibold text-900 my-0">
+                        Abdurazaqov Qo'chqor Berdibayevich
+                      </h6>
+                    </div>
+                    <div
+                      class="
+                        col-3
+                        relative_border
+                        flex
+                        justify-content-center
+                        align-items-center
+                      "
+                    >
+                      <h6 class="font-semibold text-900 my-0">
+                        1956 yil Sirdaryo viloyati, Mirzaobod tumani
+                      </h6>
+                    </div>
+                    <div
+                      class="
+                        col-3
+                        relative_border
+                        flex
+                        justify-content-center
+                        align-items-center
+                      "
+                    >
+                      <h6 class="font-semibold text-900 my-0">
+                        Pensiyada ("UZTRANSGAZ" AJ sirdaryo viloyati gaz
+                        bo'yicha ta'minoti xududiy filiali haydovchisi)
+                      </h6>
+                    </div>
+                    <div
+                      class="
+                        col-2
+                        relative_border
+                        flex
+                        justify-content-center
+                        align-items-center
+                      "
+                    >
+                      <h6 class="font-semibold text-900 my-0">
+                        Sirdaryo viloyati, Mirzaobod tumani, Toshkent QFY,
+                        Navro'z MFY Orzu ko'chasi, 5 uy
+                      </h6>
+                    </div>
+
+                    <div
+                      class="
+                        col-2
+                        relative_border
+                        flex
+                        justify-content-center
+                        align-items-center
+                      "
+                    >
+                      <h6 class="font-semibold text-900 my-0">Otasi</h6>
+                    </div>
+                    <div
+                      class="
+                        col-2
+                        relative_border
+                        flex
+                        justify-content-center
+                        align-items-center
+                      "
+                    >
+                      <h6 class="font-semibold text-900 my-0">
+                        Abdurazaqov Qo'chqor Berdibayevich
+                      </h6>
+                    </div>
+                    <div
+                      class="
+                        col-3
+                        relative_border
+                        flex
+                        justify-content-center
+                        align-items-center
+                      "
+                    >
+                      <h6 class="font-semibold text-900 my-0">
+                        1956 yil Sirdaryo viloyati, Mirzaobod tumani
+                      </h6>
+                    </div>
+                    <div
+                      class="
+                        col-3
+                        relative_border
+                        flex
+                        justify-content-center
+                        align-items-center
+                      "
+                    >
+                      <h6 class="font-semibold text-900 my-0">
+                        Pensiyada ("UZTRANSGAZ" AJ sirdaryo viloyati gaz
+                        bo'yicha ta'minoti xududiy filiali haydovchisi)
+                      </h6>
+                    </div>
+                    <div
+                      class="
+                        col-2
+                        relative_border
+                        flex
+                        justify-content-center
+                        align-items-center
+                      "
+                    >
+                      <h6 class="font-semibold text-900 my-0">
+                        Sirdaryo viloyati, Mirzaobod tumani, Toshkent QFY,
+                        Navro'z MFY Orzu ko'chasi, 5 uy
+                      </h6>
+                    </div>
+
+                    <div
+                      class="
+                        col-2
+                        relative_border
+                        flex
+                        justify-content-center
+                        align-items-center
+                      "
+                    >
+                      <h6 class="font-semibold text-900 my-0">Otasi</h6>
+                    </div>
+                    <div
+                      class="
+                        col-2
+                        relative_border
+                        flex
+                        justify-content-center
+                        align-items-center
+                      "
+                    >
+                      <h6 class="font-semibold text-900 my-0">
+                        Abdurazaqov Qo'chqor Berdibayevich
+                      </h6>
+                    </div>
+                    <div
+                      class="
+                        col-3
+                        relative_border
+                        flex
+                        justify-content-center
+                        align-items-center
+                      "
+                    >
+                      <h6 class="font-semibold text-900 my-0">
+                        1956 yil Sirdaryo viloyati, Mirzaobod tumani
+                      </h6>
+                    </div>
+                    <div
+                      class="
+                        col-3
+                        relative_border
+                        flex
+                        justify-content-center
+                        align-items-center
+                      "
+                    >
+                      <h6 class="font-semibold text-900 my-0">
+                        Pensiyada ("UZTRANSGAZ" AJ sirdaryo viloyati gaz
+                        bo'yicha ta'minoti xududiy filiali haydovchisi)
+                      </h6>
+                    </div>
+                    <div
+                      class="
+                        col-2
+                        relative_border
+                        flex
+                        justify-content-center
+                        align-items-center
+                      "
+                    >
+                      <h6 class="font-semibold text-900 my-0">
+                        Sirdaryo viloyati, Mirzaobod tumani, Toshkent QFY,
+                        Navro'z MFY Orzu ko'chasi, 5 uy
+                      </h6>
+                    </div>
+
+                    <div
+                      class="
+                        col-2
+                        relative_border
+                        flex
+                        justify-content-center
+                        align-items-center
+                      "
+                    >
+                      <h6 class="font-semibold text-900 my-0">Otasi</h6>
+                    </div>
+                    <div
+                      class="
+                        col-2
+                        relative_border
+                        flex
+                        justify-content-center
+                        align-items-center
+                      "
+                    >
+                      <h6 class="font-semibold text-900 my-0">
+                        Abdurazaqov Qo'chqor Berdibayevich
+                      </h6>
+                    </div>
+                    <div
+                      class="
+                        col-3
+                        relative_border
+                        flex
+                        justify-content-center
+                        align-items-center
+                      "
+                    >
+                      <h6 class="font-semibold text-900 my-0">
+                        1956 yil Sirdaryo viloyati, Mirzaobod tumani
+                      </h6>
+                    </div>
+                    <div
+                      class="
+                        col-3
+                        relative_border
+                        flex
+                        justify-content-center
+                        align-items-center
+                      "
+                    >
+                      <h6 class="font-semibold text-900 my-0">
+                        Pensiyada ("UZTRANSGAZ" AJ sirdaryo viloyati gaz
+                        bo'yicha ta'minoti xududiy filiali haydovchisi)
+                      </h6>
+                    </div>
+                    <div
+                      class="
+                        col-2
+                        relative_border
+                        flex
+                        justify-content-center
+                        align-items-center
+                      "
+                    >
+                      <h6 class="font-semibold text-900 my-0">
+                        Sirdaryo viloyati, Mirzaobod tumani, Toshkent QFY,
+                        Navro'z MFY Orzu ko'chasi, 5 uy
+                      </h6>
+                    </div>
+
+                    <div
+                      class="
+                        col-2
+                        relative_border
+                        flex
+                        justify-content-center
+                        align-items-center
+                      "
+                    >
+                      <h6 class="font-semibold text-900 my-0">Otasi</h6>
+                    </div>
+                    <div
+                      class="
+                        col-2
+                        relative_border
+                        flex
+                        justify-content-center
+                        align-items-center
+                      "
+                    >
+                      <h6 class="font-semibold text-900 my-0">
+                        Abdurazaqov Qo'chqor Berdibayevich
+                      </h6>
+                    </div>
+                    <div
+                      class="
+                        col-3
+                        relative_border
+                        flex
+                        justify-content-center
+                        align-items-center
+                      "
+                    >
+                      <h6 class="font-semibold text-900 my-0">
+                        1956 yil Sirdaryo viloyati, Mirzaobod tumani
+                      </h6>
+                    </div>
+                    <div
+                      class="
+                        col-3
+                        relative_border
+                        flex
+                        justify-content-center
+                        align-items-center
+                      "
+                    >
+                      <h6 class="font-semibold text-900 my-0">
+                        Pensiyada ("UZTRANSGAZ" AJ sirdaryo viloyati gaz
+                        bo'yicha ta'minoti xududiy filiali haydovchisi)
+                      </h6>
+                    </div>
+                    <div
+                      class="
+                        col-2
+                        relative_border
+                        flex
+                        justify-content-center
+                        align-items-center
+                      "
+                    >
+                      <h6 class="font-semibold text-900 my-0">
+                        Sirdaryo viloyati, Mirzaobod tumani, Toshkent QFY,
+                        Navro'z MFY Orzu ko'chasi, 5 uy
+                      </h6>
+                    </div>
+
+                    <div
+                      class="
+                        col-2
+                        relative_border
+                        flex
+                        justify-content-center
+                        align-items-center
+                      "
+                    >
+                      <h6 class="font-semibold text-900 my-0">Otasi</h6>
+                    </div>
+                    <div
+                      class="
+                        col-2
+                        relative_border
+                        flex
+                        justify-content-center
+                        align-items-center
+                      "
+                    >
+                      <h6 class="font-semibold text-900 my-0">
+                        Abdurazaqov Qo'chqor Berdibayevich
+                      </h6>
+                    </div>
+                    <div
+                      class="
+                        col-3
+                        relative_border
+                        flex
+                        justify-content-center
+                        align-items-center
+                      "
+                    >
+                      <h6 class="font-semibold text-900 my-0">
+                        1956 yil Sirdaryo viloyati, Mirzaobod tumani
+                      </h6>
+                    </div>
+                    <div
+                      class="
+                        col-3
+                        relative_border
+                        flex
+                        justify-content-center
+                        align-items-center
+                      "
+                    >
+                      <h6 class="font-semibold text-900 my-0">
+                        Pensiyada ("UZTRANSGAZ" AJ sirdaryo viloyati gaz
+                        bo'yicha ta'minoti xududiy filiali haydovchisi)
+                      </h6>
+                    </div>
+                    <div
+                      class="
+                        col-2
+                        relative_border
+                        flex
+                        justify-content-center
+                        align-items-center
+                      "
+                    >
+                      <h6 class="font-semibold text-900 my-0">
+                        Sirdaryo viloyati, Mirzaobod tumani, Toshkent QFY,
+                        Navro'z MFY Orzu ko'chasi, 5 uy
+                      </h6>
                     </div>
                   </div>
-                 
+                </div>
+                <div class="col-12 px-4 py-6" v-show="activeIndex == 2">
+                  <div class="text-center text-500">Ma'lumot yo'q</div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
@@ -621,7 +798,8 @@ import EksportService from "../../service/servises/EksportService";
 export default {
   data() {
     return {
-      visibleFull: false,
+      activeIndex: 0,
+      visibleFull: true,
       cadry: {
         fullName: null,
         phote: null,
@@ -642,6 +820,20 @@ export default {
         party: null,
         education: null,
       },
+      items: [
+                {label: 'Mehnat faoliyati', icon: 'pi pi-user',  command: (event) => {
+            this.activeIndex = 0;
+        }},
+                {label: 'Yaqin qarindoshlari', icon: 'pi pi-user',
+                command: (event) => {
+            this.activeIndex = 1;
+        }},
+                {label: "Rag'batlantirish", icon: 'pi pi-user', command: (event) => {
+            this.activeIndex = 2;
+        }},
+               
+            ],
+      active: 1,
     };
   },
   methods: {
@@ -678,11 +870,47 @@ export default {
           console.log(error);
         });
     },
+    changeTab(index) {
+      this.activeIndex = index;
+    },
   },
 };
 </script>
-<style lang="scss"  scoped>
+<style lang="scss" scoped >
 .document_container {
-  max-width: 900px;
+  background-color: #ffffff;
 }
+.resume_picture{
+  width: 160px;
+  min-height: 100% !important;
+}
+.resume_bg {
+  position: absolute;
+  top: 0px;
+  right: 00px;
+  width: 190px;
+  height: 200px;
+  background-color: #ecf7ff !important;
+  z-index: 9;
+}
+.cutom_mr {
+  margin-right: 200px !important;
+}
+.cutom_pr {
+  padding-right: 200px !important;
+}
+.custom_sidebar {
+  background: #f1f1f1 !important;
+  backdrop-filter: blur(4px) !important;
+}
+.border_bottom {
+  border-bottom: 1px solid #5fbbfd !important;
+}
+
+
+.relative_border {
+  border: 1px solid #e4e4e4 !important;
+}
+
+
 </style>
