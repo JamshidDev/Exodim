@@ -799,7 +799,7 @@ export default {
   data() {
     return {
       activeIndex: 0,
-      visibleFull: true,
+      visibleFull: false,
       cadry: {
         fullName: null,
         phote: null,

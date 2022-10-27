@@ -338,7 +338,7 @@
                 icon="pi pi-id-card"
                 class="p-button-rounded p-button-info mr-2"
                 v-tooltip.left="`Ma'lumotlarni ko'rish`"
-                @click="openResume(slotProps.data.id)"
+                @click="goPushDetails(slotProps.data.id)"
               />
               <Button
                 icon="pi pi-cloud-download"
@@ -585,6 +585,9 @@ export default {
 
     goPush(id) {
       this.$router.push(`/admin/editemployee/${id}`);
+    },
+    goPushDetails(id) {
+      this.$router.push(`/admin/employee/view/${id}`);
     },
     goNewPush() {
       this.$router.push("/admin/addnewemployee");
