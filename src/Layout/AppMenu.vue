@@ -15,7 +15,6 @@ export default {
         {
           label: "Global",
           icon: "pi pi-globe",
-          visible: () => this.get_adminPermissions("role-list"),
           items: [
             {
               label: "Statistika",
@@ -34,13 +33,12 @@ export default {
         {
           label: "Asosiy",
           icon: "pi pi-microsoft",
-          visible: () =>this.get_adminPermissions("role-list"),
           items: [
             {
               label: "Statistika",
               icon: "pi pi-chart-pie",
               to: '/admin/partstatistic',
-              visible: () =>this.get_adminPermissions("role-list"),
+              visible: () =>this.get_adminPermissions("organization_statistics"),
             },
             {
               label: "Xodimlar",
@@ -52,38 +50,19 @@ export default {
               label: "Bo'limlar",
               icon: "pi pi-sitemap",
               to: '/admin/partfactory',
-              visible: () =>this.get_adminPermissions("role-list"),
+              visible: () =>this.get_adminPermissions("organization_departments"),
             },
             {
               label: "Shtat lavozimlari",
               icon: "pi pi-align-center",
               to: '/admin/position',
-              visible: () =>this.get_adminPermissions("role-list"),
+              visible: () =>this.get_adminPermissions("organization_staffs"),
             },
             {
               label: "Arxiv",
               icon: "pi pi-shield",
               to: '/admin/historyemployee',
-              visible: () =>this.get_adminPermissions("role-list"),
-            },
-            {
-              label: "Boshqalar",
-              icon: "pi pi-box",
-              visible: () =>this.get_adminPermissions("role-lists"),
-              items: [
-                {
-                  label: "Rag'batlantirilganlar",
-                  icon: "pi pi-star",
-                  to: '/admin/position',
-              visible: () =>this.get_adminPermissions("role-list"),
-                },
-                {
-                  label: "Hududlar",
-                  icon: "pi pi-map",
-                  to: '/admin/position',
-              visible: () =>this.get_adminPermissions("role-list"),
-                },
-              ],
+              visible: () =>this.get_adminPermissions("organization_archive"),
             },
           ],
         },
@@ -94,26 +73,49 @@ export default {
             {
               label: "Ta'tillar",
               icon: "pi pi-calendar",
-              visible: () =>this.get_adminPermissions("management_organizations"),
+              visible: () =>this.get_adminPermissions("organization_vacations"),
               to: '/admin/vacation',
             },
             {
               label: "Tibbiy ko'rik",
               icon: "pi pi-id-card",
-              visible: () =>this.get_adminPermissions("management_organizations"),
+              visible: () =>this.get_adminPermissions("organization_meds"),
               to: '/admin/meds',
             },
             {
               label: "Jazolanganlar",
               icon: "pi pi-th-large",
-              visible: () =>this.get_adminPermissions("management_organizations"),
+              visible: () =>this.get_adminPermissions("organization_discips"),
               to: '/admin/punishment',
             },
             {
               label: "Mukofatlanganlar",
               icon: "pi pi-star",
-              visible: () =>this.get_adminPermissions("management_organizations"),
+              visible: () =>this.get_adminPermissions("organization_incentives"),
               to: '/admin/incentive',
+            },
+          ],
+        },
+        {
+          label: "Xavsizlik",
+          icon: "pi pi-shield",
+          visible: () =>this.get_adminPermissions("role-list"),
+          items: [
+            {
+              label: "Ma'sullar",
+              icon: "pi pi-user",
+              to: '/admin/superadmin',
+              visible: () =>this.get_adminPermissions("role-list"),
+            },
+            {
+              label: "Kirishlar",
+              icon: "pi pi-book",
+              visible: () =>this.get_adminPermissions("role-list"),
+            },
+            {
+              label: "Amallar",
+              icon: "pi pi-shield",
+              visible: () =>this.get_adminPermissions("role-list"),
             },
           ],
         },
