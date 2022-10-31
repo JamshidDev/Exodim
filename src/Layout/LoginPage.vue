@@ -159,6 +159,10 @@ export default {
                 "organization",
                 JSON.stringify(res.data.organization)
               );
+              localStorage.setItem(
+                "profil",
+                JSON.stringify(res.data)
+              );
 
               localStorage.setItem(
                 "Adminpermissions",
