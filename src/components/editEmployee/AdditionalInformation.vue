@@ -5,7 +5,7 @@
     </div>
   </div>
 
-  <div class="grid card py-4" v-if="!barLoader">
+  <div class="grid card xl:p-4 lg:p-2 pt-4 px-0" v-if="!barLoader">
     <!-- Med table -->
     <div class="col-12 py-1 px-0 mb-6" v-show="medList.length==0">
       <add-button :title="'Tibbiy ko\'rik'" :text="true"></add-button>

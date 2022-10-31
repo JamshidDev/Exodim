@@ -110,9 +110,7 @@ export default {
             {
               label: "Xabarlar",
               icon: "pi pi-comment",
-              command: () => {
-                this.$router.push("/login");
-              },
+
             },
              {
               label: "Sozlamalar",

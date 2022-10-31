@@ -85,6 +85,8 @@
                   lg:text-lg
                   xl:text-lg
                   font-medium
+                  flex align-items-center
+                  justify-content-center
                 "
               >
                 <div class="text-center" v-show="slotProps.data.vakan != 0">
@@ -106,6 +108,8 @@
                   lg:text-lg
                   xl:text-lg
                   font-medium
+                  flex align-items-center
+                  justify-content-center
                 "
               >
                 <div class="text-center" v-show="slotProps.data.sverx != 0">

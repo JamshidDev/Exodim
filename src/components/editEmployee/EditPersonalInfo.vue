@@ -5,7 +5,7 @@
     </div>
   </div>
  <div class="col-12"></div>
- <div v-if="!barLoader" class="grid card surface-0 py-4">
+ <div v-if="!barLoader" class="grid card surface-0 py-4 px-2">
     <div class="col-12">
       <div class="flex justify-content-end">
         <Button

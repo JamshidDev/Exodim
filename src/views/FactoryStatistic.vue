@@ -978,7 +978,7 @@ export default {
       alleducation_oliyChart: 0,
       allContractChart:0,
       medsChart:0,
-      mednotCount:0,
+      mednotCountChart:0,
       careersCountChart:0,
       relativesCountChart:0,
       allBirthdayCadriesChart:0,
@@ -1515,7 +1515,7 @@ export default {
             (res.data.retired_Man / res.data.all_cadries_count) * 100
           );
           this.pensionWomanChart = Math.floor(
-            (res.data.retired_WoMan / res.data.all_cadries_count) * 100
+            (res.data.retired_Woman / res.data.all_cadries_count) * 100
           );
           this.allCadry30Chart = Math.floor(
             (res.data.cadry30 / res.data.all_cadries_count) * 100
@@ -1529,6 +1529,7 @@ export default {
           this.alleducation_oliyChart = Math.floor(
             (res.data.education_oliy / res.data.all_cadries_count) * 100
           );
+
 
           this.controlLoader(false);
         })
