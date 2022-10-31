@@ -441,7 +441,7 @@ import SearchNotFoundPage from "../components/EmptyComponent/SearchNotFoundPage.
 import WordTemplate from "../components/Eksport/WordTemplate.vue";
 import DownloadButton from '@/components/buttons/DownloadButton'
 export default {
-  components: { EmployeeLoader, TablePagination, SearchNotFoundPage,WordTemplate,EmployeeDetails,DownloadButton },
+  components: { EmployeeLoader, TablePagination, SearchNotFoundPage,WordTemplate,DownloadButton },
   data() {
     return {
       displayBasic: true,

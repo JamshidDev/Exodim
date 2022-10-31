@@ -115,7 +115,7 @@ export default {
 
     customChangetheme($event) {
       if (this.darkMode) {
-        this.changeTheme($event, "lara-dark-blue", true);
+        this.changeTheme($event, "bootstrap4-dark-blue", true);
         localStorage.setItem("theme-dark", JSON.stringify(true));
       } else {
         this.changeTheme($event, "lara-light-blue", true);

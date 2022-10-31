@@ -104,15 +104,15 @@
               </div>
               <div
                 v-show="slotProps.data.days <= 10 && slotProps.data.days > 0"
-                class="w-full text-center text-yellow-500"
+                class="w-full text-center"
               >
-                {{ slotProps.data.days }}
+                {{ slotProps.data.days }} kun qoldi
               </div>
               <div
                 v-show="slotProps.data.days > 10"
-                class="w-full text-center text-blue-500"
+                class="w-full text-center"
               >
-                {{ slotProps.data.days }}
+                {{ slotProps.data.days }} kun qoldi
               </div>
             </div>
           </template>
@@ -565,7 +565,6 @@ export default {
     },
     searchByName() {
       this.params.search = this.searchCadryName;
-      console.log(this.searchCadryName);
       this.get_MedList(this.params, false);
 
     },

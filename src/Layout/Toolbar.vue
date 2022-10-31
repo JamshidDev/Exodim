@@ -276,7 +276,7 @@ export default {
   created(){
     let dark = JSON.parse(localStorage.getItem('theme-dark'))
     if(dark){
-      this.changeTheme("lara-dark-blue", true);
+      this.changeTheme("bootstrap4-dark-blue", true);
     }
     
   }

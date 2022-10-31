@@ -15,6 +15,7 @@ export default {
         {
           label: "Global",
           icon: "pi pi-globe",
+          visible: () =>this.get_TitlePermission(["management_statistics","management_organizations" ]),
           items: [
             {
               label: "Statistika",
@@ -33,6 +34,7 @@ export default {
         {
           label: "Asosiy",
           icon: "pi pi-microsoft",
+          visible: () =>this.get_TitlePermission(["organization_statistics","organization_cadries", "organization_departments" ,"organization_staffs", "organization_archive" ]),
           items: [
             {
               label: "Statistika",
@@ -69,6 +71,8 @@ export default {
         {
           label: "Monitoring",
           icon: "pi pi-th-large",
+          visible: () =>this.get_TitlePermission(["organization_vacations","organization_meds","organization_discips", "organization_incentives" ]),
+          
           items: [
             {
               label: "Ta'tillar",
@@ -99,23 +103,23 @@ export default {
         {
           label: "Xavsizlik",
           icon: "pi pi-shield",
-          visible: () =>this.get_adminPermissions("role-list"),
+          visible: () =>this.get_adminPermissions("admin"),
           items: [
             {
               label: "Ma'sullar",
               icon: "pi pi-user",
               to: '/admin/superadmin',
-              visible: () =>this.get_adminPermissions("role-list"),
+              visible: () =>this.get_adminPermissions("admin"),
             },
             {
               label: "Kirishlar",
               icon: "pi pi-book",
-              visible: () =>this.get_adminPermissions("role-list"),
+              visible: () =>this.get_adminPermissions("admin"),
             },
             {
               label: "Amallar",
               icon: "pi pi-shield",
-              visible: () =>this.get_adminPermissions("role-list"),
+              visible: () =>this.get_adminPermissions("admin"),
             },
           ],
         },
@@ -124,17 +128,8 @@ export default {
           icon: "pi pi-prime",
           items: [
             {
-              label: "Sozlamalaar",
-              icon: "pi pi-cog",
-              to: '/admin/setting',
-            },
-            {
               label: "Qo'llanma",
               icon: "pi pi-book",
-            },
-            {
-              label: "Versiya",
-              icon: "pi pi-prime",
             },
           ],
         },
@@ -144,7 +139,7 @@ export default {
     };
   },
   computed:{
-    ...mapGetters(["get_adminPermissions",])
+    ...mapGetters(["get_adminPermissions","get_TitlePermission"])
   },
 };
 </script>

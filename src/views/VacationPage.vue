@@ -558,9 +558,6 @@ export default {
         : "";
     },
 
-    searchByName(event) {
-      console.log(event);
-    },
     search_Cadry(event) {
       this.search_params.search = event.value;
       VacationService.search_Cadry(this.search_params)
