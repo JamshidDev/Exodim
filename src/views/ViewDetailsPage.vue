@@ -12,6 +12,7 @@
             border-1 border-300
             mb-4
             document_container
+            bg-primary-reverse
           "
         >
           <div class="col-12 md:col-4 xl:col-2 p-0">
@@ -21,7 +22,7 @@
             <h6 class="text-2xl text-800 my-2 uppercase font-bold">
               {{ cadry.fullName }}
             </h6>
-            <h6 class="text-base text-800 my-3 font-bold">
+            <h6 class="text-base text-800 my-3 font-semibold">
               {{ cadry.post_name }}
             </h6>
             <h6 class="text-base text-800 my-3 font-bold flex">
@@ -77,7 +78,7 @@
                 border-round-md
                 mt-3
                 border-1 border-300
-                document_container
+                bg-primary-reverse
                 py-4
                 px-4
               "
@@ -208,7 +209,7 @@
               border-round-md
               mt-4
               border-1 border-300
-              document_container
+              bg-primary-reverse
               py-4
               px-2
             "
@@ -231,12 +232,12 @@
                   :key="career.id"
                 >
                   <div class="col-2">
-                    <h6 class="text-center">
+                    <h6 class="text-center font-semibold text-600">
                       {{ career.date1 }}- {{ career.date2? career.date2 : 'h.gacha' }}
                     </h6>
                   </div>
                   <div class="col-10">
-                    <h6>
+                    <h6 class="font-semibold text-600">
                       {{ career.staff_name }}
                     </h6>
                   </div>
@@ -670,9 +671,6 @@ export default {
 };
 </script>
   <style lang="scss"  >
-.document_container {
-  background-color: #ffffff;
-}
 .resume_picture {
   width: 160px;
   min-height: 100% !important;
@@ -701,7 +699,7 @@ export default {
 }
 
 .relative_border {
-  border: 1px solid #e4e4e4 !important;
+  border: 0px solid #e4e4e4 !important;
 }
 .custom .p-scrollpanel-wrapper {
   border-right: 0px solid #f4f4f4;
