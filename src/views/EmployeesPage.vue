@@ -298,8 +298,15 @@
           </div>
           <div class="col-12 flex justify-content-between align-items-center">
             <p class="text-left text-600 mb-0">
-              Qo'shimcha filter sozlamalarini sozlash
+              Filter sozlamalar
             </p>
+            <Tag
+              class="cursor-pointer mr-4"
+              value="Izlash"
+              severity="info"
+              icon="pi pi-search"
+              @click="searchBtn()"
+            ></Tag>
             <Tag
               class="cursor-pointer"
               value="Tozalash"
@@ -346,8 +353,8 @@
               <Image
                 :src="slotProps.data.photo"
                 :alt="slotProps.data.fullname"
-                width="30"
-                height="30"
+                width="40"
+                height="40"
                 preview
               />
             </div>

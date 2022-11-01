@@ -8,12 +8,10 @@
             grid
             shadow-1
             border-round-md
-            
-            border-1 border-300
             mb-4
             p-4 xl:p-2 lg:p-2 md:p-2
-            bg-primary-reverse
           "
+          :class="[isDark? 'custom_bg':'bg-primary-reverse']"
         >
           <div class="col-12 md:col-4 lg:col-3 xl:col-2 p-0">
             <img class="resume_picture" :src="cadry.phote" alt="" />
@@ -68,16 +66,18 @@
             </h6>
           </div>
         </div>
+
         <div class="grid">
           <div class="col-12 xl:col-4 pr-4">
             <div
+            :class="[isDark? 'custom_bg':'bg-primary-reverse']"
               class="
                 grid
                 4
                 shadow-1
                 border-round-md
+
                 mt-3
-                border-1 border-300
                 bg-primary-reverse
                 py-4
                 px-4
@@ -202,16 +202,17 @@
           </div>
 
           <div
+          :class="[isDark? 'custom_bg':'bg-primary-reverse']"
             class="
                 col-12
               xl:col-8
               shadow-1
               border-round-md
               mt-4
-              border-1 border-300
               bg-primary-reverse
               py-4
               px-2
+              
             "
           >
             <div class="grid">
@@ -533,6 +534,7 @@ import EksportService from "../service/servises/EksportService";
 import formatter from "../util/formatter";
 import ProgressBarLoader from "../components/loaders/ProgressBarLoader.vue";
 import WordTemplate from "../components/Eksport/WordTemplate.vue";
+import { mapGetters  } from "vuex";
 export default {
   components: {
     ProgressBarLoader,
@@ -541,6 +543,7 @@ export default {
   data() {
     return {
       loader: false,
+      isDark:false,
       formatter,
       activeIndex: 0,
       visibleFull: false,
@@ -665,7 +668,11 @@ export default {
        this.$router.push("/admin/partemployee") 
     }
   },
+  computed:{
+  ...mapGetters(["get_darkTheme"])
+  },
   created() {
+    this.isDark = this.get_darkTheme;
     this.showResume(this.$route.params.id);
   },
 };
@@ -676,14 +683,8 @@ export default {
   max-width: 160px !important;
   min-height: 100% !important;
 }
-.resume_bg {
-  position: absolute;
-  top: 0px;
-  right: 00px;
-  width: 190px;
-  height: 200px;
-  background-color: #ecf7ff !important;
-  z-index: 9;
+.custom_bg{
+  background: #313a46 !important;
 }
 .cutom_mr {
   margin-right: 200px !important;

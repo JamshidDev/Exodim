@@ -783,7 +783,7 @@
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-red-600 text-sm uppercase font-semibold"
-                >Faoliyati yakunlangan xodimlar</span
+                >Faoliyati yakunlanganlar</span
               >
             </div>
             <div class="col-2 flex justify-content-end">
@@ -830,7 +830,7 @@
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-600 text-sm uppercase font-semibold"
-                >Qora ro'yxatdagi xodimlar</span
+                >Qora ro'yxatdagilar</span
               >
             </div>
             <div class="col-2 flex justify-content-end">

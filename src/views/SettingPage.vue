@@ -106,7 +106,7 @@ export default {
     EventBus.on("theme-change", this.themeChangeListener);
   },
   methods: {
-    ...mapActions(["actionMenu"]),
+    ...mapActions(["actionMenu", "actionisDark"]),
     changeMenu(){
       console.log(this.menuType);
       this.actionMenu(this.menuType)
@@ -117,9 +117,11 @@ export default {
       if (this.darkMode) {
         this.changeTheme($event, "bootstrap4-dark-blue", true);
         localStorage.setItem("theme-dark", JSON.stringify(true));
+        this.actionisDark(true)
       } else {
         this.changeTheme($event,"lara-light-blue", true);
         localStorage.setItem("theme-dark", JSON.stringify(false));
+        this.actionisDark(false)
       }
     },
     decrementScale() {
