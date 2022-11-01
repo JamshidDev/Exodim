@@ -461,6 +461,7 @@ export default {
       medService
         .get_CadryMed(params)
         .then((res) => {
+          console.log(res.data.cadries.data);
           this.totalPage = res.data.cadries.pagination.total;
           let number = (this.params.page - 1) * this.params.per_page;
           res.data.cadries.data.forEach((item) => {
