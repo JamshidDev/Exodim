@@ -11,14 +11,14 @@
             
             border-1 border-300
             mb-4
-            document_container
+            p-4 xl:p-2 lg:p-2 md:p-2
             bg-primary-reverse
           "
         >
-          <div class="col-12 md:col-4 xl:col-2 p-0">
+          <div class="col-12 md:col-4 lg:col-3 xl:col-2 p-0">
             <img class="resume_picture" :src="cadry.phote" alt="" />
           </div>
-          <div class="col-12 md:col-8 xl:col-6 py-2">
+          <div class="col-12 md:col-8 lg:col-5 xl:col-6 py-2">
             <h6 class="text-2xl text-800 my-2 uppercase font-bold">
               {{ cadry.fullName }}
             </h6>
@@ -38,7 +38,7 @@
             <Button label="Yuklash" @click="DowloadResume($route.params.id)" class="p-button-raised p-button-info" />
           </div>
 
-          <div class="col-12 py-4 pl-4 md:col-12 xl:col-4">
+          <div class="col-12 py-4 pl-4 md:col-12 lg:col-4 xl:col-4">
             <h6 class="text-base text-900 my-2">
               <i class="pi pi-phone text-blue-500 font-bold pr-2 text-xl"></i>
               {{ cadry.phone }}
@@ -672,7 +672,8 @@ export default {
 </script>
   <style lang="scss"  >
 .resume_picture {
-  width: 160px;
+  width: 160px !important;
+  max-width: 160px !important;
   min-height: 100% !important;
 }
 .resume_bg {
