@@ -1365,7 +1365,7 @@ export default {
           this.allIronNote = 0;
           this.allManCadries = res.data.all_man_cadries;
           this.allWomanCadries = res.data.all_woman_cadries;
-          this.pensionWoman = res.data.retired_WoMan;
+          this.pensionWoman = res.data.retired_Woman;
           this.pensionsMan = res.data.retired_Man;
           this.allNewCadries = res.data.newcadries;
           this.allDeleteCadries = res.data.delete_cadries;

@@ -47,7 +47,7 @@ export default {
       sidebar_overall: false,
       mobile_active: false,
       menuBar:true,
-      mobile_screen_width:1500,
+      mobile_screen_width:991,
     };
   },
   created() {

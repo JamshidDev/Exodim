@@ -1150,6 +1150,7 @@ export default {
         date2:formatter.outDateFormatter(this.med_date2),
         result:this.med_comment,
       }
+      console.log(this.med_id);
       employeeMed.update_CadryMed({id:this.med_id, data}).then((res)=>{
         this.get_cadryMed(this.$route.params.id);
         this.$toast.add({
