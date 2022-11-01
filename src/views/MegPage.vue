@@ -545,7 +545,7 @@ export default {
           this.$toast.add({
             severity: "success",
             summary: "Muvofaqqiyatli bajarildi",
-            detail: "Tahrirlandi",
+            detail: "Yangilandi",
             life: 2000,
           });
         });
