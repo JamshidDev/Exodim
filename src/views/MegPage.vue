@@ -524,7 +524,7 @@ export default {
       this.refresh_date1 = formatter.interDateFormatter(item.date1);
       this.refresh_date2 = formatter.interDateFormatter(item.date2);
       this.refresh_comment = "";
-      this.refresh_cadry_id = item.id;
+      this.refresh_cadry_id = item.cadry_id;
       this.controlNewDialog(true);
     },
     refreshMed() {

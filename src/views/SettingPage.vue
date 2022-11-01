@@ -118,7 +118,7 @@ export default {
         this.changeTheme($event, "bootstrap4-dark-blue", true);
         localStorage.setItem("theme-dark", JSON.stringify(true));
       } else {
-        this.changeTheme($event, "lara-light-blue", true);
+        this.changeTheme($event,"lara-light-blue", true);
         localStorage.setItem("theme-dark", JSON.stringify(false));
       }
     },

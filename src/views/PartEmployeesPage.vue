@@ -264,7 +264,7 @@
         </template>
         <Column header="No">
           <template #body="slotProps">
-            <div class="w-full text-center text-lg font-semibold">
+            <div class="w-full text-center text-lg font-medium">
               {{ slotProps.data.number }}
             </div>
           </template>
@@ -661,7 +661,6 @@ export default {
 </script>
 <style lang="scss">
 table {
-  font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 100%;
 }
