@@ -1,247 +1,290 @@
 <template >
-  <div class="grid card surface-0 shadow-1 py-4 px-3">
-    <div class="col-12 sm:col-6 md:col-6 lg:col-2 xl:col-2 p-fluid">
-      <InputText
-        type="text"
-        v-model="organization.first_name"
-        class="w-full font-semibold"
-        placeholder="Ismni kiriting"
-        @keyup.enter="searchBtn()"
-      />
-    </div>
-
-    <div class="col-12 sm:col-6 md:col-6 lg:col-2 xl:col-2 p-fluid">
-      <InputText
-        type="text"
-        v-model="organization.last_name"
-        class="w-full font-semibold"
-        placeholder="Familiya kiriting"
-        @keyup.enter="searchBtn()"
-      />
-    </div>
-    <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3 p-fluid">
-      <Dropdown
-        id="adressDistrict"
-        v-model="departmentValue"
-        :options="departmentList"
-        optionLabel="name"
-        class="xl:p-inputtext-sm"
-        :filter="true"
-        placeholder="Bo'limni tanlang"
-        emptyMessage="Hech narsa topilmadi"
-        emptyFilterMessage="Tizmda ma'lumot topilmadi..."
-        @change="changeDepartment"
-      >
-        <template #value="slotProps" class="custop_dropdown">
-          <div class="max-w-100" v-if="slotProps.value">
-            <div>{{ slotProps.value.name }}</div>
-          </div>
-          <span v-else>
-            {{ slotProps.placeholder }}
-          </span>
-        </template>
-        <template #option="slotProps">
-          <div class="max-w-100">
-            <div>{{ slotProps.option.name }}</div>
-          </div>
-        </template>
-      </Dropdown>
-    </div>
-    <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
-      <Button
-        icon="pi pi-search "
-        class="w-2 p-button-danger"
-        @click="searchBtn()"
-      />
-      <Button
-        icon="pi pi-filter"
-        class="w-2 p-button-text p-button-secondary mx-2"
-        @click="openFilterPanel"
-      />
-      <Button
-        label="Yuklash"
-        class="w-6 p-button-secondary font-medium"
-        @click="controlExportDialog(true)"
-      />
-      <!-- Additional filter menu -->
-      <OverlayPanel
-        ref="op"
-        :breakpoints="{ '960px': '75vw', '640px': '100vw' }"
-        :style="{ width: '550px' }"
-      >
-        <div class="grid">
-          <div class="col-12">
-            <h6 class="text-sm uppercase">Qo'shimcha filter sozlamalari</h6>
-          </div>
-
-          <div class="col-12">
-            <div class="col-12">
-              <h6 class="text-sm mb-0">Lavozim {{ Stuffs.length }}</h6>
-            </div>
-            <div class="w-full flex">
-              <Dropdown
-                id="adressDistrict"
-                v-model="stuffValue"
-                :options="Stuffs"
-                optionLabel="name"
-                :filter="true"
-                placeholder="Tanlang"
-                class="w-full p-inputtext-sm"
-                @change="changeStuffs"
-                emptyMessage="Hech narsa topilmadi"
-                emptyFilterMessage="Tizmda ma'lumot topilmadi..."
-                @before-show="beforeOpen"
-                :disabled="Stuffs.length == 0"
-              >
-                <template #value="slotProps">
-                  <div
-                    class="country-item country-item-value w-full"
-                    v-if="slotProps.value"
-                  >
-                    <div>{{ slotProps.value.name }}</div>
-                  </div>
-                  <span v-else>
-                    {{ slotProps.placeholder }}
-                  </span>
-                </template>
-                <template #option="slotProps">
-                  <div class="country-item w-full">
-                    <div>{{ slotProps.option.name }}</div>
-                  </div>
-                </template>
-              </Dropdown>
-            </div>
-          </div>
-          <div class="col-6">
-            <div class="col-12">
-              <h6 class="text-sm mb-0">Ma'lumoti</h6>
-            </div>
-            <div class="w-full flex">
-              <div class="w-full">
-                <Dropdown
-                  v-model="educationValue"
-                  :options="educationList"
-                  optionLabel="name"
-                  placeholder="Tanlang"
-                  class="w-full p-inputtext-sm"
-                  @change="changeEducation"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div class="col-6">
-            <div class="col-12">
-              <h6 class="text-sm mb-0">Viloyat</h6>
-            </div>
-            <div class="w-full flex">
-              <div class="w-full">
-                <Dropdown
-                  v-model="regionValue"
-                  :options="regionList"
-                  optionLabel="name"
-                  placeholder="Tanlang"
-                  class="w-full p-inputtext-sm"
-                  @change="changeRegion"
-                />
-              </div>
-            </div>
-          </div>
-          <div class="col-6">
-            <div class="col-12">
-              <h6 class="text-sm mb-0">Ta'til</h6>
-            </div>
-            <div class="w-full flex">
-              <div class="w-full">
-                <Dropdown
-                  v-model="vacationValue"
-                  :options="vacationList"
-                  optionLabel="name"
-                  placeholder="Ta'til"
-                  class="w-full p-inputtext-sm"
-                  @change="changeVacation"
-                />
-              </div>
-            </div>
-          </div>
-          <div class="col-6">
-            <div class="col-12">
-              <h6 class="text-sm mb-0">Sharif</h6>
-            </div>
-            <div class="w-full flex">
-              <div class="w-full">
-                <InputText
-                  type="text"
-                  v-model="organization.middle_name"
-                  class="w-full font-semibold p-inputtext-sm"
-                  placeholder="Kiriting"
-                />
-              </div>
-            </div>
-          </div>
-          <div class="col-6">
-            <div class="col-12">
-              <h6 class="text-sm mb-1">Yosh oralig'i</h6>
-              <p class="text-center text-blue-600 font-semibold">
-                {{ selectedAge[0] + " -- " + selectedAge[1] }}
-              </p>
-            </div>
-            <div class="w-full flex">
-              <div class="w-full">
-                <Slider
-                  class=""
-                  v-model="selectedAge"
-                  :step="1"
-                  :range="true"
-                  @change="changeCadrAge"
-                />
-              </div>
-            </div>
-          </div>
-          <div class="col-6">
-            <div class="col-12">
-              <h6 class="text-sm mb-0">Jinsi</h6>
-            </div>
-            <div class="w-full flex">
-              <div class="w-full">
-                <Dropdown
-                  v-model="genderValue"
-                  :options="genderList"
-                  optionLabel="name"
-                  placeholder="Tanlang"
-                  class="w-full p-inputtext-sm"
-                  @change="changeGender"
-                />
-              </div>
-            </div>
-          </div>
-          <div class="col-12 flex justify-content-between align-items-center">
-            <p class="text-left text-600 mb-0">
-              Qo'shimcha filter sozlamalarini sozlash
-            </p>
-            <Tag
-              class="cursor-pointer"
-              value="Tozalash"
-              severity="danger"
-              icon="pi pi-filter-slash"
-              @click="clearFilterDetails()"
-            ></Tag>
-          </div>
+  <div class="grid px-3">
+    <div class="col-12">
+      <div class="grid">
+        <div class="col-12 pb-0">
+          <bread-crumb></bread-crumb>
         </div>
-      </OverlayPanel>
+        <div class="col-12 y-0 py-0">
+          <span class="text-2xl font-semibold"
+            >Xodimlar
+            <span class="text-base text-primary pl-2">
+              ({{ totalCadries }})</span
+            >
+          </span>
+        </div>
+      </div>
     </div>
-    <div class="col-12 sm:col-6 md:col-6 lg:col-2 xl:col-2 p-fluid">
-      <Button
-        icon="pi pi-plus"
-        @click="goNewPush()"
-        class="p-button-info font-medium"
-        label="Xodim"
-        v-tooltip.bottom="`Yangi xodim qo'shish`"
-      />
+    <div class="col-12 py-0">
+      <div class="grid">
+        <div class="col-12 sm:col-6 md:col-6 lg:col-2 xl:col-2 p-fluid">
+          <InputText
+            type="text"
+            v-model="organization.first_name"
+            class="w-full font-semibold p-inputtext-sm"
+            placeholder="Ismni kiriting"
+            @keyup.enter="searchBtn()"
+          />
+        </div>
+
+        <div class="col-12 sm:col-6 md:col-6 lg:col-2 xl:col-2 p-fluid">
+          <InputText
+            type="text"
+            v-model="organization.last_name"
+            class="w-full font-semibold p-inputtext-sm"
+            placeholder="Familiya kiriting"
+            @keyup.enter="searchBtn()"
+          />
+        </div>
+        <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3 p-fluid">
+          <Dropdown
+            id="adressDistrict"
+            v-model="departmentValue"
+            :options="departmentList"
+            optionLabel="name"
+            class="p-inputtext-sm"
+            :filter="true"
+            placeholder="Bo'limni tanlang"
+            emptyMessage="Hech narsa topilmadi"
+            emptyFilterMessage="Tizmda ma'lumot topilmadi..."
+            @change="changeDepartment"
+          >
+            <template #value="slotProps" class="custop_dropdown">
+              <div class="max-w-100" v-if="slotProps.value">
+                <div>{{ slotProps.value.name }}</div>
+              </div>
+              <span v-else>
+                {{ slotProps.placeholder }}
+              </span>
+            </template>
+            <template #option="slotProps">
+              <div class="max-w-100">
+                <div>{{ slotProps.option.name }}</div>
+              </div>
+            </template>
+          </Dropdown>
+        </div>
+        <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
+          <div class="grid">
+            <div class="col-6">
+              <Button
+                icon="pi pi-filter"
+                label="Filter"
+                class="w-full p-button-secondary mx-2 p-button-sm"
+                @click="openFilterPanel"
+              />
+            </div>
+            <div class="col-6">
+              <Button
+                label="Yuklash"
+                class="w-full p-button-success font-medium p-button-sm"
+                @click="controlExportDialog(true)"
+              />
+            </div>
+          </div>
+
+          <!-- Additional filter menu -->
+          <OverlayPanel
+            ref="op"
+            :breakpoints="{ '960px': '75vw', '640px': '100vw' }"
+            :style="{ width: '550px' }"
+          >
+            <div class="grid">
+              <div class="col-12">
+                <h6 class="text-sm mb-0 font-bold">
+                  Qo'shimcha filter sozlamalari
+                </h6>
+              </div>
+
+              <div class="col-12">
+                <div class="col-12">
+                  <h6 class="text-sm mb-0">Lavozim {{ Stuffs.length }}</h6>
+                </div>
+                <div class="w-full flex">
+                  <Dropdown
+                    id="adressDistrict"
+                    v-model="stuffValue"
+                    :options="Stuffs"
+                    optionLabel="name"
+                    :filter="true"
+                    placeholder="Tanlang"
+                    class="w-full p-inputtext-sm"
+                    @change="changeStuffs"
+                    emptyMessage="Hech narsa topilmadi"
+                    emptyFilterMessage="Tizmda ma'lumot topilmadi..."
+                    @before-show="beforeOpen"
+                    :disabled="Stuffs.length == 0"
+                  >
+                    <template #value="slotProps">
+                      <div
+                        class="country-item country-item-value w-full"
+                        v-if="slotProps.value"
+                      >
+                        <div>{{ slotProps.value.name }}</div>
+                      </div>
+                      <span v-else>
+                        {{ slotProps.placeholder }}
+                      </span>
+                    </template>
+                    <template #option="slotProps">
+                      <div class="country-item w-full">
+                        <div>{{ slotProps.option.name }}</div>
+                      </div>
+                    </template>
+                  </Dropdown>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="col-12">
+                  <h6 class="text-sm mb-0">Ma'lumoti</h6>
+                </div>
+                <div class="w-full flex">
+                  <div class="w-full">
+                    <Dropdown
+                      v-model="educationValue"
+                      :options="educationList"
+                      optionLabel="name"
+                      placeholder="Tanlang"
+                      class="w-full p-inputtext-sm"
+                      @change="changeEducation"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-6">
+                <div class="col-12">
+                  <h6 class="text-sm mb-0">Viloyat</h6>
+                </div>
+                <div class="w-full flex">
+                  <div class="w-full">
+                    <Dropdown
+                      v-model="regionValue"
+                      :options="regionList"
+                      optionLabel="name"
+                      placeholder="Tanlang"
+                      class="w-full p-inputtext-sm"
+                      @change="changeRegion"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="col-12">
+                  <h6 class="text-sm mb-0">Ta'til</h6>
+                </div>
+                <div class="w-full flex">
+                  <div class="w-full">
+                    <Dropdown
+                      v-model="vacationValue"
+                      :options="vacationList"
+                      optionLabel="name"
+                      placeholder="Ta'til"
+                      class="w-full p-inputtext-sm"
+                      @change="changeVacation"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="col-12">
+                  <h6 class="text-sm mb-0">Sharif</h6>
+                </div>
+                <div class="w-full flex">
+                  <div class="w-full">
+                    <InputText
+                      type="text"
+                      v-model="organization.middle_name"
+                      class="w-full font-semibold p-inputtext-sm"
+                      placeholder="Kiriting"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="col-12">
+                  <h6 class="text-sm mb-1">Yosh oralig'i</h6>
+                  <p class="text-center text-blue-600 font-semibold">
+                    {{ selectedAge[0] + " -- " + selectedAge[1] }}
+                  </p>
+                </div>
+                <div class="w-full flex">
+                  <div class="w-full">
+                    <Slider
+                      class=""
+                      v-model="selectedAge"
+                      :step="1"
+                      :range="true"
+                      @change="changeCadrAge"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="col-12">
+                  <h6 class="text-sm mb-0">Jinsi</h6>
+                </div>
+                <div class="w-full flex">
+                  <div class="w-full">
+                    <Dropdown
+                      v-model="genderValue"
+                      :options="genderList"
+                      optionLabel="name"
+                      placeholder="Tanlang"
+                      class="w-full p-inputtext-sm"
+                      @change="changeGender"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="grid">
+                  <div class="col-6">
+                    <p class="text-left text-600 mb-0 font-bold">
+                      Filter sozlamalari
+                    </p>
+                  </div>
+                  <div class="col-6">
+                    <div class="grid">
+                      <div class="col-6">
+                        <Tag
+                          class="cursor-pointer w-full"
+                          value="Izlash"
+                          severity="info"
+                          icon="pi pi-search"
+                          @click="searchBtn()"
+                        ></Tag>
+                      </div>
+                      <div class="col-6">
+                        <Tag
+                          class="cursor-pointer w-full"
+                          value="Tozalash"
+                          severity="danger"
+                          icon="pi pi-filter-slash"
+                          @click="clearFilterDetails()"
+                        ></Tag>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </OverlayPanel>
+        </div>
+        <div class="col-12 sm:col-6 md:col-6 lg:col-2 xl:col-2 p-fluid">
+          <Button
+            icon="pi pi-plus"
+            @click="goNewPush()"
+            class="p-button-info font-medium p-button-sm"
+            label="Xodim"
+            v-tooltip.bottom="`Yangi xodim qo'shish`"
+          />
+        </div>
+      </div>
     </div>
 
     <!-- Employees table ---start -->
-    <div class="col-12 pt-2" v-show="!loadingtable">
+    <div class="col-12 pt-0" v-show="!loadingtable">
       <DataTable
         ref="dt"
         :value="cadries"
@@ -251,50 +294,53 @@
         class="p-datatable-sm"
         v-show="totalCadries"
       >
-        <template #header>
-          <div class="flex w-full">
-            <h6 class="mb-2 md:m-0 uppercase py-2 px-3">
-              Xodimlar soni (<span
-                class="text-blue-500 font-semibold text-base"
-                >{{ totalCadries }}</span
-              >
-              )
-            </h6>
-          </div>
-        </template>
-        <Column header="No">
+        <Column style="min-width:30px; width:36px">
+          <template #header>
+            <div class="text-800 text-sm font-medium">
+              No
+            </div>
+          </template>
           <template #body="slotProps">
-            <div class="w-full text-center text-lg font-medium">
+            <div class="w-full text-center text-base font-medium">
               {{ slotProps.data.number }}
             </div>
           </template>
         </Column>
-        <Column header="Fotosurat">
+        <Column style="min-width: 50px; width: 50px">
+          <template #header>
+            <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
+              Rasm
+            </div>
+          </template>
           <template #body="slotProps">
             <div class="flex justify-content-center">
               <Image
                 :src="slotProps.data.photo"
                 :alt="slotProps.data.fullname"
-                width="40"
-                height="40"
+                width="30"
+                height="30"
                 preview
               />
             </div>
           </template>
         </Column>
-        <Column field="name" header="F.I.SH" style="min-width: 16rem">
+        <Column field="name" style="min-width: 100px; width: 300px">
+          <template #header>
+            <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
+              F.I.SH
+            </div>
+          </template>
           <template #body="slotProps">
             <div
               class="
                 text-sm
                 sm:text-sm
-                md:text-md
-                lg:text-lg
-                xl:text-lg
+                md:text-sm
+                lg:text-base
+                xl:text-base
                 font-medium
                 hover:text-blue-500
                 cursor-pointer
-                
               "
               v-tooltip.bottom="`Tahrirlash`"
               @click="goPush(slotProps.data.id)"
@@ -304,9 +350,14 @@
           </template>
         </Column>
 
-        <Column header="Lavozimi" style="min-width: 20rem">
+        <Column style="min-width: 200px">
+          <template #header>
+            <div class="text-800 font-semibold">Lavozimi</div>
+          </template>
           <template #body="slotProps">
-            <div class="text-sm sm:text-sm md:text-md lg:text-lg xl:text-lg">
+            <div
+              class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base"
+            >
               {{
                 slotProps.data.staff
                   ? slotProps.data.staff.staff_full
@@ -315,15 +366,20 @@
             </div>
           </template>
         </Column>
-        <Column header="Bo'lim nomi" style="min-width: 16rem">
+        <Column style="min-width: 120px; width: 180px">
+          <template #header>
+            <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
+              Bo'lim nomi
+            </div>
+          </template>
           <template #body="slotProps">
             <div
               class="
                 text-sm
                 sm:text-sm
-                md:text-md
-                lg:text-lg
-                xl:text-lg
+                md:text-sm
+                lg:text-base
+                xl:text-base
                 font-medium
               "
             >
@@ -332,21 +388,28 @@
           </template>
         </Column>
 
-        <Column :exportable="false" style="min-width: 6rem">
+        <Column :exportable="false" style="min-width: 100px; width: 100px">
+          <template #header>
+            <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
+              Amallar
+            </div>
+          </template>
           <template #body="slotProps">
-            <div class="flex w-full">
-              <Button
-                icon="pi pi-id-card"
-                class="p-button-rounded p-button-info mr-2"
+            <div class="flex w-full align-items-center gap-2">
+              <download-button
+                :color="'bg-primary active:bg-primary'"
+                :border="'border-1 border-primary border-round'"
                 v-tooltip.left="`Ma'lumotlarni ko'rish`"
+                :icon="'pi pi-id-card'"
                 @click="goPushDetails(slotProps.data.id)"
-              />
-              <Button
-                icon="pi pi-cloud-download"
-                class="p-button-rounded p-button-success"
-                v-tooltip.left="`Ma'lumotnomani yuklash`"
+              ></download-button>
+              <download-button
+                v-tooltip.left="`Ma'lumotlarni yuklash`"
+                :color="'bg-green-600 active:bg-green-600'"
+                :border="'border-1 border-green-600 border-round'"
+                :icon="'pi pi-cloud-download'"
                 @click="DowloadResume(slotProps.data.id)"
-              />
+              ></download-button>
             </div>
           </template>
         </Column>
@@ -374,19 +437,20 @@
       ></word-template>
       <employee-details ref="show_resume"></employee-details>
       <export-panel ref="export_to_excel"></export-panel>
-      
     </div>
   </div>
 </template>
 <script>
 import TablePagination from "../components/Pagination/TablePagination.vue";
+import DownloadButton from "@/components/buttons/DownloadButton";
 import organizationsService from "../service/servises/organizationsService";
 import employeeService from "../service/servises/employeeService";
 import EmployeeLoader from "../components/loaders/EmployeeLoader.vue";
 import SearchNotFoundPage from "../components/EmptyComponent/SearchNotFoundPage.vue";
 import WordTemplate from "../components/Eksport/WordTemplate.vue";
 import EmployeeDetails from "../components/partEmployee/EmployeeDetails.vue";
-import ExportPanel from '@/components/Eksport/ExportPanel'
+import ExportPanel from "../components/Eksport/ExportPanel.vue";
+import BreadCrumb from "../components/BreadCrumb/BreadCrumb.vue";
 export default {
   components: {
     EmployeeLoader,
@@ -394,7 +458,9 @@ export default {
     SearchNotFoundPage,
     WordTemplate,
     EmployeeDetails,
+    DownloadButton,
     ExportPanel,
+    BreadCrumb,
   },
   data() {
     return {
@@ -456,15 +522,12 @@ export default {
         age_end: null,
         birth_region_id: null,
       },
-
-     
     };
   },
-  watch:{
-    exportOptions(value){
+  watch: {
+    exportOptions(value) {
       console.log(value);
-    }
-
+    },
   },
   methods: {
     // get Employee function
@@ -646,7 +709,7 @@ export default {
       this.loadingtable = item;
     },
     controlExportDialog(item) {
-      this.$refs.export_to_excel.controlPanel(true, this.organization)
+      this.$refs.export_to_excel.controlPanel(true, this.organization);
     },
   },
   created() {
@@ -656,6 +719,7 @@ export default {
     this.get_getRegions();
     this.get_getVacations();
     this.get_Stuffs();
+    console.log(this.$route);
   },
 };
 </script>
@@ -665,7 +729,8 @@ table {
   width: 100%;
 }
 
-td, th {
+td,
+th {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;

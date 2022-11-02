@@ -173,8 +173,7 @@ export default {
     }
     .p-menuitem-text{
       color: #aeb2b5 !important;
-      text-transform: uppercase;
-      font-weight: 500;
+      font-weight: 400 !important;
     }
   .p-menuitem-link:hover{
     background: #185491e0 !important;

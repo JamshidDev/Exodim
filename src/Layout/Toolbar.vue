@@ -1,15 +1,24 @@
 <template >
   <div class="fixed top-0 left-0 w-full z_index_top">
-    <Toolbar class="custom_bg px-4  pb-2 pt-2">
+    <Toolbar class="custom_bg px-4  pb-2 pt-2" :class="[isDark? 'custom_bg-dark' : 'custom_bg ' ]">
       <template #start>
-        <Button
+        <!-- <Button
         v-show="!get_menuType"
           icon="pi pi-bars"
           class="p-button-rounded p-button-outlined p-button-secondary p-button-sm p-0"
           @click="controlNavbar()"
           
-        />
-        <img v-show="get_menuType"   @click="poshGo()" class="logo-picture cursor-pointer pl-2" src="https://railway.uz/local/templates/main_v2/img/logo.webp" alt="">
+        /> -->
+        <div class="sidebar_control_btn cursor-pointer flex align-items-center" :class="(sidebarActive && SCREEN_WIDTH>991)? 'right_btn' : ''"  @click="controlNavbar()">
+          <i class="pi text-xl font-medium" :class="[sidebarActive? 'pi-angle-left' : 'pi-angle-right']"></i>
+        </div>
+
+        <div class="search_bar ml-4 hidden xl:inline">
+          <i class="pi pi-search"></i>
+          <input type="search" placeholder="Qidirish...">
+        </div>
+
+        <!-- <img v-show="get_menuType"   @click="poshGo()" class="logo-picture cursor-pointer pl-2" src="https://railway.uz/local/templates/main_v2/img/logo.webp" alt=""> -->
       </template>
 
       <template #end>
@@ -102,6 +111,8 @@ import EventBus from "../util/appEventBus.js";
 export default {
   data() {
     return {
+      isDark:false,
+      sidebarActive:false,
       items: [
         {
           label: "Kabinet",
@@ -249,7 +260,7 @@ export default {
     };
   },
   computed:{
-    ...mapGetters(["get_menuType"]),
+    ...mapGetters(["get_menuType", "get_darkTheme", "get_Sidebar"]),
   },
   methods: {
     toggle(event) {
@@ -271,21 +282,86 @@ export default {
       return localStorage.getItem("admin_avatar")? localStorage.getItem("admin_avatar") : 'https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg'
     }
   },
+  watch:{
+    get_darkTheme(dark){
+      this.isDark = dark
+    },
+    get_Sidebar(item){
+      this.sidebarActive = item
+    }
+  },
   created(){
+    this.sidebarActive = this.get_Sidebar;
     let dark = JSON.parse(localStorage.getItem('theme-dark'))
     if(dark){
       this.changeTheme("bootstrap4-dark-blue", true);
+      this.isDark = true
     }
     
   }
 };
 </script>
 <style lang="scss" scoped>
+
+.sidebar_control_btn{
+  transition: all .3s ease-out ;
+ margin-left: 3px ;
+ border: 1px solid #313a46;
+ border-radius: 40px;
+ padding: 4px 16px;
+ background-color: #313a46 !important;
+ height: 36px !important;
+ &> i{
+  color: #aeb2b5;
+ }
+
+}
+.right_btn{
+  margin-left: 253px !important;
+}
 .custom_bg{
-  background-color: #313a46 !important;
+  background-color: #eff3f8 !important;
   border-radius:0px !important;
-  border: 1px solid #313a46;
+  border: 1px solid #eff3f8;
   min-height: 62px;
+}
+.custom_bg-dark{
+  background-color:#20262e !important;
+  border-radius:0px !important;
+  border: 1px solid #20262e;
+  min-height: 62px;
+  &> i{
+    color: #aeb2b5 !important;
+  }
+ 
+}
+
+.search_bar{
+ width: 400px;
+ overflow:hidden ;
+ display: flex;
+ padding: 0px 12px;
+ border: 1px solid #ced4da;
+ position: relative !important;
+ background-color: #fff;
+ border-radius: 40px;
+ height: 36px !important;
+ &>i{
+  position: absolute;
+  top: 10px;
+  left: 10px;
+ }
+ &> input{
+  border: none;
+  background-color: transparent;
+  width: calc(100% - 20px) ;
+  min-height: 100% !important;
+  margin-left: 20px;
+ }
+ &> input:focus{
+  outline: none;
+ }
+
 }
 .z_index_top {
   z-index: 998 !important;

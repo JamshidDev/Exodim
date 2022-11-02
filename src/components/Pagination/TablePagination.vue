@@ -4,28 +4,32 @@
       v-model:first="currentPage"
       v-model:rows="page_count"
       :totalRecords="total_page"
-      class="py-0 w-full"
+      class="py-0 w-full text-base"
       style="background: transparent"
       template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport"
       @page="changePagination($event)"
     >
       >
       <template #start>
+        <span class="pr-2">Sahifaning</span>
         <InputText
           type="text"
           v-model.trim="enter_page_value"
           v-maska="'####'"
-          class="w-5rem"
+          class="w-5rem p-inputtext-sm"
           @keyup.enter="enter_page()"
-        />
+        /> <span class="pl-2"> o'tish</span>
       </template>
       <template #end>
+        <span class="pr-2 text-sm">Ma'lumotlarni</span>
         <Dropdown
+        class=" m-0 p-0 p-inputtext-sm"
           v-model="row_page_drop"
           :options="row_per_page"
           optionLabel="name"
           @change="changeRowPage"
         />
+        <span class="pl-2 text-sm">dan ko'rish</span>
       </template>
     </Paginator>
   </div>
