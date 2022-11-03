@@ -1,10 +1,23 @@
 <template >
-  <div class="grid">
+  <div class="grid px-3">
     <!-- header search dropdown -->
     <div class="col-12">
-      <div class="grid  py-2 px-2 border-round-md">
-        <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3 p-fluid">
-          <h6>
+      <div class="grid">
+        <div class="col-12 pb-0">
+          <bread-crumb :breadCump="[{name:'Statistika', path:'/admin/statistic'}]"></bread-crumb>
+        </div>
+        <div class="col-12 y-0 py-0">
+          <span class="text-2xl font-semibold"
+            >Statistika
+           
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="grid  py-2 px-2 border-round-md px-0">
+        <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3 p-fluid px-0">
+          <h6 class="mb-1 xl:text-base lg:text-base text-sm">
             Katta korxonalar -
             {{
               bigOrganizationList.length
@@ -17,7 +30,6 @@
             v-model="bigOrgValue"
             :options="bigOrganizationList"
             optionLabel="name"
-            class="xl:p-inputtext-sm"
             :filter="true"
             placeholder="Tanlang"
             emptyMessage="Hech narsa topilmadi"
@@ -40,7 +52,7 @@
           </Dropdown>
         </div>
         <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
-          <h6>
+          <h6 class="mb-1 xl:text-base lg:text-base text-sm">
             Korxonalar -
             {{
               organizations.length
@@ -79,7 +91,7 @@
           </Dropdown>
         </div>
         <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
-          <h6>
+          <h6 class="mb-1 xl:text-base lg:text-base text-sm">
             Bo'limlar va bekatlar-
             {{
               departmentList.length
@@ -118,19 +130,12 @@
           </Dropdown>
         </div>
         <div class="col-12 md:col-6 lg:col-3 xl:col-3 flex">
-          <div class="w-10">
-            <Button
+           <Button
               icon="pi pi-search"
               label="Qidiruv"
-              class="p-button-secondary w-full mt-5"
+              class="p-button-secondary w-full mt-4"
             />
-          </div>
-          <div class="w-2">
-            <Button
-              icon="pi pi-align-center"
-              class="p-button-text w-full mt-5 p-button-sm p-button-secondary"
-            />
-          </div>
+         
         </div>
       </div>
     </div>
@@ -641,515 +646,6 @@
         </div>
         </div>
 
-        <!-- Second section information -->
-        <!-- <div class="col-12 md:col-6 lg:col-6 xl:col-12">
-          <div class="card surface-0 shadow-1">
-            <div class="card p-4 pb-6">
-              <Divider align="center" type="dashed">
-                <div class="font-medium text-500">Diagrammalar orqali</div>
-              </Divider>
-              <div class="grid">
-                <div class="col-12 xl:col-6">
-                  <div class="flex justify-content-center">
-                    <Knob
-                      size="180"
-                      v-model="allManChart"
-                      valueTemplate="{value}%"
-                      readonly
-                      valueColor="MediumTurquoise"
-                      rangeColor="SlateGray"
-                      textColor="MediumTurquoise"
-                    />
-                  </div>
-                  <h5 class="text-center my-0">{{ allManCadries }}</h5>
-                  <h6 class="text-center mt-0">Erkaklar soni</h6>
-                </div>
-                <div class="col-12 xl:col-6">
-                  <div class="flex justify-content-center">
-                    <Knob
-                      size="180"
-                      v-model="allWomanChart"
-                      valueTemplate="{value}%"
-                      readonly
-                      valueColor="MediumTurquoise"
-                      rangeColor="SlateGray"
-                      textColor="MediumTurquoise"
-                    />
-                  </div>
-                  <h5 class="text-center my-0">{{ allWomanCadries }}</h5>
-                  <h6 class="text-center mt-0">Ayollar soni</h6>
-                </div>
-                <div class="col-12 xl:col-6">
-                  <div class="flex justify-content-center">
-                    <Knob
-                      size="180"
-                      v-model="pensionsManChart"
-                      valueTemplate="{value}%"
-                      readonly
-                      valueColor="MediumTurquoise"
-                      rangeColor="SlateGray"
-                      textColor="MediumTurquoise"
-                    />
-                  </div>
-                  <h5 class="text-center my-0">{{ pensionsMan }}</h5>
-                  <h6 class="text-center mt-0">Nafaqa yoshidagi erkaklar</h6>
-                </div>
-                <div class="col-12 xl:col-6">
-                  <div class="flex justify-content-center">
-                    <Knob
-                      size="180"
-                      v-model="pensionWomanChart"
-                      valueTemplate="{value}%"
-                      readonly
-                      valueColor="MediumTurquoise"
-                      rangeColor="SlateGray"
-                      textColor="MediumTurquoise"
-                    />
-                  </div>
-                  <h5 class="text-center my-0">{{ pensionWoman }}</h5>
-                  <h6 class="text-center mt-0">Nafaqa yoshidagi ayollar</h6>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> -->
-
-        <!-- Third section information -->
-        <!-- <div class="col-12 md:col-6 lg:col-6 xl:col-4">
-          <div class="card surface-0 shadow-1">
-            <div class="card p-4 pb-6">
-              <Divider align="center" type="dashed">
-                <div class="font-medium text-500">Diagrammalar orqali</div>
-              </Divider>
-              <div class="grid">
-                <div class="col-12 xl:col-6">
-                  <div class="flex justify-content-center">
-                    <Knob
-                      size="180"
-                      v-model="allCadry30Chart"
-                      valueTemplate="{value}%"
-                      readonly
-                      valueColor="MediumTurquoise"
-                      rangeColor="SlateGray"
-                      textColor="MediumTurquoise"
-                    />
-                  </div>
-                  <h5 class="text-center my-0">{{ allCadry30 }}</h5>
-                  <h6 class="text-center mt-0">30 yoshdan kichiklar</h6>
-                </div>
-                <div class="col-12 xl:col-6">
-                  <div class="flex justify-content-center">
-                    <Knob
-                      size="180"
-                      v-model="allCadry3045Chart"
-                      valueTemplate="{value}%"
-                      readonly
-                      valueColor="MediumTurquoise"
-                      rangeColor="SlateGray"
-                      textColor="MediumTurquoise"
-                    />
-                  </div>
-                  <h5 class="text-center my-0">{{ allCadry3045 }}</h5>
-                  <h6 class="text-center mt-0">30 - 45 yoshlilar</h6>
-                </div>
-                <div class="col-12 xl:col-6">
-                  <div class="flex justify-content-center">
-                    <Knob
-                      size="180"
-                      v-model="allCadry45Chart"
-                      valueTemplate="{value}%"
-                      readonly
-                      valueColor="MediumTurquoise"
-                      rangeColor="SlateGray"
-                      textColor="MediumTurquoise"
-                    />
-                  </div>
-                  <h5 class="text-center my-0">{{ allCadry45 }}</h5>
-                  <h6 class="text-center mt-0">45 yoshdan kattalar</h6>
-                </div>
-                <div class="col-12 xl:col-6">
-                  <div class="flex justify-content-center">
-                    <Knob
-                      size="180"
-                      v-model="alleducation_oliyChart"
-                      valueTemplate="{value}%"
-                      readonly
-                      valueColor="MediumTurquoise"
-                      rangeColor="SlateGray"
-                      textColor="MediumTurquoise"
-                    />
-                  </div>
-                  <h5 class="text-center my-0">{{ alleducation_oliy }}</h5>
-                  <h6 class="text-center mt-0">Oliy ma'lumotlilar</h6>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> -->
-
-        <!-- First section information -->
-        <!-- <div class="col-12 md:col-12 lg:col-12 xl:col-4">
-          <div class="card surface-0 shadow-1">
-            <div class="card p-4 pb-0">
-              <Divider align="center" type="dashed">
-                <div class="font-medium text-blue-600">Bugun</div>
-              </Divider>
-              <div
-                class="
-                  flex
-                  justify-content-between
-                  border-bottom-1 border-300
-                  pb-2
-                  mb-2
-                "
-              >
-                <div
-                  class="
-                    font-semibold
-                    text-base
-                    pl-1
-                    hover:text-blue-500
-                    cursor-pointer
-                  "
-                  @click="statisticShow(102)"
-                >
-                  Ishga qabul qilinganlar
-                </div>
-                <div class="text-xl text-600 font-semibold pr-1">
-                  <span class="text-green-500">{{ allNewCadries }}</span
-                  >/{{ allCadries }}
-                </div>
-              </div>
-              <div
-                class="
-                  flex
-                  justify-content-between
-                  border-bottom-1 border-300
-                  pb-2
-                  mb-2
-                "
-              >
-                <div
-                  class="
-                    font-semibold
-                    text-base
-                    pl-1
-                    hover:text-blue-500
-                    cursor-pointer
-                  "
-                  @click="statisticShow(102)"
-                >
-                  Faoliyati yakunlangan xodimlar
-                </div>
-                <div class="text-xl text-600 font-semibold pr-1">
-                  <span class="text-red-500">{{ allDeleteCadries }}</span
-                  >/{{ allCadries }}
-                </div>
-              </div>
-              <div
-                class="
-                  flex
-                  justify-content-between
-                  border-bottom-1 border-300
-                  pb-2
-                  mb-2
-                "
-              >
-                <div
-                  class="
-                    font-semibold
-                    text-base
-                    pl-1
-                    hover:text-blue-500
-                    cursor-pointer
-                  "
-                  @click="statisticShow(102)"
-                >
-                  Tug'ulgan kunlar
-                </div>
-                <div class="text-xl text-600 font-semibold pr-1">
-                  <span class="text-yellow-500">{{ allBirthdayCadries }}</span
-                  >/{{ allCadries }}
-                </div>
-              </div>
-            </div>
-
-            <div class="card p-4 py-0">
-              <Divider align="center" type="dashed">
-                <div class="font-medium text-600">Umumiy</div>
-              </Divider>
-              <div
-                class="
-                  flex
-                  justify-content-between
-                  border-bottom-1 border-300
-                  pb-2
-                  mb-2
-                "
-              >
-                <div
-                  class="
-                    font-semibold
-                    text-700
-                    hover:text-blue-500
-                    cursor-pointer
-                    text-base
-                    pl-1
-                  "
-                  @click="statisticShow(102)"
-                >
-                  Tibbiy ko'rik (o'tganlar)
-                </div>
-                <div class="text-xl text-600 font-semibold pr-1">
-                  <span class="text-green-500">{{
-                    allCadries - medical_examinations
-                  }}</span
-                  >/{{ allCadries }}
-                </div>
-              </div>
-
-              <div
-                class="
-                  flex
-                  justify-content-between
-                  border-bottom-1 border-300
-                  pb-2
-                  mb-2
-                "
-              >
-                <div
-                  class="
-                    font-semibold
-                    text-600
-                    hover:text-blue-500
-                    cursor-pointer
-                    text-base
-                    pl-1
-                  "
-                  @click="statisticShow(102)"
-                >
-                  Tibbiy ko'rik (o'tmaganlar)
-                </div>
-                <div class="text-xl text-600 font-semibold pr-1">
-                  <span class="text-red-500">{{ medical_examinations }}</span
-                  >/{{ allCadries }}
-                </div>
-              </div>
-
-              <div
-                class="
-                  flex
-                  justify-content-between
-                  border-bottom-1 border-300
-                  pb-2
-                  mb-2
-                "
-              >
-                <div
-                  class="
-                    font-semibold
-                    text-600
-                    hover:text-blue-500
-                    cursor-pointer
-                    text-base
-                    pl-1
-                  "
-                  @click="statisticShow(102)"
-                >
-                  Mehnat ta'tilidagi xodimlar
-                </div>
-                <div class="text-xl text-600 font-semibold pr-1">
-                  <span class="text-yellow-500">{{ vacations }}</span
-                  >/{{ allCadries }}
-                </div>
-              </div>
-              <div
-                class="
-                  flex
-                  justify-content-between
-                  border-bottom-1 border-300
-                  pb-2
-                  mb-2
-                "
-              >
-                <div
-                  class="
-                    font-semibold
-                    text-600
-                    hover:text-blue-500
-                    cursor-pointer
-                    text-base
-                    pl-1
-                  "
-                  @click="statisticShow(102)"
-                >
-                  Bola parvarishidagi xodimlar
-                </div>
-                <div class="text-xl text-600 font-semibold pr-1">
-                  <span class="text-yellow-500">{{ vacations_Dec }}</span
-                  >/{{ allCadries }}
-                </div>
-              </div>
-              <div
-                class="
-                  flex
-                  justify-content-between
-                  border-bottom-1 border-300
-                  pb-2
-                  mb-2
-                "
-              >
-                <div
-                  class="
-                    font-semibold
-                    text-600
-                    hover:text-blue-500
-                    cursor-pointer
-                    text-base
-                    pl-1
-                  "
-                  @click="statisticShow(102)"
-                >
-                  Intizomiy jazolanganlar
-                </div>
-                <div class="text-xl text-600 font-semibold pr-1">
-                  <span class="text-red-500">00</span>/{{ allCadries }}
-                </div>
-              </div>
-              <div
-                class="
-                  flex
-                  justify-content-between
-                  border-bottom-1 border-300
-                  pb-2
-                  mb-2
-                "
-              >
-                <div
-                  class="
-                    font-semibold
-                    text-600
-                    hover:text-blue-500
-                    cursor-pointer
-                    text-base
-                    pl-1
-                  "
-                  @click="statisticShow(102)"
-                >
-                  Rag'batlantirilganlar
-                </div>
-                <div class="text-xl text-600 font-semibold pr-1">
-                  <span class="text-yellow-500">00</span>/{{ allCadries }}
-                </div>
-              </div>
-              <div
-                class="
-                  flex
-                  justify-content-between
-                  border-bottom-1 border-300
-                  pb-2
-                  mb-2
-                "
-              >
-                <div
-                  class="
-                    font-semibold
-                    text-600
-                    hover:text-blue-500
-                    cursor-pointer
-                    text-base
-                    pl-1
-                  "
-                  @click="statisticShow(102)"
-                >
-                  Ilmiy darajali xodimlar
-                </div>
-                <div class="text-xl text-600 font-semibold pr-1">
-                  <span class="text-yellow-500">00</span>/{{ allCadries }}
-                </div>
-              </div>
-              <div
-                class="
-                  flex
-                  justify-content-between
-                  border-bottom-1 border-300
-                  pb-2
-                  mb-2
-                "
-              >
-                <div
-                  class="
-                    font-semibold
-                    text-600
-                    hover:text-blue-500
-                    cursor-pointer
-                    text-base
-                    pl-1
-                  "
-                  @click="statisticShow(102)"
-                >
-                  Ilmiy unvonli xodimlar
-                </div>
-                <div class="text-xl text-600 font-semibold pr-1">
-                  <span class="text-yellow-500">00</span>/{{ allCadries }}
-                </div>
-              </div>
-              <div
-                class="
-                  flex
-                  justify-content-between
-                  border-bottom-1 border-300
-                  pb-2
-                  mb-2
-                "
-              >
-                <div
-                  class="
-                    font-semibold
-                    text-600
-                    hover:text-blue-500
-                    cursor-pointer
-                    text-base
-                    pl-1
-                  "
-                  @click="statisticShow(102)"
-                >
-                  Rag'batlantirilganlar
-                </div>
-                <div class="text-xl text-600 font-semibold pr-1">
-                  <span class="text-yellow-500">00</span>/{{ allCadries }}
-                </div>
-              </div>
-              <div
-                class="
-                  flex
-                  justify-content-between
-                  border-bottom-1 border-300
-                  pb-2
-                  mb-2
-                "
-              >
-                <div
-                  class="
-                    font-semibold
-                    text-600
-                    hover:text-blue-500
-                    cursor-pointer
-                    text-base
-                    pl-1
-                  "
-                  @click="statisticShow(102)"
-                >
-                  Qora ro'yhatdagilar
-                </div>
-                <div class="text-xl text-600 font-semibold pr-1">
-                  <span class="text-red-500">{{ BlackList }}</span
-                  >/{{ allCadries }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> -->
       </div>
     </div>
     <div class="col-12" v-show="loading">
@@ -1161,8 +657,9 @@
 import StatisticSkeleton from "../components/loaders/StatisticSkeleton.vue";
 import organizationsService from "../service/servises/organizationsService";
 import globalStatistic from "@/service/servises/globalStatistic";
+import BreadCrumb from "../components/BreadCrumb/BreadCrumb.vue";
 export default {
-  components: { StatisticSkeleton },
+  components: { StatisticSkeleton, BreadCrumb },
 
   data() {
     return {
