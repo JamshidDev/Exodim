@@ -365,7 +365,7 @@ export default {
           this.$toast.add({
         severity: "warn",
         summary: "Ruxsat etilmadi",
-        detail: "Xodimlar mavjud",
+        detail: "Bo'lim mavjud",
         life: 2000,
       });
         })

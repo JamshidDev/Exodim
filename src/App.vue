@@ -8,9 +8,21 @@
 <script>
 import LayoutVue from "./Layout/Layout.vue";
 import EventBus from "./util/appEventBus.js";
+import { mapActions } from "vuex";
 export default {
   components: {
     LayoutVue,
+  },
+  methods:{
+    ...mapActions(["set_appScrollX", "set_appScrollY", "set_screenWidth", "set_screenHeight"]),
+    handleScroll() {
+      this.set_appScrollX(window.scrollX);
+      this.set_appScrollY(window.scrollY);
+    },
+    reportWindowSize(event) {
+      this.set_screenWidth(event.currentTarget.innerWidth);
+      this.set_screenHeight(event.currentTarget.innerHeight);
+    },
   },
   themeChangeListener: null,
   mounted() {
@@ -45,6 +57,14 @@ export default {
   },
   beforeUnmount() {
     EventBus.off("theme-change", this.themeChangeListener);
+  },
+  created() {
+    window.addEventListener("scroll", this.handleScroll);
+    window.addEventListener("resize", this.reportWindowSize);
+  },
+  destroyed() {
+    window.removeEventListener("scroll", this.handleScroll);
+    window.addEventListener("resize", this.reportWindowSize);
   },
 };
 </script>

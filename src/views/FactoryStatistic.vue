@@ -8,7 +8,7 @@
             Katta korxonalar -
             {{
               bigOrganizationList.length
-                ? bigOrganizationList.length - 1
+                ? bigOrganizationList.length
                 : bigOrganizationList.length
             }}
           </h6>

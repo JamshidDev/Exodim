@@ -71,7 +71,6 @@ export const globalValidate = {
   },
   positionAmount:{
     required,
-    minLength: minLength(4)
   },
   positionFirstDate:{
     required,

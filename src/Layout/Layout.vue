@@ -56,7 +56,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["get_menuType", "get_Sidebar"]),
+    ...mapGetters(["get_menuType", "get_Sidebar", "get_screenWidth"]),
     layoutClass() {
       return [
         "layout-wrapper",
@@ -85,6 +85,13 @@ export default {
         this.actionSidebar(false)
         this.sidebar= false
       }
+    },
+    get_screenWidth(screen_width){
+      if(screen_width<this.mobile_screen_width){
+        this.sidebar = false; 
+      this.actionSidebar(false)
+      }
+      
     }
   },
 
@@ -99,7 +106,13 @@ export default {
     },
   },
   created(){
-    this.sidebar = this.get_Sidebar; 
+    if(this.get_screenWidth>= this.mobile_screen_width){
+      this.sidebar = this.get_Sidebar; 
+    }else{
+      this.sidebar = this.get_Sidebar; 
+      this.mobile_active = this.get_Sidebar;
+    }
+    
   }
 };
 </script>

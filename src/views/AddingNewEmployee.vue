@@ -443,7 +443,6 @@
                 class="w-full"
                 placeholder="Stavkani kiriting"
                 id="adressStreet"
-                v-maska="'#.##'"
                 v-model="v$.positionAmount.$model"
                 :class="{ 'p-invalid': v$.positionAmount.$invalid && submitted }"
               />
@@ -636,7 +635,7 @@
         </div>
       </div>
     </div>
-    <div class="col">
+    <div class="col-12">
       <Dialog
           v-model:visible="cropperDialog"
           :style="{ width: '380px' }"
@@ -708,7 +707,6 @@ export default {
     const v$ = useVuelidate();
     return { v$ };
   },
-
   data() {
     return {
       Formatter,

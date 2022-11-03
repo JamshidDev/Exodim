@@ -3,7 +3,7 @@
     <div class="col-12">
       <div class="grid">
         <div class="col-12 pb-0">
-          <bread-crumb></bread-crumb>
+          <bread-crumb :breadCump="[{name:'Xodimlar', path:'/admin/partemployee'}]"></bread-crumb>
         </div>
         <div class="col-12 y-0 py-0">
           <span class="text-2xl font-semibold"
@@ -21,7 +21,7 @@
           <InputText
             type="text"
             v-model="organization.first_name"
-            class="w-full font-semibold p-inputtext-sm"
+            class="w-full p-inputtext-sm"
             placeholder="Ismni kiriting"
             @keyup.enter="searchBtn()"
           />
@@ -31,8 +31,8 @@
           <InputText
             type="text"
             v-model="organization.last_name"
-            class="w-full font-semibold p-inputtext-sm"
-            placeholder="Familiya kiriting"
+            class="w-full p-inputtext-sm"
+            placeholder="Familiyani kiriting"
             @keyup.enter="searchBtn()"
           />
         </div>
@@ -316,7 +316,7 @@
             <div class="flex justify-content-center">
               <Image
                 :src="slotProps.data.photo"
-                :alt="slotProps.data.fullname"
+              alt="Rasm yo'q"
                 width="30"
                 height="30"
                 preview
@@ -366,7 +366,7 @@
             </div>
           </template>
         </Column>
-        <Column style="min-width: 120px; width: 180px">
+        <Column style="min-width:120px; width:180px">
           <template #header>
             <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
               Bo'lim nomi

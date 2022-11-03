@@ -75,7 +75,7 @@ const delete_CadryUniversity = (payload)=>{
 }
 
 const remove_Cadry = (payload)=>{
-    return axios.delete(`/api/organization/cadry/${payload.id}/delete`, payload.data)
+    return axios.post(`/api/organization/cadry/${payload.id}/delete`, payload.data)
 }
 
 const delete_CadryStuff = (payload)=>{

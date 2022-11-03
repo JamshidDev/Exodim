@@ -77,6 +77,7 @@ import TabMenu from 'primevue/tabmenu';
 import TabView from 'primevue/tabview';
 import TabPanel from 'primevue/tabpanel';
 import Rating from 'primevue/rating';
+import ProgressBar from 'primevue/progressbar';
 
 
 
@@ -179,6 +180,8 @@ app.component("TabView", TabView);
 app.component("TabPanel", TabPanel);
 app.component("TabMenu", TabMenu);
 app.component("Rating", Rating);
+app.component("ProgressBar", ProgressBar);
+
 
 
 
