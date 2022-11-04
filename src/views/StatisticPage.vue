@@ -191,7 +191,7 @@
               <div
                 class="shadow-1 all_vakant_card p-4 relative border-round-md"
               >
-                <div class="absolute" @click="statisticShow(145)">
+                <div class="absolute" @click="goList(1)">
                   <i
                     class="
                       pi pi-eye
@@ -223,7 +223,7 @@
             <!-- All sverx -->
             <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
               <div class="all_sverx_card shadow-1 p-4 relative border-round-md">
-                <div class="absolute" @click="statisticShow(145)">
+                <div class="absolute" @click="goList(3)">
                   <i
                     class="
                       pi pi-eye
@@ -285,35 +285,6 @@
                 <h6 class="text-center text-white mt-1">Shtat birligi</h6>
               </div>
             </div>
-
-            <!-- All kasanachi -->
-            <!-- <div class="col-12 sm:col-12 md:col-6 lg:col-2 xl:col-2">
-              <div class="all_other_card shadow-1 p-4 relative border-round-md">
-                <div class="absolute " @click="statisticShow(145)">
-                  <i class="pi pi-eye text-2xl text-white cursor-pointer font-medium"></i>
-                </div>
-                <div class="w-full flex justify-content-center">
-                  <img width="40" height="50" src="https://railway.uz/local/templates/main_v2/img/logo.webp" alt="">
-                </div>
-                <h2
-                  class="
-                    text-center
-                    xl:text-6xl
-                    lg:text-3xl
-                    md:text-5xl
-                    sm:text-5xl
-                    text-6xl text-white
-                    font-bold
-                    mb-0
-                  "
-                >
-                  {{ formatNumber(allContract) }}
-                </h2>
-                <h6 class="text-center text-white mt-1">Kasanachilar</h6>
-              </div>
-            </div> -->
-
-            <!-- All notebook -->
           </div>
         </div>
 
@@ -336,10 +307,10 @@
             </div>
             <Divider class="mt-2 mb-1" />
             <div class="col-12 pb-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase text-lg my-2">Erkakalar - <span class="font-bold text-lg text-blue-500">{{this.allManCadries}}</span> </h6>   <Tag class="px-2 text-sm" rounded :value="`${allManChart}%`"></Tag>
+              <h6 class="uppercase  xl:text-base my-2 font-semibold">Erkakalar - <span class="font-bold text-lg text-blue-500">{{this.allManCadries}}</span> </h6>   <Tag class="px-2 text-sm" rounded :value="`${allManChart}%`"></Tag>
             </div>
             <div class="col-12 pt-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase text-lg my-2">Ayollar - <span class="font-bold text-lg text-green-500">{{this.allWomanCadries}}</span> </h6>  <Tag class="px-2 text-sm" rounded severity="success" :value="`${allWomanChart}%`"></Tag>
+              <h6 class="uppercase  xl:text-base my-2 font-semibold">Ayollar - <span class="font-bold text-lg text-green-500">{{this.allWomanCadries}}</span> </h6>  <Tag class="px-2 text-sm" rounded severity="success" :value="`${allWomanChart}%`"></Tag>
             </div>
            
           </div>
@@ -351,7 +322,7 @@
                 >Nafaqa yoshidagi xodimlar</span
               >
             </div>
-            <div class="col-2 flex justify-content-end">
+            <div class="col-2 flex justify-content-end" @click="goList(4)" >
               <i
                 class="
                   pi pi-eye
@@ -515,8 +486,9 @@
                 >Bugungi tu'gilgan kunlar</span
               >
             </div>
-            <div class="col-2 flex justify-content-end">
+            <div class="col-2 flex justify-content-end" @click="goList(2)">
               <i
+              
                 class="
                   pi pi-eye
                   text-lg text-blue-600
@@ -724,6 +696,8 @@ export default {
       allNewCadriesChart:0,
       allDeleteCadriesChart:0,
       BlackListChart:0,
+      careersCount:0,
+      relativesCount:0,
 
 
 
@@ -892,7 +866,7 @@ export default {
           this.allIronNote = 0;
           this.allManCadries = res.data.all_man_cadries;
           this.allWomanCadries = res.data.all_woman_cadries;
-          this.pensionWoman = res.data.retired_Woman;
+          this.pensionWoman = res.data.retired_WoMan;
           this.pensionsMan = res.data.retired_Man;
           this.allNewCadries = res.data.newcadries;
           this.allDeleteCadries = res.data.delete_cadries;
@@ -1160,6 +1134,25 @@ export default {
     onImageRightClick(event) {
       this.$refs.menu.show(event);
     },
+    goList(id){
+      if(id==1){
+        // Vacancy page
+        this.$router.push(`/admin/view/vacation/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/1`)
+      } else if(id==2){
+        // Birthday page
+        this.$router.push(`/admin/view/birthday/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/1`)
+      }
+      else if(id==3){
+        // Sverx Page
+        this.$router.push(`/admin/view/sverx/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/1`)
+      }
+      else if(id==4){
+        // Retired Page
+        this.$router.push(`/admin/view/retired/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/1`)
+      }
+      
+     
+    }
   },
   created() {
     this.controlLoader();

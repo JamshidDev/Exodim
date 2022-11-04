@@ -50,7 +50,6 @@ export default {
   data() {
     return {
       products: new Array(10),
-      selectedProducts: null,
     };
   },
 };

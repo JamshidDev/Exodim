@@ -61,6 +61,48 @@ const routes = [
         },
       },
       {
+        path: "/admin/view",
+        name: "view",
+        children: [
+          {
+            path: "/admin/view/vacation/:railway_id/:organization_id/:department_id/:global",
+            name: "ViewVacation",
+            component: function () {
+              return import(
+                /* webpackChunkName: "about" */ "../views/ViewPages/Vacanc/VakantSverxPage.vue"
+              );
+            },
+          },
+          {
+            path: "/admin/view/birthday/:railway_id/:organization_id/:department_id/:global",
+            name: "ViewBirthday",
+            component: function () {
+              return import(
+                /* webpackChunkName: "about" */ "../views/ViewPages/Birthday/BirthdayPage.vue"
+              );
+            },
+          },
+          {
+            path: "/admin/view/retired/:railway_id/:organization_id/:department_id/:global",
+            name: "ViewRetired",
+            component: function () {
+              return import(
+                /* webpackChunkName: "about" */ "../views/ViewPages/Retired/RetiredPage.vue"
+              );
+            },
+          },
+          {
+            path: "/admin/view/sverx/:railway_id/:organization_id/:department_id/:global",
+            name: "ViewSverx",
+            component: function () {
+              return import(
+                /* webpackChunkName: "about" */ "../views/ViewPages/Sverx/SverxPage.vue"
+              );
+            },
+          },
+        ],
+      },
+      {
         path: "/admin/partstatistic",
         name: "partstatistic",
         component: function () {
