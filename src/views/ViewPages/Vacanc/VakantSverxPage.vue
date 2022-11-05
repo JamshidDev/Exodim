@@ -80,10 +80,8 @@
                 hover:text-blue-500
                 cursor-pointer
               "
-              v-tooltip.bottom="`Tahrirlash`"
-              @click="goPush(slotProps.data.id)"
-            >
-              <div>{{ slotProps.data.fullname }}</div>
+            >{{ slotProps.data.organization_id.name }}
+              
             </div>
           </template>
         </Column>

@@ -60,6 +60,24 @@
               </div>
             </template>
           </Column>
+          <Column style="min-width: 50px; width: 50px">
+          <template #header>
+            <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
+              Rasm
+            </div>
+          </template>
+          <template #body="slotProps">
+            <div class="flex justify-content-center">
+              <Image
+                :src="slotProps.data.photo"
+              alt="Rasm yo'q"
+                width="30"
+                height="30"
+                preview
+              />
+            </div>
+          </template>
+        </Column>
           <Column style="min-width: 200px">
             <template #header>
               <div class="text-800 font-semibold">F.I.SH</div>
