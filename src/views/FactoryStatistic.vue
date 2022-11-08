@@ -153,17 +153,17 @@
                   border-round-md
                 "
               >
-                <div class="absolute" @click="statisticShow(145)">
-                  <i
+                <div class="absolute">
+                  <!-- <i
                     class="
                       pi pi-eye
                       text-2xl text-white
                       cursor-pointer
                       font-medium
                     "
-                  ></i>
+                  ></i> -->
                 </div>
-
+               
                 <h2
                   class="
                     text-center
@@ -176,7 +176,7 @@
                     mb-0
                   "
                 >
-                  {{ formatNumber(allCadries) }}
+                  {{ allCadries }}
                 </h2>
                 <h6 class="text-center text-white mt-1">Barcha xodimlar</h6>
               </div>
@@ -187,7 +187,7 @@
               <div
                 class="shadow-1 all_vakant_card p-4 relative border-round-md"
               >
-                <div class="absolute" @click="statisticShow(145)">
+                <div class="absolute" @click="goList(1)">
                   <i
                     class="
                       pi pi-eye
@@ -197,7 +197,7 @@
                     "
                   ></i>
                 </div>
-
+               
                 <h2
                   class="
                     text-center
@@ -210,7 +210,7 @@
                     mb-0
                   "
                 >
-                  {{ formatNumber(allVakant) }}
+                  {{ allVakant }}
                 </h2>
                 <h6 class="text-center text-white mt-1">Bo'sh ish o'rinlari</h6>
               </div>
@@ -219,7 +219,7 @@
             <!-- All sverx -->
             <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
               <div class="all_sverx_card shadow-1 p-4 relative border-round-md">
-                <div class="absolute" @click="statisticShow(145)">
+                <div class="absolute" @click="goList(3)">
                   <i
                     class="
                       pi pi-eye
@@ -229,7 +229,7 @@
                     "
                   ></i>
                 </div>
-
+                
                 <h2
                   class="
                     text-center
@@ -242,7 +242,7 @@
                     mb-0
                   "
                 >
-                  {{ formatNumber(allSverx) }}
+                  {{ allSverx }}
                 </h2>
                 <h6 class="text-center text-white mt-1">
                   Ortiqcha ish o'rinlari
@@ -253,17 +253,17 @@
             <!-- All position -->
             <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
               <div class="all_other_card shadow-1 p-4 relative border-round-md">
-                <div class="absolute" @click="statisticShow(145)">
-                  <i
+                <div class="absolute">
+                  <!-- <i
                     class="
                       pi pi-eye
                       text-2xl text-white
                       cursor-pointer
                       font-medium
                     "
-                  ></i>
+                  ></i> -->
                 </div>
-
+               
                 <h2
                   class="
                     text-center
@@ -276,7 +276,7 @@
                     mb-0
                   "
                 >
-                  {{ formatNumber(allPlan) }}
+                  {{allPlan }}
                 </h2>
                 <h6 class="text-center text-white mt-1">Shtat birligi</h6>
               </div>
@@ -284,7 +284,7 @@
           </div>
         </div>
 
-        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
+        <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-blue-600 text-sm uppercase font-semibold"
@@ -292,71 +292,33 @@
               >
             </div>
             <div class="col-2 flex justify-content-end">
-              <i
+              <!-- <i
                 class="
                   pi pi-eye
                   text-lg text-blue-600
                   cursor-pointer
                   font-medium
                 "
-              ></i>
+              ></i> -->
             </div>
             <Divider class="mt-2 mb-1" />
-            <div
-              class="
-                col-12
-                pb-0
-                flex
-                justify-content-between
-                align-items-center
-              "
-            >
-              <h6 class="uppercase text-lg my-2">
-                Erkakalar -
-                <span class="font-bold text-lg text-blue-500">{{
-                  this.allManCadries
-                }}</span>
-              </h6>
-              <Tag
-                class="px-2 text-sm"
-                rounded
-                :value="`${allManChart}%`"
-              ></Tag>
+            <div class="col-12 pb-0 flex justify-content-between align-items-center">
+              <h6 class="uppercase  xl:text-base my-2 font-semibold">Erkakalar - <span class="font-bold text-lg text-blue-500">{{this.allManCadries}}</span> </h6>   <Tag class="px-2 text-sm" rounded :value="`${allManChart}%`"></Tag>
             </div>
-            <div
-              class="
-                col-12
-                pt-0
-                flex
-                justify-content-between
-                align-items-center
-              "
-            >
-              <h6 class="uppercase text-lg my-2">
-                Ayollar -
-                <span class="font-bold text-lg text-green-500">{{
-                  this.allWomanCadries
-                }}</span>
-              </h6>
-              <Tag
-                class="px-2 text-sm"
-                rounded
-                severity="success"
-                :value="`${allWomanChart}%`"
-              ></Tag>
+            <div class="col-12 pt-0 flex justify-content-between align-items-center">
+              <h6 class="uppercase  xl:text-base my-2 font-semibold">Ayollar - <span class="font-bold text-lg text-green-500">{{this.allWomanCadries}}</span> </h6>  <Tag class="px-2 text-sm" rounded severity="success" :value="`${allWomanChart}%`"></Tag>
             </div>
+           
           </div>
         </div>
-
-
-        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
+        <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-blue-600 text-sm uppercase font-semibold"
                 >Nafaqa yoshidagi xodimlar</span
               >
             </div>
-            <div class="col-2 flex justify-content-end">
+            <div class="col-2 flex justify-content-end" @click="goList(4)" >
               <i
                 class="
                   pi pi-eye
@@ -367,60 +329,23 @@
               ></i>
             </div>
             <Divider class="mt-2 mb-1" />
-            <div
-              class="
-                col-12
-                pb-0
-                flex
-                justify-content-between
-                align-items-center
-              "
-            >
-              <h6 class="uppercase my-2 text-lg">
-                Erkakalar -
-                <span class="font-bold text-lg text-blue-500">{{
-                  this.pensionsMan
-                }}</span>
-              </h6>
-              <Tag
-                class="px-2 text-sm"
-                rounded
-                :value="`${pensionsManChart}%`"
-              ></Tag>
+            <div class="col-12 pb-0 flex justify-content-between align-items-center">
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Erkakalar - <span class="font-bold text-lg text-blue-500">{{this.pensionsMan}}</span> </h6>   <Tag class="px-2 text-sm" rounded :value="`${pensionsManChart}%`"></Tag>
             </div>
-            <div
-              class="
-                col-12
-                pt-0
-                flex
-                justify-content-between
-                align-items-center
-              "
-            >
-              <h6 class="uppercase my-2 text-lg">
-                Ayollar -
-                <span class="font-bold text-lg text-green-500">{{
-                  this.pensionWoman
-                }}</span>
-              </h6>
-              <Tag
-                class="px-2 text-sm"
-                rounded
-                severity="success"
-                :value="`${pensionWomanChart}%`"
-              ></Tag>
+            <div class="col-12 pt-0 flex justify-content-between align-items-center">
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Ayollar - <span class="font-bold text-lg text-green-500">{{this.pensionWoman}}</span> </h6>  <Tag class="px-2 text-sm" rounded severity="success" :value="`${pensionWomanChart}%`"></Tag>
             </div>
+           
           </div>
         </div>
-
-        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
+        <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
-              <span class="text-blue-600 uppercase text-sm font-semibold"
+              <span class="text-blue-600  uppercase text-sm font-semibold"
                 >Shartnomachi xodimlar</span
               >
             </div>
-            <div class="col-2 flex justify-content-end">
+            <div class="col-2 flex justify-content-end" @click="goList(7)">
               <i
                 class="
                   pi pi-eye
@@ -431,44 +356,23 @@
               ></i>
             </div>
             <Divider class="mt-2 mb-1" />
-            <div
-              class="col-12 pb-0 flex justify-content-between align-items-start"
-            >
-              <h6 class="uppercase text-lg my-2">
-                Shartnomachi -
-                <span class="font-bold text-lg text-blue-500">{{
-                  allContract
-                }}</span>
-              </h6>
+            <div class="col-12 pb-0 flex justify-content-between align-items-start">
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Shartnomachi - <span class="font-bold text-lg text-blue-500">{{allContract}}</span> </h6>   
             </div>
-            <div
-              class="
-                col-12
-                pt-0
-                flex
-                justify-content-between
-                align-items-center
-              "
-            >
-              <h6 class="my-2 text-lg">Umumiy</h6>
-              <Tag
-                class="px-2 text-sm"
-                rounded
-                severity="danger"
-                :value="`${allContractChart}%`"
-              ></Tag>
+            <div class="col-12 pt-0 flex justify-content-between align-items-center">
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${allContractChart}%`"></Tag>
             </div>
+           
           </div>
         </div>
-
-        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
+        <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-blue-600 text-sm uppercase font-semibold"
                 >Tibbiy ko'rik ma'lumotlari</span
               >
             </div>
-            <div class="col-2 flex justify-content-end">
+            <div class="col-2 flex justify-content-end"  @click="goList(11)">
               <i
                 class="
                   pi pi-eye
@@ -479,61 +383,24 @@
               ></i>
             </div>
             <Divider class="mt-2 mb-1" />
-            <div
-              class="
-                col-12
-                pb-0
-                flex
-                justify-content-between
-                align-items-center
-              "
-            >
-              <h6 class="uppercase text-lg my-2">
-                Muddati tugaganlar -
-                <span class="font-bold text-lg text-yellow-500">{{
-                  meds
-                }}</span>
-              </h6>
-              <Tag
-                class="px-2 text-sm"
-                rounded
-                severity="warning"
-                :value="`${medsChart}%`"
-              ></Tag>
+            <div class="col-12 pb-0 flex justify-content-between align-items-center">
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Muddati tugaganlar  - <span class="font-bold text-lg text-yellow-500">{{meds}}</span> </h6>   <Tag class="px-2 text-sm" rounded severity="warning" :value="`${medsChart}%`"></Tag>
             </div>
-            <div
-              class="
-                col-12
-                pt-0
-                flex
-                justify-content-between
-                align-items-center
-              "
-            >
-              <h6 class="uppercase text-lg my-2">
-                Kiritilmaganlar -
-                <span class="font-bold text-lg text-red-500">{{
-                  mednotCount
-                }}</span>
-              </h6>
-              <Tag
-                class="px-2 text-sm"
-                rounded
-                severity="danger"
-                :value="`${mednotCountChart}%`"
-              ></Tag>
+            <div class="col-12 pt-0 flex justify-content-between align-items-center">
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Kiritilmaganlar - <span class="font-bold text-lg text-red-500">{{mednotCount}}</span> </h6>  <Tag class="px-2 text-sm" rounded severity="danger" :value="`${mednotCountChart}%`"></Tag>
             </div>
+           
           </div>
         </div>
 
-        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
+        <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-blue-600 text-sm uppercase font-semibold"
                 >Ta'tildagi xodimlar</span
               >
             </div>
-            <div class="col-2 flex justify-content-end">
+            <div class="col-2 flex justify-content-end" @click="goList(10)">
               <i
                 class="
                   pi pi-eye
@@ -544,60 +411,23 @@
               ></i>
             </div>
             <Divider class="mt-2 mb-1" />
-            <div
-              class="
-                col-12
-                pb-0
-                flex
-                justify-content-between
-                align-items-center
-              "
-            >
-              <h6 class="uppercase text-lg my-2">
-                Mehnat ta'tili -
-                <span class="font-bold text-lg text-yellow-500">{{
-                  vacations
-                }}</span>
-              </h6>
-              <Tag
-                class="px-2 text-sm"
-                rounded
-                severity="warning"
-                :value="`${vacationsChart}%`"
-              ></Tag>
+            <div class="col-12 pb-0 flex justify-content-between align-items-center">
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Mehnat ta'tili - <span class="font-bold text-lg text-yellow-500">{{vacations}}</span> </h6>   <Tag class="px-2 text-sm" rounded severity="warning" :value="`${vacationsChart}%`"></Tag>
             </div>
-            <div
-              class="
-                col-12
-                pt-0
-                flex
-                justify-content-between
-                align-items-center
-              "
-            >
-              <h6 class="uppercase text-lg my-2">
-                Bola parvarish ta'tili -
-                <span class="font-bold text-lg text-red-500">{{
-                  vacations_Dec
-                }}</span>
-              </h6>
-              <Tag
-                class="px-2 text-sm"
-                rounded
-                severity="danger"
-                :value="`${vacations_DecChart}%`"
-              ></Tag>
+            <div class="col-12 pt-0 flex justify-content-between align-items-center">
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Bola parvarish ta'tili - <span class="font-bold text-lg text-red-500">{{vacations_Dec}}</span> </h6>  <Tag class="px-2 text-sm" rounded severity="danger" :value="`${vacations_DecChart}%`"></Tag>
             </div>
+           
           </div>
         </div>
-        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
+        <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-blue-600 text-sm uppercase font-semibold"
                 >Mehnat faoliyat</span
               >
             </div>
-            <div class="col-2 flex justify-content-end">
+            <div class="col-2 flex justify-content-end" @click="goList(9)">
               <i
                 class="
                   pi pi-eye
@@ -608,43 +438,23 @@
               ></i>
             </div>
             <Divider class="mt-2 mb-1" />
-            <div
-              class="col-12 pb-0 flex justify-content-between align-items-start"
-            >
-              <h6 class="uppercase text-lg my-2">
-                Kirirtilmaganlar -
-                <span class="font-bold text-lg text-blue-500">{{
-                  careersCount
-                }}</span>
-              </h6>
+            <div class="col-12 pb-0 flex justify-content-between align-items-start">
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Kirirtilmaganlar - <span class="font-bold text-lg text-blue-500">{{careersCount}}</span> </h6>   
             </div>
-            <div
-              class="
-                col-12
-                pt-0
-                flex
-                justify-content-between
-                align-items-center
-              "
-            >
-              <h6 class="my-2 text-lg">Umumiy</h6>
-              <Tag
-                class="px-2 text-sm"
-                rounded
-                severity="danger"
-                :value="`${careersCountChart}%`"
-              ></Tag>
+            <div class="col-12 pt-0 flex justify-content-between align-items-center">
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${careersCountChart}%`"></Tag>
             </div>
+           
           </div>
         </div>
-        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
+        <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-blue-600 text-sm uppercase font-semibold"
                 >Qarindoshliligi</span
               >
             </div>
-            <div class="col-2 flex justify-content-end">
+            <div class="col-2 flex justify-content-end" @click="goList(8)">
               <i
                 class="
                   pi pi-eye
@@ -655,45 +465,26 @@
               ></i>
             </div>
             <Divider class="mt-2 mb-1" />
-            <div
-              class="col-12 pb-0 flex justify-content-between align-items-start"
-            >
-              <h6 class="uppercase text-lg my-2">
-                Kirirtilmaganlar -
-                <span class="font-bold text-lg text-blue-500">{{
-                  relativesCount
-                }}</span>
-              </h6>
+            <div class="col-12 pb-0 flex justify-content-between align-items-start">
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Kirirtilmaganlar - <span class="font-bold text-lg text-blue-500">{{relativesCount}}</span> </h6>   
             </div>
-            <div
-              class="
-                col-12
-                pt-0
-                flex
-                justify-content-between
-                align-items-center
-              "
-            >
-              <h6 class="my-2 text-lg">Umumiy</h6>
-              <Tag
-                class="px-2 text-sm"
-                rounded
-                severity="danger"
-                :value="`${relativesCountChart}%`"
-              ></Tag>
+            <div class="col-12 pt-0 flex justify-content-between align-items-center">
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${relativesCountChart}%`"></Tag>
             </div>
+           
           </div>
         </div>
 
-        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
+        <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-blue-600 text-sm uppercase font-semibold"
                 >Bugungi tu'gilgan kunlar</span
               >
             </div>
-            <div class="col-2 flex justify-content-end">
+            <div class="col-2 flex justify-content-end" @click="goList(2)">
               <i
+              
                 class="
                   pi pi-eye
                   text-lg text-blue-600
@@ -703,43 +494,23 @@
               ></i>
             </div>
             <Divider class="mt-2 mb-1" />
-            <div
-              class="col-12 pb-0 flex justify-content-between align-items-start"
-            >
-              <h6 class="uppercase text-lg my-2">
-                Xodimlar soni -
-                <span class="font-bold text-lg text-blue-500">{{
-                  allBirthdayCadries
-                }}</span>
-              </h6>
+            <div class="col-12 pb-0 flex justify-content-between align-items-start">
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Xodimlar soni - <span class="font-bold text-lg text-blue-500">{{allBirthdayCadries}}</span> </h6>   
             </div>
-            <div
-              class="
-                col-12
-                pt-0
-                flex
-                justify-content-between
-                align-items-center
-              "
-            >
-              <h6 class="my-2 text-lg">Umumiy</h6>
-              <Tag
-                class="px-2 text-sm"
-                rounded
-                severity="danger"
-                :value="`${allBirthdayCadriesChart}%`"
-              ></Tag>
+            <div class="col-12 pt-0 flex justify-content-between align-items-center">
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${allBirthdayCadriesChart}%`"></Tag>
             </div>
+           
           </div>
         </div>
-        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
+        <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-green-500 text-sm uppercase font-semibold"
                 >Yangi xodimlar</span
               >
             </div>
-            <div class="col-2 flex justify-content-end">
+            <div class="col-2 flex justify-content-end" @click="goList(5)">
               <i
                 class="
                   pi pi-eye
@@ -750,43 +521,23 @@
               ></i>
             </div>
             <Divider class="mt-2 mb-1" />
-            <div
-              class="col-12 pb-0 flex justify-content-between align-items-start"
-            >
-              <h6 class="uppercase text-lg my-2">
-                Xodimlar soni -
-                <span class="font-bold text-lg text-blue-500">{{
-                  allNewCadries
-                }}</span>
-              </h6>
+            <div class="col-12 pb-0 flex justify-content-between align-items-start">
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Xodimlar soni - <span class="font-bold text-lg text-blue-500">{{allNewCadries}}</span> </h6>   
             </div>
-            <div
-              class="
-                col-12
-                pt-0
-                flex
-                justify-content-between
-                align-items-center
-              "
-            >
-              <h6 class="my-2 text-lg">Umumiy</h6>
-              <Tag
-                class="px-2 text-sm"
-                rounded
-                severity="danger"
-                :value="`${allNewCadriesChart}%`"
-              ></Tag>
+            <div class="col-12 pt-0 flex justify-content-between align-items-center">
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${allNewCadriesChart}%`"></Tag>
             </div>
+           
           </div>
         </div>
-        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
+        <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-red-600 text-sm uppercase font-semibold"
                 >Faoliyati yakunlanganlar</span
               >
             </div>
-            <div class="col-2 flex justify-content-end">
+            <div class="col-2 flex justify-content-end" @click="goList(6)">
               <i
                 class="
                   pi pi-eye
@@ -797,43 +548,23 @@
               ></i>
             </div>
             <Divider class="mt-2 mb-1" />
-            <div
-              class="col-12 pb-0 flex justify-content-between align-items-start"
-            >
-              <h6 class="uppercase text-lg my-2">
-                Xodimlar soni -
-                <span class="font-bold text-lg text-blue-500">{{
-                  allDeleteCadries
-                }}</span>
-              </h6>
+            <div class="col-12 pb-0 flex justify-content-between align-items-start">
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Xodimlar soni - <span class="font-bold text-lg text-blue-500">{{allDeleteCadries}}</span> </h6>   
             </div>
-            <div
-              class="
-                col-12
-                pt-0
-                flex
-                justify-content-between
-                align-items-center
-              "
-            >
-              <h6 class="my-2 text-lg">Umumiy</h6>
-              <Tag
-                class="px-2 text-sm"
-                rounded
-                severity="danger"
-                :value="`${allDeleteCadriesChart}%`"
-              ></Tag>
+            <div class="col-12 pt-0 flex justify-content-between align-items-center">
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${allDeleteCadriesChart}%`"></Tag>
             </div>
+           
           </div>
         </div>
-        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
+        <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-600 text-sm uppercase font-semibold"
                 >Qora ro'yxatdagilar</span
               >
             </div>
-            <div class="col-2 flex justify-content-end">
+            <div class="col-2 flex justify-content-end" @click="goList(12)">
               <i
                 class="
                   pi pi-eye
@@ -844,32 +575,17 @@
               ></i>
             </div>
             <Divider class="mt-2 mb-1" />
-            <div
-              class="col-12 pb-0 flex justify-content-between align-items-start"
-            >
-              <h6 class="uppercase text-lg my-2">
-                Xodimlar soni - <span class="font-bold text-blue-500">{{BlackList}}</span>
-              </h6>
+            <div class="col-12 pb-0 flex justify-content-between align-items-start">
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Xodimlar soni - <span class="font-bold text-blue-500">{{BlackList}}</span> </h6>   
             </div>
-            <div
-              class="
-                col-12
-                pt-0
-                flex
-                justify-content-between
-                align-items-center
-              "
-            >
-              <h6 class="my-2 text-lg">Umumiy</h6>
-              <Tag
-                class="px-2 text-sm"
-                rounded
-                severity="danger"
-                :value="`${BlackListChart}%`"
-              ></Tag>
+            <div class="col-12 pt-0 flex justify-content-between align-items-center">
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${BlackListChart}%`"></Tag>
             </div>
+           
           </div>
         </div>
+
+
 
         <div class="col-12 md:col-6 lg:col-6 xl:col-4">
           <div class="card surface-0 shadow-1 border-round-md px-2">
@@ -916,7 +632,6 @@
 <script>
 import StatisticSkeleton from "../components/loaders/StatisticSkeleton.vue";
 import organizationsService from "../service/servises/organizationsService";
-import globalStatistic from "@/service/servises/globalStatistic";
 import PartStatisticService from '../service/servises/PartStatisticService'
 import { mapGetters } from 'vuex';
 export default {
@@ -1641,8 +1356,72 @@ export default {
       return item;
     },
 
-    statisticShow(id) {
-      console.log(id);
+    goList(id){
+      let permission = "pereview_statistics"
+      let global =0;
+      if(id==1 && this.get_adminPermissions(permission)){
+        // Vacancy page
+        this.$router.push(`/admin/view/vacanc/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
+      } else if(id==2 && this.get_adminPermissions(permission)){
+        // Birthday page
+        this.$router.push(`/admin/view/birthday/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
+      }
+      else if(id==3 && this.get_adminPermissions(permission)){
+        // Sverx Page
+        this.$router.push(`/admin/view/sverx/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
+      }
+      else if(id==4 && this.get_adminPermissions(permission)){
+        // Retired Page
+        this.$router.push(`/admin/view/retired/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
+      }
+      
+      else if(id==5 && this.get_adminPermissions(permission)){
+        // Retired Page
+        this.$router.push(`/admin/view/newcadry/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
+      }
+      else if(id==6 && this.get_adminPermissions(permission)){
+        // Retired Page
+        this.$router.push(`/admin/view/deletecadry/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
+      }
+      else if(id==7 && this.get_adminPermissions(permission)){
+        // Retired Page
+        this.$router.push(`/admin/view/contractcadry/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
+      }
+      else if(id==8 && this.get_adminPermissions(permission)){
+        // Retired Page
+        this.$router.push(`/admin/view/relativecadry/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
+      }
+      else if(id==9 && this.get_adminPermissions(permission)){
+        // Retired Page
+        this.$router.push(`/admin/view/careercadry/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
+      }
+      else if(id==10 && this.get_adminPermissions(permission)){
+        // Retired Page
+        this.$router.push(`/admin/view/vacation/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
+      }
+      else if(id==11 && this.get_adminPermissions(permission)){
+        // Retired Page
+        this.$router.push(`/admin/view/med/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
+      }
+      else if(id==12 && this.get_adminPermissions(permission)){
+        // Retired Page
+        this.$router.push(`/admin/view/blacklist/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
+      }else{
+        this.$toast.add({
+            severity: "warn",
+            summary: "Ruhsat etilmagan",
+            detail: "Sizda bunday huquq mavjud emas",
+            life: 2000,
+          });
+      }
+      
+      
+      
+      
+      
+      
+      
+     
     },
 
     onImageRightClick(event) {

@@ -13,8 +13,8 @@
           <i class="pi text-xl font-medium" :class="[sidebarActive? 'pi-angle-left' : 'pi-angle-right']"></i>
         </div>
 
-        <div class="search_bar ml-4 hidden xl:inline">
-          <i class="pi pi-search"></i>
+        <div class=" ml-4 hidden xl:inline" :class="[isDark? 'dark_search_bar' : 'search_bar']">
+          <i class="pi pi-search text-primary"></i>
           <input type="search" placeholder="Qidirish...">
         </div>
 
@@ -24,7 +24,7 @@
       <template #end>
         <Avatar
           icon="pi pi-bell"
-          v-badge.success="4"
+          v-badge.success="0"
           shape="circle"
           size="medium"
           class="mr-4"
@@ -267,7 +267,7 @@ export default {
       this.$refs.menu.toggle(event);
     },
     toggle2(event) {
-      this.$refs.notefication.toggle(event);
+      // this.$refs.notefication.toggle(event);
     },
     poshGo(){
       this.$router.push("/admin")
@@ -357,6 +357,34 @@ export default {
   width: calc(100% - 20px) ;
   min-height: 100% !important;
   margin-left: 20px;
+ }
+ &> input:focus{
+  outline: none;
+ }
+
+}
+.dark_search_bar{
+ width: 400px;
+ overflow:hidden ;
+ display: flex;
+ padding: 0px 12px;
+ border: 1px solid #313a46;
+ position: relative !important;
+ background-color: #313a46;
+ border-radius: 40px;
+ height: 36px !important;
+ &>i{
+  position: absolute;
+  top: 10px;
+  left: 10px;
+ }
+ &> input{
+  border: none;
+  background-color: transparent;
+  width: calc(100% - 20px) ;
+  min-height: 100% !important;
+  margin-left: 20px;
+  color: #aeb2b5 !important;
  }
  &> input:focus{
   outline: none;

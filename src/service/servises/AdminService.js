@@ -2,7 +2,6 @@ import axios from "../index";
 
 // lodin admin request
 const get_AdminList = (payload)=>{
-    console.log(payload);
     return axios.get(`/api/administration/users`, {params:payload})
 }
 

@@ -20,15 +20,15 @@
           <h6 class="mb-1 xl:text-base lg:text-base text-sm">
             Katta korxonalar -
             {{
-              bigOrganizationList.length
-                ? bigOrganizationList.length - 1
-                : bigOrganizationList.length
+              get_bigOrganizationList.length
+                ? get_bigOrganizationList.length - 1
+                : get_bigOrganizationList.length
             }}
           </h6>
           <Dropdown
             id="adressDistrict"
-            v-model="bigOrgValue"
-            :options="bigOrganizationList"
+            v-model="get_bigOrgValue"
+            :options="get_bigOrganizationList"
             optionLabel="name"
             :filter="true"
             placeholder="Tanlang"
@@ -55,15 +55,15 @@
           <h6 class="mb-1 xl:text-base lg:text-base text-sm">
             Korxonalar -
             {{
-              organizations.length
-                ? organizations.length - 1
-                : organizations.length
+              get_OrganizationList.length
+                ? get_OrganizationList.length - 1
+                : get_OrganizationList.length
             }}
           </h6>
           <Dropdown
             id="adressDistrict"
-            v-model="orgValue"
-            :options="organizations"
+            v-model="get_orgValue"
+            :options="get_OrganizationList"
             optionLabel="name"
             @change="changeOrganization"
             :filter="true"
@@ -94,15 +94,15 @@
           <h6 class="mb-1 xl:text-base lg:text-base text-sm">
             Bo'limlar va bekatlar-
             {{
-              departmentList.length
-                ? departmentList.length - 1
-                : departmentList.length
+              get_DepartmentList.length
+                ? get_DepartmentList.length - 1
+                : get_DepartmentList.length
             }}
           </h6>
           <Dropdown
             id="adressDistrict"
-            v-model="departmentValue"
-            :options="departmentList"
+            v-model="get_depValue"
+            :options="get_DepartmentList"
             optionLabel="name"
             @change="changeDepartment"
             :filter="true"
@@ -157,15 +157,15 @@
                   border-round-md
                 "
               >
-                <div class="absolute" @click="statisticShow(145)">
-                  <i
+                <div class="absolute">
+                  <!-- <i
                     class="
                       pi pi-eye
                       text-2xl text-white
                       cursor-pointer
                       font-medium
                     "
-                  ></i>
+                  ></i> -->
                 </div>
                
                 <h2
@@ -180,7 +180,7 @@
                     mb-0
                   "
                 >
-                  {{ formatNumber(allCadries) }}
+                  {{ allCadries }}
                 </h2>
                 <h6 class="text-center text-white mt-1">Barcha xodimlar</h6>
               </div>
@@ -214,7 +214,7 @@
                     mb-0
                   "
                 >
-                  {{ formatNumber(allVakant) }}
+                  {{ allVakant }}
                 </h2>
                 <h6 class="text-center text-white mt-1">Bo'sh ish o'rinlari</h6>
               </div>
@@ -246,7 +246,7 @@
                     mb-0
                   "
                 >
-                  {{ formatNumber(allSverx) }}
+                  {{ allSverx }}
                 </h2>
                 <h6 class="text-center text-white mt-1">
                   Ortiqcha ish o'rinlari
@@ -257,15 +257,15 @@
             <!-- All position -->
             <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
               <div class="all_other_card shadow-1 p-4 relative border-round-md">
-                <div class="absolute" @click="statisticShow(145)">
-                  <i
+                <div class="absolute">
+                  <!-- <i
                     class="
                       pi pi-eye
                       text-2xl text-white
                       cursor-pointer
                       font-medium
                     "
-                  ></i>
+                  ></i> -->
                 </div>
                
                 <h2
@@ -280,7 +280,7 @@
                     mb-0
                   "
                 >
-                  {{ formatNumber(allPlan) }}
+                  {{allPlan }}
                 </h2>
                 <h6 class="text-center text-white mt-1">Shtat birligi</h6>
               </div>
@@ -296,14 +296,14 @@
               >
             </div>
             <div class="col-2 flex justify-content-end">
-              <i
+              <!-- <i
                 class="
                   pi pi-eye
                   text-lg text-blue-600
                   cursor-pointer
                   font-medium
                 "
-              ></i>
+              ></i> -->
             </div>
             <Divider class="mt-2 mb-1" />
             <div class="col-12 pb-0 flex justify-content-between align-items-center">
@@ -334,10 +334,10 @@
             </div>
             <Divider class="mt-2 mb-1" />
             <div class="col-12 pb-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase my-2 text-lg">Erkakalar - <span class="font-bold text-lg text-blue-500">{{this.pensionsMan}}</span> </h6>   <Tag class="px-2 text-sm" rounded :value="`${pensionsManChart}%`"></Tag>
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Erkakalar - <span class="font-bold text-lg text-blue-500">{{this.pensionsMan}}</span> </h6>   <Tag class="px-2 text-sm" rounded :value="`${pensionsManChart}%`"></Tag>
             </div>
             <div class="col-12 pt-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase my-2 text-lg">Ayollar - <span class="font-bold text-lg text-green-500">{{this.pensionWoman}}</span> </h6>  <Tag class="px-2 text-sm" rounded severity="success" :value="`${pensionWomanChart}%`"></Tag>
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Ayollar - <span class="font-bold text-lg text-green-500">{{this.pensionWoman}}</span> </h6>  <Tag class="px-2 text-sm" rounded severity="success" :value="`${pensionWomanChart}%`"></Tag>
             </div>
            
           </div>
@@ -361,10 +361,10 @@
             </div>
             <Divider class="mt-2 mb-1" />
             <div class="col-12 pb-0 flex justify-content-between align-items-start">
-              <h6 class="uppercase text-lg my-2">Shartnomachi - <span class="font-bold text-lg text-blue-500">{{allContract}}</span> </h6>   
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Shartnomachi - <span class="font-bold text-lg text-blue-500">{{allContract}}</span> </h6>   
             </div>
             <div class="col-12 pt-0 flex justify-content-between align-items-center">
-              <h6 class=" my-2 text-lg">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${allContractChart}%`"></Tag>
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${allContractChart}%`"></Tag>
             </div>
            
           </div>
@@ -388,10 +388,10 @@
             </div>
             <Divider class="mt-2 mb-1" />
             <div class="col-12 pb-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase text-lg my-2">Muddati tugaganlar  - <span class="font-bold text-lg text-yellow-500">{{meds}}</span> </h6>   <Tag class="px-2 text-sm" rounded severity="warning" :value="`${medsChart}%`"></Tag>
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Muddati tugaganlar  - <span class="font-bold text-lg text-yellow-500">{{meds}}</span> </h6>   <Tag class="px-2 text-sm" rounded severity="warning" :value="`${medsChart}%`"></Tag>
             </div>
             <div class="col-12 pt-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase text-lg my-2">Kiritilmaganlar - <span class="font-bold text-lg text-red-500">{{mednotCount}}</span> </h6>  <Tag class="px-2 text-sm" rounded severity="danger" :value="`${mednotCountChart}%`"></Tag>
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Kiritilmaganlar - <span class="font-bold text-lg text-red-500">{{mednotCount}}</span> </h6>  <Tag class="px-2 text-sm" rounded severity="danger" :value="`${mednotCountChart}%`"></Tag>
             </div>
            
           </div>
@@ -416,10 +416,10 @@
             </div>
             <Divider class="mt-2 mb-1" />
             <div class="col-12 pb-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase text-lg my-2">Mehnat ta'tili - <span class="font-bold text-lg text-yellow-500">{{vacations}}</span> </h6>   <Tag class="px-2 text-sm" rounded severity="warning" :value="`${vacationsChart}%`"></Tag>
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Mehnat ta'tili - <span class="font-bold text-lg text-yellow-500">{{vacations}}</span> </h6>   <Tag class="px-2 text-sm" rounded severity="warning" :value="`${vacationsChart}%`"></Tag>
             </div>
             <div class="col-12 pt-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase text-lg my-2">Bola parvarish ta'tili - <span class="font-bold text-lg text-red-500">{{vacations_Dec}}</span> </h6>  <Tag class="px-2 text-sm" rounded severity="danger" :value="`${vacations_DecChart}%`"></Tag>
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Bola parvarish ta'tili - <span class="font-bold text-lg text-red-500">{{vacations_Dec}}</span> </h6>  <Tag class="px-2 text-sm" rounded severity="danger" :value="`${vacations_DecChart}%`"></Tag>
             </div>
            
           </div>
@@ -443,10 +443,10 @@
             </div>
             <Divider class="mt-2 mb-1" />
             <div class="col-12 pb-0 flex justify-content-between align-items-start">
-              <h6 class="uppercase text-lg my-2">Kirirtilmaganlar - <span class="font-bold text-lg text-blue-500">{{careersCount}}</span> </h6>   
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Kirirtilmaganlar - <span class="font-bold text-lg text-blue-500">{{careersCount}}</span> </h6>   
             </div>
             <div class="col-12 pt-0 flex justify-content-between align-items-center">
-              <h6 class=" my-2 text-lg">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${careersCountChart}%`"></Tag>
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${careersCountChart}%`"></Tag>
             </div>
            
           </div>
@@ -470,10 +470,10 @@
             </div>
             <Divider class="mt-2 mb-1" />
             <div class="col-12 pb-0 flex justify-content-between align-items-start">
-              <h6 class="uppercase text-lg my-2">Kirirtilmaganlar - <span class="font-bold text-lg text-blue-500">{{relativesCount}}</span> </h6>   
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Kirirtilmaganlar - <span class="font-bold text-lg text-blue-500">{{relativesCount}}</span> </h6>   
             </div>
             <div class="col-12 pt-0 flex justify-content-between align-items-center">
-              <h6 class=" my-2 text-lg">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${relativesCountChart}%`"></Tag>
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${relativesCountChart}%`"></Tag>
             </div>
            
           </div>
@@ -499,10 +499,10 @@
             </div>
             <Divider class="mt-2 mb-1" />
             <div class="col-12 pb-0 flex justify-content-between align-items-start">
-              <h6 class="uppercase text-lg my-2">Xodimlar soni - <span class="font-bold text-lg text-blue-500">{{allBirthdayCadries}}</span> </h6>   
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Xodimlar soni - <span class="font-bold text-lg text-blue-500">{{allBirthdayCadries}}</span> </h6>   
             </div>
             <div class="col-12 pt-0 flex justify-content-between align-items-center">
-              <h6 class=" my-2 text-lg">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${allBirthdayCadriesChart}%`"></Tag>
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${allBirthdayCadriesChart}%`"></Tag>
             </div>
            
           </div>
@@ -526,10 +526,10 @@
             </div>
             <Divider class="mt-2 mb-1" />
             <div class="col-12 pb-0 flex justify-content-between align-items-start">
-              <h6 class="uppercase text-lg my-2">Xodimlar soni - <span class="font-bold text-lg text-blue-500">{{allNewCadries}}</span> </h6>   
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Xodimlar soni - <span class="font-bold text-lg text-blue-500">{{allNewCadries}}</span> </h6>   
             </div>
             <div class="col-12 pt-0 flex justify-content-between align-items-center">
-              <h6 class=" my-2 text-lg">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${allNewCadriesChart}%`"></Tag>
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${allNewCadriesChart}%`"></Tag>
             </div>
            
           </div>
@@ -553,10 +553,10 @@
             </div>
             <Divider class="mt-2 mb-1" />
             <div class="col-12 pb-0 flex justify-content-between align-items-start">
-              <h6 class="uppercase text-lg my-2">Xodimlar soni - <span class="font-bold text-lg text-blue-500">{{allDeleteCadries}}</span> </h6>   
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Xodimlar soni - <span class="font-bold text-lg text-blue-500">{{allDeleteCadries}}</span> </h6>   
             </div>
             <div class="col-12 pt-0 flex justify-content-between align-items-center">
-              <h6 class=" my-2 text-lg">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${allDeleteCadriesChart}%`"></Tag>
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${allDeleteCadriesChart}%`"></Tag>
             </div>
            
           </div>
@@ -580,10 +580,10 @@
             </div>
             <Divider class="mt-2 mb-1" />
             <div class="col-12 pb-0 flex justify-content-between align-items-start">
-              <h6 class="uppercase text-lg my-2">Xodimlar soni - <span class="font-bold text-blue-500">{{BlackList}}</span> </h6>   
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Xodimlar soni - <span class="font-bold text-blue-500">{{BlackList}}</span> </h6>   
             </div>
             <div class="col-12 pt-0 flex justify-content-between align-items-center">
-              <h6 class=" my-2 text-lg">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${BlackListChart}%`"></Tag>
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${BlackListChart}%`"></Tag>
             </div>
            
           </div>
@@ -620,8 +620,12 @@
 
       </div>
     </div>
+
     <div class="col-12" v-show="loading">
       <statistic-skeleton></statistic-skeleton>
+    </div>
+    <div class="col-12">
+      <Toast position="bottom-right" />
     </div>
   </div>
 </template>
@@ -630,6 +634,7 @@ import StatisticSkeleton from "../components/loaders/StatisticSkeleton.vue";
 import organizationsService from "../service/servises/organizationsService";
 import globalStatistic from "@/service/servises/globalStatistic";
 import BreadCrumb from "../components/BreadCrumb/BreadCrumb.vue";
+import { mapActions, mapGetters } from "vuex";
 export default {
   components: { StatisticSkeleton, BreadCrumb },
 
@@ -846,16 +851,25 @@ export default {
     
     };
   },
+  computed:{
+    ...mapGetters(["get_bigOrganizationList","get_OrganizationList", "get_DepartmentList","get_bigOrgValue", "get_orgValue", "get_depValue", "get_adminPermissions" ])
+  },
   methods: {
+
+    ...mapActions(["set_bigOrganization","set_organization", "set_department", "set_bigOrgValue", "set_orgValue", "set_depValue"]),
     controlLoader(item) {
       this.loading = item;
     },
 
+    
+
     get_Statistic(params) {
       this.controlLoader(true);
-      // console.table(params);
+      this.organization.organization_id = this.get_orgValue? this.get_orgValue.id : null;
+      this.organization.railway_id = this.get_bigOrgValue? this.get_bigOrgValue.id : null;
+      this.organization.department_id = this.get_depValue? this.get_depValue.id : null;
       globalStatistic
-        .get_globalStatistic(params)
+        .get_globalStatistic(this.organization)
         .then((res) => {
           console.log(res.data);
           this.allCadries = res.data.all_cadries_count;
@@ -1034,7 +1048,6 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          this.controlLoader(false);
         });
     },
 
@@ -1048,6 +1061,7 @@ export default {
               name: "Barchasi",
               id: null,
             });
+            this.set_bigOrganization(this.bigOrganizationList)
           } else {
             this.bigOrganizationList = res.data;
           }
@@ -1067,6 +1081,7 @@ export default {
               name: "Barchasi",
               id: null,
             });
+            this.set_organization( this.organizations)
           } else {
             this.organizations = res.data;
           }
@@ -1087,6 +1102,7 @@ export default {
               name: "Barchasi",
               id: null,
             });
+            this.set_department( this.departmentList)
           } else {
             this.departmentList = res.data;
           }
@@ -1097,85 +1113,84 @@ export default {
     },
 
     changeRailway(event) {
-      this.organization.railway_id = event.value.id;
-      this.organization.department_id = null;
-      this.organization.organization_id = null;
+      this.set_bigOrgValue(event.value);
+      this.set_orgValue(null);
+      this.set_depValue(null);
       this.get_Statistic(this.organization);
       this.get_Organization(event.value.id);
-      this.orgValue = null;
-      this.departmentValue = null;
-      this.departmentList = [];
+      this.set_department([])
+
     },
 
     changeOrganization(event) {
-      this.organization.organization_id = event.value.id;
-      this.organization.department_id = null;
+      this.set_orgValue(event.value);
+      this.set_depValue(null);
       this.get_Statistic(this.organization);
-      this.departmentValue = null;
       this.get_Department(event.value.id);
     },
 
     changeDepartment(event) {
-      this.organization.department_id = event.value.id;
+      this.set_depValue(event.value);
       this.get_Statistic(this.organization);
     },
-    formatNumber(item) {
-      return item;
-    },
 
-    statisticShow(id) {
-      console.log(id);
-    },
-    
     goList(id){
+      let permission = "pereview_statistics"
       let global = 1;
-      if(id==1){
+      if(id==1 && this.get_adminPermissions(permission)){
         // Vacancy page
         this.$router.push(`/admin/view/vacanc/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
-      } else if(id==2){
+      } else if(id==2 && this.get_adminPermissions(permission)){
         // Birthday page
         this.$router.push(`/admin/view/birthday/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
       }
-      else if(id==3){
+      else if(id==3 && this.get_adminPermissions(permission)){
         // Sverx Page
         this.$router.push(`/admin/view/sverx/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
       }
-      else if(id==4){
+      else if(id==4 && this.get_adminPermissions(permission)){
         // Retired Page
         this.$router.push(`/admin/view/retired/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
       }
       
-      else if(id==5){
+      else if(id==5 && this.get_adminPermissions(permission)){
         // Retired Page
         this.$router.push(`/admin/view/newcadry/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
       }
-      else if(id==6){
+      else if(id==6 && this.get_adminPermissions(permission)){
         // Retired Page
         this.$router.push(`/admin/view/deletecadry/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
       }
-      else if(id==7){
+      else if(id==7 && this.get_adminPermissions(permission)){
         // Retired Page
         this.$router.push(`/admin/view/contractcadry/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
       }
-      else if(id==8){
+      else if(id==8 && this.get_adminPermissions(permission)){
         // Retired Page
         this.$router.push(`/admin/view/relativecadry/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
       }
-      else if(id==9){
+      else if(id==9 && this.get_adminPermissions(permission)){
         // Retired Page
         this.$router.push(`/admin/view/careercadry/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
       }
-      else if(id==10){
+      else if(id==10 && this.get_adminPermissions(permission)){
         // Retired Page
         this.$router.push(`/admin/view/vacation/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
       }
-      else if(id==11){
+      else if(id==11 && this.get_adminPermissions(permission)){
         // Retired Page
         this.$router.push(`/admin/view/med/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
       }
-      else if(id==12){
+      else if(id==12 && this.get_adminPermissions(permission)){
         // Retired Page
         this.$router.push(`/admin/view/blacklist/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
+      }else{
+        this.$toast.add({
+            severity: "warn",
+            summary: "Ruhsat etilmagan",
+            detail: "Sizda bunday huquq mavjud emas",
+            life: 2000,
+          });
       }
       
       
@@ -1191,7 +1206,12 @@ export default {
   created() {
     this.controlLoader();
     this.get_Statistic(this.organization);
-    this.get_Railway();
+    if(this.get_bigOrgValue){
+
+    }else{
+      this.get_Railway();
+    }
+    
   },
 };
 </script>

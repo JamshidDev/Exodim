@@ -6,7 +6,7 @@
             <bread-crumb
               :breadCump="[
                 { name: 'Statistika', path: '/admin/statistic' },
-                { name: 'Sverx', path: '/admin/view/vacation' },
+                { name: 'Sverx', path: '' },
               ]"
             ></bread-crumb>
           </div>

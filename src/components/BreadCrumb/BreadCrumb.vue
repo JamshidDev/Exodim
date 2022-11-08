@@ -23,7 +23,10 @@ export default {
     },
     methods:{
         goPush(path){
-            this.$router.push(path)
+            if(path){
+                this.$router.push(path)
+            }
+            
         }
     }
 }
