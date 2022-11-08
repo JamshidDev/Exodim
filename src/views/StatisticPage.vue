@@ -349,7 +349,7 @@
                 >Shartnomachi xodimlar</span
               >
             </div>
-            <div class="col-2 flex justify-content-end">
+            <div class="col-2 flex justify-content-end" @click="goList(7)">
               <i
                 class="
                   pi pi-eye
@@ -376,7 +376,7 @@
                 >Tibbiy ko'rik ma'lumotlari</span
               >
             </div>
-            <div class="col-2 flex justify-content-end">
+            <div class="col-2 flex justify-content-end"  @click="goList(11)">
               <i
                 class="
                   pi pi-eye
@@ -404,7 +404,7 @@
                 >Ta'tildagi xodimlar</span
               >
             </div>
-            <div class="col-2 flex justify-content-end">
+            <div class="col-2 flex justify-content-end" @click="goList(10)">
               <i
                 class="
                   pi pi-eye
@@ -431,7 +431,7 @@
                 >Mehnat faoliyat</span
               >
             </div>
-            <div class="col-2 flex justify-content-end">
+            <div class="col-2 flex justify-content-end" @click="goList(9)">
               <i
                 class="
                   pi pi-eye
@@ -458,7 +458,7 @@
                 >Qarindoshliligi</span
               >
             </div>
-            <div class="col-2 flex justify-content-end">
+            <div class="col-2 flex justify-content-end" @click="goList(8)">
               <i
                 class="
                   pi pi-eye
@@ -514,7 +514,7 @@
                 >Yangi xodimlar</span
               >
             </div>
-            <div class="col-2 flex justify-content-end">
+            <div class="col-2 flex justify-content-end" @click="goList(5)">
               <i
                 class="
                   pi pi-eye
@@ -541,7 +541,7 @@
                 >Faoliyati yakunlanganlar</span
               >
             </div>
-            <div class="col-2 flex justify-content-end">
+            <div class="col-2 flex justify-content-end" @click="goList(6)">
               <i
                 class="
                   pi pi-eye
@@ -568,7 +568,7 @@
                 >Qora ro'yxatdagilar</span
               >
             </div>
-            <div class="col-2 flex justify-content-end">
+            <div class="col-2 flex justify-content-end" @click="goList(12)">
               <i
                 class="
                   pi pi-eye
@@ -877,7 +877,7 @@ export default {
           this.careersCount = res.data.careersCount;
           this.relativesCount = res.data.relativesCount;
 
-          careersCount: 0,
+          // careersCount: 0,
             // relativesCount:0,
 
             (this.alleducation_oliy = res.data.highly_special_educations);
@@ -1113,15 +1113,11 @@ export default {
       this.get_Statistic(this.organization);
       this.departmentValue = null;
       this.get_Department(event.value.id);
-
-      console.log(event.value.id);
     },
 
     changeDepartment(event) {
       this.organization.department_id = event.value.id;
       this.get_Statistic(this.organization);
-
-      console.log(event.value.id);
     },
     formatNumber(item) {
       return item;
@@ -1130,29 +1126,67 @@ export default {
     statisticShow(id) {
       console.log(id);
     },
-
-    onImageRightClick(event) {
-      this.$refs.menu.show(event);
-    },
+    
     goList(id){
+      let global = 1;
       if(id==1){
         // Vacancy page
-        this.$router.push(`/admin/view/vacation/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/1`)
+        this.$router.push(`/admin/view/vacanc/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
       } else if(id==2){
         // Birthday page
-        this.$router.push(`/admin/view/birthday/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/1`)
+        this.$router.push(`/admin/view/birthday/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
       }
       else if(id==3){
         // Sverx Page
-        this.$router.push(`/admin/view/sverx/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/1`)
+        this.$router.push(`/admin/view/sverx/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
       }
       else if(id==4){
         // Retired Page
-        this.$router.push(`/admin/view/retired/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/1`)
+        this.$router.push(`/admin/view/retired/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
       }
       
+      else if(id==5){
+        // Retired Page
+        this.$router.push(`/admin/view/newcadry/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
+      }
+      else if(id==6){
+        // Retired Page
+        this.$router.push(`/admin/view/deletecadry/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
+      }
+      else if(id==7){
+        // Retired Page
+        this.$router.push(`/admin/view/contractcadry/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
+      }
+      else if(id==8){
+        // Retired Page
+        this.$router.push(`/admin/view/relativecadry/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
+      }
+      else if(id==9){
+        // Retired Page
+        this.$router.push(`/admin/view/careercadry/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
+      }
+      else if(id==10){
+        // Retired Page
+        this.$router.push(`/admin/view/vacation/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
+      }
+      else if(id==11){
+        // Retired Page
+        this.$router.push(`/admin/view/med/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
+      }
+      else if(id==12){
+        // Retired Page
+        this.$router.push(`/admin/view/blacklist/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
+      }
+      
+      
+      
+      
+      
+      
+      
      
-    }
+    },
+
   },
   created() {
     this.controlLoader();

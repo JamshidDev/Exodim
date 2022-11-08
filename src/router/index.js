@@ -65,7 +65,7 @@ const routes = [
         name: "view",
         children: [
           {
-            path: "/admin/view/vacation/:railway_id/:organization_id/:department_id/:global",
+            path: "/admin/view/vacanc/:railway_id/:organization_id/:department_id/:global",
             name: "ViewVacation",
             component: function () {
               return import(
@@ -97,6 +97,77 @@ const routes = [
             component: function () {
               return import(
                 /* webpackChunkName: "about" */ "../views/ViewPages/Sverx/SverxPage.vue"
+              );
+            },
+          },
+          {
+            path: "/admin/view/newcadry/:railway_id/:organization_id/:department_id/:global",
+            name: "Newcadry",
+            component: function () {
+              return import(
+                /* webpackChunkName: "about" */ "../views/ViewPages/NewCadry/NewCadryPage.vue"
+              );
+            },
+          },
+          {
+            path: "/admin/view/deletecadry/:railway_id/:organization_id/:department_id/:global",
+            name: "Deletecadry",
+            component: function () {
+              return import(
+                /* webpackChunkName: "about" */ "../views/ViewPages/DeleteCadry/DeleteCadry.vue"
+              );
+            },
+          },
+          {
+            path: "/admin/view/contractcadry/:railway_id/:organization_id/:department_id/:global",
+            name: "Contractcadry",
+            component: function () {
+              return import(
+                /* webpackChunkName: "about" */ "../views/ViewPages/ContractCadry/ContractCadey.vue"
+              );
+            },
+          },
+          {
+            path: "/admin/view/relativecadry/:railway_id/:organization_id/:department_id/:global",
+            name: "Relativecadry",
+            component: function () {
+              return import(
+                /* webpackChunkName: "about" */ "../views/ViewPages/Relativecadry/RelativeCadryPage.vue"
+              );
+            },
+          },
+          {
+            path: "/admin/view/careercadry/:railway_id/:organization_id/:department_id/:global",
+            name: "Careercadry",
+            component: function () {
+              return import(
+                /* webpackChunkName: "about" */ "../views/ViewPages/CareerCadry/CareerCadryPage.vue"
+              );
+            },
+          },
+          {
+            path: "/admin/view/vacation/:railway_id/:organization_id/:department_id/:global",
+            name: "Vacation",
+            component: function () {
+              return import(
+                /* webpackChunkName: "about" */ "../views/ViewPages/Vacation/VacationPage.vue"
+              );
+            },
+          }, {
+            path: "/admin/view/med/:railway_id/:organization_id/:department_id/:global",
+            name: "Med",
+            component: function () {
+              return import(
+                /* webpackChunkName: "about" */ "../views/ViewPages/Med/MedPage.vue"
+              );
+            },
+          },
+          {
+            path: "/admin/view/blacklist/:railway_id/:organization_id/:department_id/:global",
+            name: "BlackList",
+            component: function () {
+              return import(
+                /* webpackChunkName: "about" */ "../views/ViewPages/BlackCadry/BlackCadryPage.vue"
               );
             },
           },
