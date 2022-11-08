@@ -125,6 +125,7 @@
             </div>
           </template>
         </Column>
+        
 
         <Column :exportable="false" style="min-width: 100px; width: 200px">
           <template #header>
@@ -160,6 +161,7 @@
    <div class="col-12" v-show="loading">
     <vacanc-loader></vacanc-loader>
    </div>
+   
   </div>
 </template>
 <script>
@@ -218,6 +220,7 @@ export default {
         this.params.per_page = event.per_page;
         this.get_List(this.params)
     },
+    
     controlLoaser(item){
       this.loading = item;
     }

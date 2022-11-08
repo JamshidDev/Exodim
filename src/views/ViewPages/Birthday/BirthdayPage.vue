@@ -190,7 +190,6 @@
       get_List(params){
         this.controlLoaser(true)
           ViewService.get_ViewBirthday(params).then((res)=>{
-              console.log(res.data.cadries);
               let number =
               (this.params.page - 1) * this.params.per_page;
               res.data.cadries.data.forEach((item) => {

@@ -93,6 +93,25 @@
               </div>
             </template>
           </Column>
+
+          <Column :exportable="false" style="min-width: 100px; width: 600px">
+            <template #header>
+              <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
+                Lavozimi
+              </div>
+            </template>
+            <template #body="slotProps">
+              <div
+                class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base"
+              >
+                {{
+                  slotProps.data.staff.staff_full
+                }}
+              </div>
+            
+            </template>
+          </Column>
+
           
           <Column  style="min-width: 100px; width: 400px">
             <template #header>
@@ -103,40 +122,33 @@
             </template>
             <template #body="slotProps">
               <div
-                class="
-                  text-sm
-                  sm:text-sm
-                  md:text-sm
-                  lg:text-base
-                  xl:text-base
-                  font-medium
-                  cursor-pointer
-                "
+              class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base"
               >
-                <div>{{ slotProps.data.organization.name }}</div>
+                <div v-show="global">{{ slotProps.data.organization.name }}</div>
+                <div v-show="!global">{{ slotProps.data.staff.department_id.name }}</div>
               </div>
             </template>
           </Column>
+          <Column :exportable="false" style="min-width: 40px; width: 40px">
+          <template #header>
+            <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
+              Amallar
+            </div>
+          </template>
+          <template #body="slotProps">
+            <download-button
+                v-tooltip.left="`Ma'lumotlarni yuklash`"
+                :color="'bg-green-600 active:bg-green-600'"
+                :border="'border-1 border-green-600 border-round'"
+                :icon="'pi pi-cloud-download'"
+                @click="DowloadResume(slotProps.data.id)"
+              ></download-button>
+          </template>
+        </Column>
   
          
   
-          <Column :exportable="false" style="min-width: 100px; width: 300px">
-            <template #header>
-              <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
-                Bo'lim nomi 
-              </div>
-            </template>
-            <template #body="slotProps">
-              <div
-                class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base"
-              >
-                {{
-                  slotProps.data.staff.department_id.name
-                }}
-              </div>
-            
-            </template>
-          </Column>
+          
           <template #footer>
             <table-pagination
               v-show="totalItem > 10"
@@ -152,6 +164,13 @@
      <div class="col-12" v-show="loading">
       <birthday-loader></birthday-loader>
      </div>
+     <div class="col-12">
+    <word-template
+        :cadry_id="Dowload_cadry_id"
+        v-show="false"
+        ref="word_resume"
+      ></word-template>
+   </div>
     </div>
   </template>
   <script>
@@ -161,19 +180,23 @@
   import NoDataComponent from "../../../components/EmptyComponent/NoDataComponent.vue";
   import BirthdayLoader from "../../../components/loaders/BrithdayLoader.vue"
   import formatter from "../../../util/formatter";
+  import DownloadButton from '@/components/buttons/DownloadButton'
+import WordTemplate from "../../../components/Eksport/WordTemplate.vue";
   export default {
     components: {
       BreadCrumb,
       TablePagination,
       NoDataComponent,
       BirthdayLoader,
+      DownloadButton,
+    WordTemplate,
     },
     data() {
       return {
         formatter,
         loading:false,
         global:true,
-        rangeDate:[],
+        rangeDate:[new Date(),new Date()],
         params: {
           railway_id:null,
           organization_id:null,
@@ -218,6 +241,10 @@
             this.get_List(this.params)
         }
       },
+      DowloadResume(id) {
+      console.table(id);
+      this.$refs.word_resume.generateWord(id);
+    },
       searchBtn(){
         this.get_List(this.params)
       },
@@ -231,12 +258,8 @@
       }
     },
     created(){
-        var today = new Date()
-        var currentDate = new Date()
-        this.rangeDate=[
-        new Date(currentDate.setDate(today.getDate() -1)),
-            today
-        ]
+        // var today = new Date()
+        // this.rangeDate=[today,today]
       this.params.railway_id = JSON.parse(this.$route.params.railway_id);
       this.params.organization_id = JSON.parse(this.$route.params.organization_id);
       this.params.department_id =  JSON.parse(this.$route.params.department_id);

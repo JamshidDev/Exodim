@@ -199,7 +199,7 @@
         formatter,
         loading:false,
         global:true,
-        rangeDate:[],
+        rangeDate:[new Date(),new Date()],
         params: {
           railway_id:null,
           organization_id:null,
@@ -225,7 +225,6 @@
         this.params.date1 = this.formatter.outDateFormatter(this.rangeDate[0])
         this.params.date2 = this.formatter.outDateFormatter(this.rangeDate[1])
           ViewService.get_ViewBlackCadry(params).then((res)=>{
-              console.log(res.data.cadries);
               let number =
               (this.params.page - 1) * this.params.per_page;
               res.data.cadries.data.forEach((item) => {
@@ -257,12 +256,6 @@
       }
     },
     created(){
-        var today = new Date()
-        var currentDate = new Date()
-        this.rangeDate=[
-        new Date(currentDate.setDate(today.getDate() -1)),
-            today
-        ]
       this.params.railway_id = JSON.parse(this.$route.params.railway_id);
       this.params.organization_id = JSON.parse(this.$route.params.organization_id);
       this.params.department_id =  JSON.parse(this.$route.params.department_id);
