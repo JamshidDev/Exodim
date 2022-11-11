@@ -66,6 +66,7 @@
         showGridlines
         class="p-datatable-sm"
         stripedRows
+        v-model:selection="selectitem" selectionMode="single"
       >
       <Column style="min-width:30px; width:36px">
           <template #header>
@@ -455,6 +456,7 @@ export default {
   },
   data() {
     return {
+      selectitem:null,
       loader: false,
       searchPartName: null,
       totalDepartment: 0,

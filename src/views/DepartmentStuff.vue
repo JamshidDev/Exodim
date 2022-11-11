@@ -155,13 +155,13 @@
             </div>
           </template>
         </Column>
-        <!-- <template #footer>
+        <template #footer>
           <table-pagination
-            v-show="totalDepartment > 10"
-            :total_page="totalDepartment"
+            v-show="totalItem > 10"
+            :total_page="totalItem"
             @pagination="changePagination($event)"
           ></table-pagination> </template
-      > -->
+      >
     </DataTable>
     <no-data-component v-show="totalItem<1"></no-data-component>
     </div>
@@ -290,7 +290,6 @@
   </div>
 </template>
 <script>
-import TablePagination from "../components/Pagination/TablePagination.vue";
 import DeleteButton from "../components/buttons/DeleteButton.vue";
 import EditButton from "../components/buttons/EditButton.vue";
 import ViewButtonV from "../components/buttons/ViewButtonV.vue";
@@ -299,6 +298,7 @@ import DepartmentStuffLoader from "../components/loaders/DepartmentStuffLoader.v
 import DepartmentService from "../service/servises/DepartmentService";
 import BreadCrumb from "../components/BreadCrumb/BreadCrumb.vue";
 import NoDataComponent from "../components/EmptyComponent/NoDataComponent.vue";
+import TablePagination from "../components/Pagination/TablePagination.vue";
 export default {
   components: {
     DeleteButton,
@@ -318,6 +318,7 @@ export default {
       searchPartName:null,
       department_name: "",
       params: {
+        search:null,
         page: 1,
         per_page: 10,
       },
@@ -364,9 +365,9 @@ export default {
     },
   },
   methods: {
-    get_DepartmentStuff(id, loader) {
+    get_DepartmentStuff(id, params, loader) {
       this.controlLoader(loader);
-      DepartmentStuffService.get_DepartmentStuff({ id })
+      DepartmentStuffService.get_DepartmentStuff({ id, params })
         .then((res) => {
           let cadrList = [];
           console.log(res.data);
@@ -469,6 +470,11 @@ export default {
     searchByName(){
       console.log(this.searchPartName);
     },
+    changePagination(event) {
+      this.params.page = event.page;
+      this.params.per_page = event.per_page;
+      this.get_DepartmentStuff(this.$route.params.id,this.params ,true);
+    },
 
     controlLoader(item) {
       this.loader = item;
@@ -479,7 +485,7 @@ export default {
   },
   created() {
     this.department_name = this.$route.params.name;
-    this.get_DepartmentStuff(this.$route.params.id, true);
+    this.get_DepartmentStuff(this.$route.params.id,this.params ,true);
     this.get_StuffList()
     this.get_Classifikator();
   },

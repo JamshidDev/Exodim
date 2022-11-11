@@ -2,7 +2,7 @@ import axios from "../index";
 
 
 const get_DepartmentStuff = (payload)=>{
-    return axios.get(`/api/organization/department/${payload.id}/staffs`)
+    return axios.get(`/api/organization/department/${payload.id}/staffs`, {params: payload.params})
 }
 
 const create_DepartmentStuff = (payload)=>{

@@ -17,10 +17,11 @@
             <img class="resume_picture" :src="cadry.phote" alt="" />
           </div>
           <div class="col-12 md:col-8 lg:col-5 xl:col-6 py-2">
-            <h6 class="text-2xl text-800 my-2 uppercase font-bold">
+            <h6 class="text-lg text-800 my-2 uppercase font-semibold">
               {{ cadry.fullName }}
             </h6>
-            <h6 class="text-base text-800 my-3 font-semibold">
+            <h6 class="text-base text-800 my-3 font-medium">
+              <h6 class="text-base text-800 my-0 font-medium">{{ cadry.post_date }} dan</h6>
               {{ cadry.post_name }}
             </h6>
             <h6 class="text-base text-800 my-3 font-bold flex">
@@ -623,6 +624,7 @@ export default {
       this.controlLoader(true);
       EksportService.get_ResumeDetails({ id: id })
         .then((res) => {
+          console.log(res.data.cadry);
           this.cadry.fullName = res.data.cadry.fullname;
           this.cadry.phote = res.data.cadry.photo;
           this.cadry.phone = res.data.cadry.phone;
