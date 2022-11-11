@@ -1,17 +1,26 @@
 <template>
-  <div class="grid card surface-0 shadow-1 py-2 px-2">
-    <div class="col-12 flex justify-content-start py-0 mb-4">
-        <Button
-              icon="pi pi-arrow-circle-left"
-              @click="goPush()"
-              class="p-button-secondary p-button-rounded p-button-sm"
-              v-tooltip.right="`Orqaga`"
-            />
+  <div class="grid px-3">
+    <div class="col-12">
+      <div class="grid">
+        <div class="col-12 pb-0">
+          <bread-crumb
+            :breadCump="[{ name: 'Shtatlar', path: '/admin/position' },{ name: 'Xodimlar', path: '' }]"
+          ></bread-crumb>
+        </div>
+        <div class="col-12 y-0 py-0">
+          <span class="xl:text-lg lg:text-base text-sm font-semibold"
+            >
+            <span class="text-blue-600">{{ positionName }}</span>
+                shtat lavozimidagi xodimlar ro'yhati
+              
+          </span>
+        </div>
+      </div>
     </div>
     <div class="col-12" v-show="loader">
       <user-list-loader></user-list-loader>
     </div>
-    <div class="col-12" v-show="!loader">
+    <div class="col-12 py-0" v-show="!loader">
       <DataTable
         ref="dt"
         :value="cadryList"
@@ -22,35 +31,6 @@
         stripedRows
         v-show="totalCadries"
       >
-        <template #header>
-          <div class="grid">
-            <div class="col-12 xl:col-6 lg:col-6 md:col-6">
-              <h6 class="font-medium text-lg">
-                <span class="text-blue-600">{{ positionName }}</span>
-                shtat lavozimidagi xodimlar ro'yhati
-              </h6>
-            </div>
-            <div
-              class="
-                col-12
-                xl:col-6
-                lg:col-6
-                md:col-6
-                flex
-                justify-content-end
-                align-items-center
-              "
-            >
-              <InputText
-                type="text"
-                v-model="searchPositionName"
-                placeholder="Ism orqali qidiruv"
-                class="p-inputtext-sm"
-                @keyup.enter="searchByName()"
-              />
-            </div>
-          </div>
-        </template>
         <Column header="" style="min-width: 30px; width: 40px">
           <template #body="slotProps">
             <div class="w-full text-center font-medium">
@@ -67,8 +47,8 @@
               <Image
                 :src="slotProps.data.photo"
                 :alt="slotProps.data.fullname"
-                width="40"
-                height="40"
+                width="30"
+                height="30"
                 preview
               />
             </div>
@@ -105,28 +85,6 @@
             </div>
           </template>
         </Column>
-
-        <Column :exportable="false" style="min-width: 150px; width: 150px">
-          <template #header>
-            <div class="text-800 font-semibold">Amallar</div>
-          </template>
-          <template #body="slotProps">
-            <div class="flex gap-2">
-              <view-button-v
-                v-tooltip.bottom="`Xodimlarni ko'rish`"
-                :icon="'pi-users'"
-              ></view-button-v>
-              <edit-button
-                :editItem="slotProps.data"
-                @editEvent="editItem($event)"
-              ></edit-button>
-              <delete-button
-                :deleteItem="slotProps.data.id"
-                @deleteAcceptEvent="deletePosition($event)"
-              ></delete-button>
-            </div>
-          </template>
-        </Column>
         <template #footer>
           <table-pagination
             v-show="totalCadries > 10"
@@ -135,19 +93,8 @@
           ></table-pagination>
         </template>
       </DataTable>
-      <div class="col-12" v-show="!totalCadries">
-      <div class="grid">
-        <div class="col-12">
-          <h6 class="font-medium text-lg">
-            <span class="text-blue-600">{{ positionName }}</span> lavozimidagi
-            xodimlar ro'yhati
-          </h6>
-        </div>
-        <div class="col-12">
-          <div class="text-center w-full text-400">Xodimlar topilmadi</div>
-        </div>
-      </div>
-    </div>
+      <no-data-component v-show="!totalCadries"></no-data-component>
+      
     </div>
   
    
@@ -157,10 +104,16 @@
   import ViewButtonV from "../buttons/ViewButtonV.vue";
 import employeeService from "../../service/servises/employeeService";
 import UserListLoader from "../loaders/UserListLoader.vue";
+import NoDataComponent from "../EmptyComponent/NoDataComponent.vue";
+import TablePagination from "../Pagination/TablePagination.vue";
+import BreadCrumb from "../BreadCrumb/BreadCrumb.vue";
 export default {
   components:{
     UserListLoader,
     ViewButtonV,
+    NoDataComponent,
+    BreadCrumb,
+    TablePagination,
   },
   data() {
     return {
@@ -216,6 +169,11 @@ export default {
     },
     goPush() {
       this.$router.push("/admin/position");
+    },
+    changePagination(event) {
+      this.position.page = event.page;
+      this.position.per_page = event.per_page;
+      this.get_Position_Cadry(this.$route.params.position_id);
     },
     controlLoader(item){
       this.loader = item

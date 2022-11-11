@@ -7,7 +7,7 @@
           <bread-crumb :breadCump="[{name:'Bo\'limlar', path:'/admin/partfactory'}, {name:'Shtatlar', path:''},]"></bread-crumb>
         </div>
         <div class="col-12 y-0 pt-0 pb-1">
-          <span class="text-lg font-semibold"
+          <span class=" text-sm  xl:text-lg lg:text-base font-semibold"
             > <span class="text-blue-600">{{ department_name }}</span>
                 bo'limiga biriktirilgan shtat lavozimlari ro'yhati
           </span>
@@ -33,7 +33,7 @@
         showGridlines
         class="p-datatable-sm"
         stripedRows
-        v-show="totalItem>1"
+        v-show="totalItem"
         v-model:selection="selectitem" selectionMode="single"
       >
         <Column  style="min-width:30px; width:36px">
@@ -472,7 +472,7 @@ export default {
     },
     changePagination(event) {
       this.params.page = event.page;
-      this.params.per_page = event.per_page;
+      this.stuff_params.per_page = event.per_page;
       this.get_DepartmentStuff(this.$route.params.id,this.params ,true);
     },
 

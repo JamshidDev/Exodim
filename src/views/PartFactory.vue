@@ -6,7 +6,7 @@
           <bread-crumb :breadCump="[{name:'Bo\'limlar', path:''}]"></bread-crumb>
         </div>
         <div class="col-12 y-0 py-0">
-          <span class="text-2xl font-semibold"
+          <span class="xl:text-base lg:text-base text-sm font-semibold"
             >Bo'limlar
             <span class="text-base text-primary pl-2">
               ({{ totalDepartment }})</span
@@ -505,6 +505,7 @@ export default {
       DepartmentService.get_Department(params)
         .then((res) => {
           this.totalDepartment = res.data.departments.pagination.total;
+          console.log(res.data.departments);
           let cadrList = [];
           let number = (this.params.page - 1) * this.params.per_page;
           res.data.departments.data.forEach((item) => {

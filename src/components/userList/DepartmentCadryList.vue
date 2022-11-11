@@ -1,15 +1,20 @@
 <template>
-  <div class="grid card surface-0 shadow-1 py-2 px-2">
-    <div class="col-12 flex justify-content-start py-0 mb-4">
-      <Button
-        icon="pi pi-arrow-circle-left"
-        @click="goPush()"
-        class="p-button-secondary p-button-rounded p-button-sm"
-        v-tooltip.right="`Orqaga`"
-      />
+  <div class="grid py-2 px-3">
+    <div class="col-12">
+      <div class="grid">
+        <div class="col-12 pb-0">
+          <bread-crumb :breadCump="[{name:'Bo\'limlar', path:'/admin/partfactory'}, {name:'Xodimlar', path:' '}]"></bread-crumb>
+        </div>
+        <div class="col-12 py-0">
+          <span class="xl:text-base lg:text-base text-sm font-semibold"
+            >   <span class="text-blue-600">{{ department_name }}</span>
+                bo'limidagi xodimlar ro'yhati
+          </span>
+        </div>
+      </div>
     </div>
 
-    <div class="col-12" v-show="!loader">
+    <div class="col-12 pt-1" v-show="!loader">
       <DataTable
         ref="dt"
         :value="cadryList"
@@ -18,37 +23,8 @@
         showGridlines
         class="p-datatable-sm"
         stripedRows
-        v-show="totalCadries"
+        v-show="totalCadries>1"
       >
-        <template #header>
-          <div class="grid">
-            <div class="col-12 xl:col-6 lg:col-6 md:col-6">
-              <h6 class="font-medium text-lg uppercase">
-                <span class="text-blue-600">{{ department_name }}</span>
-                bo'limidagi xodimlar ro'yhati
-              </h6>
-            </div>
-            <div
-              class="
-                col-12
-                xl:col-6
-                lg:col-6
-                md:col-6
-                flex
-                justify-content-end
-                align-items-center
-              "
-            >
-              <InputText
-                type="text"
-                v-model="searchPositionName"
-                placeholder="Ism orqali qidiruv"
-                class="p-inputtext-sm"
-                @keyup.enter="searchByName()"
-              />
-            </div>
-          </div>
-        </template>
         <Column header="" style="min-width: 30px; width: 40px">
           <template #body="slotProps">
             <div class="w-full text-center font-medium">
@@ -65,8 +41,8 @@
               <Image
                 :src="slotProps.data.photo"
                 :alt="slotProps.data.fullname"
-                width="40"
-                height="40"
+                width="30"
+                height="30"
                 preview
               />
             </div>
@@ -185,19 +161,8 @@
           ></table-pagination>
         </template>
       </DataTable>
-      <!-- <div class="col-12" v-show="!totalCadries">
-        <div class="grid">
-          <div class="col-12">
-            <h6 class="font-medium text-lg">
-              <span class="text-blue-600">{{ department_name }}</span>
-              bo'limidagi xodimlar ro'yhati
-            </h6>
-          </div>
-          <div class="col-12">
-            <div class="text-center w-full text-400">Xodimlar topilmadi</div>
-          </div>
-        </div>
-      </div> -->
+      <no-data-component v-show="totalCadries<1"></no-data-component>
+     
     </div>
     <div class="col-12" v-show="loader">
       <user-list-loader></user-list-loader>
@@ -209,11 +174,15 @@ import DepartmentService from "../../service/servises/DepartmentService";
 import UserListLoader from "../loaders/UserListLoader.vue";
 import EditButton from "../buttons/EditButton.vue";
 import TablePagination from "../Pagination/TablePagination.vue";
+import BreadCrumb from "../BreadCrumb/BreadCrumb.vue";
+import NoDataComponent from "../EmptyComponent/NoDataComponent.vue";
 export default {
   components: {
     UserListLoader,
     EditButton,
     TablePagination,
+    BreadCrumb,
+    NoDataComponent,
   },
   data() {
     return {

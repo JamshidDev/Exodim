@@ -6,7 +6,7 @@
           <bread-crumb :breadCump="[{name:'Bo\'limlar', path:'/admin/partfactory'}, {name:'Shtatlar', path:`/admin/department/stuff/${$route.params.depId}/${$route.params.depName}`},{name:'Xodimlar', path:''}]"></bread-crumb>
         </div>
         <div class="col-12 y-0 pt-0 pb-1">
-          <span class="text-lg font-semibold"
+          <span class="xl:text-base lg:text-base text-sm font-semibold"
             > <span class="text-blue-600">{{ stuff_name }}</span>
                 lavozimidagi xodimlar ro'yhati
           </span>
@@ -23,6 +23,7 @@
         class="p-datatable-sm"
         stripedRows
         v-show="totalPage"
+        v-model:selection="selectitem" selectionMode="single"
       >
         <Column header="" style="min-width:30px; width:36px">
           <template #header>
@@ -138,19 +139,7 @@
           ></table-pagination>
         </template>
       </DataTable>
-      <div class="col-12" v-show="!totalPage">
-        <div class="grid">
-          <div class="col-12">
-            <h6 class="font-medium text-lg">
-              <span class="text-blue-600">{{ stuff_name }}</span>
-              bo'limidagi xodimlar ro'yhati
-            </h6>
-          </div>
-          <div class="col-12">
-            <div class="text-center w-full text-400">Xodimlar topilmadi</div>
-          </div>
-        </div>
-      </div>
+      <no-data-component v-show="!totalPage"></no-data-component>
     </div>
     <div class="col-12 pt-1" v-show="loader">
         <user-list-loader></user-list-loader>
@@ -163,19 +152,21 @@ import DepartmentStuffService from "@/service/servises/DepartmentStuffService";
 import TablePagination from "../Pagination/TablePagination.vue";
 import UserListLoader from "../loaders/UserListLoader.vue";
 import BreadCrumb from "../BreadCrumb/BreadCrumb.vue";
+import NoDataComponent from "../EmptyComponent/NoDataComponent.vue";
 export default {
   components:{
     TablePagination,
     UserListLoader,
     EditButton,
     BreadCrumb,
+    NoDataComponent,
   },
   data() {
     return {
       stuffCadryList: [],
       vacationList:[],
       totalPage:0,
-
+      selectitem:null,
 
       stuff_name: "",
       loader: false,
