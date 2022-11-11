@@ -129,20 +129,29 @@
               </div>
             </template>
           </Column>
-          <Column :exportable="false" style="min-width: 40px; width: 40px">
+          <Column :exportable="false" style="min-width: 100px; width: 100px">
           <template #header>
             <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
               Amallar
             </div>
           </template>
           <template #body="slotProps">
-            <download-button
+            <div class="flex w-full align-items-center gap-2">
+              <download-button
+                :color="'bg-primary active:bg-primary'"
+                :border="'border-1 border-primary border-round'"
+                v-tooltip.left="`Ma'lumotlarni ko'rish`"
+                :icon="'pi pi-id-card'"
+                @click="goPushDetails(slotProps.data.id)"
+              ></download-button>
+              <download-button
                 v-tooltip.left="`Ma'lumotlarni yuklash`"
                 :color="'bg-green-600 active:bg-green-600'"
                 :border="'border-1 border-green-600 border-round'"
                 :icon="'pi pi-cloud-download'"
                 @click="DowloadResume(slotProps.data.id)"
               ></download-button>
+            </div>
           </template>
         </Column>
   
@@ -164,13 +173,14 @@
      <div class="col-12" v-show="loading">
       <birthday-loader></birthday-loader>
      </div>
-     <div class="col-12">
+     <div class="col-12" v-show="false">
     <word-template
         :cadry_id="Dowload_cadry_id"
-        v-show="false"
+        
         ref="word_resume"
       ></word-template>
    </div>
+   <export-panel ref="export_to_excel"></export-panel>
     </div>
   </template>
   <script>
@@ -182,6 +192,7 @@
   import formatter from "../../../util/formatter";
   import DownloadButton from '@/components/buttons/DownloadButton'
 import WordTemplate from "../../../components/Eksport/WordTemplate.vue";
+import EmployeeDetails from "../../../components/partEmployee/EmployeeDetails.vue";
   export default {
     components: {
       BreadCrumb,
@@ -190,6 +201,7 @@ import WordTemplate from "../../../components/Eksport/WordTemplate.vue";
       BirthdayLoader,
       DownloadButton,
     WordTemplate,
+    EmployeeDetails,
     },
     data() {
       return {
@@ -244,6 +256,9 @@ import WordTemplate from "../../../components/Eksport/WordTemplate.vue";
       DowloadResume(id) {
       console.table(id);
       this.$refs.word_resume.generateWord(id);
+    },
+    goPushDetails(id) {
+      this.$router.push(`/admin/employee/view/${id}`);
     },
       searchBtn(){
         this.get_List(this.params)

@@ -319,6 +319,16 @@ const routes = [
         },
       },
       {
+        path: "/admin/skill",
+        name: "Skill",
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: function () {
+          return import(/* webpackChunkName: "about" */ "../views/SkillPage/SkillPage.vue");
+        },
+      },
+      {
         path: "/admin/superadmin",
         name: "superadmin",
         // route level code-splitting

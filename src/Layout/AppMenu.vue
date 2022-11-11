@@ -101,6 +101,21 @@ export default {
           ],
         },
         {
+          label: "Tayorlov",
+          icon: "pi pi-th-large",
+          visible: () =>this.get_TitlePermission(["admin",]),
+          
+          items: [
+            {
+              label: "Malaka oshirish",
+              icon: "pi pi-stop",
+              visible: () =>this.get_adminPermissions("admin"),
+              to: '/admin/skill',
+            },
+           
+          ],
+        },
+        {
           label: "Xavsizlik",
           icon: "pi pi-shield",
           visible: () =>this.get_adminPermissions("admin"),

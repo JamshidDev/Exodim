@@ -1,16 +1,30 @@
 <template>
 
-  <div class="grid card surface-0 shadow-1 py-2 px-2">
-    <div class="col-12 flex justify-content-start py-0 mb-4">
-        <Button
-              icon="pi pi-arrow-circle-left"
-              @click="goPush()"
-              class="p-button-secondary p-button-rounded p-button-sm"
-              v-tooltip.right="`Orqaga`"
-            />
+  <div class="grid px-3">
+    <div class="col-12">
+      <div class="grid">
+        <div class="col-12 pb-0">
+          <bread-crumb :breadCump="[{name:'Bo\'limlar', path:'/admin/partfactory'}, {name:'Shtatlar', path:''},]"></bread-crumb>
+        </div>
+        <div class="col-12 y-0 pt-0 pb-1">
+          <span class="text-lg font-semibold"
+            > <span class="text-blue-600">{{ department_name }}</span>
+                bo'limiga biriktirilgan shtat lavozimlari ro'yhati
+          </span>
+        </div>
+        <!-- <div class="col-12 pb-0 pt-1">
+              <InputText
+                type="text"
+                v-model="searchPartName"
+                placeholder="Nomi orqali qidiruv"
+                class="p-inputtext-sm"
+                @keyup.enter="searchByName()"
+              />
+            </div> -->
+      </div>
     </div>
 
-    <div class="col-12" v-show="!loader">
+    <div class="col-12 pt-1" v-show="!loader">
       <DataTable
         ref="dt"
         :value="DepStuffList"
@@ -19,29 +33,23 @@
         showGridlines
         class="p-datatable-sm"
         stripedRows
+        v-show="totalItem>1"
+        v-model:selection="selectitem" selectionMode="single"
       >
-        <template #header>
-          <div class="grid">
-            <div class="col-6">
-              <h6 class="font-medium uppercase text-lg pt-1 pl-2">
-                <span class="text-blue-600">{{ department_name }}</span>
-                bo'limiga biriktirilgan shtat lavozimlari ro'yhati
-              </h6>
+        <Column  style="min-width:30px; width:36px">
+          <template #header>
+            <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
+              No
             </div>
-            <div class="col-6 flex justify-content-end align-items-center">
-              <InputText
-                type="text"
-                v-model="searchPartName"
-                placeholder="Nomi orqali qidiruv"
-                class="p-inputtext-sm"
-                @keyup.enter="searchByName()"
-              />
-            </div>
-          </div>
-        </template>
-        <Column header="" style="min-width: 30px; width: 40px">
+          </template>
           <template #body="slotProps">
-            <div class="w-full text-center text-lg">
+            <div class=" text-sm
+                sm:text-sm
+                md:text-sm
+                lg:text-base
+                xl:text-base
+                text-center
+                font-medium">
               {{ slotProps.data.number }}
             </div>
           </template>
@@ -53,11 +61,12 @@
           <template #body="slotProps">
             <div
               class="
-                text-sm
+              text-sm
                 sm:text-sm
-                md:text-md
-                lg:text-lg
-                xl:text-lg
+                md:text-sm
+                lg:text-base
+                xl:text-base
+                font-medium
               "
             >
               {{ slotProps.data.staff_fullname }}
@@ -72,11 +81,11 @@
           <template #body="slotProps">
             <div
               class="
-                text-sm
+              text-sm
                 sm:text-sm
-                md:text-md
-                lg:text-lg
-                xl:text-lg
+                md:text-sm
+                lg:text-base
+                xl:text-base
                 font-medium
                 text-center text-blue-500
               "
@@ -92,11 +101,11 @@
           <template #body="slotProps">
             <div
               class="
-                text-sm
+              text-sm
                 sm:text-sm
-                md:text-md
-                lg:text-lg
-                xl:text-lg
+                md:text-sm
+                lg:text-base
+                xl:text-base
                 font-medium
                 text-center
               "
@@ -154,9 +163,10 @@
           ></table-pagination> </template
       > -->
     </DataTable>
+    <no-data-component v-show="totalItem<1"></no-data-component>
     </div>
 
-    <div class="col-12" v-show="loader">
+    <div class="col-12 pt-1" v-show="loader">
       <department-stuff-loader></department-stuff-loader>
     </div>
     <div class="col-12">
@@ -287,6 +297,8 @@ import ViewButtonV from "../components/buttons/ViewButtonV.vue";
 import DepartmentStuffService from "../service/servises/DepartmentStuffService";
 import DepartmentStuffLoader from "../components/loaders/DepartmentStuffLoader.vue";
 import DepartmentService from "../service/servises/DepartmentService";
+import BreadCrumb from "../components/BreadCrumb/BreadCrumb.vue";
+import NoDataComponent from "../components/EmptyComponent/NoDataComponent.vue";
 export default {
   components: {
     DeleteButton,
@@ -294,9 +306,13 @@ export default {
     ViewButtonV,
     TablePagination,
     DepartmentStuffLoader,
+    BreadCrumb,
+    NoDataComponent,
   },
   data() {
     return {
+      selectitem:null,
+      totalItem:0,
       loader: false,
       DepStuffList: [],
       searchPartName:null,
@@ -318,7 +334,7 @@ export default {
       stuff_params:{
         search:null,
         page:1,
-        per_page:1000
+        per_page:10,
       }
 
 
@@ -353,13 +369,15 @@ export default {
       DepartmentStuffService.get_DepartmentStuff({ id })
         .then((res) => {
           let cadrList = [];
+          console.log(res.data);
+          this.totalItem = res.data.department.pagination.total
           let number = (this.params.page - 1) * this.params.per_page;
-          res.data.department.forEach((item) => {
+          res.data.department.data.forEach((item) => {
             number++;
             item.number = number;
             cadrList.push(item);
           });
-          this.DepStuffList = res.data.department;
+          this.DepStuffList = res.data.department.data;
           this.controlLoader(false);
         })
         .catch((error) => {

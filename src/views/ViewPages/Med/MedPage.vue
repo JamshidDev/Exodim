@@ -106,16 +106,19 @@
               </div>
             </template>
           </Column>
-  
-          <Column style="min-width:100px; width:400px">
+          <Column  style="min-width: 100px; width: 400px">
             <template #header>
-              <div class="text-800 font-semibold">Korxona nomi</div>
+              <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
+                
+                {{global? 'Korxona nomi': 'Bo\'lim nomi' }}
+              </div>
             </template>
-            <template  #body="slotProps">
+            <template #body="slotProps">
               <div
-                class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base  font-medium"
+              class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base"
               >
-                  {{slotProps.data.organization.name}}
+                <div v-show="global">{{ slotProps.data.organization.name }}</div>
+                <div v-show="!global">{{ slotProps.data.staff.department_id.name }}</div>
               </div>
             </template>
           </Column>

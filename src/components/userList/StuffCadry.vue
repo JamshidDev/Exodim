@@ -1,15 +1,19 @@
 <template >
-  <div class="grid card surface-0 shadow-1 py-2 px-2">
-    <div class="col-12 flex justify-content-start py-0 mb-4">
-      <Button
-        icon="pi pi-arrow-circle-left"
-        @click="goPush()"
-        class="p-button-secondary p-button-rounded p-button-sm"
-        v-tooltip.right="`Orqaga`"
-      />
+  <div class="grid px-3">
+    <div class="col-12">
+      <div class="grid">
+        <div class="col-12 pb-0">
+          <bread-crumb :breadCump="[{name:'Bo\'limlar', path:'/admin/partfactory'}, {name:'Shtatlar', path:`/admin/department/stuff/${$route.params.depId}/${$route.params.depName}`},{name:'Xodimlar', path:''}]"></bread-crumb>
+        </div>
+        <div class="col-12 y-0 pt-0 pb-1">
+          <span class="text-lg font-semibold"
+            > <span class="text-blue-600">{{ stuff_name }}</span>
+                lavozimidagi xodimlar ro'yhati
+          </span>
+        </div>
+      </div>
     </div>
-
-    <div class="col-12" v-show="!loader">
+    <div class="col-12 pt-1" v-show="!loader">
         <DataTable
         ref="dt"
         :value="stuffCadryList"
@@ -20,36 +24,10 @@
         stripedRows
         v-show="totalPage"
       >
-        <template #header>
-          <div class="grid">
-            <div class="col-12 xl:col-6 lg:col-6 md:col-6">
-              <h6 class="font-medium text-lg">
-                <span class="text-blue-600">{{ stuff_name }}</span>
-                lavozimidagi xodimlar ro'yhati
-              </h6>
-            </div>
-            <div
-              class="
-                col-12
-                xl:col-6
-                lg:col-6
-                md:col-6
-                flex
-                justify-content-end
-                align-items-center
-              "
-            >
-              <InputText
-                type="text"
-                v-model="searchPositionName"
-                placeholder="Ism orqali qidiruv"
-                class="p-inputtext-sm"
-                @keyup.enter="searchByName()"
-              />
-            </div>
-          </div>
-        </template>
-        <Column header="" style="min-width: 30px; width: 40px">
+        <Column header="" style="min-width:30px; width:36px">
+          <template #header>
+            <div class="text-800 font-semibold">No</div>
+          </template>
           <template #body="slotProps">
             <div class="w-full text-center font-medium">
               {{ slotProps.data.number }}
@@ -65,8 +43,8 @@
               <Image
                 :src="slotProps.data.cadry.photo"
                 :alt="slotProps.data.cadry.fullname"
-                width="40"
-                height="40"
+                width="30"
+                height="30"
                 preview
               />
             </div>
@@ -79,13 +57,12 @@
           <template #body="slotProps">
             <div
               class="
-                text-sm
+              text-sm
                 sm:text-sm
-                md:text-md
-                lg:text-lg
-                xl:text-lg
+                md:text-sm
+                lg:text-base
+                xl:text-base
                 font-medium
-                text-left
               "
             >
               {{ slotProps.data.cadry.fullname }}
@@ -97,10 +74,21 @@
             <div class="text-800 font-semibold">Faoliyat turi</div>
           </template>
           <template #body="slotProps">
-            <div v-show="slotProps.data.staff_status=='Asosiy'" class="text-sm sm:text-sm md:text-md lg:text-lg text-center text-green-500 font-medium">
+            <div v-show="slotProps.data.staff_status=='Asosiy'" class=" text-sm
+            text-sm
+                sm:text-sm
+                md:text-sm
+                lg:text-base
+                xl:text-base
+                font-medium text-center text-green-500">
               {{ slotProps.data.staff_status }}
             </div>
-            <div v-show="slotProps.data.staff_status!=='Asosiy'" class="text-sm sm:text-sm md:text-md lg:text-lg text-center text-yellow-500 font-medium">
+            <div v-show="slotProps.data.staff_status!=='Asosiy'" class=" text-sm
+                sm:text-sm
+                md:text-sm
+                lg:text-base
+                xl:text-base
+                font-medium text-center text-yellow-500">
               {{ slotProps.data.staff_status }}
             </div>
           </template>
@@ -110,7 +98,13 @@
             <div class="text-800 font-semibold">Stavkasi</div>
           </template>
           <template #body="slotProps">
-            <div class="text-sm sm:text-sm md:text-md lg:text-lg text-center font-medium">
+            <div class=" text-sm
+                sm:text-sm
+                md:text-sm
+                lg:text-base
+                xl:text-base
+                font-medium
+                 text-center ">
               {{ slotProps.data.rate }}
             </div>
           </template>
@@ -139,7 +133,7 @@
         <template #footer>
           <table-pagination
             v-show="totalPage > 10"
-            :total_page="totalCadries"
+            :total_page="totalPage"
             @pagination="changePagination($event)"
           ></table-pagination>
         </template>
@@ -158,7 +152,7 @@
         </div>
       </div>
     </div>
-    <div class="col-12" v-show="loader">
+    <div class="col-12 pt-1" v-show="loader">
         <user-list-loader></user-list-loader>
       </div>
   </div>
@@ -168,11 +162,13 @@ import EditButton from "../buttons/EditButton.vue";
 import DepartmentStuffService from "@/service/servises/DepartmentStuffService";
 import TablePagination from "../Pagination/TablePagination.vue";
 import UserListLoader from "../loaders/UserListLoader.vue";
+import BreadCrumb from "../BreadCrumb/BreadCrumb.vue";
 export default {
   components:{
     TablePagination,
     UserListLoader,
     EditButton,
+    BreadCrumb,
   },
   data() {
     return {
@@ -211,11 +207,10 @@ export default {
           console.log(error);
         });
     },
-    goPush(){
-      this.$router.push({name:"departmentstuff", params:{
-        id:this.$route.params.depId,
-        name:this.$route.params.depName
-      }});
+    changePagination(event) {
+      this.params.page = event.page;
+      this.params.per_page = event.per_page;
+      this.get_StuffCadry(this.$route.params.id, this.params, true);
     },
     editItem(id){
       this.$router.push(`/admin/editemployee/${id}`)

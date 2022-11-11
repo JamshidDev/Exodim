@@ -440,7 +440,7 @@
                         @click="editItemStuff(item.id)"
                       ></edit-button>
                       <delete-button
-                        v-if="item.staff_status !== 'Asosiy'"
+                        v-if="stuffList.length>1"
                         :deleteItem="item.id"
                         @deleteAcceptEvent="deleteStuffItem($event)"
                       ></delete-button>

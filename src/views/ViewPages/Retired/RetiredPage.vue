@@ -93,6 +93,23 @@
               </div>
             </template>
           </Column>
+          <Column :exportable="false" style="min-width: 100px; width: 600px">
+            <template #header>
+              <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
+                Lavozimi
+              </div>
+            </template>
+            <template #body="slotProps">
+              <div
+                class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base"
+              >
+                {{
+                  slotProps.data.staff.staff_full
+                }}
+              </div>
+            
+            </template>
+          </Column>
           
           <Column  style="min-width: 100px; width: 300px">
             <template #header>
@@ -110,43 +127,25 @@
                   lg:text-base
                   xl:text-base
                   font-medium
-                  hover:text-blue-500
                   cursor-pointer
                 "
               >
-                <div>{{ slotProps.data.organization?.name }}</div>
+                <div v-show="global">{{ slotProps.data.organization?.name }}</div>
+                <div v-show="!global">{{ slotProps.data.staff?.department_id?.name }}</div>
+
               </div>
             </template>
           </Column>
-  
-         
-  
-          <Column :exportable="false" style="min-width: 100px; width: 200px">
-            <template #header>
-              <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
-                Bo'lim nomi 
-              </div>
-            </template>
-            <template #body="slotProps">
-              <div
-                class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base"
-              >
-                {{
-                  slotProps.data.staff?.department_id?.name
-                }}
-              </div>
-            
-            </template>
-          </Column>
+
           <Column :exportable="false" style="min-width: 100px; width: 120px">
             <template #header>
               <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
-                Sanasi
+                Tug'ilgan sana
               </div>
             </template>
             <template #body="slotProps">
               <div
-                class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base text-center"
+                class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base text-center text-blue-500"
               >
                 {{
                   formatter.arrowDateFormat(slotProps.data.birth_date)
@@ -164,7 +163,7 @@
             </template>
             <template #body="slotProps">
               <div
-                class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base text-center"
+                class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base text-center font-medium text-blue-500"
               >
                 {{
                   slotProps.data.cadry_age

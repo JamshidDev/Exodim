@@ -665,7 +665,7 @@ export default {
       this.$refs.word_resumes.generateWord(id);
     },
     goBack(){
-       this.$router.push("/admin/partemployee") 
+       this.$router.go(-1)
     }
   },
   computed:{

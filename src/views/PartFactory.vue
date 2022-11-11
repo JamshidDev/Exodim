@@ -1,19 +1,22 @@
 <template >
-  <div class="grid card surface-0 shadow-1 py-2 px-2">
-    <h6 class="text-base p-2 uppercase">Bo'limlar</h6>
-
-    <div class="col-12" v-show="!loader">
-      <DataTable
-        ref="dt"
-        :value="departmentList"
-        dataKey="id"
-        responsiveLayout="scroll"
-        showGridlines
-        class="p-datatable-sm"
-        stripedRows
-      >
-        <template #header>
-          <div class="grid">
+  <div class="grid px-3">
+    <div class="col-12">
+      <div class="grid">
+        <div class="col-12 pb-0">
+          <bread-crumb :breadCump="[{name:'Bo\'limlar', path:''}]"></bread-crumb>
+        </div>
+        <div class="col-12 y-0 py-0">
+          <span class="text-2xl font-semibold"
+            >Bo'limlar
+            <span class="text-base text-primary pl-2">
+              ({{ totalDepartment }})</span
+            >
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="grid">
             <div class="col-6">
               <InputText
                 type="text"
@@ -53,26 +56,41 @@
               ></Button>
             </div>
           </div>
-        </template>
-        <Column header="" style="min-width: 30px; width: 40px">
+    </div>
+    <div class="col-12 py-0" v-show="!loader">
+      <DataTable
+        ref="dt"
+        :value="departmentList"
+        dataKey="id"
+        responsiveLayout="scroll"
+        showGridlines
+        class="p-datatable-sm"
+        stripedRows
+      >
+      <Column style="min-width:30px; width:36px">
+          <template #header>
+            <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
+              No
+            </div>
+          </template>
           <template #body="slotProps">
-            <div class="w-full text-center text-lg font-semibold">
+            <div class="w-full text-center text-base font-medium">
               {{ slotProps.data.number }}
             </div>
           </template>
         </Column>
         <Column style="min-width: 16rem">
           <template #header>
-            <div class="text-800 font-semibold">Bo'lim nomi</div>
+            <div class="text-800 text-sm lg:text-base xl:text-base font-medium">Bo'lim nomi</div>
           </template>
           <template #body="slotProps">
             <div
               class="
-                text-sm
+              text-sm
                 sm:text-sm
-                md:text-md
-                lg:text-lg
-                xl:text-lg
+                md:text-sm
+                lg:text-base
+                xl:text-base
                 font-medium
               "
             >
@@ -83,7 +101,7 @@
 
         <Column class="py-0" style="min-width: 200px; width: 200px">
           <template #header>
-            <div class="text-800 font-semibold">
+            <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
               Bo'sh/Ortiqcha ish o'rinlari
             </div>
           </template>
@@ -93,11 +111,11 @@
                 class="
                   col-6
                   text-sm
-                  sm:text-sm
-                  md:text-md
-                  lg:text-lg
-                  xl:text-lg
-                  font-medium
+                sm:text-sm
+                md:text-sm
+                lg:text-base
+                xl:text-base
+                font-medium
                   flex align-items-center
                   justify-content-center
                 "
@@ -115,12 +133,12 @@
               <div
                 class="
                   col-6
-                  text-center text-sm
-                  sm:text-sm
-                  md:text-md
-                  lg:text-lg
-                  xl:text-lg
-                  font-medium
+                  text-sm
+                sm:text-sm
+                md:text-sm
+                lg:text-base
+                xl:text-base
+                font-medium
                   flex align-items-center
                   justify-content-center
                 "
@@ -140,16 +158,16 @@
         </Column>
         <Column style="min-width: 50px; width: 80px">
           <template #header>
-            <div class="text-800 font-semibold">Plan</div>
+            <div class="text-800 text-sm lg:text-base xl:text-base font-medium">Plan</div>
           </template>
           <template #body="slotProps">
             <div
               class="
-                text-sm
+              text-sm
                 sm:text-sm
-                md:text-md
-                lg:text-lg
-                xl:text-lg
+                md:text-sm
+                lg:text-base
+                xl:text-base
                 font-medium
                 text-center text-blue-500
               "
@@ -160,16 +178,16 @@
         </Column>
         <Column style="min-width: 110px; width: 110px">
           <template #header>
-            <div class="text-800 font-semibold">Xodimlar soni</div>
+            <div class="text-800 text-sm lg:text-base xl:text-base font-medium">Xodimlar soni</div>
           </template>
           <template #body="slotProps">
             <div
               class="
-                text-sm
+              text-sm
                 sm:text-sm
-                md:text-md
-                lg:text-lg
-                xl:text-lg
+                md:text-sm
+                lg:text-base
+                xl:text-base
                 font-medium
                 text-center
               "
@@ -181,7 +199,7 @@
 
         <Column :exportable="false" style="min-width: 150px; width: 150px">
           <template #header>
-            <div class="text-800 font-semibold">Amallar</div>
+            <div class="text-800 text-sm lg:text-base xl:text-base font-medium">Amallar</div>
           </template>
           <template #body="slotProps">
             <div class="flex gap-2">
@@ -221,11 +239,7 @@
         </template>
       </DataTable>
     </div>
-    <div class="col-12">
-
-    </div>
-
-    <div class="col-12" v-show="loader">
+    <div class="col-12 py-0" v-show="loader">
       <department-loader></department-loader>
     </div>
     <div class="col-12">
@@ -244,7 +258,7 @@
       >
         <template #header>
           <h6 class="uppercase text-lg text-blue-500 font-medium">
-            {{ partDialogType ? "Ma'lumot qo'shish" : "Ma'lumotni tahrirlash" }}
+            {{ partDialogType ? "Bo'lim qo'shish" : "Bo'limni tahrirlash" }}
           </h6>
         </template>
         <div class="grid pt-2">
@@ -429,6 +443,7 @@ import ViewButtonV from "../components/buttons/ViewButtonV.vue";
 import DepartmentService from "../service/servises/DepartmentService";
 import DepartmentStuffService from "@/service/servises/DepartmentStuffService";
 import DepartmentLoader from "../components/loaders/DepartmentLoader.vue";
+import BreadCrumb from "../components/BreadCrumb/BreadCrumb.vue";
 export default {
   components: {
     DeleteButton,
@@ -436,6 +451,7 @@ export default {
     ViewButtonV,
     TablePagination,
     DepartmentLoader,
+    BreadCrumb,
   },
   data() {
     return {

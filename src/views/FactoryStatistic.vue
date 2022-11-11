@@ -627,6 +627,9 @@
     <div class="col-12" v-show="loading">
       <statistic-skeleton></statistic-skeleton>
     </div>
+    <div class="col-12">
+      <Toast position="bottom-right" />
+    </div>
   </div>
 </template>
 <script>
