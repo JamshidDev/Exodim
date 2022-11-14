@@ -4,7 +4,6 @@
       <progress-bar-loader></progress-bar-loader>
     </div>
   </div>
- <div class="col-12"></div>
  <div v-if="!barLoader" class="grid card surface-0 py-4 px-2">
     <div class="col-12">
       <div class="flex justify-content-end">
@@ -1189,7 +1188,7 @@ export default {
       this.stuff_stuffList = [];
       DepartmentStuffService.get_DepartmentStuff({ id }).then((res) => {
         this.stuff_stuff = null;
-        this.stuff_stuffList = res.data.department;
+        this.stuff_stuffList = res.data.department.data;
       });
     },
 

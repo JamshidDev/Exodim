@@ -105,6 +105,12 @@ export default {
           name: "Qo'shimcha",
           icon: "pi pi-bars",
         },
+        {
+          route: "six",
+          value: "6",
+          name: "Boshqalar",
+          icon: "pi pi-bars",
+        },
       ],
     };
   },
@@ -150,6 +156,13 @@ export default {
           route: "five",
           value: "5",
           name: "Qo'shimcha",
+          icon: "pi pi-bars",
+        }
+      }else if(name=='details-six'){
+        this.live_router =  {
+          route: "six",
+          value: "6",
+          name: "Boshqalar",
           icon: "pi pi-bars",
         }
       }

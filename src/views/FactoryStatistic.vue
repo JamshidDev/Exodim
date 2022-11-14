@@ -342,7 +342,7 @@
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-blue-600  uppercase text-sm font-semibold"
-                >Shartnomachi xodimlar</span
+                >Kasanachilar</span
               >
             </div>
             <div class="col-2 flex justify-content-end" @click="goList(7)">
@@ -357,7 +357,7 @@
             </div>
             <Divider class="mt-2 mb-1" />
             <div class="col-12 pb-0 flex justify-content-between align-items-start">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Shartnomachi - <span class="font-bold text-lg text-blue-500">{{allContract}}</span> </h6>   
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Kasanachi - <span class="font-bold text-lg text-blue-500">{{allContract}}</span> </h6>   
             </div>
             <div class="col-12 pt-0 flex justify-content-between align-items-center">
               <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${allContractChart}%`"></Tag>
@@ -420,6 +420,36 @@
            
           </div>
         </div>
+
+        <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
+          <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
+            <div class="col-10">
+              <span class="text-blue-600 text-sm uppercase font-semibold"
+                >Lavozim yo'riqnimasi</span
+              >
+            </div>
+            <div class="col-2 flex justify-content-end" @click="goList(13)">
+              <i
+                class="
+                  pi pi-eye
+                  text-lg text-blue-600
+                  cursor-pointer
+                  font-medium
+                "
+              ></i>
+            </div>
+            <Divider class="mt-2 mb-1" />
+            <div class="col-12 pb-0 flex justify-content-between align-items-start">
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Kirirtilmaganlar - <span class="font-bold text-lg text-blue-500">{{not_staff_files}}</span> </h6>   
+            </div>
+            <div class="col-12 pt-0 flex justify-content-between align-items-center">
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${not_staff_filesChart}%`"></Tag>
+            </div>
+           
+          </div>
+        </div>
+
+
         <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
@@ -447,6 +477,8 @@
            
           </div>
         </div>
+
+
         <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
@@ -684,6 +716,9 @@ export default {
       vacationsChart: 0,
       vacations_DecChart: 0,
       BlackList: 0,
+      not_staff_files:0,
+      not_staff_filesChart:0,
+
 
       // Chart Details
       allManChart: 0,
@@ -985,6 +1020,10 @@ export default {
 
           this.meds = res.data.meds;
           this.mednotCount = res.data.mednotCount;
+          this.not_staff_files = res.data.not_staff_files;
+          this.not_staff_filesChart =  Math.floor(
+            (res.data.not_staff_files / res.data.all_cadries_count) * 100
+          );
 
           this.medsChart = Math.floor(
             (res.data.meds / res.data.all_cadries_count) * 100
@@ -1409,7 +1448,12 @@ export default {
       else if(id==12 && this.get_adminPermissions(permission)){
         // Retired Page
         this.$router.push(`/admin/view/blacklist/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
-      }else{
+      } else if(id==13 && this.get_adminPermissions(permission)){
+        // Retired Page
+        this.$router.push(`/admin/view/stuffs/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
+      }
+      
+      else{
         this.$toast.add({
             severity: "warn",
             summary: "Ruhsat etilmagan",
