@@ -32,7 +32,7 @@
             />
           </div>
           <div class="col-6 flex justify-content-end">
-            <Calendar inputId="range" @date-select="changeCalendar"  dateFormat="dd/mm/yy" v-model="rangeDate" selectionMode="range" class="p-inputtext-sm" :manualInput="false" />
+            <Calendar inputId="range" @date-select="changeCalendar"  dateFormat="dd/mm/yy" v-model="rangeDate" selectionMode="range" class="p-inputtext-sm font-bold" :manualInput="false" />
           </div>
         
         </div>
@@ -78,13 +78,13 @@
             </div>
           </template>
         </Column>
-          <Column style="min-width: 200px">
+          <Column style="min-width:100px; width:200px">
             <template #header>
               <div class="text-800 font-semibold">F.I.SH</div>
             </template>
             <template #body="slotProps">
               <div
-                class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base"
+                class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base font-medium"
               >
                 {{
                   slotProps.data.fullname
@@ -94,7 +94,7 @@
             </template>
           </Column>
 
-          <Column :exportable="false" style="min-width: 100px; width: 600px">
+          <Column style="min-width:100px;">
             <template #header>
               <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
                 Lavozimi
@@ -104,6 +104,12 @@
               <div
                 class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base"
               >
+              <span class="text-primary">
+                {{
+                  formatter.outDateFormatter(slotProps.data.staff.staff_date)
+                 
+                }}
+              </span>
                 {{
                   slotProps.data.staff.staff_full
                 }}
@@ -129,7 +135,37 @@
               </div>
             </template>
           </Column>
-          <Column :exportable="false" style="min-width: 100px; width: 100px">
+          <Column  style="min-width: 60px; width:100px">
+            <template #header>
+              <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
+                
+                Faoliyat turi
+              </div>
+            </template>
+            <template #body="slotProps">
+              <div
+              class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base text-green-600 font-semibold text-center"
+              >
+                <div>{{ slotProps.data.staff.staff_status}}</div>
+              </div>
+            </template>
+          </Column>
+          <Column  style="min-width: 60px; width:100px">
+            <template #header>
+              <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
+                
+                Stavkasi
+              </div>
+            </template>
+            <template #body="slotProps">
+              <div
+              class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base text-green-600 font-semibold text-center"
+              >
+                <div>{{ slotProps.data.staff.rate}}</div>
+              </div>
+            </template>
+          </Column>
+          <Column  style="min-width: 100px; width: 100px">
           <template #header>
             <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
               Amallar
@@ -175,12 +211,10 @@
      </div>
      <div class="col-12" v-show="false">
     <word-template
-        :cadry_id="Dowload_cadry_id"
         
         ref="word_resume"
       ></word-template>
    </div>
-   <export-panel ref="export_to_excel"></export-panel>
     </div>
   </template>
   <script>
@@ -193,6 +227,7 @@
   import DownloadButton from '@/components/buttons/DownloadButton'
 import WordTemplate from "../../../components/Eksport/WordTemplate.vue";
 import EmployeeDetails from "../../../components/partEmployee/EmployeeDetails.vue";
+import { mapActions, mapGetters } from "vuex";
   export default {
     components: {
       BreadCrumb,
@@ -229,12 +264,12 @@ import EmployeeDetails from "../../../components/partEmployee/EmployeeDetails.vu
       };
     },
     methods:{
+      ...mapActions(["set_new_cadry_date"]),
       get_List(params){
         this.controlLoaser(true)
         this.params.date1 = this.formatter.outDateFormatter(this.rangeDate[0])
         this.params.date2 = this.formatter.outDateFormatter(this.rangeDate[1])
           ViewService.get_ViewNewCadry(params).then((res)=>{
-              console.log(res.data.cadries);
               let number =
               (this.params.page - 1) * this.params.per_page;
               res.data.cadries.data.forEach((item) => {
@@ -248,13 +283,15 @@ import EmployeeDetails from "../../../components/partEmployee/EmployeeDetails.vu
           })
       },
       changeCalendar(){
-        console.log(this.rangeDate.length);
         if(this.rangeDate[1]!==null){
+          this.set_new_cadry_date({
+            date1:this.rangeDate[0],
+            date2:this.rangeDate[1],
+          })
             this.get_List(this.params)
         }
       },
       DowloadResume(id) {
-      console.table(id);
       this.$refs.word_resume.generateWord(id);
     },
     goPushDetails(id) {
@@ -272,14 +309,22 @@ import EmployeeDetails from "../../../components/partEmployee/EmployeeDetails.vu
         this.loading = item;
       }
     },
+    computed:{
+      ...mapGetters(["get_new_cadry_date"])
+    },
     created(){
-        // var today = new Date()
-        // this.rangeDate=[today,today]
       this.params.railway_id = JSON.parse(this.$route.params.railway_id);
       this.params.organization_id = JSON.parse(this.$route.params.organization_id);
       this.params.department_id =  JSON.parse(this.$route.params.department_id);
       this.global = this.$route.params.global=="1"? true : false;
-      this.get_List(this.params)
+      if(this.get_new_cadry_date.date1){
+        this.rangeDate[0] = this.get_new_cadry_date.date1
+        this.rangeDate[1] = this.get_new_cadry_date.date2
+        this.get_List(this.params)
+
+      }else{
+        this.get_List(this.params)
+      }
      
     }
   };

@@ -485,11 +485,11 @@ export default {
       genderList: [
         {
           name: "Erkak",
-          id: 0,
+          id: 'true',
         },
         {
           name: "Ayol",
-          id: 1,
+          id: 'false',
         },
       ],
       genderValue: null, //fake

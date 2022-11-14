@@ -6,7 +6,7 @@
             <bread-crumb
               :breadCump="[
                 { name: 'Statistika', path: this.global? '/admin/statistic': '/admin/partstatistic' },
-                { name: 'Lavozim', path: '' },
+                { name: 'Lavozim yo\'riqnomasi', path: '' },
               ]"
             ></bread-crumb>
           </div>
@@ -78,7 +78,7 @@
             </div>
           </template>
         </Column>
-          <Column style="min-width: 200px">
+          <Column style="min-width:100px; width:200px">
             <template #header>
               <div class="text-800 font-semibold">F.I.SH</div>
             </template>
@@ -93,8 +93,25 @@
               </div>
             </template>
           </Column>
+          <Column :exportable="false" style="min-width: 100px;">
+            <template #header>
+              <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
+                Lavozimi
+              </div>
+            </template>
+            <template #body="slotProps">
+              <div
+                class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base"
+              >
+                {{
+                  slotProps.data.staff.staff_full
+                }}
+              </div>
+            
+            </template>
+          </Column>
           
-          <Column  style="min-width: 100px; width: 300px">
+          <Column  style="min-width: 100px; width: 400px">
             <template #header>
               <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
                 
@@ -120,6 +137,24 @@
               </div>
             </template>
           </Column>
+          <Column :exportable="false" style="min-width: 30px; width: 40px">
+          <template #header>
+            <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
+              Amallar
+            </div>
+          </template>
+          <template #body="slotProps">
+            <div class="flex w-full align-items-center">
+              <download-button
+                :color="'bg-primary active:bg-primary'"
+                :border="'border-1 border-primary border-round'"
+                v-tooltip.left="`Ma'lumotlarni ko'rish`"
+                :icon="'pi pi-id-card'"
+                @click="goPushDetails(slotProps.data.id)"
+              ></download-button>
+            </div>
+          </template>
+        </Column>
           <template #footer>
             <table-pagination
               v-show="totalItem > 10"
@@ -143,6 +178,7 @@
   import TablePagination from "../../../components/Pagination/TablePagination.vue";
   import NoDataComponent from "../../../components/EmptyComponent/NoDataComponent.vue";
   import BirthdayLoader from "../../../components/loaders/BrithdayLoader.vue"
+  import DownloadButton from '@/components/buttons/DownloadButton'
   
   export default {
     components: {
@@ -150,6 +186,7 @@
       TablePagination,
       NoDataComponent,
       BirthdayLoader,
+      DownloadButton,
     },
     data() {
       return {
@@ -193,6 +230,9 @@
           this.params.per_page = event.per_page;
           this.get_List(this.params)
       },
+      goPushDetails(id) {
+      this.$router.push(`/admin/employee/view/${id}`);
+    },
       controlLoaser(item){
         this.loading = item;
       }

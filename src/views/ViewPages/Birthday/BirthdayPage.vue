@@ -114,30 +114,13 @@
                   cursor-pointer
                 "
               >
-                <div>{{ slotProps.data.organization.name }}</div>
+                <div v-show="global">{{ slotProps.data.organization.name }}</div>
+                <div v-show="!global">{{ slotProps.data.staff.department_id.name }}</div>
+
               </div>
             </template>
           </Column>
   
-         
-  
-          <Column :exportable="false" style="min-width: 100px; width: 200px">
-            <template #header>
-              <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
-                Bo'lim nomi 
-              </div>
-            </template>
-            <template #body="slotProps">
-              <div
-                class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base"
-              >
-                {{
-                  slotProps.data.staff.department_id.name
-                }}
-              </div>
-            
-            </template>
-          </Column>
           <template #footer>
             <table-pagination
               v-show="totalItem > 10"
