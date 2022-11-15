@@ -314,11 +314,6 @@ export default {
       cadry_adress: null,
     };
   },
-  watch: {
-    status_bedroom() {
-      this.cadry_adress = null;
-    },
-  },
   methods: {
     get_Cadry_qualification(loader) {
       this.controlLoader(loader)
@@ -351,7 +346,7 @@ export default {
       this.direction = event.training_direction;
       this.DirectionList = event.directions;
       this.planDate = new Date(`${event.data_qualification}-03-25`);
-      this.status_bedroom = event.status_bedroom == 1 ? false : true;
+      this.status_bedroom = event.status_bedroom == 1 ? true : false;
       this.cadry_adress = event.address;
       this.cadry_comment = event.comment;
       (this.lastDate = null), this.controlDialog(true);
@@ -374,8 +369,8 @@ export default {
           training_direction_id: this.direction.id,
           date_1: this.formatter.textDateYear(this.lastDate),
           date_2: this.formatter.textDateYear(this.planDate),
-          status_bedroom: !this.status_bedroom,
-          address: this.cadry_adress,
+          status_bedroom: this.status_bedroom,
+          address:this.status_bedroom? null : this.cadry_adress ,
           comment: this.cadry_comment,
         };
         let update_data = {
@@ -383,8 +378,8 @@ export default {
           apparat_id: this.activity.id,
           training_direction_id: this.direction.id,
           date_qualification: this.formatter.textDateYear(this.planDate),
-          status_bedroom: !this.status_bedroom,
-          address: this.cadry_adress,
+          status_bedroom: this.status_bedroom,
+          address:this.status_bedroom? null : this.cadry_adress ,
           comment: this.cadry_comment,
         };
         if (this.skillDialogtype) {
