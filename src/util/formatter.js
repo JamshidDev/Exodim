@@ -12,6 +12,10 @@ const textDateFormat = function (time){
   let textFormat = new Date(time).toLocaleDateString("en-GB")
   return textFormat
 }
+const textDateYear = function (time){
+  let textFormat = new Date(time).getFullYear()
+  return textFormat
+}
 const arrowDateFormat = function (time){
     let date = new Date(time)
     let year = date.getFullYear()
@@ -20,6 +24,6 @@ const arrowDateFormat = function (time){
     return `${day}-${month}-${year}`
 }
 
-export default { interDateFormatter, outDateFormatter,textDateFormat,arrowDateFormat };
+export default { interDateFormatter, outDateFormatter,textDateFormat,arrowDateFormat, textDateYear };
 
 

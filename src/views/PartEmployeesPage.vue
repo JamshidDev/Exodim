@@ -293,6 +293,7 @@
         showGridlines
         class="p-datatable-sm"
         v-show="totalCadries"
+        v-model:selection="selectitem" selectionMode="single"
       >
         <Column style="min-width:30px; width:36px">
           <template #header>
@@ -464,6 +465,7 @@ export default {
   },
   data() {
     return {
+      selectitem:null,
       displayBasic: true,
       loadingtable: false,
       selectedCadries: null,

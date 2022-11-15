@@ -199,6 +199,18 @@
               <div class="col-6 py-2 pl-2">
                 <h6 class="text-700 text-left text-sm">{{ cadry.deputy }}</h6>
               </div>
+
+              <div class="col-6 py-0 flex align-items-center">
+                <h6 class="text-900 font-bold text-sm text-left">
+                  <i
+                    class="pi pi-user text-blue-500 font-bold pr-2 text-xl"
+                  ></i>
+                  Pasport JSHR
+                </h6>
+              </div>
+              <div class="col-6 py-2 pl-2">
+                <h6 class="text-700 text-left text-sm">{{ cadry.pinfl }}</h6>
+              </div>
             </div>
           </div>
 
@@ -571,6 +583,7 @@ export default {
         nationality: null,
         party: null,
         education: null,
+        pinfl:null,
       },
       items: [
         {
@@ -649,6 +662,7 @@ export default {
           this.cadry.education = res.data.cadry.education;
           this.cadry.vacations = res.data.vacations;
           this.cadry.meds = res.data.meds;
+          this.cadry.pinfl = res.data.cadry.pinfl;
 
           this.controlLoader(false);
         })

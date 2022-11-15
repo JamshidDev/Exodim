@@ -1,11 +1,94 @@
 <template>
-  <div class="grid card xl:p-4 lg:p-2 pt-4 px-2">
-    <div class="col-12 p-0">
+  <div class="grid card xl:p-4 lg:p-2 p-2">
+    <div class="col-12 p-2">
       <add-button
         @click="addItemSkill()"
         :title="'Tayorlov'"
         :text="false"
       ></add-button>
+    </div>
+    <div class="col-12">
+      <DataTable
+        :value="List_qualification"
+        dataKey="id"
+        :paginator="false"
+        responsiveLayout="scroll"
+        showGridlines
+        class="pb-6 p-datatable-sm"
+      >
+        <Column style="min-width: 100px; width: 200px">
+          <template #header>
+            <div class="text-800 font-semibold">Ta'lim turi</div>
+          </template>
+          <template #body="slotProps">
+            <div class="text-left cursor-pointer font-semibold">
+              {{ slotProps.data.type_qualification.name }}
+            </div>
+          </template>
+        </Column>
+        <Column style="min-width: 100px">
+          <template #header>
+            <div class="text-800 font-semibold">Faoliyat turi</div>
+          </template>
+          <template #body="slotProps">
+            <div class="font-semibold flex justify-content-center">
+              {{ slotProps.data.apparat.name }}
+            </div>
+          </template>
+        </Column>
+        <Column style="min-width: 100px; width: 400px">
+          <template #header>
+            <div class="text-800 font-semibold">Ta'lim yo'nalishi</div>
+          </template>
+          <template #body="slotProps">
+            <div class="font-semibold flex justify-content-center">
+              {{ slotProps.data.training_direction.name }}
+            </div>
+          </template>
+        </Column>
+        <Column style="min-width: 80px; width: 100px">
+          <template #header>
+            <div class="text-800 font-semibold">Status</div>
+          </template>
+          <template #body="slotProps">
+            <div class="font-semibold flex justify-content-center">
+              <Chip
+                :label="slotProps.data.status.message"
+                class="mr-2 mb-2 text-sm"
+                :class="[slotProps.data.status.status && 'custom_chip']"
+              />
+            </div>
+          </template>
+        </Column>
+        <Column style="min-width: 40px; width: 60px">
+          <template #header>
+            <div class="text-800 font-semibold">Ball</div>
+          </template>
+          <template #body="slotProps">
+            <div class="font-semibold flex justify-content-center">
+              {{ slotProps.data.ball ? slotProps.data.ball : "" }}
+            </div>
+          </template>
+        </Column>
+
+        <Column :exportable="false" style="min-width: 100px; width: 100px">
+          <template #header>
+            <div class="text-800 font-semibold">Amallar</div>
+          </template>
+          <template #body="slotProps">
+            <div class="flex gap-2">
+              <edit-button
+                :editItem="slotProps.data"
+                @editEvent="editItemSkill($event)"
+              ></edit-button>
+              <delete-button
+                :deleteItem="slotProps.data.id"
+                @deleteAcceptEvent="deleteItemSkill($event)"
+              ></delete-button>
+            </div>
+          </template>
+        </Column>
+      </DataTable>
     </div>
     <div class="col-12 p-0">
       <Dialog
@@ -178,17 +261,24 @@
 <script>
 import AddButton from "../buttons/AddButton.vue";
 import SkillService from "@/service/servises/SkillService";
+import formatter from "../../util/formatter";
+import DeleteButton from "../buttons/DeleteButton.vue";
+import EditButton from "../buttons/EditButton.vue";
 
 export default {
   components: {
     AddButton,
+    DeleteButton,
+    EditButton,
   },
   data() {
     return {
+      formatter,
       skill_submitted: false,
       totalCadries: 0,
       skillDialog: false,
       skillDialogtype: true,
+
       List_qualification: [],
 
       type_Qualifications: [],
@@ -228,9 +318,19 @@ export default {
       this.resetSkillDialog();
       this.controlDialog(true);
     },
-    editItemSkill() {
+    editItemSkill(event) {
       this.skill_submitted = false;
       this.skillDialogtype = false;
+      this.controlDialog(true);
+      this.qualification = event.type_qualification
+      this.activity = event.apparat
+      this.direction = event.training_direction
+      this.planDate = new Date(`${event.data_qualification}-03-25`) 
+      this.status_bedroom = event.status_bedroom==1? false : true;
+      this.cadry_adress = event.address;
+      this.cadry_comment =event.comment
+
+      console.log(event);
     },
 
     addAndEditItem() {
@@ -242,16 +342,36 @@ export default {
         !this.lastDate_Error &&
         !this.planDate_Error
       ) {
+        let cadry_id = this.$route.params.id;
         let data = {
           type_qualification: this.qualification.id,
           apparat_id: this.activity.id,
           training_direction_id: this.direction.id,
-          date_1: this.lastDate,
-          date_2: this.planDate,
+          date_1: this.formatter.textDateYear(this.lastDate),
+          date_2: this.formatter.textDateYear(this.planDate),
           status_bedroom: !this.status_bedroom,
+          address: this.cadry_adresss,
+          comment: this.cadry_comment,
         };
-        console.log(data);
+        if (this.skillDialogtype) {
+          SkillService.create_Qualification({ id: cadry_id, data }).then(
+            (res) => {
+              this.controlDialog(false);
+            }
+          );
+        }
       }
+    },
+
+    deleteItemSkill(id) {
+      SkillService.delete_Cadry_Qualification({ id })
+        .then((res) => {
+          console.log(res.data);
+          this.get_Cadry_qualification();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
 
     changeActivity() {
@@ -304,7 +424,7 @@ export default {
 
     lastDate_Error() {
       if (!this.lastDate) {
-        return true;
+        return this.skillDialogtype;
       } else {
         return false;
       }
@@ -328,5 +448,10 @@ export default {
   },
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
+.custom_chip {
+  background: var(--green-100);
+  color: var(--green-700);
+  font-weight: 700 !important;
+}
 </style>

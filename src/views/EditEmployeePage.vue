@@ -108,7 +108,7 @@ export default {
         {
           route: "six",
           value: "6",
-          name: "Boshqalar",
+          name: "Tayyorlov",
           icon: "pi pi-bars",
         },
       ],
@@ -162,7 +162,7 @@ export default {
         this.live_router =  {
           route: "six",
           value: "6",
-          name: "Boshqalar",
+          name: "Tayyorlov",
           icon: "pi pi-bars",
         }
       }

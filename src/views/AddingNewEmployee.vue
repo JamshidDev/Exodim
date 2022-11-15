@@ -1,20 +1,24 @@
 <template >
-  <div class="grid card surface-0 shadow-1 py-4 px-3">
+  <div class="grid py-4 px-3">
     <!-- Page header details -->
+    <div class="col-12">
+      <div class="grid">
+        <div class="col-12 pb-0">
+          <bread-crumb :breadCump="[{name:'Xodimlar', path:'/admin/partemployee'}, {name:'Yangi xodim', path:''}]"></bread-crumb>
+        </div>
+        <div class="col-12 y-0 py-0">
+          <span class="text-2xl font-semibold"
+            >Yangi xodim ma'lumotlari
+        
+          </span>
+        </div>
+      </div>
+    </div>
     <div class="col-12">
       <div class="grid">
         <div class="col-12">
          <div class="grid">
-          <div class="col-6 flex justify-content-start py-0">
-            <Button
-              icon="pi pi-arrow-circle-left"
-              @click="goPush()"
-              class="p-button-secondary p-button-rounded p-button-sm"
-              v-tooltip.right="`Orqaga`"
-            />
-           
-          </div>
-          <div class="col-6 flex justify-content-end py-0">
+          <div class="col-12 flex justify-content-end py-0">
             <Button
               icon="pi pi-search"
               class="p-button-green p-button-sm mr-2"
@@ -33,16 +37,12 @@
           
        
         </div>
-        <div class="col-12 mb-2">
-          <h6 class="uppercase pl-2 text-xl text-center font-semibold">
-            Yangi xodim ma'lumotlari
-          </h6>
-        </div>
       </div>
     </div>
-
-    <!-- Personal imformation details -->
-    <div class="col-12 mb-4">
+    <div class="col-12 card surface-0 shadow-1">
+      <div class="grid">
+        <!-- Personal imformation details -->
+    <div class="col-12 mb-4 ">
       <div class="grid xl:px-4 xl:mx-4 lg:px-2 xl:mx-2">
         <div class="col-12 text-left text-base font-medium uppercase mb-4">
           Shaxsiy ma'lumotlari
@@ -635,6 +635,10 @@
         </div>
       </div>
     </div>
+      </div>
+    </div>
+
+    
     <div class="col-12">
       <Dialog
           v-model:visible="cropperDialog"
@@ -696,12 +700,14 @@ import Formatter from "../util/formatter";
 import { minLength, required } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
 import { Cropper } from "vue-advanced-cropper";
+import BreadCrumb from "../components/BreadCrumb/BreadCrumb.vue";
 import "vue-advanced-cropper/dist/style.css";
 export default {
   components:{
     SuccessAlert,
     WarningAlert,
     Cropper,
+    BreadCrumb,
   },
   setup() {
     const v$ = useVuelidate();

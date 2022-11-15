@@ -14,8 +14,17 @@ const get_Cadry_Qualification = (payload)=>{
 }
 
 const create_Qualification = (payload)=>{
-    return axios.get(`/api/qualification/cadry/${payload.id}/add`, payload.data)
+    return axios.post(`/api/qualification/cadry/${payload.id}/add`, payload.data)
+}
+
+const update_Qualification = (payload)=>{
+    return axios.put(`/api/qualification/${payload.id}/update`, payload.data)
+}
+
+const delete_Cadry_Qualification = (payload)=>{
+    return axios.delete(`/api/qualification/${payload.id}/delete`)
 }
 
 
-export default {get_Qualification,search_Cadry, create_Qualification, get_Cadry_Qualification}
+
+export default {get_Qualification,search_Cadry, create_Qualification, get_Cadry_Qualification, update_Qualification, delete_Cadry_Qualification }
