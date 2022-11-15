@@ -1,13 +1,18 @@
 <template>
-  <div class="grid card xl:p-4 lg:p-2 p-2">
-    <div class="col-12 p-2">
+    <div class="grid card py-4" v-if="barLoader">
+    <div class="col-12">
+      <progress-bar-loader></progress-bar-loader>
+    </div>
+  </div>
+  <div class="grid card xl:p-4 lg:p-2 p-2" v-if="!barLoader">
+    <div class="col-12 p-2" v-show="!List_qualification.length > 0">
       <add-button
         @click="addItemSkill()"
         :title="'Tayorlov'"
         :text="false"
       ></add-button>
     </div>
-    <div class="col-12">
+    <div class="col-12" v-show="List_qualification.length > 0">
       <DataTable
         :value="List_qualification"
         dataKey="id"
@@ -16,7 +21,7 @@
         showGridlines
         class="pb-6 p-datatable-sm"
       >
-        <Column style="min-width: 100px; width: 200px">
+        <Column style="min-width: 80px; width: 120px">
           <template #header>
             <div class="text-800 font-semibold">Ta'lim turi</div>
           </template>
@@ -116,6 +121,7 @@
               v-model="qualification"
               :options="type_Qualifications"
               optionLabel="name"
+              optionValue="id"
               placeholder="Tanlang"
               class="w-full"
               :class="{ 'p-invalid': qualification_Error && skill_submitted }"
@@ -184,7 +190,7 @@
               {{ direction ? direction.comment_time : "" }}
             </h6>
           </div>
-          <div class="col-6">
+          <div class="col-6" v-show="skillDialogtype">
             <h6 class="mb-2 pl-2 text-500">Oxirgi malaka oshirgan yili</h6>
             <Calendar
               class="w-full"
@@ -217,7 +223,9 @@
               v-model="status_bedroom"
               :binary="true"
             />
-            <span class="pl-2 text-500">Xodimni yoqotxonaa zaruriyati bor</span>
+            <span class="pl-2 text-500"
+              >Xodimni yoqotxonaga zaruriyati bor</span
+            >
           </div>
           <div class="col-12" v-show="!status_bedroom">
             <h6 class="mb-2 pl-2 text-500">Toshkentda yashash manzili</h6>
@@ -226,6 +234,7 @@
               placeholder="Yashash manzili"
               id="employeePhone"
               v-model="cadry_adress"
+              :class="{ 'p-invalid': cadry_adress_Error && skill_submitted }"
               :autoResize="true"
               rows="1"
             />
@@ -256,6 +265,9 @@
         </template>
       </Dialog>
     </div>
+    <div class="col-12">
+      <Toast position="bottom-right" />
+    </div>
   </div>
 </template>
 <script>
@@ -264,20 +276,24 @@ import SkillService from "@/service/servises/SkillService";
 import formatter from "../../util/formatter";
 import DeleteButton from "../buttons/DeleteButton.vue";
 import EditButton from "../buttons/EditButton.vue";
+import ProgressBarLoader from "../loaders/ProgressBarLoader.vue";
 
 export default {
   components: {
     AddButton,
     DeleteButton,
     EditButton,
+    ProgressBarLoader,
   },
   data() {
     return {
+      barLoader:false,
       formatter,
       skill_submitted: false,
       totalCadries: 0,
       skillDialog: false,
       skillDialogtype: true,
+      qualification_id: null,
 
       List_qualification: [],
 
@@ -292,17 +308,25 @@ export default {
 
       lastDate: null,
       planDate: null,
+
       status_bedroom: true,
       cadry_comment: null,
       cadry_adress: null,
     };
   },
+  watch: {
+    status_bedroom() {
+      this.cadry_adress = null;
+    },
+  },
   methods: {
-    get_Cadry_qualification() {
+    get_Cadry_qualification(loader) {
+      this.controlLoader(loader)
       SkillService.get_Cadry_Qualification({ id: this.$route.params.id }).then(
         (res) => {
           console.log(res.data.cadries);
           this.List_qualification = res.data.cadries;
+          this.controlLoader(false)
         }
       );
     },
@@ -321,16 +345,16 @@ export default {
     editItemSkill(event) {
       this.skill_submitted = false;
       this.skillDialogtype = false;
-      this.controlDialog(true);
-      this.qualification = event.type_qualification
-      this.activity = event.apparat
-      this.direction = event.training_direction
-      this.planDate = new Date(`${event.data_qualification}-03-25`) 
-      this.status_bedroom = event.status_bedroom==1? false : true;
+      this.qualification = event.type_qualification.id;
+      this.qualification_id = event.id;
+      this.activity = event.apparat;
+      this.direction = event.training_direction;
+      this.DirectionList = event.directions;
+      this.planDate = new Date(`${event.data_qualification}-03-25`);
+      this.status_bedroom = event.status_bedroom == 1 ? false : true;
       this.cadry_adress = event.address;
-      this.cadry_comment =event.comment
-
-      console.log(event);
+      this.cadry_comment = event.comment;
+      (this.lastDate = null), this.controlDialog(true);
     },
 
     addAndEditItem() {
@@ -340,25 +364,56 @@ export default {
         !this.activity_Error &&
         !this.direction_Error &&
         !this.lastDate_Error &&
-        !this.planDate_Error
+        !this.planDate_Error &&
+        !this.cadry_adress_Error
       ) {
         let cadry_id = this.$route.params.id;
         let data = {
-          type_qualification: this.qualification.id,
+          type_qualification: this.qualification,
           apparat_id: this.activity.id,
           training_direction_id: this.direction.id,
           date_1: this.formatter.textDateYear(this.lastDate),
           date_2: this.formatter.textDateYear(this.planDate),
           status_bedroom: !this.status_bedroom,
-          address: this.cadry_adresss,
+          address: this.cadry_adress,
+          comment: this.cadry_comment,
+        };
+        let update_data = {
+          type_qualification: this.qualification,
+          apparat_id: this.activity.id,
+          training_direction_id: this.direction.id,
+          date_qualification: this.formatter.textDateYear(this.planDate),
+          status_bedroom: !this.status_bedroom,
+          address: this.cadry_adress,
           comment: this.cadry_comment,
         };
         if (this.skillDialogtype) {
+          this.controlDialog(false);
           SkillService.create_Qualification({ id: cadry_id, data }).then(
             (res) => {
-              this.controlDialog(false);
+              this.get_Cadry_qualification(false);
+              this.$toast.add({
+                severity: "success",
+                summary: "Muvofaqqiyatli bajarildi",
+                detail: "Qo'shildi",
+                life: 2000,
+              });
             }
           );
+        } else {
+          this.controlDialog(false);
+          SkillService.update_Qualification({
+            id: this.qualification_id,
+            data: update_data,
+          }).then((res) => {
+            this.get_Cadry_qualification(false);
+            this.$toast.add({
+              severity: "success",
+              summary: "Muvofaqqiyatli bajarildi",
+              detail: "Tahrirlandi",
+              life: 2000,
+            });
+          });
         }
       }
     },
@@ -366,8 +421,14 @@ export default {
     deleteItemSkill(id) {
       SkillService.delete_Cadry_Qualification({ id })
         .then((res) => {
-          console.log(res.data);
-          this.get_Cadry_qualification();
+          this.get_Cadry_qualification(false);
+
+          this.$toast.add({
+            severity: "success",
+            summary: "Muvofaqqiyatli bajarildi",
+            detail: "O'chirildi",
+            life: 2000,
+          });
         })
         .catch((error) => {
           console.log(error);
@@ -388,13 +449,15 @@ export default {
       this.cadry_comment = null;
       this.cadry_adress = null;
     },
-
+    controlLoader(item){
+      this.barLoader = item;
+    },
     controlDialog(item) {
       this.skillDialog = item;
     },
   },
   created() {
-    this.get_Cadry_qualification();
+    this.get_Cadry_qualification(true);
     this.get_Qualificaton();
   },
   computed: {
@@ -440,7 +503,7 @@ export default {
 
     cadry_adress_Error() {
       if (!this.cadry_adress) {
-        return true;
+        return !this.status_bedroom;
       } else {
         return false;
       }
