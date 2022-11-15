@@ -1,7 +1,43 @@
-<template >
-  <div class="grid card surface-0 shadow-1 py-2 px-2">
-    <h6 class="text-base p-2 uppercase">Tibbiy ko'rik</h6>
-    <div class="col-12" v-show="!loader">
+<template>
+  <div class="grid px-3">
+    <div class="col-12">
+      <div class="grid">
+        <div class="col-12 pb-0">
+          <bread-crumb
+            :breadCump="[{ name: 'Tibbiy ko\'rik', path: '' }]"
+          ></bread-crumb>
+        </div>
+        <div class="col-12 y-0 py-0">
+          <span class="text-2xl font-semibold"
+            >Tibbiy ko'rik
+            <span class="text-base text-primary pl-2"> ({{ totalPage }})</span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 py-0">
+      <div class="grid py-0">
+        <div class="col-6">
+          <InputText
+            type="text"
+            v-model="searchCadryName"
+            placeholder="Ism orqali qidiruv"
+            class="p-inputtext-sm"
+            @keyup.enter="searchByName()"
+          />
+        </div>
+        <div class="col-6 flex justify-content-end">
+          <Button
+            icon="pi pi-plus"
+            label="Qo'shish"
+            class="p-button-info p-button-sm"
+            @click="addItemMed()"
+            v-tooltip.bottom="`Yangi tibbiy ko'rik qo'shish`"
+          ></Button>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 py-0" v-show="!loader">
       <DataTable
         ref="dt"
         :value="medList"
@@ -10,32 +46,15 @@
         showGridlines
         class="p-datatable-sm"
         stripedRows
+        v-model:selection="selectitem"
+        selectionMode="single"
       >
-        <template #header>
-          <div class="grid">
-            <div class="col-6">
-              <InputText
-                type="text"
-                v-model="searchCadryName"
-                placeholder="Ism orqali qidiruv"
-                class="p-inputtext-sm"
-                @keyup.enter="searchByName()"
-              />
-            </div>
-            <div class="col-6 flex justify-content-end">
-              <Button
-                icon="pi pi-plus"
-                label="Qo'shish"
-                class="p-button-info p-button-sm"
-                @click="addItemMed()"
-                v-tooltip.bottom="`Yangi tibbiy ko'rik qo'shish`"
-              ></Button>
-            </div>
-          </div>
-        </template>
         <Column header="" style="min-width: 30px; width: 40px">
+          <template #header>
+            <div class="text-800 text-sm font-medium">No</div>
+          </template>
           <template #body="slotProps">
-            <div class="w-full text-center text-lg font-semibold">
+            <div class="w-full text-center text-base font-medium">
               {{ slotProps.data.number }}
             </div>
           </template>
@@ -49,8 +68,8 @@
               <Image
                 :src="slotProps.data.photo"
                 :alt="slotProps.data.fullname"
-                width="40"
-                height="40"
+                width="30"
+                height="30"
                 preview
               />
             </div>
@@ -58,18 +77,13 @@
         </Column>
         <Column style="min-width: 16rem">
           <template #header>
-            <div class="text-800 font-semibold">F.I.SH</div>
+            <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
+              F.I.SH
+            </div>
           </template>
           <template #body="slotProps">
             <div
-              class="
-                text-sm
-                sm:text-sm
-                md:text-md
-                lg:text-lg
-                xl:text-lg
-                font-medium
-              "
+              class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base"
             >
               {{ slotProps.data.fullname }}
             </div>
@@ -78,18 +92,13 @@
 
         <Column style="min-width: 100px; width: 150px">
           <template #header>
-            <div class="text-800 font-semibold">Status</div>
+            <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
+              Status
+            </div>
           </template>
           <template #body="slotProps">
             <div
-              class="
-                text-sm
-                sm:text-sm
-                md:text-md
-                lg:text-lg
-                xl:text-lg
-                font-medium
-              "
+              class="text-sm sm:text-sm md:text-md lg:text-lg xl:text-lg font-medium"
             >
               <div
                 v-show="slotProps.data.days <= 0"
@@ -108,10 +117,7 @@
               >
                 {{ slotProps.data.days }} kun qoldi
               </div>
-              <div
-                v-show="slotProps.data.days > 10"
-                class="w-full text-center"
-              >
+              <div v-show="slotProps.data.days > 10" class="w-full text-center">
                 {{ slotProps.data.days }} kun qoldi
               </div>
             </div>
@@ -119,19 +125,13 @@
         </Column>
         <Column style="min-width: 100px; width: 100px">
           <template #header>
-            <div class="text-800 font-semibold">Oxirgi sana</div>
+            <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
+              Oxirgi sana
+            </div>
           </template>
           <template #body="slotProps">
             <div
-              class="
-                text-sm
-                sm:text-sm
-                md:text-md
-                lg:text-lg
-                xl:text-lg
-                text-center
-                font-medium
-              "
+              class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base"
               :class="[slotProps.data.isFinished ? 'text-red-500' : '']"
             >
               {{ formatter.arrowDateFormat(slotProps.data.date1) }}
@@ -140,19 +140,13 @@
         </Column>
         <Column style="min-width: 100px; width: 100px">
           <template #header>
-            <div class="text-800 font-semibold">Keyingi sana</div>
+            <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
+              Keyingi sana
+            </div>
           </template>
           <template #body="slotProps">
             <div
-              class="
-                text-sm
-                sm:text-sm
-                md:text-md
-                lg:text-lg
-                xl:text-lg
-                text-center
-                font-medium
-              "
+              class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base"
               :class="[slotProps.data.isFinished ? 'text-red-500' : '']"
             >
               {{ formatter.arrowDateFormat(slotProps.data.date2) }}
@@ -162,7 +156,9 @@
 
         <Column style="min-width: 120px; width: 120px">
           <template #header>
-            <div class="text-800 font-semibold">Amallar</div>
+            <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
+              Amallar
+            </div>
           </template>
           <template #body="slotProps">
             <div class="flex gap-2">
@@ -182,7 +178,7 @@
         </template>
       </DataTable>
     </div>
-    <div class="col-12" v-show="loader">
+    <div class="col-12 py-0" v-show="loader">
       <med-loader></med-loader>
     </div>
     <div class="col-12">
@@ -363,15 +359,19 @@ import medService from "../service/servises/medService";
 import VacationService from "@/service/servises/VacationService";
 import MedLoader from "../components/loaders/MedLoader.vue";
 import formatter from "../util/formatter";
+import BreadCrumb from "../components/BreadCrumb/BreadCrumb.vue";
+
 export default {
   components: {
     TextButton,
     TablePagination,
     MedLoader,
+    BreadCrumb,
   },
   data() {
     return {
       loader: false,
+      selectitem: null,
       medList: [],
       formatter,
       med_submitted: false,
@@ -394,7 +394,7 @@ export default {
       params: {
         page: 1,
         per_page: 10,
-        search:null,
+        search: null,
       },
       searchCadryName: null,
       search: {
@@ -567,7 +567,6 @@ export default {
     searchByName() {
       this.params.search = this.searchCadryName;
       this.get_MedList(this.params, false);
-
     },
 
     controlDialog(item) {
@@ -586,5 +585,4 @@ export default {
   },
 };
 </script>
-<style lang="">
-</style>
+<style lang=""></style>

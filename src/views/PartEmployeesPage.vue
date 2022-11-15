@@ -1,9 +1,11 @@
-<template >
+<template>
   <div class="grid px-3">
     <div class="col-12">
       <div class="grid">
         <div class="col-12 pb-0">
-          <bread-crumb :breadCump="[{name:'Xodimlar', path:'/admin/partemployee'}]"></bread-crumb>
+          <bread-crumb
+            :breadCump="[{ name: 'Xodimlar', path: '/admin/partemployee' }]"
+          ></bread-crumb>
         </div>
         <div class="col-12 y-0 py-0">
           <span class="text-2xl font-semibold"
@@ -293,13 +295,12 @@
         showGridlines
         class="p-datatable-sm"
         v-show="totalCadries"
-        v-model:selection="selectitem" selectionMode="single"
+        v-model:selection="selectitem"
+        selectionMode="single"
       >
-        <Column style="min-width:30px; width:36px">
+        <Column style="min-width: 30px; width: 36px">
           <template #header>
-            <div class="text-800 text-sm font-medium">
-              No
-            </div>
+            <div class="text-800 text-sm font-medium">No</div>
           </template>
           <template #body="slotProps">
             <div class="w-full text-center text-base font-medium">
@@ -317,7 +318,7 @@
             <div class="flex justify-content-center">
               <Image
                 :src="slotProps.data.photo"
-              alt="Rasm yo'q"
+                alt="Rasm yo'q"
                 width="30"
                 height="30"
                 preview
@@ -333,16 +334,7 @@
           </template>
           <template #body="slotProps">
             <div
-              class="
-                text-sm
-                sm:text-sm
-                md:text-sm
-                lg:text-base
-                xl:text-base
-                font-medium
-                hover:text-blue-500
-                cursor-pointer
-              "
+              class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base font-medium hover:text-blue-500 cursor-pointer"
               v-tooltip.bottom="`Tahrirlash`"
               @click="goPush(slotProps.data.id)"
             >
@@ -367,7 +359,7 @@
             </div>
           </template>
         </Column>
-        <Column style="min-width:120px; width:180px">
+        <Column style="min-width: 120px; width: 180px">
           <template #header>
             <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
               Bo'lim nomi
@@ -375,14 +367,7 @@
           </template>
           <template #body="slotProps">
             <div
-              class="
-                text-sm
-                sm:text-sm
-                md:text-sm
-                lg:text-base
-                xl:text-base
-                font-medium
-              "
+              class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base font-medium"
             >
               <span>{{ slotProps.data.department }}</span>
             </div>
@@ -465,7 +450,7 @@ export default {
   },
   data() {
     return {
-      selectitem:null,
+      selectitem: null,
       displayBasic: true,
       loadingtable: false,
       selectedCadries: null,
@@ -487,11 +472,11 @@ export default {
       genderList: [
         {
           name: "Erkak",
-          id: 'true',
+          id: "true",
         },
         {
           name: "Ayol",
-          id: 'false',
+          id: "false",
         },
       ],
       genderValue: null, //fake
