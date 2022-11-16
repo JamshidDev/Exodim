@@ -506,10 +506,11 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .custom_chip {
   background: var(--green-100);
   color: var(--green-700);
   font-weight: 700 !important;
 }
+
 </style>
