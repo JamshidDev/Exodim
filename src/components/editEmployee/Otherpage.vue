@@ -21,13 +21,17 @@
         showGridlines
         class="pb-6 p-datatable-sm"
       >
-        <Column style="min-width: 80px; width: 120px">
+        <Column style="min-width: 80px; width: 160px">
           <template #header>
             <div class="text-800 font-semibold">Ta'lim turi</div>
           </template>
           <template #body="slotProps">
             <div class="text-left cursor-pointer font-semibold">
-              {{ slotProps.data.type_qualification.name }}
+              <Chip
+                :label="slotProps.data.type_qualification.name"
+                class="mr-2 mb-2 text-sm"
+                :class="[slotProps.data.type_qualification.id ==1? 'bg-blue-100 text-blue-700 font-bold' : 'bg-yellow-100 text-yellow-700 font-semibold']"
+              />
             </div>
           </template>
         </Column>
@@ -36,7 +40,7 @@
             <div class="text-800 font-semibold">Faoliyat turi</div>
           </template>
           <template #body="slotProps">
-            <div class="font-semibold flex justify-content-center">
+            <div class="font-semibold text-left">
               {{ slotProps.data.apparat.name }}
             </div>
           </template>
@@ -46,7 +50,7 @@
             <div class="text-800 font-semibold">Ta'lim yo'nalishi</div>
           </template>
           <template #body="slotProps">
-            <div class="font-semibold flex justify-content-center">
+            <div class="font-semibold text-left">
               {{ slotProps.data.training_direction.name }}
             </div>
           </template>
@@ -61,6 +65,19 @@
                 :label="slotProps.data.status.message"
                 class="mr-2 mb-2 text-sm"
                 :class="[slotProps.data.status.status && 'custom_chip']"
+              />
+            </div>
+          </template>
+        </Column>
+        <Column style="min-width: 80px; width: 100px">
+          <template #header>
+            <div class="text-800 font-semibold">Rejadagi yili</div>
+          </template>
+          <template #body="slotProps">
+            <div class="font-semibold flex justify-content-center">
+              <Chip
+                :label="slotProps.data.data_qualification"
+                class="mr-2 mb-2 text-sm text-purple-700 bg-purple-100 font-bold"
               />
             </div>
           </template>

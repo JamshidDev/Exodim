@@ -173,7 +173,7 @@ const routes = [
           },
           {
             path: "/admin/view/stuffs/:railway_id/:organization_id/:department_id/:global",
-            name: "BlackList",
+            name: "Stuffs",
             component: function () {
               return import(
                 /* webpackChunkName: "about" */ "../views/ViewPages/Stuff/StuffPage.vue"
@@ -337,6 +337,17 @@ const routes = [
           return import(/* webpackChunkName: "about" */ "../views/SkillPage/SkillPage.vue");
         },
       },
+      {
+        path: "/admin/types",
+        name: "SkillTypes",
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: function () {
+          return import(/* webpackChunkName: "about" */ "../views/SkillPage/TypesPage");
+        },
+      },
+      
       {
         path: "/admin/superadmin",
         name: "superadmin",

@@ -106,12 +106,25 @@ export default {
           visible: () =>this.get_TitlePermission(["admin",]),
           
           items: [
+          {
+              label: "Xo'jaliklar",
+              icon: "pi pi-stop",
+              visible: () =>this.get_adminPermissions("admin"),
+              to: '/admin/types',
+            },
+            {
+              label: "Yo'nalishlar",
+              icon: "pi pi-stop",
+              visible: () =>this.get_adminPermissions("admin"),
+              to: '/admin/direction',
+            },
             {
               label: "Malaka oshirish",
               icon: "pi pi-stop",
               visible: () =>this.get_adminPermissions("admin"),
               to: '/admin/skill',
             },
+           
            
           ],
         },

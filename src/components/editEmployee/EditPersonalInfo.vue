@@ -746,7 +746,7 @@
             <div class="xl:col-4 lg:col-4 md:col-4 col-12">
               <Checkbox
                 inputId="binary"
-                v-model="status_decret"
+                v-model="status_for_decret"
                 :binary="true"
               />
               <span class="pl-2 text-500">Dekretdagi xodim o'rniga</span>
@@ -754,8 +754,7 @@
             <div class="xl:col-4 lg:col-4 md:col-4 col-12">
               <Checkbox
                 inputId="binary"
-                v-model="status_for_decret"
-                :binary="true"
+                v-model="status_decret"
               />
               <span class="pl-2 text-500">Dekretdagi xodim?</span>
             </div>
@@ -997,6 +996,11 @@ export default {
       }
     },
   },
+  watch:{
+    status_for_decret(val){
+      console.log(val);
+    }
+  },
 
   created() {
     this.getEmployee(this.$route.params.id);
@@ -1013,7 +1017,6 @@ export default {
         .get_employeeDetails({ id })
      
         .then((res) => {
-          console.table(res.data.cadry);
           let cadry = res.data.cadry;
           this.defaulAvatar = cadry.photo;
           this.firstName = cadry.first_name;
@@ -1144,6 +1147,7 @@ export default {
         this.controFinishDialog(false);
       }
     },
+
     deleteStuffItem(id) {
       console.log(id);
       this.delete_stuff_id = id;
@@ -1156,6 +1160,7 @@ export default {
           this.controldeleteStuffDialog(true);
         });
     },
+
     get_check_career() {
       employeeService
         .get_checkCarrer({ cadry_id: this.$route.params.id })
@@ -1163,6 +1168,7 @@ export default {
           this.check_career_list = res.data;
         });
     },
+
     deleteStuff() {
       this.delete_submitted = true;
       if (
@@ -1183,6 +1189,7 @@ export default {
         this.controldeleteStuffDialog(false);
       }
     },
+
     changeDepartment() {
       let id = this.stuff_department.id;
       this.stuff_stuffList = [];
@@ -1222,24 +1229,6 @@ export default {
             console.log(error);
           });
       });
-      /*
-let id = this.$route.params.id 
-      let name = this.fileName
-      this.$refs.cropper.getResult().canvas.toBlob( (blob)=> {
-        
-        let form = new FormData();
-        form.append("photo", blob, "JAmshid.jpg")
-        
-        employeeService
-          .get_employeeAvatar({ id:id , form: form })
-          .then((res) => {
-            console.log(res);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      });
-      */
     },
 
     controlCopper(item) {
@@ -1262,7 +1251,8 @@ let id = this.$route.params.id
         this.status_decret = false;
         this.status_for_decret = false;
         this.stuff_date = null;
-        (this.stuff_department = null), this.controlstuffDialog(true);
+        this.stuff_department = null;
+         this.controlstuffDialog(true);
       });
     },
 
@@ -1270,6 +1260,7 @@ let id = this.$route.params.id
       this.cadry_stuff_id = id;
       this.stuffDialogType = false;
       employeeService.update_CadryStuff({ id }).then((res) => {
+        console.log(res.data);
         this.stuff_departmentList = res.data.departments;
         this.stuff_department = res.data.department_id;
         this.stuff_stuffList = res.data.department_staffs;
@@ -1287,6 +1278,7 @@ let id = this.$route.params.id
 
     editStuff() {
       this.controlstuffDialog(false);
+      console.log(this.status_for_decret);
       let data = {
         department_id: this.stuff_department.id,
         staff_id: this.stuff_stuff.id,
@@ -1295,6 +1287,7 @@ let id = this.$route.params.id
         staff_date: formatter.outDateFormatter(this.stuff_date),
         status_sverx: this.status_sverx,
         status_for_decret: this.status_for_decret,
+
         status_decret: this.status_decret,
         careerCheck: this.add_career,
         career_id: this.update_career,

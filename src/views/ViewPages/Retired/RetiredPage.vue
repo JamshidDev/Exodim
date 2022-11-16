@@ -144,14 +144,13 @@
               </div>
             </template>
             <template #body="slotProps">
-              <div
-                class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base text-center text-blue-500"
-              >
-                {{
-                  formatter.arrowDateFormat(slotProps.data.birth_date)
-                 
-                }}
-              </div>
+              <div class="text-left cursor-pointer font-semibold">
+              <Chip
+                :label=" formatter.arrowDateFormat(slotProps.data.birth_date)"
+                class="mr-2 mb-2 text-sm bg-blue-100 text-blue-700 font-bold"
+                
+              />
+            </div>
             
             </template>
           </Column>

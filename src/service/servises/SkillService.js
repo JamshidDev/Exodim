@@ -26,5 +26,23 @@ const delete_Cadry_Qualification = (payload)=>{
 }
 
 
+// Skill Types
+const get_Skill_Apparats = (payload)=>{
+    return axios.get(`/api/qualification/management/apparats`,{params:payload.params})
+}
 
-export default {get_Qualification,search_Cadry, create_Qualification, get_Cadry_Qualification, update_Qualification, delete_Cadry_Qualification }
+const create_Skill_Apparats = (payload)=>{
+    return axios.post(`/api/qualification/management/apparat/add`, payload.data)
+}
+
+const update_Skill_Apparats = (payload)=>{
+    return axios.put(`/api/qualification/management/apparat/${payload.apparat_id}/update`, payload.data)
+}
+
+const delete_Skill_Apparats = (payload)=>{
+    return axios.delete(`/api/qualification/management/apparat/${payload.apparat_id}/delete`)
+}
+
+
+
+export default {get_Qualification,search_Cadry, create_Qualification, get_Cadry_Qualification, update_Qualification, delete_Cadry_Qualification, get_Skill_Apparats,update_Skill_Apparats,delete_Skill_Apparats,create_Skill_Apparats }
