@@ -43,6 +43,25 @@ const delete_Skill_Apparats = (payload)=>{
     return axios.delete(`/api/qualification/management/apparat/${payload.apparat_id}/delete`)
 }
 
+// Skill Directions
+
+const get_Skill_Direction = (payload)=>{
+    return axios.get(`/api/qualification/management/directions`,{params:payload.params})
+}
+
+const create_Skill_Direction = (payload)=>{
+    return axios.post(`/api/qualification/management/direction/add`, payload.data)
+}
+
+const update_Skill_Direction = (payload)=>{
+    return axios.put(`/api/qualification/management/direction/${payload.direction_id}/update`, payload.data)
+}
 
 
-export default {get_Qualification,search_Cadry, create_Qualification, get_Cadry_Qualification, update_Qualification, delete_Cadry_Qualification, get_Skill_Apparats,update_Skill_Apparats,delete_Skill_Apparats,create_Skill_Apparats }
+const delete_Skill_Direction = (payload)=>{
+    return axios.delete(`/api/qualification/management/direction/${payload.direction_id}/delete`)
+}
+
+
+
+export default {get_Qualification,search_Cadry, create_Qualification, get_Cadry_Qualification, update_Qualification, delete_Cadry_Qualification, get_Skill_Apparats,update_Skill_Apparats,delete_Skill_Apparats,create_Skill_Apparats,get_Skill_Direction, create_Skill_Direction,update_Skill_Direction,delete_Skill_Direction }

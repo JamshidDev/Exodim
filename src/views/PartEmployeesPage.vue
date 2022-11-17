@@ -629,8 +629,8 @@ export default {
       console.log(event);
       this.organization.page = event.page;
       this.organization.per_page = event.per_page;
-      localStorage.setItem("page_1", event.page);
-      localStorage.setItem("per_page_1", event.per_page);
+      localStorage.setItem("page_5", event.page);
+      localStorage.setItem("per_page_5", event.per_page);
       this.getEmployee(this.organization);
     },
 

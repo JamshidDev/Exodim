@@ -23,4 +23,5 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 <!-- EmployeePage page_2 -->
 <!-- PositionPage page_3 -->
 <!-- FactoryPart page_4 -->
+<!-- DirectionPage page_5 -->
 

@@ -49,7 +49,7 @@
         </div>
       </div>
     </div>
-    <div class="col-12 py-0">
+    <div class="col-12 py-0" v-show="!loader">
       <DataTable
         ref="dt"
         :value="List"
@@ -86,11 +86,7 @@
                 lg:text-base
                 xl:text-base
                 font-medium
-                hover:text-blue-500
-                cursor-pointer
               "
-              v-tooltip.bottom="`Tahrirlash`"
-              @click="goPush(slotProps.data.id)"
             >
               <div>{{ slotProps.data.name }}</div>
             </div>
@@ -113,7 +109,10 @@
                 text-center
               "
             >
-              {{ slotProps.data.directions }}
+              <Chip
+                :label="slotProps.data.directions "
+                class="mr-2 mb-2 text-sm text-blue-700 bg-blue-100 font-bold"
+              />
             </div>
           </template>
         </Column>
@@ -138,7 +137,7 @@
         </Column>
         <template #footer>
           <table-pagination
-            v-show="totalItem > 10"
+            v-show="totalItem>10"
             :total_page="totalItem"
             :page="params.page"
             :per_page="params.per_page"
@@ -146,7 +145,13 @@
           ></table-pagination>
         </template>
       </DataTable>
+      <no-data-component v-show="!totalItem"></no-data-component>
     </div>
+    <div class="col-12 py-0" v-show="loader">
+      <types-loader></types-loader>
+    </div>
+
+
     <div class="col-12">
       <Dialog
         v-model:visible="dialog"
@@ -207,6 +212,8 @@ import SkillService from "@/service/servises/SkillService";
 import DeleteButton from "../../components/buttons/DeleteButton.vue";
 import EditButton from "../../components/buttons/EditButton.vue";
 import NoDataComponent from "../../components/EmptyComponent/NoDataComponent.vue";
+import TypesLoader from "../../components/loaders/TypesLoader.vue";
+import { mapActions, mapGetters } from "vuex";
 export default {
   components: {
     BreadCrumb,
@@ -214,6 +221,7 @@ export default {
     DeleteButton,
     EditButton,
     NoDataComponent,
+    TypesLoader,
   },
 
   data() {
@@ -223,10 +231,15 @@ export default {
       apparatDialogtype: true,
       submitted: false,
       dialog: false,
+      loader:false,
 
       params: {
-        page: 1,
-        per_page: 10,
+        page: localStorage.getItem("page_6")
+          ? Number(localStorage.getItem("page_6"))
+          : 1,
+          per_page:localStorage.getItem("per_page_6")
+          ? Number(localStorage.getItem("per_page_6"))
+          : 10,
         search: null,
       },
 
@@ -236,7 +249,9 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["set_type_page_search"]),
     get_skill_Types(params, loader) {
+      this.controlLoader(loader)
       SkillService.get_Skill_Apparats({ params: params }).then((res) => {
         let number = (this.params.page - 1) * this.params.per_page;
         res.data.apparats.data.forEach((item) => {
@@ -246,6 +261,7 @@ export default {
         console.log(res.data.apparats);
         this.List = res.data.apparats.data;
         this.totalItem = res.data.apparats.pagination.total;
+        this.controlLoader(false)
       });
     },
 
@@ -273,7 +289,7 @@ export default {
         if (this.apparatDialogtype) {
             SkillService.create_Skill_Apparats({data }).then(
             (res) => {
-              this.get_skill_Types(this.params, true);
+              this.get_skill_Types(this.params, false);
               this.$toast.add({
                 severity: "success",
                 summary: "Muvofaqqiyatli bajarildi",
@@ -285,7 +301,7 @@ export default {
         } else {
           SkillService.update_Skill_Apparats({ apparat_id: this.apparat_id , data }).then(
             (res) => {
-              this.get_skill_Types(this.params, true);
+              this.get_skill_Types(this.params, false);
               this.$toast.add({
                 severity: "success",
                 summary: "Muvofaqqiyatli bajarildi",
@@ -299,23 +315,42 @@ export default {
     },
     deleteItem(id) {
       SkillService.delete_Skill_Apparats({ apparat_id: id }).then((res) => {
-        this.get_skill_Types(this.params, true);
+        this.get_skill_Types(this.params, false);
         this.$toast.add({
             severity: "success",
             summary: "Muvofaqqiyatli bajarildi",
             detail: "O'chirildi",
             life: 2000,
           });
-      });
+      }).catch((error)=>{
+        this.$toast.add({
+              severity: "warn",
+              summary: "Xatolik",
+              detail: "Yo'nalish mavjud",
+              life: 2000,
+            });
+      })
     },
     searchByName() {
+      this.set_type_page_search(this.params.search)
+      this.get_skill_Types(this.params, true);
+    },
+    changePagination(event) {
+      this.params.page = event.page;
+      this.params.per_page = event.per_page;
+      localStorage.setItem("page_6", event.page);
+      localStorage.setItem("per_page_6", event.per_page);
       this.get_skill_Types(this.params, true);
     },
     controlDialog(item) {
       this.dialog = item;
     },
+    controlLoader(item){
+      this.loader = item;
+    },
   },
   computed: {
+    ...mapGetters(["get_type_page_search"]),
     apparatName_Error() {
       if (!this.apparatName) {
         return true;
@@ -325,7 +360,13 @@ export default {
     },
   },
   created() {
-    this.get_skill_Types(this.params, true);
+    if(this.get_type_page_search){
+      this.params.search =  this.get_type_page_search;
+      this.get_skill_Types(this.params, true);
+    }else{
+      this.get_skill_Types(this.params, true);
+    }
+    
   },
 };
 </script>
