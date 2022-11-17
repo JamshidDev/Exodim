@@ -103,25 +103,25 @@ export default {
         {
           label: "Tayorlov",
           icon: "pi pi-th-large",
-          visible: () =>this.get_TitlePermission(["admin",]),
+          visible: () =>this.get_TitlePermission(["management_qualifications",]),
           
           items: [
           {
               label: "Xo'jaliklar",
               icon: "pi pi-stop",
-              visible: () =>this.get_adminPermissions("admin"),
+              visible: () =>this.get_adminPermissions("management_qualifications"),
               to: '/admin/types',
             },
             {
               label: "Yo'nalishlar",
               icon: "pi pi-stop",
-              visible: () =>this.get_adminPermissions("admin"),
+              visible: () =>this.get_adminPermissions("management_qualifications"),
               to: '/admin/direction',
             },
             {
               label: "Malaka oshirish",
               icon: "pi pi-stop",
-              visible: () =>this.get_adminPermissions("admin"),
+              visible: () =>this.get_adminPermissions("management_qualifications"),
               to: '/admin/skill',
             },
            

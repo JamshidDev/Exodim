@@ -86,8 +86,6 @@
                 lg:text-base
                 xl:text-base
                 font-medium
-                hover:text-blue-500
-                cursor-pointer
               "
             >
               <div>{{ slotProps.data.name }}</div>

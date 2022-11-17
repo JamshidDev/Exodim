@@ -77,7 +77,7 @@
         </Column>
         <Column style="min-width: 16rem">
           <template #header>
-            <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
+            <div class="text-800 text-sm lg:text-base xl:text-base font-semibold">
               F.I.SH
             </div>
           </template>
@@ -89,8 +89,29 @@
             </div>
           </template>
         </Column>
+        <Column style="min-width: 150px; width: 200px">
+          <template #header>
+            <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
+              Xulosa
+            </div>
+          </template>
+          <template #body="slotProps">
+            <div
+              class="text-sm sm:text-sm md:text-md lg:text-lg xl:text-lg font-medium"
+            >
+              <div
+                class="w-full text-center text-red-500"
+              >
+                <Chip
+                :label="slotProps.data.result"
+                class="mr-2 mb-2 text-sm text-cyan-700 bg-cyan-100 font-bold"
+              />
+              </div>
+            </div>
+          </template>
+        </Column>
 
-        <Column style="min-width: 100px; width: 150px">
+        <Column style="min-width: 130px; width: 130px">
           <template #header>
             <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
               Status
@@ -127,7 +148,7 @@
             </div>
           </template>
         </Column>
-        <Column style="min-width: 120px; width: 120px">
+        <Column style="min-width: 110px; width: 110px">
           <template #header>
             <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
               Oxirgi sana
@@ -144,7 +165,7 @@
             </div>
           </template>
         </Column>
-        <Column style="min-width:120px; width:120px">
+        <Column style="min-width:110px; width:110px">
           <template #header>
             <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
               Keyingi sana
@@ -171,10 +192,13 @@
           </template>
           <template #body="slotProps">
             <div class="flex gap-2">
-              <text-button
-                :text="'Yangilash'"
-                @click="refreshItem(slotProps.data)"
-              ></text-button>
+              <Button
+            icon="pi pi-refresh"
+            label="Yangilash"
+            class="p-button-success p-button-sm text-sm"
+            @click="refreshItem(slotProps.data)"
+            v-tooltip.bottom="`Tibbiy ko'rik xulosasini yangilash`"
+          ></Button>
             </div>
           </template>
         </Column>
@@ -203,7 +227,7 @@
           '640px': '90vw',
         }"
         :style="{ width: '50vw' }"
-        :modal="true"
+        :modal="false"
       >
         <template #header>
           <h6 class="uppercase text-lg text-blue-500 font-medium">
@@ -369,6 +393,7 @@ import VacationService from "@/service/servises/VacationService";
 import MedLoader from "../components/loaders/MedLoader.vue";
 import formatter from "../util/formatter";
 import BreadCrumb from "../components/BreadCrumb/BreadCrumb.vue";
+
 
 export default {
   components: {

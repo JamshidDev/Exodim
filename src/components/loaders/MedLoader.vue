@@ -8,9 +8,9 @@
         showGridlines
         class="p-datatable-sm"
       >
-      <Column header="" style="min-width: 30px; width: 40px">
+        <Column header="" style="min-width: 30px; width: 36px">
           <template #body>
-            <Skeleton size="2rem" class="mr-1"></Skeleton>
+            <Skeleton size="1rem" class="mr-1"></Skeleton>
           </template>
         </Column>
         <Column style="min-width: 60px; width: 60px">
@@ -18,11 +18,9 @@
             <div class="text-800 font-semibold"></div>
           </template>
           <template #body>
-            <Skeleton size="3rem" class="mr-1"></Skeleton>
+            <Skeleton size="2rem" class="mr-1"></Skeleton>
           </template>
         </Column>
-
-
 
         <Column style="min-width: 16rem">
           <template #header>
@@ -56,12 +54,11 @@
             <Skeleton></Skeleton>
           </template>
         </Column>
-        <Column style="min-width: 120px; width: 120px">
-          <template #header>
-            <div class="text-800 font-semibold"></div>
-          </template>
+        <Column style="min-width:120px; width:120px">
           <template #body>
-            <Skeleton></Skeleton>
+            <div class="flex">
+              <Skeleton size="2rem" class="px-7"></Skeleton>
+            </div>
           </template>
         </Column>
       </DataTable>
