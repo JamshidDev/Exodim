@@ -303,7 +303,7 @@
             </div>
             <Divider class="mt-2 mb-1" />
             <div class="col-12 pb-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase  xl:text-base my-2 font-semibold">Erkakalar - <span class="font-bold text-lg text-blue-500">{{this.allManCadries}}</span> </h6>   <Tag class="px-2 text-sm" rounded :value="`${allManChart}%`"></Tag>
+              <h6 class="uppercase  xl:text-base my-2 font-semibold">Erkaklar - <span class="font-bold text-lg text-blue-500">{{this.allManCadries}}</span> </h6>   <Tag class="px-2 text-sm" rounded :value="`${allManChart}%`"></Tag>
             </div>
             <div class="col-12 pt-0 flex justify-content-between align-items-center">
               <h6 class="uppercase  xl:text-base my-2 font-semibold">Ayollar - <span class="font-bold text-lg text-green-500">{{this.allWomanCadries}}</span> </h6>  <Tag class="px-2 text-sm" rounded severity="success" :value="`${allWomanChart}%`"></Tag>
@@ -440,7 +440,7 @@
             </div>
             <Divider class="mt-2 mb-1" />
             <div class="col-12 pb-0 flex justify-content-between align-items-start">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Kirirtilmaganlar - <span class="font-bold text-lg text-blue-500">{{not_staff_files}}</span> </h6>   
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Kiritilmaganlar - <span class="font-bold text-lg text-blue-500">{{not_staff_files}}</span> </h6>   
             </div>
             <div class="col-12 pt-0 flex justify-content-between align-items-center">
               <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${not_staff_filesChart}%`"></Tag>

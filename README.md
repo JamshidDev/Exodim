@@ -24,4 +24,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 <!-- PositionPage page_3 -->
 <!-- FactoryPart page_4 -->
 <!-- DirectionPage page_5 -->
+<!-- TypesPage page_6 -->
+
 

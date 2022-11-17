@@ -334,7 +334,7 @@
             </div>
             <Divider class="mt-2 mb-1" />
             <div class="col-12 pb-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Erkakalar - <span class="font-bold text-lg text-blue-500">{{this.pensionsMan}}</span> </h6>   <Tag class="px-2 text-sm" rounded :value="`${pensionsManChart}%`"></Tag>
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Erkaklar - <span class="font-bold text-lg text-blue-500">{{this.pensionsMan}}</span> </h6>   <Tag class="px-2 text-sm" rounded :value="`${pensionsManChart}%`"></Tag>
             </div>
             <div class="col-12 pt-0 flex justify-content-between align-items-center">
               <h6 class="uppercase xl:text-base my-2 font-semibold">Ayollar - <span class="font-bold text-lg text-green-500">{{this.pensionWoman}}</span> </h6>  <Tag class="px-2 text-sm" rounded severity="success" :value="`${pensionWomanChart}%`"></Tag>
@@ -346,7 +346,7 @@
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-blue-600  uppercase text-sm font-semibold"
-                >Shartnomachi xodimlar</span
+                >Kasanachilar</span
               >
             </div>
             <div class="col-2 flex justify-content-end" @click="goList(7)">
@@ -361,7 +361,7 @@
             </div>
             <Divider class="mt-2 mb-1" />
             <div class="col-12 pb-0 flex justify-content-between align-items-start">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Shartnomachi - <span class="font-bold text-lg text-blue-500">{{allContract}}</span> </h6>   
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Kasanachi - <span class="font-bold text-lg text-blue-500">{{allContract}}</span> </h6>   
             </div>
             <div class="col-12 pt-0 flex justify-content-between align-items-center">
               <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${allContractChart}%`"></Tag>
@@ -443,7 +443,7 @@
             </div>
             <Divider class="mt-2 mb-1" />
             <div class="col-12 pb-0 flex justify-content-between align-items-start">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Kirirtilmaganlar - <span class="font-bold text-lg text-blue-500">{{not_staff_files}}</span> </h6>   
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Kiritilmaganlar - <span class="font-bold text-lg text-blue-500">{{not_staff_files}}</span> </h6>   
             </div>
             <div class="col-12 pt-0 flex justify-content-between align-items-center">
               <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${not_staff_filesChart}%`"></Tag>

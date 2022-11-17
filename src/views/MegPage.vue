@@ -104,26 +104,30 @@
                 v-show="slotProps.data.days <= 0"
                 class="w-full text-center text-red-500"
               >
-                <Tag
-                  class="mr-2"
-                  icon="pi pi-info-circle"
-                  severity="danger"
-                  value="Tugagan"
-                ></Tag>
+                <Chip
+                label="Tugagan"
+                class="mr-2 mb-2 text-sm text-red-700 bg-red-100 font-bold"
+              />
               </div>
               <div
                 v-show="slotProps.data.days <= 10 && slotProps.data.days > 0"
                 class="w-full text-center"
               >
-                {{ slotProps.data.days }} kun qoldi
+              <Chip
+                :label="`${slotProps.data.days} kun qoldi`"
+                class="mr-2 mb-2 text-sm text-yellow-700 bg-yellow-100 font-bold"
+              />
               </div>
               <div v-show="slotProps.data.days > 10" class="w-full text-center">
-                {{ slotProps.data.days }} kun qoldi
+                <Chip
+                :label="`${slotProps.data.days} kun qoldi`"
+                class="mr-2 mb-2 text-sm text-blue-700 bg-blue-100 font-bold"
+              />
               </div>
             </div>
           </template>
         </Column>
-        <Column style="min-width: 100px; width: 100px">
+        <Column style="min-width: 120px; width: 120px">
           <template #header>
             <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
               Oxirgi sana
@@ -132,13 +136,15 @@
           <template #body="slotProps">
             <div
               class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base"
-              :class="[slotProps.data.isFinished ? 'text-red-500' : '']"
             >
-              {{ formatter.arrowDateFormat(slotProps.data.date1) }}
+              <Chip
+                :label="formatter.arrowDateFormat(slotProps.data.date1)"
+                class="mr-2 mb-2 text-sm text-purple-700 bg-purple-100 font-bold"
+              />
             </div>
           </template>
         </Column>
-        <Column style="min-width: 100px; width: 100px">
+        <Column style="min-width:120px; width:120px">
           <template #header>
             <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
               Keyingi sana
@@ -149,7 +155,10 @@
               class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base"
               :class="[slotProps.data.isFinished ? 'text-red-500' : '']"
             >
-              {{ formatter.arrowDateFormat(slotProps.data.date2) }}
+            <Chip
+                :label="formatter.arrowDateFormat(slotProps.data.date2)"
+                class="mr-2 mb-2 text-sm text-purple-700 bg-purple-100 font-bold"
+              />
             </div>
           </template>
         </Column>
