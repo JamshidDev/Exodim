@@ -75,7 +75,7 @@
             </div>
           </template>
         </Column>
-        <Column style="min-width: 16rem">
+        <Column style="min-width:100px; width:300px">
           <template #header>
             <div class="text-800 text-sm lg:text-base xl:text-base font-semibold">
               F.I.SH
@@ -89,6 +89,22 @@
             </div>
           </template>
         </Column>
+
+        <Column style="min-width:100px;">
+          <template #header>
+            <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
+              Bo'lim
+            </div>
+          </template>
+          <template #body="slotProps">
+            <div
+              class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base font-medium"
+            >
+          {{slotProps.data.staff.department_id.name}}
+            </div>
+          </template>
+        </Column>
+
         <Column style="min-width: 150px; width: 200px">
           <template #header>
             <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
@@ -100,7 +116,7 @@
               class="text-sm sm:text-sm md:text-md lg:text-lg xl:text-lg font-medium"
             >
               <div
-                class="w-full text-center text-red-500"
+                class="w-full text-center"
               >
                 <Chip
                 :label="slotProps.data.result"
@@ -183,6 +199,8 @@
             </div>
           </template>
         </Column>
+
+     
 
         <Column style="min-width: 120px; width: 120px">
           <template #header>

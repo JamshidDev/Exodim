@@ -68,25 +68,36 @@
             </div>
           </template>
         </Column>
-        <Column style="min-width: 16rem">
+        <Column style="min-width:100px; width:300px">
           <template #header>
             <div class="text-800 font-semibold">F.I.SH</div>
           </template>
           <template #body="slotProps">
             <div
               class="
-                text-sm
-                sm:text-sm
-                md:text-md
-                lg:text-lg
-                xl:text-lg
-                font-medium
+              text-800 text-sm lg:text-base xl:text-base
               "
             >
               {{ slotProps.data.cadry.fullname }}
             </div>
           </template>
         </Column>
+
+        <Column style="min-width:100px;">
+          <template #header>
+            <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
+              Bo'lim
+            </div>
+          </template>
+          <template #body="slotProps">
+            <div
+              class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base font-medium"
+            >
+          {{slotProps.data.cadry.department}}
+            </div>
+          </template>
+        </Column>
+
 
         <Column style="min-width: 150px; width: 200px">
           <template #header>
@@ -103,53 +114,53 @@
                 font-medium
               "
             >
-              {{ vacationName(slotProps.data.status_decret) }}
+              <Chip
+                :label="vacationName(slotProps.data.status_decret) "
+                class="mr-2 mb-2 text-sm text-cyan-700 bg-cyan-100 font-bold"
+              />
             </div>
           </template>
         </Column>
-        <Column style="min-width: 100px; width: 100px">
+
+        <Column style="min-width: 50px; width: 110px">
           <template #header>
-            <div class="text-800 font-semibold">Qachondan</div>
+            <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
+              Qachondan
+            </div>
           </template>
           <template #body="slotProps">
             <div
-              class="
-                text-sm
-                sm:text-sm
-                md:text-md
-                lg:text-lg
-                xl:text-lg
-                text-center
-                font-medium
-              "
-              :class="[slotProps.data.isFinished ? 'text-red-500' : '']"
+              class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base"
             >
-              {{ formatter.arrowDateFormat(slotProps.data.date1) }}
+              <Chip
+                :label="formatter.arrowDateFormat(slotProps.data.date1)"
+                class="mr-2 mb-2 text-sm text-purple-700 bg-purple-100 font-bold"
+              />
             </div>
           </template>
         </Column>
-        <Column style="min-width: 100px; width: 100px">
+
+
+        <Column style="min-width: 50px; width: 110px">
           <template #header>
-            <div class="text-800 font-semibold">Qachongacha</div>
+            <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
+              Qachongacha
+            </div>
           </template>
           <template #body="slotProps">
             <div
-              class="
-                text-sm
-                sm:text-sm
-                md:text-md
-                lg:text-lg
-                xl:text-lg
-                text-center
-                font-medium
-              "
-              :class="[slotProps.data.isFinished ? 'text-red-500' : '']"
+              class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base"
             >
-              {{ formatter.arrowDateFormat(slotProps.data.date2) }}
+              <Chip
+                :label="formatter.arrowDateFormat(slotProps.data.date2)"
+                class="mr-2 mb-2 text-sm text-purple-700 bg-purple-100 font-bold"
+              />
             </div>
           </template>
         </Column>
-        <Column style="min-width: 200px; width: 300px">
+
+
+        <Column style="min-width: 100px; width: 300px">
           <template #header>
             <div class="text-800 font-semibold">Ta'til davri</div>
           </template>

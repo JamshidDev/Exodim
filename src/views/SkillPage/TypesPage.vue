@@ -93,6 +93,32 @@
           </template>
         </Column>
 
+        <Column style="min-width: 140px; width: 140px">
+          <template #header>
+            <div class="text-800 font-semibold">Ta'lim turi</div>
+          </template>
+          <template #body="slotProps">
+            <div
+              class="
+                text-sm
+                sm:text-sm
+                md:text-sm
+                lg:text-base
+                xl:text-base
+                font-medium
+                text-center
+              "
+            >
+              <Chip
+                :label="slotProps.data.type_qualification.name "
+                class="mr-2 mb-2 text-sm text-blue-700 bg-blue-100 font-bold"
+              />
+            </div>
+          </template>
+        </Column>
+
+
+
         <Column style="min-width: 100px; width: 100px">
           <template #header>
             <div class="text-800 font-semibold">Yo'nalishlar</div>
@@ -176,6 +202,19 @@
         </template>
         <div class="grid pt-2">
           <div class="col-12">
+            <h6 class="mb-2 pl-2 text-500">Ta'lim turi</h6>
+            <Dropdown
+              id="bornRegion"
+              v-model="type_qualification"
+              :options="type_qualification_List"
+              optionLabel="name"
+              optionValue="id"
+              placeholder="Tanlang"
+              class="w-full"
+              :class="{ 'p-invalid': qualification_Error && submitted }"
+            />
+          </div>
+          <div class="col-12">
             <h6 class="mb-2 pl-2 text-500">Nomi</h6>
             <InputText
               type="text"
@@ -233,6 +272,10 @@ export default {
       dialog: false,
       loader:false,
 
+      type_qualification_List:[],
+      type_qualification:null,
+
+
       params: {
         page: localStorage.getItem("page_6")
           ? Number(localStorage.getItem("page_6"))
@@ -258,8 +301,9 @@ export default {
           number++;
           item.number = number;
         });
-        console.log(res.data.apparats);
+        console.log(res.data.apparats.type_qualifications);
         this.List = res.data.apparats.data;
+        this.type_qualification_List = res.data.type_qualifications
         this.totalItem = res.data.apparats.pagination.total;
         this.controlLoader(false)
       });
@@ -269,6 +313,7 @@ export default {
       this.submitted = false;
       this.apparatDialogtype = true;
       this.apparatName = null;
+      this.type_qualification = null;
       this.controlDialog(true);
     },
     editItem(event){
@@ -276,15 +321,17 @@ export default {
       this.apparatDialogtype = false;
       this.apparatName = event.name;
       this.apparat_id = event.id;
+      this.type_qualification = event.type_qualification.id;
       this.controlDialog(true);
     },
 
     addAndEdit() {
       this.submitted = true;
-      if (!this.apparatName_Error) {
+      if (!this.apparatName_Error && !this.qualification_Error) {
         this.controlDialog(false);
         let data = {
           name: this.apparatName,
+          type_qualification_id:this.type_qualification
         };
         if (this.apparatDialogtype) {
             SkillService.create_Skill_Apparats({data }).then(
@@ -358,6 +405,13 @@ export default {
         return false;
       }
     },
+    qualification_Error(){
+      if (!this.type_qualification) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   },
   created() {
     if(this.get_type_page_search){

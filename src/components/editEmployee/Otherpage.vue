@@ -142,6 +142,7 @@
               placeholder="Tanlang"
               class="w-full"
               :class="{ 'p-invalid': qualification_Error && skill_submitted }"
+              @change="changeQualification"
             />
           </div>
           <div class="col-12">
@@ -313,6 +314,7 @@ export default {
       qualification_id: null,
 
       List_qualification: [],
+      List:[],
 
       type_Qualifications: [],
       qualification: null,
@@ -345,7 +347,8 @@ export default {
     get_Qualificaton() {
       SkillService.get_Qualification().then((res) => {
         this.type_Qualifications = res.data.type_qualification;
-        this.ActivityType = res.data.apparats;
+        this.List = res.data.apparats
+        // this.ActivityType = res.data.apparats;
       });
     },
     addItemSkill() {
@@ -366,7 +369,9 @@ export default {
       this.status_bedroom = event.status_bedroom == 1 ? true : false;
       this.cadry_adress = event.address;
       this.cadry_comment = event.comment;
-      (this.lastDate = null), this.controlDialog(true);
+      this.lastDate = null;
+      this.changeQualification();
+       this.controlDialog(true);
     },
 
     addAndEditItem() {
@@ -445,6 +450,12 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    changeQualification(){
+      this.ActivityType =  this.List.filter((item) => item.type_qualification_id == this.qualification);
+      this.activity=null;
+      this.direction = null;
+      this.DirectionList=[];
     },
 
     changeActivity() {
