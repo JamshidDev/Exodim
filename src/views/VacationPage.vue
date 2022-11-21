@@ -1,7 +1,64 @@
 <template >
-  <div class="grid card surface-0 shadow-1 py-2 px-2">
-    <h6 class="text-base p-2 uppercase">Hozirda ta'tildagi xodimlar</h6>
-    <div class="col-12" v-show="!loader">
+  <div class="grid px-3">
+    <div class="col-12">
+      <div class="grid">
+        <div class="col-12 pb-0">
+          <bread-crumb
+            :breadCump="[{ name: 'Ta\'tillar', path: '' }]"
+          ></bread-crumb>
+        </div>
+        <div class="col-12 y-0 py-0">
+          <span class="text-2xl font-semibold"
+            >Hozirda ta'tildagi xodimlar
+            <span class="text-base text-primary pl-2"> ({{ totalPage }})</span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 py-0">
+      <div class="grid py-0">
+        <div class="col-12 sm:col-6 md:col-6 lg:col-2 xl:col-2 p-fluid">
+          <InputText
+            type="text"
+            v-model="searchPartName"
+            placeholder="Qidiruv..."
+            class="p-inputtext-sm"
+            @keyup.enter="searchByName()"
+          />
+        </div>
+        <div
+          class="
+            col-12
+            sm:col-6
+            md:col-6
+            lg:col-2
+            xl:col-2
+            p-fluid
+            xl:col-offset-6
+            lg:col-offset-6
+          "
+        >
+          <Button
+            label="Yuklash"
+            class="p-button-success p-button-sm xl:ml-2 lg:ml-2"
+            @click="export_Data_toExcel()"
+            v-tooltip.bottom="`Ma'lumotlarni yuklash`"
+          ></Button>
+        </div>
+        <div class="col-12 sm:col-6 md:col-6 lg:col-2 xl:col-2 p-fluid">
+          <Button
+            icon="pi pi-plus"
+            label="Qo'shish"
+            class="p-button-info p-button-sm xl:ml-2 lg:ml-2"
+            @click="addItemVacation()"
+            v-tooltip.bottom="`Xodimni ta'tilga yuborish`"
+          ></Button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 pt-0" v-show="!loader">
       <DataTable
         ref="dt"
         :value="vacation_cadryList"
@@ -11,79 +68,48 @@
         class="p-datatable-sm"
         stripedRows
       >
-        <template #header>
-          <div class="grid">
-            <div
-              class="
-                col-12
-                xl:col-6
-                lg:col-6
-                md:col-6
-                sm:col-6
-              "
-            >
-              <InputText
-                type="text"
-                v-model="searchPartName"
-                placeholder="Ism orqali qidiruv"
-                class="p-inputtext-sm"
-                @keyup.enter="searchByName()"
-              />
-            </div>
-
-            <div class="col-12 xl:col-6 lg:col-6 md:col-6 sm:col-6 flex
-                justify-content-end
-                align-items-center">
-              <Button
-                icon="pi pi-plus"
-                label="Qo'shish"
-                class="p-button-info p-button-sm xl:ml-2 lg:ml-2"
-                @click="addItemVacation()"
-                v-tooltip.bottom="`Xodimni ta'tilga yuborish`"
-              ></Button>
-            </div>
-           
-          </div>
-        </template>
-        <Column header="" style="min-width: 30px; width: 40px">
+        <Column header="" style="min-width: 30px; width: 36px">
+          <template #header>
+            <div class="text-800 text-sm font-medium">No</div>
+          </template>
           <template #body="slotProps">
-            <div class="w-full text-center text-lg font-semibold">
+            <div class="w-full text-center text-base font-medium">
               {{ slotProps.data.number }}
             </div>
           </template>
         </Column>
-        <Column style="min-width: 60px; width: 60px">
+        <Column style="min-width: 50px; width: 50px">
           <template #header>
-            <div class="text-800 font-semibold">Rasm</div>
+            <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
+              Rasm
+            </div>
           </template>
           <template #body="slotProps">
             <div class="flex justify-content-center">
               <Image
                 :src="slotProps.data.cadry.photo"
-                :alt="slotProps.data.cadry.fullname"
-                width="40"
-                height="40"
+                alt="Rasm yo'q"
+                width="30"
+                height="30"
                 preview
               />
             </div>
           </template>
         </Column>
-        <Column style="min-width:100px; width:300px">
+        <Column style="min-width: 100px; width: 300px">
           <template #header>
-            <div class="text-800 font-semibold">F.I.SH</div>
+            <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
+              F.I.SH
+            </div>
           </template>
           <template #body="slotProps">
-            <div
-              class="
-              text-800 text-sm lg:text-base xl:text-base
-              "
-            >
+            <div class="text-800 text-sm lg:text-base xl:text-base">
               {{ slotProps.data.cadry.fullname }}
             </div>
           </template>
         </Column>
 
-        <Column style="min-width:100px;">
+        <Column style="min-width: 100px">
           <template #header>
             <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
               Bo'lim
@@ -91,17 +117,25 @@
           </template>
           <template #body="slotProps">
             <div
-              class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base font-medium"
+              class="
+                text-sm
+                sm:text-sm
+                md:text-sm
+                lg:text-base
+                xl:text-base
+                font-medium
+              "
             >
-          {{slotProps.data.cadry.department}}
+              {{ slotProps.data.cadry.department }}
             </div>
           </template>
         </Column>
 
-
         <Column style="min-width: 150px; width: 200px">
           <template #header>
-            <div class="text-800 font-semibold">Ta'til turi</div>
+            <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
+              Ta'til turi
+            </div>
           </template>
           <template #body="slotProps">
             <div
@@ -115,7 +149,7 @@
               "
             >
               <Chip
-                :label="vacationName(slotProps.data.status_decret) "
+                :label="vacationName(slotProps.data.status_decret)"
                 class="mr-2 mb-2 text-sm text-cyan-700 bg-cyan-100 font-bold"
               />
             </div>
@@ -134,12 +168,17 @@
             >
               <Chip
                 :label="formatter.arrowDateFormat(slotProps.data.date1)"
-                class="mr-2 mb-2 text-sm text-purple-700 bg-purple-100 font-bold"
+                class="
+                  mr-2
+                  mb-2
+                  text-sm text-purple-700
+                  bg-purple-100
+                  font-bold
+                "
               />
             </div>
           </template>
         </Column>
-
 
         <Column style="min-width: 50px; width: 110px">
           <template #header>
@@ -153,16 +192,23 @@
             >
               <Chip
                 :label="formatter.arrowDateFormat(slotProps.data.date2)"
-                class="mr-2 mb-2 text-sm text-purple-700 bg-purple-100 font-bold"
+                class="
+                  mr-2
+                  mb-2
+                  text-sm text-purple-700
+                  bg-purple-100
+                  font-bold
+                "
               />
             </div>
           </template>
         </Column>
 
-
         <Column style="min-width: 100px; width: 300px">
           <template #header>
-            <div class="text-800 font-semibold">Ta'til davri</div>
+            <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
+              Ta'til davri
+            </div>
           </template>
           <template #body="slotProps">
             <div
@@ -178,15 +224,25 @@
                 justify-content-evenly
               "
             >
-              <div>{{ slotProps.data.period_date1? slotProps.data.period_date1: ""  }}</div>
-              <div>{{ slotProps.data.period_date2? slotProps.data.period_date2: ""  }}</div>
+              <div>
+                {{
+                  slotProps.data.period_date1 ? slotProps.data.period_date1 : ""
+                }}
+              </div>
+              <div>
+                {{
+                  slotProps.data.period_date2 ? slotProps.data.period_date2 : ""
+                }}
+              </div>
             </div>
           </template>
         </Column>
 
         <Column :exportable="false" style="min-width: 80px; width: 100px">
           <template #header>
-            <div class="text-800 font-semibold">Amallar</div>
+            <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
+              Amallar
+            </div>
           </template>
           <template #body="slotProps">
             <div class="flex gap-2">
@@ -354,6 +410,16 @@
         </template>
       </Dialog>
     </div>
+
+    <div class="col-12" v-show="false">
+      <download-excel
+        :data="jsonData"
+        :fields="json_fields"
+        name="Ta'tildagi Xodimlar.xls"
+        ref="vacation_table"
+      >
+      </download-excel>
+    </div>
   </div>
 </template>
 <script>
@@ -366,12 +432,14 @@ import VacationService from "../service/servises/VacationService";
 import { globalValidate } from "../validation/vuevalidate";
 import { minLength, required } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
+import BreadCrumb from "../components/BreadCrumb/BreadCrumb.vue";
 export default {
   components: {
     EditButton,
     DeleteButton,
     TablePagination,
     VacationLoader,
+    BreadCrumb,
   },
   setup() {
     const v$ = useVuelidate();
@@ -403,7 +471,7 @@ export default {
       params: {
         page: 1,
         per_page: 10,
-        search:null,
+        search: null,
       },
 
       search_params: {
@@ -413,6 +481,51 @@ export default {
       },
       totalPage: 0,
       submitted: false,
+
+      jsonData: [],
+      json_fields: {
+        "F.I.SH": "cadry.fullname",
+        "Bo'lim": "cadry.department",
+        "Ta'til turi": {
+          field: "status_decret", // nested attribute supported
+          callback: (value) => {
+            return value == 1? "Bola parvarish ta'tili" : "Mehnat ta'tili";
+          },
+        },
+        Qachondan: {
+          field: "date1", // nested attribute supported
+          callback: (value) => {
+            return this.formatter.arrowDateFormat(value);
+          },
+        },
+        Qachongacha: {
+          field: "date2", // nested attribute supported
+          callback: (value) => {
+            return this.formatter.arrowDateFormat(value);
+          },
+        },
+        "Ta'til davri (dan)": {
+          field: "period1", // nested attribute supported
+          callback: (value) => {
+            if(value){
+              return this.formatter.outDateFormatter(value);
+            }else{
+              return "Kiritilmagan"
+            }
+            
+          },
+        },
+        "Ta'til davri (gacha)": {
+          field: "period2", // nested attribute supported
+          callback: (value) => {
+            if(value){
+              return this.formatter.outDateFormatter(value);
+            }else{
+              return "Kiritilmagan"
+            }
+          },
+        },
+      },
     };
   },
   validations() {
@@ -505,7 +618,7 @@ export default {
         if (this.med_dialodType) {
           VacationService.create_CadryVacation({ data })
             .then((res) => {
-            this.get_Vacations(this.params, false);
+              this.get_Vacations(this.params, false);
               this.$toast.add({
                 severity: "success",
                 summary: "Muvofaqqiyatli bajarildi",
@@ -522,8 +635,8 @@ export default {
             data,
           })
             .then((res) => {
-                this.get_Vacations(this.params, false);
-                this.$toast.add({
+              this.get_Vacations(this.params, false);
+              this.$toast.add({
                 severity: "success",
                 summary: "Muvofaqqiyatli bajarildi",
                 detail: "Tahrirlandi",
@@ -540,7 +653,7 @@ export default {
     deleteItemVacation(id) {
       VacationService.delete_CadryVacation({ id })
         .then((res) => {
-            this.get_Vacations(this.params, false);
+          this.get_Vacations(this.params, false);
           this.$toast.add({
             severity: "success",
             summary: "Muvofaqqiyatli bajarildi",
@@ -575,7 +688,7 @@ export default {
         });
     },
 
-    searchByName(){
+    searchByName() {
       this.params.search = this.searchPartName;
       this.get_Vacations(this.params, true);
     },
@@ -585,6 +698,21 @@ export default {
       let mil_date1 = new Date(date1).getTime();
       let distance = mil_date2 - mil_date1;
       return Math.round(distance / (1000 * 60 * 60 * 24));
+    },
+    export_Data_toExcel() {
+      VacationService.get_CadryVacation({
+        search: null,
+        page: 1,
+        per_page: 80000,
+      }).then((res) => {
+        console.log(res.data.cadries);
+        this.jsonData = res.data.cadries.data;
+        setTimeout(()=>{
+          this.$refs.vacation_table.generate();
+        }, 1000)
+        
+      });
+     
     },
 
     controlDialog(item) {
@@ -597,7 +725,7 @@ export default {
   created() {
     this.get_VacationList();
     this.get_Vacations(this.params, true);
-    this.search_Cadry({ value: "a" });
+    this.search_Cadry({ value: " " });
   },
 };
 </script>

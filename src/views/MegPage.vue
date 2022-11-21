@@ -37,6 +37,7 @@
         </div>
       </div>
     </div>
+
     <div class="col-12 py-0" v-show="!loader">
       <DataTable
         ref="dt"
@@ -49,7 +50,7 @@
         v-model:selection="selectitem"
         selectionMode="single"
       >
-        <Column header="" style="min-width: 30px; width: 40px">
+        <Column header="" style="min-width: 30px; width: 36px">
           <template #header>
             <div class="text-800 text-sm font-medium">No</div>
           </template>
@@ -59,7 +60,7 @@
             </div>
           </template>
         </Column>
-        <Column style="min-width: 60px; width: 60px">
+        <Column style="min-width: 50px; width: 50px">
           <template #header>
             <div class="text-800 font-semibold">Rasm</div>
           </template>

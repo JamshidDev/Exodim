@@ -5,13 +5,17 @@ const interDateFormatter = function (time) {
 
 const outDateFormatter = function (time) {
   let newFormatDate = new Date(time).toLocaleDateString("en-CA");
+  console.log(newFormatDate);
   return newFormatDate;
 };
 
 const textDateFormat = function (time){
   let textFormat = new Date(time).toLocaleDateString("en-GB")
-  return textFormat
+  return textFormat.toString()
 }
+
+
+
 const textDateYear = function (time){
   let textFormat = new Date(time).getFullYear()
   return textFormat

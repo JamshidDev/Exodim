@@ -7,17 +7,17 @@ export const globalValidate = {
   firtName: {
     required,
     minLength: minLength(3),
-    maxLength:maxLength(16)
+    maxLength:maxLength(20)
   },
   lastName:{
     required,
     minLength: minLength(3),
-    maxLength:maxLength(16)
+    maxLength:maxLength(20)
   },
   thirdName:{
     required,
     minLength: minLength(3),
-    maxLength:maxLength(16)
+    maxLength:maxLength(30)
   },
   bornDate:{
     required,

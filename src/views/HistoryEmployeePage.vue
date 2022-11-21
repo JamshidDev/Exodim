@@ -212,7 +212,7 @@
           <div class="col-12 xl:col-4 lg:col-4">
             <h6 class="mb-2 pl-2 text-500">Plan</h6>
             <InputText
-              type="text"
+              type="number"
               class="w-full font-semibold"
               placeholder="Kiriting"
               id="adressStreet"
@@ -297,7 +297,7 @@ export default {
       }
     },
     stuff_Plan() {
-      if (!this.stuff_plan) {
+      if (!this.stuff_plan || this.stuff_plan>4 ) {
         return true;
       } else {
         return false;
@@ -351,7 +351,7 @@ export default {
     get_departmentStuff(id) {
       DepartmentStuffService.get_DepartmentStuff({ id }).then((res) => {
         console.log(res.data.department);
-        this.stuffList = res.data.department;
+        this.stuffList = res.data.department.data;
       });
     },
     pushCadry() {
@@ -393,7 +393,7 @@ export default {
       this.department = null;
       this.status = null;
       this.stuff = null;
-      this.stuff_plan = 0;
+      this.stuff_plan = 1;
       this.stuff_date = "";
     },
   },

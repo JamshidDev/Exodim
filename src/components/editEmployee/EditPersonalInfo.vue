@@ -70,7 +70,6 @@
               <h6 class="mb-2 pl-2 text-500">Sharif</h6>
               <InputText
                 type="text"
-                id="thirdName"
                 v-model="v$.thirdName.$model"
                 :class="{ 'p-invalid': v$.thirdName.$invalid && submitted }"
                 class="w-full font-semibold"
@@ -1082,7 +1081,17 @@ export default {
             this.getEmployee(this.$route.params.id);
           })
           .catch((error) => {
-            console.log(error);
+            if(error.response.status == 400){
+              console.log(error.response.data);
+
+              this.$toast.add({
+                severity: "warn",
+                summary: "Xatolik",
+                detail: "JSHR noto'g'ri",
+                life: 2000,
+              });
+            }
+            console.log(error.response.status == 400);
           });
         console.log(isFormValid);
       }

@@ -51,7 +51,7 @@
           </div>
         </div>
 
-        <div class="col-12 pt-0 card surface-0 shadow-1 mt-4">
+        <div class="col-12 pt-0 mt-4">
           <router-view
             v-slot="{ Component }"
           >
