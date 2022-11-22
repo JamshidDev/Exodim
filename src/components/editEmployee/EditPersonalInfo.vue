@@ -45,12 +45,11 @@
         <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
           <div class="grid">
             <div class="col-12">
-              <h6 class="mb-2 pl-2 text-500">Familiya</h6>
+              <h6 class="mb-2 pl-2 text-500 text-sm">Familiya</h6>
               <InputText
                 type="text"
-                class="w-full font-semibold"
+                class="w-full p-inputtext-sm font-normal text-base "
                 placeholder="Familiyani kiriting"
-                id="firstName"
                 v-model="v$.lastName.$model"
                 :class="{ 'p-invalid': v$.lastName.$invalid && submitted }"
               />
@@ -658,6 +657,7 @@
                 placeholder="Tanlang"
                 class="w-full p-input-sm"
                 @change="changeDepartment"
+                :class="{ 'p-invalid': stuff_department_Error && stuff_submitted }"
               >
                 <template #value="slotProps">
                   <div class="font-semibold" v-if="slotProps.value">
@@ -727,12 +727,26 @@
             <div class="col-12 xl:col-4 lg:col-4">
               <h6 class="mb-2 pl-2 text-500">Plan</h6>
               <InputText
-                type="text"
+                type="number"
                 class="w-full font-semibold"
-                placeholder="Kiriting 1"
+                placeholder="Kiriting"
                 id="adressStreet"
                 v-model="stuff_plan"
               />
+            </div>
+            <div class="col-12" v-show="stuffDialogType">
+              <div class="grid py-0">
+                <div class="xl:col-4 lg:col-4 md:col-4 col-12 py-0">
+                  <h6 class="mb-2 pl-2 text-500">Prikaz raqam</h6>
+              <InputText
+                type="text"
+                class="w-full font-semibold"
+                placeholder="Kiriting"
+                id="adressStreet"
+                v-model="command_number"
+              />
+                </div>
+              </div>
             </div>
             <div class="xl:col-4 lg:col-4 md:col-4 col-12">
               <Checkbox
@@ -813,8 +827,10 @@ import EditButton from "@/components/buttons/EditButton";
 import DeleteButton from "@/components/buttons/DeleteButton";
 import TextButton from "@/components/buttons/TextButton";
 import DepartmentStuffService from "../../service/servises/DepartmentStuffService";
+import { maska } from 'maska'
 
 export default {
+  directives: { maska },
   components: {
     Cropper,
     ProgressBarLoader,
@@ -929,6 +945,9 @@ export default {
       add_career: false,
       check_career_list: [],
       update_career: null,
+      command_number:null,
+
+      stuff_submitted:false,
 
       barLoader: false,
     };
@@ -994,11 +1013,57 @@ export default {
         return false;
       }
     },
-  },
-  watch:{
-    status_for_decret(val){
-      console.log(val);
-    }
+
+
+
+
+    stuff_department_Error(){
+      if (!this.stuff_department) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+
+    stuff_stuff_Error(){
+      if (!this.stuff_stuff) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+
+    stuff_status_Error(){
+      if (!this.stuff_status) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+
+    stuff_date_Error(){
+      if (!this.stuff_date) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+
+    stuff_plan_Error(){
+      if (!this.stuff_plan) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+
+
+
+
+
+
+
+
   },
 
   created() {
@@ -1158,7 +1223,6 @@ export default {
     },
 
     deleteStuffItem(id) {
-      console.log(id);
       this.delete_stuff_id = id;
       this.delete_submitted = false;
       employeeService
@@ -1261,7 +1325,9 @@ export default {
         this.status_for_decret = false;
         this.stuff_date = null;
         this.stuff_department = null;
+        this.command_number = null;
          this.controlstuffDialog(true);
+
       });
     },
 
@@ -1279,15 +1345,16 @@ export default {
         this.stuff_plan = res.data.rate;
         this.status_sverx = res.data.status_decret == 1;
         this.status_decret = res.data.status_for_decret == 1;
+        this.command_number = null,
         this.stuff_date = formatter.interDateFormatter(res.data.staff_date);
         this.controlstuffDialog(true);
         this.get_check_career();
       });
     },
 
-    editStuff() {
+    editStuff(){
       this.controlstuffDialog(false);
-      console.log(this.status_for_decret);
+      console.log(this.stuff_department);
       let data = {
         department_id: this.stuff_department.id,
         staff_id: this.stuff_stuff.id,
@@ -1296,19 +1363,20 @@ export default {
         staff_date: formatter.outDateFormatter(this.stuff_date),
         status_sverx: this.status_sverx,
         status_for_decret: this.status_for_decret,
-
         status_decret: this.status_decret,
         careerCheck: this.add_career,
         career_id: this.update_career,
+        command_number:this.command_number
       };
+      if(!this.stuff_department_Error){
 
-      if (this.stuffDialogType) {
+        if (this.stuffDialogType) {
         let id = this.$route.params.id;
         delete data.career_id;
         employeeService
           .create_CadryStuff({ id, data })
           .then((res) => {
-            console.log(res);
+            this.getEmployee(this.$route.params.id)
           })
           .catch((error) => {
             if (error.response.status == 400) {
@@ -1321,6 +1389,7 @@ export default {
             }
           });
       } else {
+        delete data.command_number;
         let id = this.cadry_stuff_id;
         employeeService.edit_CadryStuff({ id, data }).then((res) => {
           this.$toast.add({
@@ -1341,6 +1410,10 @@ export default {
             }
           })
       }
+
+      }
+
+      
     },
 
     controlstuffDialog(item) {

@@ -463,7 +463,7 @@ const routes = [
         // which is lazy-loaded when the route is visited.
         component: function () {
           return import(
-            /* webpackChunkName: "about" */ "../views/EditEmployeePage.vue"
+            /* webpackChunkName: "about" */ "../views/Cadry/CadryPage.vue"
           );
         },
         children: [
@@ -475,7 +475,7 @@ const routes = [
             // which is lazy-loaded when the route is visited.
             component: function () {
               return import(
-                /* webpackChunkName: "about" */ "../components/editEmployee/EditPersonalInfo.vue"
+                /* webpackChunkName: "about" */ "../views/Cadry/CadryDetails/PersonalPage.vue"
               );
             },
           },

@@ -130,6 +130,10 @@ app.component('Button', Button);
 app.component('Breadcrumb', Breadcrumb);
 app.component('Toolbar', Toolbar);
 app.component('SplitButton', SplitButton);
+
+
+
+
 app.component('Menu', Menu);
 app.component('Avatar', Avatar);
 app.component('Badge', BadgeDirective);

@@ -28,11 +28,12 @@
           <span class="p-input-icon-left p-fluid w-full">
             <i class="pi pi-search" />
             <InputText
-              type="text"
+              type="number"
               v-model.trim="searchValue"
               placeholder="JSHRni kiriting"
               class="w-full p-inputtext-sm text-base font-medium"
               @keyup.enter="searchFromArchive"
+              v-maska="'##############'"
             />
           </span>
         </div>
