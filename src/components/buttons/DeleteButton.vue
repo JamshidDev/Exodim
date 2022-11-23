@@ -14,7 +14,7 @@
     @click="showTemplate($event)"
     style="max-width: 40px"
   >
-    <i class="pi pi-trash text-white text-lg"></i>
+    <i class="pi pi-trash text-white text-base"></i>
   </div>
   <ConfirmPopup group="demo">
     <template #message="slotProps">

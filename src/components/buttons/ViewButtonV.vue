@@ -13,7 +13,7 @@
       @click="updateBtn"
       style="max-width: 40px"
     >
-      <i :class="['pi',icon? icon: 'pi-cloud-download' ]" class="text-white text-lg"></i>
+      <i :class="['pi',icon? icon: 'pi-cloud-download' ]" class="text-white text-base"></i>
     </div>
   </template>
   <script>

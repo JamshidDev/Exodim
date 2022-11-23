@@ -472,23 +472,28 @@
                 }}</span></label
               >
             </div>
+
+           
           </div>
         </div>
 
         <template #footer>
-          <div class="col-12 pt-2">
+          <div class="col-12">
+            <h6 v-show="progressActive" class="mb-1 text-yellow-500 font-normal text-center" >Hozirda ma'lumotlar tayorlanmoqda, siz kerakli bo'limlrni tanlashingiz mumkin!</h6>
+            <h6 v-show="!progressActive" class="mb-1 text-green-500 font-normal text-center">Ma'lumotlar yuklashga tayyor!</h6>
+          </div>
             <div class="flex justify-content-center">
               <Button
-                label="Export"
+                :label="export_btn_label"
                 icon="pi pi-cloud-download"
-                class="p-button-rounded font-medium px-8"
+                class="p-button-rounded font-normal px-8"
+                :loading="progressActive"
                 :class="[
                   progressActive ? 'p-button-secondary' : 'p-button-success',
                 ]"
                 @click="filterDetails"
               />
             </div>
-          </div>
         </template>
       </Dialog>
     </div>
@@ -496,10 +501,13 @@
       <download-excel
         :data="jsonData"
         :fields="json_fields"
-        name="exodim.xls"
+        :name="organizationName+'.xls'"
         ref="excel_table"
       >
       </download-excel>
+    </div>
+    <div class="col-12">
+      <Toast position="bottom-right" />
     </div>
   </div>
 </template>
@@ -509,8 +517,10 @@ export default {
   data() {
     return {
       progressActive: true,
+      export_btn_label:'Tayyorlanmoqda...',
       exportDialog: false,
       exportOptions: [],
+      organizationName:localStorage.getItem("organization")? `Xodimlar ma'lumotlari(${JSON.parse(localStorage.getItem("organization")).name})` : "Xodimlar ma'lumotlari",
 
       jsonData: [],
       json_fields: {},
@@ -548,17 +558,17 @@ export default {
         {
           id: 7,
           name: "Yashash (Viloyati)",
-          key: "passport_date",
+          key: "now_position_region",
         },
         {
           id: 8,
           name: "Yashash (Tumani)",
-          key: "passport_date",
+          key: "now_position_city",
         },
         {
           id: 9,
           name: "Yashash manzili",
-          key: "now_position",
+          key: "address",
         },
         {
           id: 10,
@@ -632,38 +642,43 @@ export default {
         },
         {
           id: 24,
-          name: "Stavkasi",
-          key: "passport_date",
-        },
-        {
-          id: 25,
           name: "Stavka",
           key: "rate",
         },
         {
-          id: 26,
+          id: 25,
           name: "Shtat kategoriya",
           key: "category",
         },
         {
-          id: 27,
+          id: 26,
           name: "Oliygohlar",
           key: "instituts",
         },
         {
-          id: 28,
+          id: 27,
           name: "Deputatliligi",
           key: "deputy",
         },
         {
+          id: 28,
+          name: "Tibbiy ko'rik(Xulosa)",
+          key: "med_result",
+        },
+        // {
+        //   id: 30,
+        //   name: "Xodim id",
+        //   key: "id",
+        // },
+        {
           id: 29,
-          name: "aaaa",
-          key: "languages",
+          name: "Tibbiy ko'rik(Oxirgi sana)",
+          key: "med_date1",
         },
         {
           id: 30,
-          name: "Xarbiy unvoni",
-          key: "military_rank",
+          name: "Tibbiy ko'rik(Keyingi sana)",
+          key: "med_date2",
         },
       ],
     };
@@ -675,6 +690,7 @@ export default {
     },
 
     get_exportdetails(params, loader) {
+      this.export_btn_label = 'Tayyorlanmoqda...',
       this.progressActive = true;
       EksportService.get_exportAnyDetails(params).then((res) => {
         console.log(res.data);
@@ -708,10 +724,23 @@ export default {
             passport_date: item.passport_date,
             passport_position_city:item.passport_position_city,
             passport_position_region:item.passport_position_region,
+
+            now_position_region:item.now_position_region,
+            now_position_city:item.now_position_city,
+            address:item.address,
+
+            med_date1:item.med?.date1,
+            med_date2:item.med?.date2,
+            med_result:item.med?.result,
+            id:item.id
+
+
+
           };
           this.jsonData.push(option);
         });
         this.progressActive = false;
+        this.export_btn_label = 'EXPORT'
       });
     },
     filterDetails() {
@@ -726,6 +755,13 @@ export default {
         this.$refs.excel_table.generate();
         this.exportDialog = false;
         
+      }else{
+        this.$toast.add({
+        severity: "warn",
+        summary: "Xatolik",
+        detail: "Kamida bitta bo'limni tanlang",
+        life: 2000,
+      });
       }
     },
 

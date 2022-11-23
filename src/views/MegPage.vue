@@ -17,7 +17,7 @@
     </div>
     <div class="col-12 py-0">
       <div class="grid py-0">
-        <div class="col-6">
+        <div class="col-12 sm:col-6 md:col-6 lg:col-2 xl:col-2 p-fluid">
           <InputText
             type="text"
             v-model="searchCadryName"
@@ -26,7 +26,16 @@
             @keyup.enter="searchByName()"
           />
         </div>
-        <div class="col-6 flex justify-content-end">
+        <div class="col-12 sm:col-6 md:col-6 lg:col-2 xl:col-2 p-fluid xl:col-offset-6">
+          <Button
+            label="Yuklash"
+            class="p-button-success p-button-sm xl:ml-2 lg:ml-2"
+            @click="export_Data_toExcel()"
+            v-tooltip.bottom="`Ma'lumotlarni yuklash`"
+          ></Button>
+
+        </div>
+        <div class="col-12 sm:col-6 md:col-6 lg:col-2 xl:col-2 p-fluid">
           <Button
             icon="pi pi-plus"
             label="Qo'shish"
@@ -402,6 +411,15 @@
         </template>
       </Dialog>
     </div>
+    <div class="col-12" v-show="false">
+      <download-excel
+        :data="jsonData"
+        :fields="json_fields"
+        :name="organizationName+''"
+        ref="Med_table"
+      >
+      </download-excel>
+    </div>
   </div>
 </template>
 <script>
@@ -431,6 +449,7 @@ export default {
       med_cadryList: [],
       med_date1: "",
       med_date2: "",
+      organizationName:localStorage.getItem("organization")? `Tibbiy ko'rik(${JSON.parse(localStorage.getItem("organization")).name})` : "Tibbiy ko'rik.xls",
 
       med_comment: "",
       med_fullName: "",
@@ -455,6 +474,42 @@ export default {
         page: 1,
         per_page: 1000,
       },
+
+      jsonData: [],
+      json_fields: {
+        "F.I.SH": "fullname",
+        "Bo'lim": "staff.department_id.name",
+        "Xulosa": {
+          field: "result", // nested attribute supported
+          callback: (value) => {
+            return value? value : " ";
+          },
+        },
+        "Status": {
+          field: "days", // nested attribute supported
+          callback: (value) => {
+            if(value>0){
+              return value + 'kun qoldi';
+            }else{
+              return "Tugagan"
+            }
+            
+          },
+        },
+        Qachondan: {
+          field: "date1", // nested attribute supported
+          callback: (value) => {
+            return this.formatter.arrowDateFormat(value);
+          },
+        },
+        Qachongacha: {
+          field: "date2", // nested attribute supported
+          callback: (value) => {
+            return this.formatter.arrowDateFormat(value);
+          },
+        },
+      },
+
     };
   },
   computed: {
@@ -620,6 +675,16 @@ export default {
     searchByName() {
       this.params.search = this.searchCadryName;
       this.get_MedList(this.params, false);
+    },
+
+    export_Data_toExcel(){
+      medService.get_CadryMed({page:1, per_page:80000,search:null, }).then((res)=>{
+        console.log(res.data.cadries.data);
+        this.jsonData = res.data.cadries.data;
+        setTimeout(()=>{
+          this.$refs.Med_table.generate();
+        }, 1000)
+      })
     },
 
     controlDialog(item) {

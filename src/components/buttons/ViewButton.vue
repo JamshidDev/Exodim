@@ -16,7 +16,7 @@
       target="_blank"
       download
     >
-      <i :class="['pi',icon? icon: 'pi-cloud-download' ]" class="text-white text-lg"></i>
+      <i :class="['pi',icon? icon: 'pi-cloud-download' ]" class="text-white text-base"></i>
     </a>
   </template>
   <script>

@@ -37,10 +37,11 @@
             p-fluid
             xl:col-offset-6
             lg:col-offset-6
+            flex justify-content-end
           "
         >
           <Button
-            label="Yuklash"
+                      icon="pi pi-cloud-download"
             class="p-button-success p-button-sm xl:ml-2 lg:ml-2"
             @click="export_Data_toExcel()"
             v-tooltip.bottom="`Ma'lumotlarni yuklash`"
@@ -415,7 +416,7 @@
       <download-excel
         :data="jsonData"
         :fields="json_fields"
-        name="Ta'tildagi Xodimlar.xls"
+        name="Ta'tildagi xodimlar.xls"
         ref="vacation_table"
       >
       </download-excel>

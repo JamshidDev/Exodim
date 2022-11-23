@@ -448,6 +448,7 @@
               </div>
             </div>
           </div>
+          <!-- <stuff-component :List="stuffList"></stuff-component> -->
         </div>
   
         <div class="col-12">
@@ -827,17 +828,16 @@
   import DeleteButton from "@/components/buttons/DeleteButton";
   import TextButton from "@/components/buttons/TextButton";
   import DepartmentStuffService from "../../../service/servises/DepartmentStuffService";
-  import { maska } from 'maska'
-  
+  import StuffComponent from '@/views/Cadry/Components/StuffComponent'
   export default {
-    directives: { maska },
     components: {
-      Cropper,
+      Cropper, 
       ProgressBarLoader,
       EditButton,
       DeleteButton,
       TextButton,
       TextButton,
+      StuffComponent,
     },
     setup: () => ({ v$: useVuelidate() }),
   

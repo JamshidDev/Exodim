@@ -15,7 +15,7 @@
     @click="updateBtn"
     style="max-width: 40px"
   >
-    <i class="pi pi-pencil text-white text-lg"></i>
+    <i class="pi pi-pencil text-white text-base"></i>
   </div>
 </template>
 <script>
@@ -28,5 +28,5 @@ export default {
     }
 };
 </script>
-<style lang="">
+<style lang="scss" scoped>
 </style>
