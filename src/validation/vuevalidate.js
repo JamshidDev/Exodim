@@ -78,6 +78,9 @@ export const globalValidate = {
   positionDegree:{
     required,
   },
+  command_number:{
+    required,
+  },
 
 
 //   Academic validate

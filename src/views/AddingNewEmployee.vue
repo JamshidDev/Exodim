@@ -39,22 +39,19 @@
         </div>
       </div>
     </div>
-    <div class="col-12 card surface-0 shadow-1">
+    <div class="col-12 surface-0 ">
       <div class="grid">
         <!-- Personal imformation details -->
-    <div class="col-12 mb-4 ">
+    <div class="col-12">
       <div class="grid xl:px-4 xl:mx-4 lg:px-2 xl:mx-2">
-        <div class="col-12 text-left text-base font-medium uppercase mb-4">
-          Shaxsiy ma'lumotlari
-        </div>
 
         <!-- avatar -->
-        <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
-          <div class="employee-avatar-box" @click="$refs.file.click()">
-            <div class="img-box" :class="{'img-box-invalid' : submitted_blob && !cropper_blob }">
+        <div class="col-12 flex justify-content-center mb-4">
+          <div class="employee-avatar-box">
+            <div class="img-box" @click="$refs.file.click()" :class="{'img-box-invalid' : submitted_blob && !cropper_blob }">
               <img
                 class="employee-avatar"
-                :src="image.src? image.src : 'https://w7.pngwing.com/pngs/577/307/png-transparent-human-with-circle-logo-national-cyber-security-alliance-organization-drupal-association-information-internet-icon-s-customers-free-miscellaneous-company-logo.png'"
+                :src="image.src? image.src : 'https://unilibrary.uz/static/media/placeholder.ac5bb684.svg'"
                 alt=""
               />
               <div class="hover-element">
@@ -68,12 +65,11 @@
         <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
           <div class="grid">
             <div class="col-12">
-              <h6 class="mb-2 pl-2">Familiya</h6>
+              <h6 class="mb-2">Familiya</h6>
               <InputText
                 type="text"
                 class="w-full font-semibold"
-                placeholder="Familiyani kiriting"
-                id="firstName"
+                placeholder="Kiriting"
                 v-model="v$.lastName.$model"
                 :class="{ 'p-invalid': v$.lastName.$invalid && submitted }"
               />
@@ -227,14 +223,63 @@
             </div>
           </div>
         </div>
+
+        <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
+          <div class="grid">
+            <div class="col-12 p-fluid">
+              <h6 class="mb-2 pl-2">Jinsi</h6>
+              <Dropdown
+                id="employeeGender"
+                v-model="v$.employeeGender.$model"
+                :class="{
+                  'p-invalid': v$.employeeGender.$invalid && submitted,
+                }"
+                :options="genderList"
+                optionLabel="name"
+                optionValue="id"
+                placeholder="Jinsini tanlang"
+                class="w-full"
+              />
+            </div>
+            <div class="col-12 p-fluid">
+              <h6 class="mb-2 pl-2">Telefon raqam</h6>
+              <InputText
+                type="text"
+                class="w-full"
+                placeholder="Raqamni kiriting"
+                id="employeePhone"
+                v-model="v$.employeePhone.$model"
+                v-maska="'(##)-###-##-##'"
+                :class="{ 'p-invalid': v$.employeePhone.$invalid && submitted }"
+              />
+            </div>
+            <div class="col-12">
+              <h6 class="mb-2 pl-2">Millati</h6>
+              <Dropdown
+                id="employeeNation"
+                v-model="v$.employeeNation.$model"
+                :class="{
+                  'p-invalid': v$.employeeNation.$invalid && submitted,
+                }"
+                :options="NationalityList"
+                optionLabel="name"
+                optionValue="id"
+                placeholder="Millatni tanlang"
+                class="w-full"
+              />
+            </div>
+          </div>
+        </div>
+
+
       </div>
     </div>
 
     <!-- Person pasport details -->
 
-    <div class="col-12 mb-4">
+    <div class="col-12">
       <div class="grid xl:px-4 xl:mx-4 lg:px-2 xl:mx-2">
-        <div class="col-12 text-left text-lg font-medium uppercase mb-4">
+        <div class="col-12 text-500 text-left text-base font-medium uppercase mb-0">
           Pasport ma'lumotlari
         </div>
 
@@ -328,9 +373,9 @@
 
     <!-- Position information details -->
 
-    <div class="col-12 mb-4">
+    <div class="col-12">
       <div class="grid xl:px-4 xl:mx-4 lg:px-2 xl:mx-2">
-        <div class="col-12 text-left text-lg font-medium uppercase mb-4">
+        <div class="col-12 text-left text-base font-medium text-500 uppercase">
           Lavozim ma'lumotlari
         </div>
 
@@ -348,6 +393,7 @@
             :showButtonBar="true"
           />
         </div>
+
         <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
           <h6 class="mb-2 pl-2">Bo'lim nomi</h6>
           <Dropdown
@@ -379,6 +425,7 @@
             </template>
           </Dropdown>
         </div>
+
         <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
           <h6 class="mb-2 pl-2">Shtat lavozimi</h6>
           <Dropdown
@@ -409,6 +456,7 @@
             </template>
           </Dropdown>
         </div>
+
         <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
           <h6 class="mb-2 pl-2">Birinchi lavozim sanasi (O'TY)</h6>
           <Calendar
@@ -422,6 +470,7 @@
             placeholder="Sanani tanlang"
           />
         </div>
+
         <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
           <h6 class="mb-2 pl-2">Xizmat darajasi</h6>
           <Dropdown
@@ -436,25 +485,67 @@
             
           />
         </div>
+
         <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
           <h6 class="mb-2 pl-2">Stavkasi</h6>
           <InputText
-                type="text"
+                type="number"
                 class="w-full"
-                placeholder="Stavkani kiriting"
-                id="adressStreet"
+                placeholder="Kiriting"
                 v-model="v$.positionAmount.$model"
                 :class="{ 'p-invalid': v$.positionAmount.$invalid && submitted }"
               />
         </div>
+
+        <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
+          <h6 class="mb-2 pl-2">Buyruq raqami</h6>
+          <InputText
+                type="text"
+                class="w-full"
+                placeholder="Kiriting"
+                v-model="v$.command_number.$model"
+                :class="{ 'p-invalid': v$.command_number.$invalid && submitted }"
+              />
+        </div>
+
+        <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
+          <h6 class="mb-2 pl-2">Karta raqami</h6>
+          <InputText
+                type="number"
+                class="w-full"
+                placeholder="Kiriting"
+                v-model="order"
+              />
+        </div>
+        <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
+          <h6 class="mb-2 pl-2">Tabel raqami</h6>
+          <InputText
+                type="number"
+                class="w-full"
+                placeholder="Kiriting"
+                v-model="status_dec"
+              />
+        </div>
+
+        <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
+          <h6 class="mb-2 pl-2">Izoh (Ixtiyoriy)</h6>
+          <InputText
+                type="text"
+                class="w-full"
+                placeholder="Kiriting"
+                v-model="comment"
+              />
+        </div>
+
+
       </div>
     </div>
 
     <!-- Academic information details -->
 
-    <div class="col-12 mb-4">
+    <div class="col-12">
       <div class="grid xl:px-4 xl:mx-4 lg:px-2 xl:mx-2">
-        <div class="col-12 text-left text-lg font-medium uppercase mb-4">
+        <div class="col-12 text-500 text-left text-base font-medium uppercase ">
           Akademik ma'lumotlari
         </div>
 
@@ -508,21 +599,6 @@
         <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
           <div class="grid">
             <div class="col-12">
-              <h6 class="mb-2 pl-2">Millati</h6>
-              <Dropdown
-                id="employeeNation"
-                v-model="v$.employeeNation.$model"
-                :class="{
-                  'p-invalid': v$.employeeNation.$invalid && submitted,
-                }"
-                :options="NationalityList"
-                optionLabel="name"
-                optionValue="id"
-                placeholder="Millatni tanlang"
-                class="w-full"
-              />
-            </div>
-            <div class="col-12">
               <h6 class="mb-2 pl-2 text-500">Chet tillari</h6>
               <MultiSelect
                 class="w-full font-semibold"
@@ -553,33 +629,6 @@
 
         <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
           <div class="grid">
-            <div class="col-12">
-              <h6 class="mb-2 pl-2">Jinsi</h6>
-              <Dropdown
-                id="employeeGender"
-                v-model="v$.employeeGender.$model"
-                :class="{
-                  'p-invalid': v$.employeeGender.$invalid && submitted,
-                }"
-                :options="genderList"
-                optionLabel="name"
-                optionValue="id"
-                placeholder="Jinsini tanlang"
-                class="w-full"
-              />
-            </div>
-            <div class="col-12">
-              <h6 class="mb-2 pl-2">Telefon raqam</h6>
-              <InputText
-                type="text"
-                class="w-full"
-                placeholder="Raqamni kiriting"
-                id="employeePhone"
-                v-model="v$.employeePhone.$model"
-                v-maska="'(##)-###-##-##'"
-                :class="{ 'p-invalid': v$.employeePhone.$invalid && submitted }"
-              />
-            </div>
             <div class="col-12">
               <h6 class="mb-2 pl-2">Xarbiy unvoni</h6>
               <InputText
@@ -756,6 +805,12 @@ export default {
       employeePhone: "",
       employeeMilitaryTitle: "",
       employeeSelectedOrgan: "",
+      command_number:null,
+      comment:null,
+      order:null,
+      status_dec:null,
+
+
 
       RegionsList: [],
       DistrictList: [],
@@ -814,6 +869,7 @@ export default {
       positionFirstDate: globalValidate.positionFirstDate,
       positionDegree: globalValidate.positionDegree,
       positionAmount:globalValidate.positionAmount,
+      command_number:globalValidate.command_number,
 
       academic: globalValidate.academic,
       academicDegree: globalValidate.academicDegree,
@@ -895,43 +951,14 @@ export default {
         form.append("deputy",this.employeeSelectedOrgan)
         form.append("phone",this.employeePhone)
         form.append("last_name",this.lastName)
-        form.append("last_name",this.lastName)
+
+        form.append("command_number",this.command_number)
+        form.append("comment",this.comment)
+        form.append("order",this.order)
+        form.append("status_dec",this.status_dec)
 
 
 
-
-        // let data = {
-        //   last_name: this.lastName,
-        //   first_name: this.firstName,
-        //   middle_name: this.thirdName,
-        //   birht_date: Formatter.outDateFormatter(this.bornDate),
-        //   birth_city_id: this.bornDistric.id,
-        //   birth_region_id: this.bornRegion,
-        //   address_region_id: this.adressRegion,
-        //   address_city_id: this.adressDistrict.id,
-        //   address: this.adressStreet,
-        //   pass_region_id: this.passportRegion,
-        //   pass_city_id: this.passportDistrict.id,
-        //   jshshir: this.passportJSHR,
-        //   passport: this.passportSeriya,
-        //   pass_date: Formatter.outDateFormatter(this.passportDate),
-        //   job_date: Formatter.outDateFormatter(this.positionFirstDate),
-        //   post_date: Formatter.outDateFormatter(this.positionDate),
-        //   worklevel_id: this.positionDegree,
-        //   department_id: this.positionPart.id,
-        //   staff_id: this.positionName.id,
-        //   stavka:this.positionAmount,
-
-        //   education_id: this.academic,
-        //   academictitle_id: this.academicTitle,
-        //   academicdegree_id: this.academicDegree,
-        //   nationality_id: this.employeeNation,
-        //   language: language_ids,
-        //   party_id: this.employeeParty,
-        //   military_rank: this.employeeMilitaryTitle,
-        //   deputy: this.employeeSelectedOrgan,
-        //   phone: this.employeePhone,
-        // };
         console.table(form);
 
         employeeAdd.create_Cadry({form}).then((res)=>{
@@ -1041,19 +1068,18 @@ export default {
 </script>
 <style lang="scss" scoped>
 .employee-avatar-box {
-  width: 100%;
   display: flex;
   justify-content: start;
   align-items: center;
-  position: relative;
+ 
   .img-box-invalid{
     border: 2px solid #e24c4c !important;
   }
   .img-box {
-    position: relative;
     margin-top: 20px;
-    width: 180px;
-    height: 240px;
+    position: relative;
+    width: 120px;
+    height: 160px;
     overflow: hidden;
     border: 2px solid #767b8338;
     border-radius: 10px;
@@ -1063,8 +1089,8 @@ export default {
       opacity: 1;
     }
     .employee-avatar {
-      width: 180px;
-      height: 100%;
+      width: 120px;
+      height: 160px;
     }
     .hover-element {
       width: 100%;

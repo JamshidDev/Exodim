@@ -77,11 +77,12 @@
               />
             </div>
             <div class="col-6">
-              <Button
+              <!-- <Button
                 label="Yuklash"
                 class="w-full p-button-success font-medium p-button-sm"
                 @click="controlExportDialog(true)"
-              />
+              /> -->
+              <SplitButton label="Yuklash"   @click="controlExportDialog(true)" icon="pi pi-arrow-circle-down" class="p-button-sm p-button-success w-full" :model="downloadItems"></SplitButton>
             </div>
           </div>
 
@@ -508,7 +509,31 @@ export default {
         age_start: null,
         age_end: null,
         birth_region_id: null,
+
+        
       },
+      downloadItems: [
+				{
+					label: 'Excel',
+					icon: 'pi pi-file-excel',
+					command: () => {
+						this.controlExportDialog(true)
+					}
+				},
+				{
+					label: 'Word',
+					icon: 'pi pi-file',
+					command: () => {
+						
+					}
+				},
+				{
+					label: 'Yuklanganlar',
+					icon: 'pi pi-folder',
+          to:"/admin/zipfiles"
+
+				},
+			]
     };
   },
   watch: {
