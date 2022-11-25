@@ -297,7 +297,8 @@
         class="p-datatable-sm"
         v-show="totalCadries"
         v-model:selection="selectitem"
-        selectionMode="single"
+        @row-select="selectRow"
+        @row-select-all="selectAll"
       >
         <Column style="min-width: 30px; width: 36px">
           <template #header>
@@ -326,6 +327,8 @@
               />
             </div>
           </template>
+        </Column>
+        <Column v-if="selectMode" selectionMode="multiple"  headerStyle="width: 3rem">
         </Column>
         <Column field="name" style="min-width: 100px; width: 300px">
           <template #header>
@@ -451,7 +454,8 @@ export default {
   },
   data() {
     return {
-      selectitem: null,
+      selectitem: [],
+      selectMode:false,
       displayBasic: true,
       loadingtable: false,
       selectedCadries: null,
@@ -521,10 +525,10 @@ export default {
 					}
 				},
 				{
-					label: 'Word',
+					label: 'Tanlash',
 					icon: 'pi pi-file',
 					command: () => {
-						
+						this.selectMode = !this.selectMode;
 					}
 				},
 				{
@@ -535,11 +539,6 @@ export default {
 				},
 			]
     };
-  },
-  watch: {
-    exportOptions(value) {
-      console.log(value);
-    },
   },
   methods: {
     // get Employee function
@@ -657,6 +656,12 @@ export default {
       localStorage.setItem("page_1", event.page);
       localStorage.setItem("per_page_1", event.per_page);
       this.getEmployee(this.organization);
+    },
+    selectRow(event){
+      console.log(event);
+    },
+    selectAll(event){
+      console.log(event);
     },
 
     goPush(id) {

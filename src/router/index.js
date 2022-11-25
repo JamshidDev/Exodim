@@ -535,7 +535,7 @@ const routes = [
             // which is lazy-loaded when the route is visited.
             component: function () {
               return import(
-                /* webpackChunkName: "about" */ "../components/editEmployee/AdditionalInformation.vue"
+                /* webpackChunkName: "about" */ "../views/Cadry/CadryDetails/AdditionalPage.vue"
               );
             },
           },

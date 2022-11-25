@@ -112,6 +112,7 @@
         </Column>
       </DataTable>
     </div>
+
     <div class="col-12 p-0">
       <Dialog
         v-model:visible="skillDialog"
@@ -242,7 +243,7 @@
               :binary="true"
             />
             <span class="pl-2 text-500"
-              >Xodimni yoqotxonaga zaruriyati bor</span
+              >Xodimni yotoqxonaga zaruriyati bor</span
             >
           </div>
           <div class="col-12" v-show="!status_bedroom">
@@ -283,6 +284,7 @@
         </template>
       </Dialog>
     </div>
+
     <div class="col-12">
       <Toast position="bottom-right" />
     </div>
@@ -303,6 +305,7 @@ export default {
     EditButton,
     ProgressBarLoader,
   },
+
   data() {
     return {
       barLoader:false,
@@ -333,6 +336,7 @@ export default {
       cadry_adress: null,
     };
   },
+
   methods: {
     get_Cadry_qualification(loader) {
       this.controlLoader(loader)
@@ -533,6 +537,7 @@ export default {
     },
   },
 };
+
 </script>
 <style lang="scss">
 .custom_chip {
