@@ -299,7 +299,13 @@
         v-model:selection="selectitem"
         @row-select="selectRow"
         @row-select-all="selectAll"
+        @row-unselect="rowUnselect"	
       >
+      <template #header>
+            <div class="text-800 text-sm lg:text-base xl:text-base font-normal">
+              Barchasi tanlangan
+            </div>
+          </template>
         <Column style="min-width: 30px; width: 36px">
           <template #header>
             <div class="text-800 text-sm font-medium">No</div>
@@ -328,7 +334,7 @@
             </div>
           </template>
         </Column>
-        <Column v-if="selectMode" selectionMode="multiple"  headerStyle="width: 3rem">
+        <Column  selectionMode="multiple" headerStyle="width: 3em" style="min-width:40px; width:40px">
         </Column>
         <Column field="name" style="min-width: 100px; width: 300px">
           <template #header>
@@ -455,6 +461,7 @@ export default {
   data() {
     return {
       selectitem: [],
+      isSelectAll:false,
       selectMode:false,
       displayBasic: true,
       loadingtable: false,
@@ -555,9 +562,11 @@ export default {
             number++;
             item.number = number;
             cadrList.push(item);
+            // this.selectitem.push(item);
           });
           this.cadries = res.data.cadries.data;
           this.controlLoading(false);
+         
         })
         .catch((error) => {
           this.controlLoading(false);
@@ -658,11 +667,18 @@ export default {
       this.getEmployee(this.organization);
     },
     selectRow(event){
+      // console.log(this.selectitem);
       console.log(event);
     },
     selectAll(event){
       console.log(event);
+      this.isSelectAll=true;
+      // console.log(this.selectitem);
     },
+    rowUnselect(event){
+      console.log(event);
+      // console.log(this.selectitem);
+    },	
 
     goPush(id) {
       this.$router.push(`/admin/editemployee/${id}`);

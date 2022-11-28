@@ -66,7 +66,7 @@
         showGridlines
         class="p-datatable-sm"
         stripedRows
-        v-model:selection="selectitem" selectionMode="single"
+        v-model:selection="selectitem" selectionMode="multiple"
       >
       <Column style="min-width:30px; width:36px">
           <template #header>

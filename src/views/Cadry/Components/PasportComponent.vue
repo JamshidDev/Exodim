@@ -143,6 +143,7 @@ export default {
     addItem() {
         this.file_path = null;
         this.submitted = false;
+        this.error_msg = null;
         this.controlDialog(true)
     },
     addandEdit(){
@@ -172,7 +173,7 @@ export default {
         const { files } = event.target;
         let fileArray = files[0].name.split(".");
         let extention = fileArray[fileArray.length - 1];
-        if (extention == "pdf") {
+        if (extention == "pdf" || extention == "PDF") {
             this.error_msg = null,
           this.file_path = files[0];
           this.file_Name = files[0].name;
