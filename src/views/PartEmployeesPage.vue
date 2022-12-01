@@ -82,7 +82,13 @@
                 class="w-full p-button-success font-medium p-button-sm"
                 @click="controlExportDialog(true)"
               /> -->
-              <SplitButton label="Yuklash"   @click="controlExportDialog(true)" icon="pi pi-arrow-circle-down" class="p-button-sm p-button-success w-full" :model="downloadItems"></SplitButton>
+              <SplitButton
+                label="Yuklash"
+                @click="downloadControl(true)"
+                icon="pi pi-arrow-circle-down"
+                class="p-button-sm p-button-success w-full"
+                :model="downloadItems"
+              ></SplitButton>
             </div>
           </div>
 
@@ -297,15 +303,37 @@
         class="p-datatable-sm"
         v-show="totalCadries"
         v-model:selection="selectitem"
-        @row-select="selectRow"
-        @row-select-all="selectAll"
-        @row-unselect="rowUnselect"	
       >
-      <template #header>
-            <div class="text-800 text-sm lg:text-base xl:text-base font-normal">
-              Barchasi tanlangan
+        <template #header v-if="selectMode">
+          <div class="grid">
+            <div class="col-12">
+              <div
+                class="
+                  text-800 text-sm
+                  lg:text-base
+                  xl:text-base
+                  font-medium
+                  text-center text-blue-600
+                "
+                v-show="!isSelectAll"
+              >
+                Tanlanganlar soni - {{ this.selectOptions.length }}
+              </div>
+              <div
+                class="
+                  text-800 text-sm
+                  lg:text-base
+                  xl:text-base
+                  font-medium
+                  text-center text-red-600
+                "
+                v-show="isSelectAll"
+              >
+                Tanlanmaganlar soni - {{ this.unSelectItemId.length }}
+              </div>
             </div>
-          </template>
+          </div>
+        </template>
         <Column style="min-width: 30px; width: 36px">
           <template #header>
             <div class="text-800 text-sm font-medium">No</div>
@@ -334,7 +362,25 @@
             </div>
           </template>
         </Column>
-        <Column  selectionMode="multiple" headerStyle="width: 3em" style="min-width:40px; width:40px">
+        <Column style="min-width: 50px; width: 50px" v-if="selectMode">
+          <template #header>
+            <div class="text-800 flex justify-content-center w-full">
+              <Checkbox
+                :value="true"
+                v-model="selectAllOption"
+                @change="changeSelectAll"
+              />
+            </div>
+          </template>
+          <template #body="slotProps">
+            <div class="flex justify-content-center">
+              <Checkbox
+                :value="slotProps.data.id"
+                v-model="selectOptions"
+                @change="changeRowSelect(slotProps.data.id)"
+              />
+            </div>
+          </template>
         </Column>
         <Column field="name" style="min-width: 100px; width: 300px">
           <template #header>
@@ -344,7 +390,16 @@
           </template>
           <template #body="slotProps">
             <div
-              class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base font-medium hover:text-blue-500 cursor-pointer"
+              class="
+                text-sm
+                sm:text-sm
+                md:text-sm
+                lg:text-base
+                xl:text-base
+                font-medium
+                hover:text-blue-500
+                cursor-pointer
+              "
               v-tooltip.bottom="`Tahrirlash`"
               @click="goPush(slotProps.data.id)"
             >
@@ -377,7 +432,14 @@
           </template>
           <template #body="slotProps">
             <div
-              class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base font-medium"
+              class="
+                text-sm
+                sm:text-sm
+                md:text-sm
+                lg:text-base
+                xl:text-base
+                font-medium
+              "
             >
               <span>{{ slotProps.data.department }}</span>
             </div>
@@ -433,6 +495,69 @@
       ></word-template>
       <employee-details ref="show_resume"></employee-details>
       <export-panel ref="export_to_excel"></export-panel>
+      <Dialog
+        v-model:visible="selectionDialog"
+        :breakpoints="{
+          '1960px': '30vw',
+          '1600px': '40vw',
+          '1200px': '70vw',
+          '960px': '80vw',
+          '640px': '90vw',
+        }"
+        :style="{ width: '50vw' }"
+        :modal="true"
+      >
+        <template #header>
+          <h6 class="uppercase text-lg text-center text-blue-500 font-medium">
+            Xodimlarni ma'lumotlarini yuklash
+          </h6>
+        </template>
+        <div class="grid pt-2">
+          <div class="col-12">
+            <InputText
+              type="text"
+              v-model="file_name"
+              class="w-full p-inputtext-sm font-medium text-base"
+              placeholder="Fayl nomi"
+            />
+          </div>
+          <div class="col-12">
+            <Checkbox :value="true" v-model="cadry_pasport" />
+            <label class="pl-2 text-700 font-normal"
+              >Xodimlarni pasport nusxasi ham yuklansinmi?</label
+            >
+          </div>
+
+          <div class="col-12">
+            <h6 class="mb-1 pl-2 mt-0 text-700 font-normal">
+              Yuklanishga yuborilayotgan ma'lumotlari soni -
+              <span class="text-blue-500 font-medium">{{
+                isSelectAll
+                  ? totalCadries - unSelectItemId.length
+                  : selectItemId.length
+              }}</span>
+            </h6>
+            <h6 class="mb-1 mt-0 pl-2 text-700 font-normal">
+              Xodimlarni ma'lumotlarini yuklash jarayoni bir necha daqiqa vaqt
+              olishi mumkin.
+            </h6>
+          </div>
+        </div>
+
+        <template #footer>
+          <div class="col-12 pt-2">
+            <div class="flex justify-content-center">
+              <Button
+              :loading="dowloadLoading"
+                icon="pi pi-arrow-circle-down"
+                :label="downloadBtnText"
+                class="p-button-success p-button-sm font-bold"
+                @click="startDownloadZip()"
+              />
+            </div>
+          </div>
+        </template>
+      </Dialog>
     </div>
   </div>
 </template>
@@ -447,6 +572,7 @@ import WordTemplate from "../components/Eksport/WordTemplate.vue";
 import EmployeeDetails from "../components/partEmployee/EmployeeDetails.vue";
 import ExportPanel from "../components/Eksport/ExportPanel.vue";
 import BreadCrumb from "../components/BreadCrumb/BreadCrumb.vue";
+import EksportService from "@/service/servises/EksportService";
 export default {
   components: {
     EmployeeLoader,
@@ -461,11 +587,19 @@ export default {
   data() {
     return {
       selectitem: [],
-      isSelectAll:false,
-      selectMode:false,
-      displayBasic: true,
+      isSelectAll: false,
+      selectOptions: [],
+      selectAllOption: [],
+      selectItemId: [],
+      unSelectItemId: [],
+      selectMode: false,
+      selectionDialog: false,
+      file_name: 'Xodimlar ma\'lumotlari',
+      cadry_pasport: [],
+      dowloadLoading:false,
+      downloadBtnText:'Yuklashni boshlash',
+
       loadingtable: false,
-      selectedCadries: null,
       cadries: [],
       Dowload_cadry_id: null,
       selectedAge: [10, 80],
@@ -520,31 +654,28 @@ export default {
         age_start: null,
         age_end: null,
         birth_region_id: null,
-
-        
       },
       downloadItems: [
-				{
-					label: 'Excel',
-					icon: 'pi pi-file-excel',
-					command: () => {
-						this.controlExportDialog(true)
-					}
-				},
-				{
-					label: 'Tanlash',
-					icon: 'pi pi-file',
-					command: () => {
-						this.selectMode = !this.selectMode;
-					}
-				},
-				{
-					label: 'Yuklanganlar',
-					icon: 'pi pi-folder',
-          to:"/admin/zipfiles"
-
-				},
-			]
+        {
+          label: "Excel",
+          icon: "pi pi-file-excel",
+          command: () => {
+            this.controlExportDialog(true);
+          },
+        },
+        {
+          label: "Tanlash",
+          icon: "pi pi-user-plus",
+          command: () => {
+            this.selectMode = !this.selectMode;
+          },
+        },
+        {
+          label: "Yuklanganlar",
+          icon: "pi pi-folder",
+          to: "/admin/zipfiles",
+        },
+      ],
     };
   },
   methods: {
@@ -566,7 +697,13 @@ export default {
           });
           this.cadries = res.data.cadries.data;
           this.controlLoading(false);
-         
+          if (this.isSelectAll) {
+            this.cadries.forEach((item) => {
+              if (!this.unSelectItemId.includes(item.id)) {
+                this.selectOptions.push(item.id);
+              }
+            });
+          }
         })
         .catch((error) => {
           this.controlLoading(false);
@@ -666,19 +803,72 @@ export default {
       localStorage.setItem("per_page_1", event.per_page);
       this.getEmployee(this.organization);
     },
-    selectRow(event){
-      // console.log(this.selectitem);
-      console.log(event);
+
+    changeSelectAll(event) {
+      if (this.selectAllOption.length > 0) {
+        this.isSelectAll = true;
+        this.selectOptions = this.cadries.map((item) => item.id);
+        this.unSelectItemId = [];
+        this.selectItemId = [];
+      } else {
+        this.isSelectAll = false;
+        this.selectOptions = [];
+        this.unSelectItemId = [];
+        this.selectItemId = [];
+      }
     },
-    selectAll(event){
-      console.log(event);
-      this.isSelectAll=true;
-      // console.log(this.selectitem);
+    changeRowSelect(id) {
+      if (this.selectOptions.includes(id) && this.isSelectAll) {
+        console.log(this.unSelectItemId);
+        this.unSelectItemId = this.unSelectItemId.filter(
+          (item) => item !== id
+        );
+      } else if (!this.selectOptions.includes(id) && this.isSelectAll) {
+        console.log(this.unSelectItemId);
+        if(!this.unSelectItemId.includes(id)){
+          this.unSelectItemId.push(id);
+        }
+      } else if (this.selectOptions.includes(id) && !this.isSelectAll) {
+        this.selectItemId.push(id);
+      } else if (!this.selectOptions.includes(id) && !this.isSelectAll) {
+        this.selectItemId = this.selectItemId.filter((item) => item !== id);
+      }
     },
-    rowUnselect(event){
-      console.log(event);
-      // console.log(this.selectitem);
-    },	
+    downloadControl() {
+      if (this.selectMode) {
+        this.controlSectionDialog(true);
+        this.dowloadLoading = false;
+        this.downloadBtnText = 'Yuklashni boshlash'
+
+      } else {
+        this.controlExportDialog(true);
+      }
+    },
+    startDownloadZip() {
+      let params = {...this.organization};
+      params.comment = this.file_name;
+      params.passport_files = this.cadry_pasport.length > 0;
+      params.send_all = this.isSelectAll? 1 : 0 ;
+      params.not_send_arr = this.unSelectItemId;
+      params.send_arr = this.selectItemId;
+
+      this.dowloadLoading = true
+      this.downloadBtnText = 'Yuklanmoqda...'
+      EksportService.get_cadryZip(params).then((res)=>{
+        this.dowloadLoading = false;
+        this.downloadBtnText = 'Yuklashni boshlash'
+        this.$router.push('/admin/zipfiles')
+      }).catch((error)=>{
+        this.dowloadLoading = false;
+        this.downloadBtnText = 'Yuklashni boshlash'
+        this.$toast.add({
+        severity: "warn",
+        summary: "Ruxsat etilmadi",
+        detail: error.response.data.message,
+        life: 2000,
+      });
+      })
+    },
 
     goPush(id) {
       this.$router.push(`/admin/editemployee/${id}`);
@@ -744,6 +934,9 @@ export default {
     controlExportDialog(item) {
       this.$refs.export_to_excel.controlPanel(true, this.organization);
     },
+    controlSectionDialog(item) {
+      this.selectionDialog = item;
+    },
   },
   created() {
     this.getEmployee(this.organization);
@@ -752,7 +945,6 @@ export default {
     this.get_getRegions();
     this.get_getVacations();
     this.get_Stuffs();
-    console.log(this.$route);
   },
 };
 </script>
