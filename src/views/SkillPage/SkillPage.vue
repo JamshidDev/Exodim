@@ -10,7 +10,7 @@
         <div class="col-12 y-0 py-0">
           <span class="text-2xl font-semibold"
             >Malaka oshirish
-            <span class="text-base text-primary pl-2"> (0)</span>
+            <span class="text-base text-primary pl-2" v-show="(totalItem>0)"> ( {{totalItem}} )</span>
           </span>
         </div>
       </div>
@@ -20,32 +20,26 @@
         <div class="col-12 xl:col-6">
           <InputText
             type="text"
-            v-model="searchCadryName"
-            placeholder="Ism orqali qidiruv"
+            v-model="search_name"
+            placeholder="Qidiruv..."
             class="p-inputtext-sm"
             @keyup.enter="searchByName()"
           />
         </div>
         <div class="col-12 xl:col-6 flex justify-content-end">
-          <Button
-            icon="pi pi-plus"
-            label="Qo'shish"
-            class="p-button-info p-button-sm"
-            @click="addItemSkill()"
-            v-tooltip.bottom="`Tayorlovga yuborish`"
-          ></Button>
+          <Calendar inputId="yearpicker" @date-select="changeDate" v-model="date1" view="year" dateFormat="yy"/>
         </div>
       </div>
     </div>
     <div class="col-12 pt-0" v-show="!loadingtable">
       <DataTable
         ref="dt"
-        :value="qualificatonCadry"
+        :value="statisticList"
         dataKey="id"
         responsiveLayout="scroll"
         showGridlines
+        v-show="totalItem>0"
         class="p-datatable-sm"
-        v-show="totalCadries"
       >
         <Column style="min-width: 30px; width: 36px">
           <template #header>
@@ -57,28 +51,10 @@
             </div>
           </template>
         </Column>
-        <Column style="min-width: 50px; width: 50px">
+        <Column style="min-width:100px;">
           <template #header>
             <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
-              Rasm
-            </div>
-          </template>
-          <template #body="slotProps">
-            <div class="flex justify-content-center">
-              <Image
-                :src="slotProps.data.photo"
-                alt="Rasm yo'q"
-                width="30"
-                height="30"
-                preview
-              />
-            </div>
-          </template>
-        </Column>
-        <Column field="name" style="min-width: 100px; width: 300px">
-          <template #header>
-            <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
-              F.I.SH
+              Korxona nomi
             </div>
           </template>
           <template #body="slotProps">
@@ -90,37 +66,51 @@
                 lg:text-base
                 xl:text-base
                 font-medium
-                hover:text-blue-500
-                cursor-pointer
               "
-              v-tooltip.bottom="`Tahrirlash`"
-              @click="goPush(slotProps.data.id)"
             >
-              <div>{{ slotProps.data.fullname }}</div>
+              <div>{{ slotProps.data.name }}</div>
+            </div>
+          </template>
+        </Column>
+        <Column field="name" style="min-width: 50px; width: 60px">
+          <template #header>
+            <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
+              Xodimlar
+            </div>
+          </template>
+          <template #body="slotProps">
+            <div
+              class="
+                text-sm
+                sm:text-sm
+                md:text-sm
+                lg:text-base
+                xl:text-base
+                font-medium
+                text-center
+              "
+            >
+              <div>{{ slotProps.data.upgrades }}</div>
             </div>
           </template>
         </Column>
 
-        <Column style="min-width: 200px">
+        <Column style="min-width: 50px; width: 60px">
           <template #header>
-            <div class="text-800 font-semibold">Lavozimi</div>
+            <div class="text-800 font-semibold">Yotoqxona</div>
           </template>
           <template #body="slotProps">
             <div
-              class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base"
+              class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base text-center"
             >
-              {{
-                slotProps.data.staff
-                  ? slotProps.data.staff.staff_full
-                  : `Tizimda ma'lumot yo'q`
-              }}
+            <div>{{ slotProps.data.status_bedroom }}</div>
             </div>
           </template>
         </Column>
-        <Column style="min-width: 120px; width: 180px">
+        <Column style="min-width: 50px; width: 60px">
           <template #header>
             <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
-              Bo'lim nomi
+              Ruhsat
             </div>
           </template>
           <template #body="slotProps">
@@ -132,9 +122,10 @@
                 lg:text-base
                 xl:text-base
                 font-medium
+                text-center
               "
             >
-              <span>{{ slotProps.data.department }}</span>
+              <span>{{ slotProps.data.accepteds }}</span>
             </div>
           </template>
         </Column>
@@ -151,255 +142,87 @@
         </Column>
         <template #footer>
           <table-pagination
-            v-show="totalCadries > 10"
-            :total_page="totalCadries"
+            v-show="totalItem>10"
+            :total_page="totalItem"
             @pagination="changePagination($event)"
           ></table-pagination>
         </template>
       </DataTable>
-      <no-data-component v-show="!totalCadries"></no-data-component>
+      <no-data-component v-show="!totalItem"></no-data-component>
+    </div>
+    <div class="col-12 pt-0" v-show="loadingtable">
+      <skill-loader></skill-loader>
     </div>
 
-    <div class="col-12">
-      <Dialog
-        v-model:visible="skillDialog"
-        :breakpoints="{
-          '1960px': '30vw',
-          '1600px': '40vw',
-          '1200px': '70vw',
-          '960px': '80vw',
-          '640px': '90vw',
-        }"
-        :style="{ width: '50vw' }"
-        :modal="true"
-      >
-        <template #header>
-          <h6 class="uppercase text-lg text-blue-500 font-medium">
-            Tayyorlovga yuborish
-          </h6>
-        </template>
-        <div class="grid pt-2">
-          <div class="col-12">
-            <h6 class="mb-2 pl-2 text-500">Ta'lim turi</h6>
-            <Dropdown
-              id="bornRegion"
-              v-model="qualification"
-              :options="type_Qualifications"
-              optionLabel="name"
-              placeholder="Tanlang"
-              class="w-full font-semibold"
-              @change="changeType"
-            />
-          </div>
-          <div class="col-12">
-            <h6 class="mb-2 pl-2 text-500">Xodimni tanlang</h6>
-            <Dropdown
-              id="positionPart"
-              v-model="cadry"
-              :options="cadryList"
-              optionLabel="fullname"
-              :filter="true"
-              placeholder="Tanlang"
-              class="w-full"
-            >
-              <template #value="slotProps">
-                <div class="font-semibold" v-if="slotProps.value">
-                  <div>{{ slotProps.value.fullname }}</div>
-                </div>
-                <span v-else class="font-semibold">
-                  {{ slotProps.placeholder }}
-                </span>
-              </template>
-              <template #option="slotProps">
-                <div class="country-item">
-                  <div>{{ slotProps.option.fullname }}</div>
-                </div>
-              </template>
-            </Dropdown>
-          </div>
-          <div class="col-12">
-            <h6 class="mb-2 pl-2 text-500">Faoliyat turi</h6>
-            <Dropdown
-              id="positionPart"
-              v-model="activity"
-              :options="ActivityType"
-              optionLabel="name"
-              :filter="true"
-              placeholder="Tanlang"
-              class="w-full"
-              @change="changeActivity"
-            >
-              <template #value="slotProps">
-                <div class="font-semibold" v-if="slotProps.value">
-                  <div>{{ slotProps.value.name }}</div>
-                </div>
-                <span v-else class="font-semibold">
-                  {{ slotProps.placeholder }}
-                </span>
-              </template>
-              <template #option="slotProps">
-                <div class="country-item">
-                  <div>{{ slotProps.option.name }}</div>
-                </div>
-              </template>
-            </Dropdown>
-          </div>
-          <div class="col-12">
-            <h6 class="mb-2 pl-2 text-500">Ta'lim yo'nalishi</h6>
-            <Dropdown
-              id="positionPart"
-              v-model="direction"
-              :options="DirectionList"
-              optionLabel="name"
-              :filter="true"
-              placeholder="Tanlang"
-              class="w-full"
-            >
-              <template #value="slotProps">
-                <div class="font-semibold" v-if="slotProps.value">
-                  <div>{{ slotProps.value.name }}</div>
-                </div>
-                <span v-else class="font-semibold">
-                  {{ slotProps.placeholder }}
-                </span>
-              </template>
-              <template #option="slotProps">
-                <div class="country-item">
-                  <div>{{ slotProps.option.name }}</div>
-                </div>
-              </template>
-            </Dropdown>
-          </div>
-          <div class="col-12" v-show="direction">
-              <h6 class="my-0 text-yellow-400 text-sm font-medium">
-               {{direction? direction.staff_name : ''}}
-              </h6>
-              <h6 class="my-0 text-yellow-400">
-                {{direction? direction.comment_time : ''}}
-              </h6>
-          </div>
-          <div class="col-6">
-            <h6 class="mb-2 pl-2 text-500">Oxirgi malaka oshirgan sanasi</h6>
-            <Calendar
-              class="w-full font-semibold"
-              :manualInput="true"
-              id="positionFirstDate"
-              v-model="lastDate"
-              view="year" dateFormat="yy"
-              v-maska="'####'"
-              placeholder="Sanani tanlang"
-              :class="{ 'p-invalid': cadry_Date1 && med_submitted }"
-            />
-          </div>
-          <div class="col-6">
-            <h6 class="mb-2 pl-2 text-500">Rejadagi o'tish sanasi</h6>
-            <Calendar
-              class="w-full font-semibold"
-              :manualInput="true"
-              v-model="planDate"
-              view="year" dateFormat="yy"
-              v-maska="'####'"
-              placeholder="Sanani tanlang"
-              :class="{ 'p-invalid': cadry_Date2 && med_submitted }"
-            />
-          </div>
-          <div class="col-12">
-            <h6 class="mb-2 pl-2 text-500">Izoh</h6>
-            <Textarea
-              class="w-full font-semibold"
-              placeholder="(Ixtiyoriy)"
-              id="employeePhone"
-              v-model="med_comment"
-              :autoResize="true"
-              rows="1"
-            />
-          </div>
-        </div>
-
-        <template #footer>
-          <div class="col-12 pt-2">
-            <div class="flex justify-content-end">
-              <Button
-                label="Saqlash"
-                class="p-button-secondary p-button-sm"
-                @click="AddMed()"
-              />
-            </div>
-          </div>
-        </template>
-      </Dialog>
-    </div>
   </div>
 </template>
 <script>
-import BreadCrumb from "../../components/BreadCrumb/BreadCrumb.vue";
+import BreadCrumb from '@/components/BreadCrumb/BreadCrumb'
 import SkillService from "@/service/servises/SkillService";
 import NoDataComponent from '@/components/EmptyComponent/NoDataComponent'
+import TablePagination from '@/components/Pagination/TablePagination';
+import SkillLoader from '@/components/loaders/SkillLoader';
 export default {
   components: {
     BreadCrumb,
     NoDataComponent,
+    TablePagination,
+    SkillLoader,
   },
   data() {
     return {
-      cadryList: [],
-      totalCadries: 0,
-      skillDialog: false,
-      type_Qualifications: [],
-      qualification: null,
-      search_params: {
-        page: 1,
-        per_page: 1000,
-        search: 'a',
-      },
-      cadryList:[],
-      cadry:null,
-      List:[],
-      ActivityType:[],
-      activity:null,
-      DirectionList:[],
-      direction:null,
-      lastDate:null,
-      planDate:null,
+      statisticList: [],
+      totalItem:0,
+      search_name:null,
+      date1:'2022',
+      loadingtable:false,
 
-      qualificatonCadry:[],
+      params:{
+        date_qual:'2022',
+        search:null,
+        page:1,
+        per_page:10
+      }
     };
   },
 
   methods: {
-    get_Qualificaton() {
-      SkillService.get_Qualification().then((res) => {
-        console.log(res.data);
-        this.type_Qualifications = res.data.type_qualification;
-        this.List = res.data.apparats
+    get_Statistic(params, loader) {
+      this.controlLoader(loader)
+      SkillService.get_Skill_Statistic(params).then((res) => {
+        let number =
+            (this.params.page - 1) * this.params.per_page;
+            res.data.railways.data.forEach((item) => {
+            number++;
+            item.number = number;
+          });
+        this.statisticList =res.data.railways.data
+        this.totalItem = res.data.railways.pagination.total
+        this.controlLoader(false)
+
       });
     },
+    changePagination(event){
+      this.params.page = event.page;
+      this.params.per_page = event.per_page;
+      this.get_Statistic(this.params, true);
 
-    searchCadry(params){
-      SkillService.search_Cadry(params).then((res)=>{
-        console.log(res.data);
-        this.cadryList = res.data.data;
-       
-      })
     },
-    addItemSkill() {
-      this.controlDialog(true);
+    changeDate(){
+      this.params.date_qual = new Date(this.date1).getFullYear()
+      this.get_Statistic(this.params, true);
     },
-    changeType(){
-     this.ActivityType = this.List.filter((item)=>item.status == this.qualification.id)
+
+    searchByName(){
+      this.params.search = this.search_name;
+      this.get_Statistic(this.params, true);
     },
-    changeActivity(){
-      console.log(this.activity);
-      this.DirectionList = this.activity.directions;
-      this.direction = null;
-    },
-    controlDialog(item) {
-      this.skillDialog = item;
+    controlLoader(item){
+      this.loadingtable = item;
     },
   },
   created() {
-    this.get_Qualificaton();
-    this.searchCadry(this.search_params)
+    this.get_Statistic(this.params, true);
   },
 };
 </script>
