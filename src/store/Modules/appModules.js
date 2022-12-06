@@ -30,7 +30,6 @@ const getters = {
     return state.activeSidebar;
   },
   get_darkTheme(state) {
-    console.log(state.isDark);
     return state.isDark;
   },
 };

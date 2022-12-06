@@ -17,6 +17,7 @@
         </div>
       </div>
     </div>
+
     <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3 p-fluid">
       <h6 class="text-sm mb-1 mt-0 pl-1">
         Katta korxonalar -
@@ -31,7 +32,6 @@
         v-model="bigOrgValue"
         :options="bigOrganizationList"
         optionLabel="name"
-        class="p-inputtext-sm"
         :filter="true"
         placeholder="Tanlang"
         emptyMessage="Hech narsa topilmadi"
@@ -69,7 +69,7 @@
         @change="changeOrganization"
         :filter="true"
         placeholder=" Tanlang"
-        class="w-full p-inputtext-sm"
+        class="w-full"
         emptyMessage="Hech narsa topilmadi"
         emptyFilterMessage="Tizmda ma'lumot topilmadi..."
       >
@@ -108,7 +108,7 @@
         optionLabel="name"
         :filter="true"
         placeholder="Tanlang"
-        class="w-full p-inputtext-sm"
+        class="w-full"
         @change="changeDepartment"
         emptyMessage="Hech narsa topilmadi"
         emptyFilterMessage="Tizmda ma'lumot topilmadi..."
@@ -136,7 +136,7 @@
       <Button
         icon="pi pi-filter "
         label="Filter"
-        class="mt-3 w-full p-button-secondary p-button-sm"
+        class="mt-3 w-full p-button-secondary"
         @click="openFilterPanel"
       />
       <!-- Additional filter menu -->
@@ -150,7 +150,7 @@
             <h6 class="text-sm uppercase">Qo'shimcha filter sozlamalari</h6>
           </div>
 
-          <div class="col-6">
+          <div class="col-12">
             <div class="col-12">
               <h6 class="text-sm mb-0">Lavozim {{ Stuffs.length }}</h6>
             </div>
@@ -189,23 +189,6 @@
               </Dropdown>
             </div>
           </div>
-          <div class="col-6">
-            <div class="col-12">
-              <h6 class="text-sm mb-0">Ma'lumoti</h6>
-            </div>
-            <div class="w-full flex">
-              <div class="w-full">
-                <Dropdown
-                  v-model="educationValue"
-                  :options="educationList"
-                  optionLabel="name"
-                  placeholder="Tanlang"
-                  class="w-full p-inputtext-sm"
-                  @change="changeEducation"
-                />
-              </div>
-            </div>
-          </div>
 
           <div class="col-6">
             <div class="col-12">
@@ -237,36 +220,6 @@
                   placeholder="Ta'til"
                   class="w-full p-inputtext-sm"
                   @change="changeVacation"
-                />
-              </div>
-            </div>
-          </div>
-          <div class="col-6">
-            <div class="col-12">
-              <h6 class="text-sm mb-0">Ism</h6>
-            </div>
-            <div class="w-full flex">
-              <div class="w-full">
-                <InputText
-                  type="text"
-                  v-model="organization.first_name"
-                  class="w-full font-semibold p-inputtext-sm"
-                  placeholder="Kiriting"
-                />
-              </div>
-            </div>
-          </div>
-          <div class="col-6">
-            <div class="col-12">
-              <h6 class="text-sm mb-0">Familiya</h6>
-            </div>
-            <div class="w-full flex">
-              <div class="w-full">
-                <InputText
-                  type="text"
-                  v-model="organization.last_name"
-                  class="w-full font-semibold p-inputtext-sm"
-                  placeholder="Kiriting"
                 />
               </div>
             </div>
@@ -341,6 +294,53 @@
       </OverlayPanel>
     </div>
 
+    <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
+      <InputText
+            type="text"
+            v-model="organization.last_name"
+            class="w-full"
+            placeholder="Familiya"
+            @keyup.enter="searchBtn()"
+          />
+    </div>
+
+    <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
+      <InputText
+            type="text"
+            v-model="organization.first_name"
+            class="w-full"
+            placeholder="Ism"
+            @keyup.enter="searchBtn()"
+          />
+    </div>
+
+    <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
+      <InputText
+            type="text"
+            v-model="organization.middle_name"
+            class="w-full"
+            placeholder="Sharif"
+            @keyup.enter="searchBtn()"
+          />
+    </div>
+
+    <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
+      <div class="w-full flex">
+              <div class="w-full">
+                <Dropdown
+                  v-model="educationValue"
+                  :options="educationList"
+                  optionLabel="name"
+                  placeholder="Tanlang"
+                  class="w-full"
+                  @change="changeEducation"
+                />
+              </div>
+            </div>
+    </div>
+
+
+
     <!-- Employees table ---start -->
     <div class="col-12 pt-2" v-show="!loadingtable">
       <DataTable
@@ -353,19 +353,19 @@
         v-show="totalCadries"
         stripedRows
       >
-        <Column>
+        <Column style="min-width: 30px; width: 36px">
           <template #header>
-            <div class="text-800 font-semibold">No</div>
+            <div class="text-800 font-semibold" >No</div>
           </template>
           <template #body="slotProps">
             <div
-              class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base"
+              class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base text-center"
             >
               {{ slotProps.data.number }}
             </div>
           </template>
         </Column>
-        <Column>
+        <Column style="min-width: 50px; width: 50px"> 
           <template #header>
             <div class="text-800 font-semibold">Rasm</div>
           </template>
@@ -381,7 +381,7 @@
             </div>
           </template>
         </Column>
-        <Column style="min-width: 100px; width: 200px">
+        <Column style="min-width:100px; width:200px">
           <template #header>
             <div class="text-800 font-semibold">F.I.SH</div>
           </template>
@@ -394,7 +394,7 @@
           </template>
         </Column>
 
-        <Column field="rating" style="min-width: 200px">
+        <Column field="rating" style="min-width:100px">
           <template #header>
             <div class="text-800 font-semibold">Lavozimi</div>
           </template>
@@ -423,7 +423,7 @@
           </template>
         </Column>
 
-        <Column :exportable="false" style="min-width: 100px; width: 100px">
+        <Column :exportable="false" style="min-width:100px; width:100px">
           <template #header>
             <div class="text-800 font-semibold">Amallar</div>
           </template>
@@ -458,9 +458,13 @@
       </DataTable>
       <search-not-found-page v-show="!totalCadries"></search-not-found-page>
     </div>
+
+
     <div class="col-12 pt-2" v-show="loadingtable">
       <employee-loader></employee-loader>
     </div>
+
+
     <div class="col-12">
       <Toast position="bottom-right" />
       <word-template
@@ -495,44 +499,6 @@ export default {
       loadingtable: false,
       selectedCadries: null,
       cadries: [],
-      items: [
-        {
-          label: "Pdf",
-          icon: "pi pi pi-copy",
-          command: () => {
-            this.$toast.add({
-              severity: "success",
-              summary: "Updated",
-              detail: "Data Updated",
-              life: 3000,
-            });
-          },
-        },
-        {
-          label: "Exel",
-          icon: "pi pi pi-copy",
-          command: () => {
-            this.$toast.add({
-              severity: "success",
-              summary: "Updated",
-              detail: "Data Updated",
-              life: 3000,
-            });
-          },
-        },
-        {
-          label: "Printer",
-          icon: "pi pi-print",
-          command: () => {
-            this.$toast.add({
-              severity: "success",
-              summary: "Updated",
-              detail: "Data Updated",
-              life: 3000,
-            });
-          },
-        },
-      ],
 
       Dowload_cadry_id: null,
 
@@ -748,6 +714,8 @@ export default {
     },
     changeEducation(event) {
       this.organization.education_id = event.value.id;
+      this.searchBtn();
+
     },
     changeRegion(event) {
       this.organization.birth_region_id = event.value.id;
@@ -773,7 +741,6 @@ export default {
     },
 
     searchBtn() {
-      console.table(this.organization);
       this.getOrg(this.organization);
     },
 

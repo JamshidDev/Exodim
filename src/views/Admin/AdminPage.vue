@@ -182,52 +182,10 @@
               <span id="myLogin"> {{ slotProps.data.email }} </span>
               <span>
                 <i
-                  @click="copyFunction('raximov@jamshid.ajk ')"
+                  @click="copyFunction(slotProps.data.email)"
                   class="pi pi-copy pl-2 cursor-pointer"
                 ></i>
               </span>
-            </div>
-          </template>
-        </Column>
-        <Column style="min-width: 100px; width: 100px">
-          <template #header>
-            <div class="text-800 font-semibold">Parol</div>
-          </template>
-          <template #body="slotProps">
-            <div
-              class="
-                text-sm
-                sm:text-sm
-                md:text-md
-                lg:text-lg
-                xl:text-lg
-                text-center
-                font-medium
-              "
-              :class="[slotProps.data.isFinished ? 'text-red-500' : '']"
-            >
-              ************
-            </div>
-          </template>
-        </Column>
-        <Column style="min-width: 80px; width: 80px">
-          <template #header>
-            <div class="text-800 font-semibold">E-id</div>
-          </template>
-          <template #body="slotProps">
-            <div
-              class="
-                text-sm
-                sm:text-sm
-                md:text-md
-                lg:text-base
-                xl:text-base
-                text-center
-                font-medium
-                text-red-600
-              "
-            >
-              {{ slotProps.data.id }}
             </div>
           </template>
         </Column>
