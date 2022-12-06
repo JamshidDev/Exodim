@@ -6,6 +6,7 @@ import adminModules from './Modules/adminModules'
 import statisticModule from "./Modules/statisticModule";
 import ViewStatisticModule from "./Modules/ViewStatisticModule";
 import searchModule from "./Modules/searchModule";
+import factoryModule from "./Modules/factoryModule";
 
 // Vue.use(Vuex);
 
@@ -16,5 +17,6 @@ export default new Vuex.Store({
     statisticModule,
     ViewStatisticModule,
     searchModule,
+    factoryModule,
   },
 });

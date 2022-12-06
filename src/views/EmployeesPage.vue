@@ -1,5 +1,6 @@
 <template>
   <div class="grid px-3">
+
     <div class="col-12">
       <div class="grid">
         <div class="col-12 pb-0">
@@ -22,15 +23,15 @@
       <h6 class="text-sm mb-1 mt-0 pl-1">
         Katta korxonalar -
         {{
-          bigOrganizationList.length
-            ? bigOrganizationList.length - 1
-            : bigOrganizationList.length
+          get_bigFactoryList.length
+            ? get_bigFactoryList.length - 1
+            : get_bigFactoryList.length
         }}
       </h6>
       <Dropdown
         id="adressDistrict"
-        v-model="bigOrgValue"
-        :options="bigOrganizationList"
+        v-model="get_bigFactory"
+        :options="get_bigFactoryList"
         optionLabel="name"
         :filter="true"
         placeholder="Tanlang"
@@ -58,13 +59,13 @@
       <h6 class="text-sm mb-1 mt-0 pl-1">
         Korxonalar -
         {{
-          organizations.length ? organizations.length - 1 : organizations.length
+          get_factoryList.length ? get_factoryList.length - 1 : get_factoryList.length
         }}
       </h6>
       <Dropdown
         id="adressDistrict"
-        v-model="orgValue"
-        :options="organizations"
+        v-model="get_factory"
+        :options="get_factoryList"
         optionLabel="name"
         @change="changeOrganization"
         :filter="true"
@@ -96,15 +97,15 @@
       <h6 class="text-sm mb-1 mt-0 pl-1">
         Bo'limlar va bekatlar -
         {{
-          departmentList.length
-            ? departmentList.length - 1
-            : departmentList.length
+          get_facDepartmentList.length
+            ? get_facDepartmentList.length - 1
+            : get_facDepartmentList.length
         }}
       </h6>
       <Dropdown
         id="adressDistrict"
-        v-model="departmentValue"
-        :options="departmentList"
+        v-model="get_factoryDepartment"
+        :options="get_facDepartmentList"
         optionLabel="name"
         :filter="true"
         placeholder="Tanlang"
@@ -484,6 +485,7 @@ import SearchNotFoundPage from "../components/EmptyComponent/SearchNotFoundPage.
 import WordTemplate from "../components/Eksport/WordTemplate.vue";
 import DownloadButton from "@/components/buttons/DownloadButton";
 import BreadCrumb from "@/components/BreadCrumb/BreadCrumb";
+import {mapActions, mapGetters} from "vuex"
 export default {
   components: {
     EmployeeLoader,
@@ -504,13 +506,6 @@ export default {
 
       selectedAge: [10, 80],
 
-      // Organization
-      bigOrganizationList: [],
-      bigOrgValue: null, //fake
-      organizations: [],
-      orgValue: null, //fake
-      departmentList: [],
-      departmentValue: null, //fake
       Stuffs: [],
       stuffValue: null, //fake
       educationList: [],
@@ -558,23 +553,27 @@ export default {
       },
     };
   },
+  computed:{
+    ...mapGetters(["get_bigFactoryList", "get_factoryList", "get_facDepartmentList", "get_bigFactory", "get_factory", "get_factoryDepartment"])
+  },
   methods: {
+    ...mapActions(["set_bigFactoryList", "set_factoryList", "set_facDepartmentList", "set_bigFactory", "set_factory", "set_factoryDepartment" ]),
     // get Global organization function
     getOrg(params) {
       this.controlLoading(true);
-      console.table(params);
+      this.organization.railway_id = this.get_bigFactory? this.get_bigFactory.id : null;
+      this.organization.organization_id = this.get_factory? this.get_factory.id : null;
+      this.organization.department_id = this.get_factoryDepartment? this.get_factoryDepartment.id : null;
+
       globalFactoryService
         .getOrganization(params)
         .then((res) => {
-          console.log(res.data.cadries);
           this.totalCadries = res.data.cadries.pagination.total;
-          let cadrList = [];
           let number =
             (this.organization.page - 1) * this.organization.per_page;
           res.data.cadries.data.forEach((item) => {
             number++;
             item.number = number;
-            cadrList.push(item);
           });
           this.cadries = res.data.cadries.data;
           this.controlLoading(false);
@@ -591,13 +590,13 @@ export default {
         .get_Railway()
         .then((res) => {
           if (res.data.length) {
-            this.bigOrganizationList = res.data;
-            this.bigOrganizationList.unshift({
+            res.data.unshift({
               name: "Barchasi",
               id: null,
             });
+            this.set_bigFactoryList(res.data)
           } else {
-            this.bigOrganizationList = res.data;
+            this.set_bigFactoryList(res.data)
           }
         })
         .catch((error) => {
@@ -610,13 +609,13 @@ export default {
         .get_Organization({ railway_id: id })
         .then((res) => {
           if (res.data.length) {
-            this.organizations = res.data;
-            this.organizations.unshift({
+            res.data.unshift({
               name: "Barchasi",
               id: null,
             });
+            this.set_factoryList(res.data)
           } else {
-            this.organizations = res.data;
+            this.set_factoryList(res.data)
           }
         })
         .catch((error) => {
@@ -632,7 +631,7 @@ export default {
             name: "Barchasi",
             id: null,
           });
-          this.departmentList = res.data;
+          this.set_facDepartmentList(res.data)
         })
         .catch((error) => {
           console.log(error);
@@ -684,20 +683,17 @@ export default {
     },
 
     changeRailway(event) {
-      this.organization.railway_id = event.value.id;
+      this.set_bigFactory(event.value)
       this.get_Organization(event.value.id);
-      this.organization.organization_id = null;
-      this.organization.department_id = null;
-      this.departmentList = [];
-      this.departmentValue = null;
-      this.orgValue = null;
+      this.set_factory(null);
+      this.set_factoryDepartment(null);
+      this.set_facDepartmentList([])
       this.getOrg(this.organization);
     },
 
     changeOrganization(event) {
-      this.organization.organization_id = event.value.id;
-      this.organization.department_id = null;
-      this.departmentValue = null;
+      this.set_factory(event.value);
+      this.set_factoryDepartment(null)
       this.stuffValue = null;
       this.get_Department(event.value.id);
       this.get_Stuffs(event.value.id);
@@ -705,7 +701,7 @@ export default {
     },
 
     changeDepartment(event) {
-      this.organization.department_id = event.value.id;
+      this.set_factoryDepartment(event.value)
       this.getOrg(this.organization);
     },
 
@@ -790,8 +786,13 @@ export default {
     },
   },
   created() {
+    if(this.get_bigFactory){
+
+    }else{
+      this.get_Railway();
+    }
     this.getOrg(this.organization);
-    this.get_Railway();
+
     this.get_Education();
     this.get_getRegions();
     this.get_getVacations();
