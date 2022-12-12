@@ -10,13 +10,18 @@
 
       <!-- Layout main -->
       <div class="layout_main_section xl:px-2 lg:px-2 px-1 pb-2">
-        <div class="pb-2">
+        <!-- <div class="pb-2">
           <top-app-menu v-show="get_menuType"></top-app-menu>
-        </div>
+        </div> -->
 
         <!-- Router main -->
         <div class="pb-2 px-2 mt-1 min_main">
-          <router-view></router-view>
+          <!-- <router-view></router-view> -->
+          <router-view v-slot="{ Component }">
+            <transition name="slide-right" mode="out-in">
+              <component :is="Component" />
+            </transition>
+          </router-view>
         </div>
         <!-- <AppFooter /> -->
       </div>
@@ -120,6 +125,29 @@ export default {
 </script>
 <style lang="scss" >
 .min_main {
-  min-height: calc(100vh - 176px) !important;
+  min-height: calc(100vh - 76px) !important;
+  overflow: hidden !important;
+  position: relative !important;
+  width: 100% !important;
 }
+
+.slide-right-enter-active{
+  transition: all 0.2s linear;
+}
+.slide-right-leave-active {
+  transition: all 0.1s linear;
+}
+
+.slide-right-enter-from {
+  transform: translateY(-10px);
+  opacity: 0;
+}
+.slide-right-enter-to {
+  transform: translateY(0px);
+  opacity: 1;
+}
+.slide-right-leave-from {
+  transform: scale(1);
+}
+
 </style>

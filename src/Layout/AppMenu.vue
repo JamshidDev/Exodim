@@ -182,6 +182,7 @@ export default {
             {
               label: "Qo'llanma",
               icon: "pi pi-book",
+              to: "/guide",
             },
           ],
         },

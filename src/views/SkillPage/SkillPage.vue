@@ -1,7 +1,5 @@
 <template >
-  <div class="grid px-3">
-
-
+  <div class="grid px-3 min-w-full">
     <!-- Title section -->
     <div class="col-12">
       <div class="grid">
@@ -10,30 +8,40 @@
             :breadCump="[{ name: 'Malaka oshirish', path: '' }]"
           ></bread-crumb>
         </div>
-        <div class="col-12 y-0 py-0">
+        <div class="col-12 y-0 py-1 relative">
           <span class="text-2xl font-semibold"
             >Malaka oshirish
             <span class="text-base text-primary pl-2" v-show="totalItem > 0">
               ( {{ totalItem }} )</span
             >
           </span>
+          <Button
+            label="Yuklash"
+            @click="get_Skill_Exports()"
+            class="
+              p-button-raised p-button-success p-button-sm
+              absolute
+              right-0
+              mr-2
+            "
+            icon="pi pi-arrow-circle-down"
+          />
         </div>
       </div>
     </div>
 
-
-<!-- Header section -->
+    <!-- Header section -->
     <div class="col-12 py-0">
       <div class="grid">
         <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3 p-fluid">
-                <Dropdown
-                  v-model="qualification"
-                  :options="qualificationList"
-                  optionLabel="name"
-                  placeholder="Tayorlov turini tanlang"
-                  class="w-full p-inputtext-sm"
-                  @change="changeQualification"
-                />
+          <Dropdown
+            v-model="qualification"
+            :options="qualificationList"
+            optionLabel="name"
+            placeholder="Tayorlov turini tanlang"
+            class="w-full p-inputtext-sm"
+            @change="changeQualification"
+          />
         </div>
 
         <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
@@ -99,33 +107,31 @@
           </Dropdown>
         </div>
         <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
-        <div class="grid p-0">
-          <div class="col-7 p-fluid">
-            <InputText
-            type="text"
-            v-model="search_name"
-            placeholder="Qidiruv..."
-            class="p-inputtext-sm"
-            @keyup.enter="searchByName()"
-          />
-          </div>
+          <div class="grid p-0">
+            <div class="col-7 p-fluid">
+              <InputText
+                type="text"
+                v-model="search_name"
+                placeholder="Qidiruv..."
+                class="p-inputtext-sm"
+                @keyup.enter="searchByName()"
+              />
+            </div>
 
-          <div class="col-5 p-fluid">
-            <Calendar
-            inputId="yearpicker"
-            class="p-inputtext-sm"
-            @date-select="changeDate"
-            v-model="date1"
-            view="year"
-            dateFormat="yy"
-          />
+            <div class="col-5 p-fluid">
+              <Calendar
+                inputId="yearpicker"
+                class="p-inputtext-sm"
+                @date-select="changeDate"
+                v-model="date1"
+                view="year"
+                dateFormat="yy"
+              />
+            </div>
           </div>
-
-        </div>
         </div>
       </div>
     </div>
-
 
     <!-- table section -->
     <div class="col-12 pt-0" v-show="!loadingtable">
@@ -144,7 +150,16 @@
             <div class="text-800 text-sm font-medium">No</div>
           </template>
           <template #body="slotProps">
-            <div class="text-800 w-full text-center text-sm lg:text-base xl:text-base font-normal">
+            <div
+              class="
+                text-800
+                w-full
+                text-center text-sm
+                lg:text-base
+                xl:text-base
+                font-normal
+              "
+            >
               {{ slotProps.data.number }}
             </div>
           </template>
@@ -187,8 +202,14 @@
                 text-center
               "
             >
-            <div v-show="(slotProps.data.upgrades==0)" class="w-full text-center text-red-700 bg-red-100 ">{{ slotProps.data.upgrades }}</div>
-              <Chip v-show="(slotProps.data.upgrades!==0)"
+              <div
+                v-show="slotProps.data.upgrades == 0"
+                class="w-full text-center text-red-700 bg-red-100"
+              >
+                {{ slotProps.data.upgrades }}
+              </div>
+              <Chip
+                v-show="slotProps.data.upgrades !== 0"
                 :label="slotProps.data.upgrades.toString()"
                 class="mr-2 mb-2 text-sm text-blue-700 bg-blue-100 font-bold"
               />
@@ -196,9 +217,11 @@
           </template>
         </Column>
 
-        <Column style="min-width:50px; width:200px">
+        <Column style="min-width: 50px; width: 200px">
           <template #header>
-            <div class="text-800 font-semibold">Yotoqxonaga zarurati yo'q xodimlar</div>
+            <div class="text-800 font-semibold">
+              Yotoqxonaga zarurati yo'q xodimlar
+            </div>
           </template>
           <template #body="slotProps">
             <div
@@ -211,47 +234,20 @@
                 text-center
               "
             >
-              <div v-show="(slotProps.data.status_bedroom==0)" class="w-full text-center text-red-700 bg-red-100 ">{{ slotProps.data.status_bedroom}}</div>
-              <Chip v-show="(slotProps.data.status_bedroom!==0)"
+              <div
+                v-show="slotProps.data.status_bedroom == 0"
+                class="w-full text-center text-red-700 bg-red-100"
+              >
+                {{ slotProps.data.status_bedroom }}
+              </div>
+              <Chip
+                v-show="slotProps.data.status_bedroom !== 0"
                 :label="slotProps.data.status_bedroom.toString()"
                 class="mr-2 mb-2 text-sm text-blue-700 bg-blue-100 font-bold"
               />
             </div>
           </template>
         </Column>
-        <!-- <Column style="min-width: 50px; width: 60px">
-          <template #header>
-            <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
-              Ruhsat
-            </div>
-          </template>
-          <template #body="slotProps">
-            <div
-              class="
-                text-sm
-                sm:text-sm
-                md:text-sm
-                lg:text-base
-                xl:text-base
-                font-medium
-                text-center
-              "
-            >
-              <span>{{ slotProps.data.accepteds }}</span>
-            </div>
-          </template>
-        </Column> -->
-
-        <!-- <Column :exportable="false" style="min-width: 100px; width: 100px">
-          <template #header>
-            <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
-              Amallar
-            </div>
-          </template>
-          <template #body>
-            <div class="flex w-full align-items-center gap-2"></div>
-          </template>
-        </Column> -->
         <template #footer>
           <table-pagination
             v-show="totalItem > 10"
@@ -264,6 +260,15 @@
     </div>
     <div class="col-12 pt-0" v-show="loadingtable">
       <skill-loader></skill-loader>
+    </div>
+    <div class="col-12" v-show="false">
+      <download-excel
+        :data="jsonData"
+        :fields="json_fields"
+        :name="'Test'"
+        ref="Skill_table"
+      >
+      </download-excel>
     </div>
   </div>
 </template>
@@ -282,15 +287,15 @@ export default {
   },
   data() {
     return {
-      List:[],
-      qualificationList:[],
-      qualification:null,
+      List: [],
+      qualificationList: [],
+      qualification: null,
       apparatList: [],
       apparat: null,
       DirectionList: [],
       direction: null,
 
-      selectItem:null,
+      selectItem: null,
 
       statisticList: [],
       totalItem: 0,
@@ -307,8 +312,24 @@ export default {
         per_page: localStorage.getItem("per_page_7")
           ? Number(localStorage.getItem("per_page_7"))
           : 10,
-        apparat_id:null,
-        training_direction_id:null,
+        apparat_id: null,
+        training_direction_id: null,
+      },
+
+      jsonData: [],
+      json_fields: {
+        "Xo'jalik nomi": "name",
+        "Yo'nalish nomi": "nameOfType",
+        "Tinglovchilarning kasbiy toifalari": "typeOfListener",
+        "O'qish davri": "educationTime",
+        "Toshkent MTU": "MTU_one",
+        "Qo'qon MTU": "MTU_two",
+        "Buxoro MTU": "MTU_three",
+        "Qo'ng'irot MTU": "MTU_four",
+        "Qarshi MTU": "MTU_five",
+        "Termiz MTU": "MTU_six",
+        "Boshqarma va korxonalar": "departmentAndOrganization",
+        Jami: "total",
       },
     };
   },
@@ -327,43 +348,92 @@ export default {
         this.controlLoader(false);
       });
     },
-    get_Apparats(){
-      SkillService.get_Skill_Apparats({params:{
-        page:1,
-        per_page:1000,
-        search:null,
-      }}).then((res) =>{
+    get_Apparats() {
+      SkillService.get_Skill_Apparats({
+        params: {
+          page: 1,
+          per_page: 1000,
+          search: null,
+        },
+      }).then((res) => {
         this.qualificationList = res.data.type_qualifications;
         this.List = res.data.apparats.data;
-      })
+      });
     },
-    get_Directions(){
-      SkillService.get_Skill_Direction({params:{
-        page:1,
-        per_page:1000,
-        search:null,
-      }}).then((res) =>{
+    get_Directions() {
+      SkillService.get_Skill_Direction({
+        params: {
+          page: 1,
+          per_page: 1000,
+          search: null,
+        },
+      }).then((res) => {
         console.log(res.data.directions.data);
-        this.DirectionList =res.data.directions.data.filter((item) => item.apparat.id == this.apparat.id )
-      })
+        this.DirectionList = res.data.directions.data.filter(
+          (item) => item.apparat.id == this.apparat.id
+        );
+      });
+    },
+    get_Skill_Exports() {
+      SkillService.get_Skill_Export({ date_qual: this.params.date_qual }).then(
+        (res) => {
+          res.data.data.forEach((item) => {
+            item[0].directions.forEach((direct) => {
+              this.jsonData.push({
+                name: item[0].name,
+                nameOfType:direct.name,
+                typeOfListener: direct.staff_name,
+                educationTime: direct.comment_time,
+                MTU_one: direct.mtu1,
+                MTU_two: direct.mtu2,
+                MTU_three: direct.mtu3,
+                MTU_four: direct.mtu4,
+                MTU_five: direct.mtu5,
+                MTU_six: direct.mtu6,
+                departmentAndOrganization: direct.others,
+                total: direct.total,
+              });
+            });
+            this.jsonData.push({
+              name:' ',
+              nameOfType: `<b>${item[0].total_directions.total}</b>`,
+              typeOfListener: `<b>${item[0].total_directions.total_directions}</b>`,
+              educationTime: `<b>${item[0].total_directions.total_time}</b>`,
+              MTU_one: `<b>${item[0].total_directions.total_mtu1}</b>`,
+              MTU_two: `<b>${item[0].total_directions.total_mtu2}</b>`,
+              MTU_three: `<b>${item[0].total_directions.total_mtu3}</b>`,
+              MTU_four: `<b>${item[0].total_directions.total_mtu4}</b>`,
+              MTU_five: `<b>${item[0].total_directions.total_mtu5}</b>`,
+              MTU_six: `<b>${item[0].total_directions.total_mtu6}</b>`,
+              departmentAndOrganization: `<b>${item[0].total_directions.total_others}</b>`,
+              total:`<b>${item[0].total_directions.total_all}</b>`,
+            });
+          });
+
+          console.log(this.jsonData);
+          setTimeout(() => {
+            this.$refs.Skill_table.generate();
+          }, 1000);
+        }
+      );
     },
 
-
-
-    changeApparats(){
+    changeApparats() {
       this.direction = null;
       this.params.apparat_id = this.apparat.id;
       this.get_Statistic(this.params, true);
-      this.get_Directions()
+      this.get_Directions();
     },
-    changeDirection(){
+    changeDirection() {
       this.params.training_direction_id = this.direction.id;
       this.get_Statistic(this.params, true);
     },
-    changeQualification(){
+    changeQualification() {
       this.apparat = null;
       this.direction = null;
-      this.apparatList = this.List.filter((item) => item.type_qualification.id == this.qualification.id)
+      this.apparatList = this.List.filter(
+        (item) => item.type_qualification.id == this.qualification.id
+      );
     },
 
     changePagination(event) {
@@ -388,9 +458,7 @@ export default {
   },
   created() {
     this.get_Statistic(this.params, true);
-    this.get_Apparats()
+    this.get_Apparats();
   },
 };
 </script>
-<style lang="">
-</style>

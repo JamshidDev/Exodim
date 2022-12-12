@@ -147,7 +147,7 @@
               "
             >
               <Chip
-                :label="slotProps.data.time_lesson"
+                :label="slotProps.data.time_lesson.toString()"
                 class="
                   mr-2
                   mb-2
@@ -176,7 +176,7 @@
               "
             >
               <Chip
-                :label="slotProps.data.comment_time"
+                :label="slotProps.data.comment_time.toString()"
                 class="mr-2 mb-2 text-sm text-blue-700 bg-blue-100 font-bold"
               />
             </div>

@@ -1,5 +1,5 @@
 <template >
-  <div class="grid py-2 px-2">
+  <div class="grid py-2 px-2 min-w-full">
     <div class="col-6">
       <h6 class="text-lg p-2 uppercase">
         Rag'batlantirilgan xodimlar

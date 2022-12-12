@@ -110,7 +110,7 @@
               "
             >
               <Chip
-                :label="slotProps.data.type_qualification.name "
+                :label="slotProps.data.type_qualification.name.toString()"
                 class="mr-2 mb-2 text-sm text-blue-700 bg-blue-100 font-bold"
               />
             </div>
@@ -136,7 +136,7 @@
               "
             >
               <Chip
-                :label="slotProps.data.directions "
+                :label="slotProps.data.directions.toString() "
                 class="mr-2 mb-2 text-sm text-blue-700 bg-blue-100 font-bold"
               />
             </div>
@@ -301,7 +301,6 @@ export default {
           number++;
           item.number = number;
         });
-        console.log(res.data.apparats.type_qualifications);
         this.List = res.data.apparats.data;
         this.type_qualification_List = res.data.type_qualifications
         this.totalItem = res.data.apparats.pagination.total;

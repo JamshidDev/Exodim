@@ -574,6 +574,47 @@ const routes = [
     },
   },
   {
+    path: "/guide",
+    name: "guide",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: function () {
+      return import(/* webpackChunkName: "about" */ "../views/Guide/GuidePage.vue");
+    },
+    children:[
+      {
+        path: "/guide/",
+        name: "guide-home",
+        component: function () {
+          return import(
+            /* webpackChunkName: "about" */ "../views/Guide/Pages/GuideHomePage.vue"
+          );
+        },
+      },
+      {
+        path: "/guide/one",
+        name: "guide-one",
+        component: function () {
+          return import(
+            /* webpackChunkName: "about" */ "../views/Guide/Pages/LoginPage.vue"
+          );
+        },
+      },
+      {
+        path: "/guide/two",
+        name: "guide-two",
+        component: function () {
+          return import(
+            /* webpackChunkName: "about" */ "../views/Guide/Pages/NewCadry.vue"
+          );
+        },
+      },
+    ]
+
+  },
+  
+  {
     path: "/:pathMatch(.*)*",
     name: "NotFound",
     // route level code-splitting
