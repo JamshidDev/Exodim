@@ -19,9 +19,9 @@
           alt="guide-1.jpg"
         />
       </div>
-      <div class="text-content text-lg my-4">
-        Exodimga yangi xodim qo'shish uchun <b>Xodimlar</b>(1) menyusi orqali
-        kirib <b>Xodim</b>(2) qo'shish tugmasi orqali o'tiladi.
+      <div class="text-content text-lg my-4 font-medium">
+        Exodimga yangi xodim qo'shish uchun <b class="text-blue-600">Xodimlar</b>(1) menyusi orqali
+        kirib <b class="text-blue-600">Xodim</b>(2) qo'shish tugmasi orqali o'tiladi.
       </div>
       <div class="picture_content my-2 lg:mx-6 xl:mx-6">
         <img
@@ -30,17 +30,21 @@
           alt="guide-1.jpg"
         />
       </div>
-      <div class="text-content text-lg my-4">
+      <div class="text-content text-lg my-4 font-medium">
         Exodimga yangi xodim qo'shishdan oldin uning ma'lumotlari bazada bor yoki yo'qligi tekshiriladi.
-        Buning uchun xodimning <b>Pasport JSHR</b>(3) ma'lumoti kiritiladi
+        Buning uchun xodimning <b class="text-blue-600">Pasport JSHR</b>(3) ma'lumoti kiritiladi va <b class="text-blue-600">Izlash</b>(1) tugmasi orqali izlanadi.
         
       </div>
       <div class="picture_content my-2 lg:mx-6 xl:mx-6">
         <img
           class="w-full"
-          src="../../../assets/guide/picture/guide-3.jpg"
+          src="../../../assets/guide/picture/guide-6.jpg"
           alt="guide-1.jpg"
         />
+      </div>
+      <div class="text-content text-lg my-4 font-medium">
+       Agarda yuqorida keltirilgan <b class="text-blue-600">Xabar</b>(2) chiqsa: Siz izlagan xodim <b>Markaziy aparat</b> korxonasida ishlayotgan xisoblanadi va siz bu korxona ma'sul xodimi bilan bog'lanishingiz lozim bo'ladi.
+        
       </div>
     </div>
   </div>

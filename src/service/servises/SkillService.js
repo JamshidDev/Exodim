@@ -68,9 +68,13 @@ const get_Skill_Statistic = (payload)=>{
     return axios.get(`/api/qualification/management/upgrades`,{params:payload})
 }
 
+const get_Skill_Organization = (payload)=>{
+    return axios.get(`/api/qualification/management/organization/${payload.id}/upgrades`,{params:payload.params})
+}
+
 const get_Skill_Export = (payload)=>{
     return axios.get(`/api/qualification/management/upgrades/export`,{params:payload})
 }
 
 
-export default {get_Qualification,search_Cadry, create_Qualification, get_Cadry_Qualification, update_Qualification, delete_Cadry_Qualification, get_Skill_Apparats,update_Skill_Apparats,delete_Skill_Apparats,create_Skill_Apparats,get_Skill_Direction, create_Skill_Direction,update_Skill_Direction,delete_Skill_Direction, get_Skill_Statistic,get_Skill_Export }
+export default {get_Qualification,search_Cadry, create_Qualification, get_Cadry_Qualification, update_Qualification, delete_Cadry_Qualification, get_Skill_Apparats,update_Skill_Apparats,delete_Skill_Apparats,create_Skill_Apparats,get_Skill_Direction, create_Skill_Direction,update_Skill_Direction,delete_Skill_Direction, get_Skill_Statistic,get_Skill_Export,get_Skill_Organization }

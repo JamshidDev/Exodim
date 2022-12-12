@@ -227,12 +227,12 @@
             >
               <div>
                 {{
-                  slotProps.data.period_date1 ? slotProps.data.period_date1 : ""
+                  slotProps.data.period1? formatter.arrowDateFormat(slotProps.data.period1) : ""
                 }}
               </div>
               <div>
                 {{
-                  slotProps.data.period_date2 ? slotProps.data.period_date2 : ""
+                  slotProps.data.period2 ? formatter.arrowDateFormat(slotProps.data.period2) : ""
                 }}
               </div>
             </div>
@@ -588,11 +588,11 @@ export default {
       this.command_number = event.command_number ? event.command_number : "";
       this.date1 = this.formatter.interDateFormatter(event.date1);
       this.date2 = this.formatter.interDateFormatter(event.date2);
-      this.period_date1 = event.period_date1
-        ? this.formatter.interDateFormatter(event.period_date1)
+      this.period_date1 = event.period1
+        ? this.formatter.interDateFormatter(event.period1)
         : "";
-      this.period_date2 = event.period_date2
-        ? this.formatter.interDateFormatter(event.period_date2)
+      this.period_date2 = event.period2
+        ? this.formatter.interDateFormatter(event.period2)
         : "";
       this.cadry = event.cadry;
       this.controlDialog(true);

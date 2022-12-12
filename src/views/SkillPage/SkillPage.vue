@@ -185,10 +185,10 @@
             </div>
           </template>
         </Column>
-        <Column field="name" style="min-width: 50px; width: 150px">
+        <Column field="name" style="min-width: 50px; width: 50px">
           <template #header>
             <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
-              Xodimlar soni
+              Ko'rish
             </div>
           </template>
           <template #body="slotProps">
@@ -204,7 +204,40 @@
             >
               <div
                 v-show="slotProps.data.upgrades == 0"
-                class="w-full text-center text-red-700 bg-red-100"
+                class="w-full text-center text-400"
+              >
+                <i class="pi pi-eye-slash text-2xl cursor-pointer"></i>
+              </div>
+              <div
+                v-show="slotProps.data.upgrades !== 0"
+                class="w-full text-center text-blue-600"
+              >
+                <i @click="goOrganization(slotProps.data.id, slotProps.data.name)" class="pi pi-eye text-2xl cursor-pointer"></i>
+              </div>
+            </div>
+          </template>
+        </Column>
+
+        <Column field="name" style="min-width: 50px; width: 60px">
+          <template #header>
+            <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
+              Xodimlar
+            </div>
+          </template>
+          <template #body="slotProps">
+            <div
+              class="
+                text-sm
+                sm:text-sm
+                md:text-sm
+                lg:text-base
+                xl:text-base
+                text-center
+              "
+            >
+              <div
+                v-show="slotProps.data.upgrades == 0"
+                class="w-full text-center text-400"
               >
                 {{ slotProps.data.upgrades }}
               </div>
@@ -217,7 +250,7 @@
           </template>
         </Column>
 
-        <Column style="min-width: 50px; width: 200px">
+        <Column style="min-width: 50px; width: 160px">
           <template #header>
             <div class="text-800 font-semibold">
               Yotoqxonaga zarurati yo'q xodimlar
@@ -236,7 +269,7 @@
             >
               <div
                 v-show="slotProps.data.status_bedroom == 0"
-                class="w-full text-center text-red-700 bg-red-100"
+                class="w-full text-center text-400"
               >
                 {{ slotProps.data.status_bedroom }}
               </div>
@@ -381,7 +414,7 @@ export default {
             item[0].directions.forEach((direct) => {
               this.jsonData.push({
                 name: item[0].name,
-                nameOfType:direct.name,
+                nameOfType: direct.name,
                 typeOfListener: direct.staff_name,
                 educationTime: direct.comment_time,
                 MTU_one: direct.mtu1,
@@ -395,7 +428,7 @@ export default {
               });
             });
             this.jsonData.push({
-              name:' ',
+              name: " ",
               nameOfType: `<b>${item[0].total_directions.total}</b>`,
               typeOfListener: `<b>${item[0].total_directions.total_directions}</b>`,
               educationTime: `<b>${item[0].total_directions.total_time}</b>`,
@@ -406,7 +439,7 @@ export default {
               MTU_five: `<b>${item[0].total_directions.total_mtu5}</b>`,
               MTU_six: `<b>${item[0].total_directions.total_mtu6}</b>`,
               departmentAndOrganization: `<b>${item[0].total_directions.total_others}</b>`,
-              total:`<b>${item[0].total_directions.total_all}</b>`,
+              total: `<b>${item[0].total_directions.total_all}</b>`,
             });
           });
 
@@ -416,6 +449,11 @@ export default {
           }, 1000);
         }
       );
+    },
+
+    goOrganization(railway_id,name){
+      this.$router.push(`/admin/skill/organization/${this.qualification? this.qualification.id : null}/${this.apparat? this.apparat.id : null}/${this.direction? this.direction.id : null}/${this.params.date_qual}/${railway_id}/${name}`)
+
     },
 
     changeApparats() {
