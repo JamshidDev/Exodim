@@ -329,6 +329,7 @@ export default {
       direction: null,
 
       selectItem: null,
+      amount:0,
 
       statisticList: [],
       totalItem: 0,
@@ -375,9 +376,11 @@ export default {
         res.data.railways.data.forEach((item) => {
           number++;
           item.number = number;
+          this.amount = this.amount+ item.upgrades;
         });
         this.statisticList = res.data.railways.data;
         this.totalItem = res.data.railways.pagination.total;
+        console.log(this.amount);
         this.controlLoader(false);
       });
     },

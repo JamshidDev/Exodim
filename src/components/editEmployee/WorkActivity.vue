@@ -124,7 +124,7 @@
               type="text"
               class="w-full font-semibold"
               placeholder="Yilni kiriting"
-              id="employeePhone"
+              id="stuff_date1"
               v-model="careerDialogdate1"
               v-maska="'####'"
             />
@@ -135,7 +135,7 @@
               type="text"
               class="w-full font-semibold"
               placeholder="Yilni kiriting"
-              id="employeePhone"
+              id="stuff_date2"
               v-model="careerDialogdate2"
               v-maska="'####'"
             />
@@ -146,7 +146,7 @@
             <Textarea
               class="w-full font-semibold"
               placeholder="Lavozim to'liq nomini kiriting"
-              id="employeePhone"
+              id="stuff_name"
               v-model="careerDialogname"
               :autoResize="true"
               rows="5"

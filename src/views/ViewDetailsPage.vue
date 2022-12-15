@@ -20,8 +20,8 @@
             <h6 class="text-lg text-800 my-2 uppercase font-semibold">
               {{ cadry.fullName }}
             </h6>
-            <h6 class="text-base text-800 my-3 font-medium">
-              <h6 class="text-base text-800 my-0 font-medium">{{ cadry.post_date }} dan</h6>
+            <h6 class="text-base text-800 my-3 font-normal">
+              <h6 class="text-base text-800 font-normal my-0">{{formatter.arrowDateFormat(cadry.post_date) }} dan</h6>
               {{ cadry.post_name }}
             </h6>
             <h6 class="text-base text-800 my-3 font-bold flex">
@@ -34,7 +34,7 @@
               />
             </h6>
 
-            <Button label="Yuklash" @click="DowloadResume($route.params.id)" class="p-button-raised p-button-info" />
+            <Button label="Yuklash" @click="DowloadResume($route.params.id)" class="p-button-raised p-button-info px-4" />
           </div>
 
           <div class="col-12 py-4 pl-4 md:col-12 lg:col-4 xl:col-4">
@@ -724,6 +724,7 @@ export default {
 }
 
 .custom .p-scrollpanel-bar {
+  width: 0px !important;
   background-color: #1976d2;
   opacity: 1;
   transition: background-color 0.3s;
@@ -731,6 +732,7 @@ export default {
 
 .custom .p-scrollpanel-bar:hover {
   background-color: #135ba1;
+  width: 0px !important;
 }
 
 .cordinate_btn{

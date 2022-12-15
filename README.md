@@ -27,6 +27,9 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 <!-- TypesPage page_6 -->
 <!-- SkillPage page_7 -->
 <!-- Skill - Organization page_8 -->
+<!-- Archive cadry - page_9 -->
+
+
 
 
 

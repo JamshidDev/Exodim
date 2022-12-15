@@ -75,9 +75,15 @@ export default {
               visible: () => this.get_adminPermissions("organization_staffs"),
             },
             {
-              label: "Arxiv",
+              label: "Arxivdan chiqarish",
               icon: "pi pi-shield",
               to: "/admin/historyemployee",
+              visible: () => this.get_adminPermissions("organization_archive"),
+            },
+            {
+              label: "Arxivdagi xodimlar",
+              icon: "pi pi-shield",
+              to: "/admin/historycadry",
               visible: () => this.get_adminPermissions("organization_archive"),
             },
           ],
@@ -258,10 +264,12 @@ export default {
 
   .p-menuitem-icon {
     padding-right: 10px;
+    font-size: 18px !important;
   }
   .p-menuitem-text {
     color: #aeb2b5 !important;
     font-weight: 400 !important;
+    text-transform: uppercase !important;
   }
   .p-menuitem-link:hover {
     background: #51657a !important;

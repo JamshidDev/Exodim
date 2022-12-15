@@ -154,7 +154,6 @@
           <div class="col-12">
             <h6 class="mb-2 pl-2 text-500">Qarindoshligi</h6>
             <Dropdown
-                id="bornRegion"
                 v-model="relative_id"
                 :options="relativeList"
                 optionLabel="name"
@@ -169,7 +168,7 @@
               type="text"
               class="w-full font-semibold"
               placeholder="Kiriting"
-              id="employeePhone"
+              id="relative_fullname"
               v-model="relative_fullName"
             />
           </div>
@@ -179,7 +178,7 @@
               type="text"
               class="w-full font-semibold"
               placeholder="Kiritng"
-              id="employeePhone"
+              id="relative_birthday"
               v-model="relative_birthday"
             />
           </div>
@@ -189,7 +188,7 @@
             <Textarea
               class="w-full font-semibold"
               placeholder="Kiriting"
-              id="employeePhone"
+              id="relative_job"
               v-model="relative_job"
               :autoResize="true"
               rows="1"
@@ -200,7 +199,7 @@
             <Textarea
               class="w-full font-semibold"
               placeholder="Kiriting"
-              id="employeePhone"
+              id="relative_adress"
               v-model="relative_adress"
               :autoResize="true"
               rows="1"

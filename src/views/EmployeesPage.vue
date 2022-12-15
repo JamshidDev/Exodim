@@ -424,6 +424,27 @@
           </template>
         </Column>
 
+        <Column field="rating" style="min-width: 40px; width: 40px">
+          <template #header>
+            <div class="text-800 font-semibold">SMS</div>
+          </template>
+          <template #body="slotProps">
+            <div
+              class="text-sm sm:text-sm md:text-sm lg:text-base xl:text-base"
+            >
+            <download-button
+            class="px-3"
+                v-tooltip.left="`SMS xabar jo'natish`"
+                :color="'bg-yellow-500 active:bg-yellow-500'"
+                :border="'border-1 border-yellow-500 border-round'"
+                :icon="'pi pi-send'"
+                @click="SMS_Dialog(slotProps.data.id,slotProps.data.fullname)"
+              ></download-button>
+            </div>
+          </template>
+        </Column>
+
+
         <Column :exportable="false" style="min-width:100px; width:100px">
           <template #header>
             <div class="text-800 font-semibold">Amallar</div>
@@ -468,6 +489,55 @@
 
     <div class="col-12">
       <Toast position="bottom-right" />
+
+      <Dialog
+        v-model:visible="sms_dialog"
+        :breakpoints="{
+          '1960px': '30vw',
+          '1600px': '40vw',
+          '1200px': '70vw',
+          '960px': '80vw',
+          '640px': '90vw',
+        }"
+        :style="{ width: '50vw' }"
+        :modal="true"
+      >
+        <template #header>
+          <h6 class="uppercase text-lg text-blue-500 font-medium">
+            SMS xabar yuborish <span class="text-sm text-green-500 capitalize"> ( {{sms_user}} )</span>
+          </h6>
+        </template>
+        <div class="grid pt-2">
+         
+          
+          <div class="col-12">
+            <h6 class="mb-1 pl-2 text-500">Xabar</h6>
+            <Textarea
+              class="w-full font-medium"
+              placeholder="Bu yerga xabar matnini yozing..."
+              id="sms_msg"
+              v-model="sms_msg"
+              :autoResize="true"
+              rows="3"
+              :class="{ 'p-invalid': cadry_ref_comment && refresh_submitted }"
+            />
+          </div>
+          <span class="pl-2 text-sm text-500">Elementlar soni - {{sms_msg.length}} </span>
+        </div>
+
+        <template #footer>
+          <div class="col-12 pt-2">
+            <div class="flex justify-content-end">
+              <Button
+                label="Yuborish"
+                class="p-button-secondary p-button-sm"
+                @click="send_Message()"
+              />
+            </div>
+          </div>
+        </template>
+      </Dialog>
+
       <word-template
         :cadry_id="Dowload_cadry_id"
         v-show="false"
@@ -484,6 +554,7 @@ import EmployeeLoader from "../components/loaders/EmployeeLoader.vue";
 import SearchNotFoundPage from "../components/EmptyComponent/SearchNotFoundPage.vue";
 import WordTemplate from "../components/Eksport/WordTemplate.vue";
 import DownloadButton from "@/components/buttons/DownloadButton";
+import SmsService from '@/service/servises/SmsService'
 import BreadCrumb from "@/components/BreadCrumb/BreadCrumb";
 import {mapActions, mapGetters} from "vuex"
 export default {
@@ -501,6 +572,10 @@ export default {
       loadingtable: false,
       selectedCadries: null,
       cadries: [],
+      sms_dialog:false,
+      sms_msg:'',
+      sms_user:null,
+      sms_user_id:null,
 
       Dowload_cadry_id: null,
 
@@ -680,6 +755,31 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+
+    SMS_Dialog(id, name){
+      this.sms_user = name;
+      this.sms_user_id = id;
+      this.sms_dialog =true
+    },
+    send_Message(){
+      this.sms_dialog =false
+      SmsService.send_SMS({cadry_id:this.sms_user_id, data:{comment:this.sms_msg}}).then((res) =>{
+        console.log(res.data);
+        this.$toast.add({
+        severity: "success",
+        summary: "SMS xabar",
+        detail: "Xabar muvofaqiyatli jo'natildi",
+        life: 2000,
+      });
+      }).catch((error) =>{
+        this.$toast.add({
+        severity: "error",
+        summary: "SMS xabar",
+        detail: "Xatolik yuz berdi...",
+        life: 2000,
+      });
+      })
     },
 
     changeRailway(event) {
