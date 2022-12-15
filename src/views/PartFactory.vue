@@ -25,8 +25,8 @@
                 class="p-inputtext-sm"
                 @keyup.enter="searchByName()"
               />
-              <Chip class="font-bold uppercase text-green-700 bg-green-100 text-sm mx-2" label="Vakansiya - 12"  />
-              <Chip class="font-bold uppercase text-red-700 bg-red-100 text-sm mx-2" label="Sverx - 13"  />
+              <!-- <Chip class="font-bold uppercase text-green-700 bg-green-100 text-sm mx-2" label="Vakansiya - 12"  />
+              <Chip class="font-bold uppercase text-red-700 bg-red-100 text-sm mx-2" label="Sverx - 13"  /> -->
             </div>
             <div class="col-12 xl:col-6 lg:col-6 md:col-6 sm:col-6 flex justify-content-end align-items-center">
               <Button
