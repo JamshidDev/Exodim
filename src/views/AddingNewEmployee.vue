@@ -487,7 +487,7 @@
         </div>
 
         <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
-          <h6 class="mb-2 pl-2">Stavkasi</h6>
+          <h6 class="mb-2 pl-2">Stavka</h6>
           <InputText
                 type="number"
                 class="w-full"
