@@ -261,6 +261,7 @@ import EditButton from "../components/buttons/EditButton.vue";
 import ViewButtonV from "../components/buttons/ViewButtonV.vue";
 import positionService from "@/service/servises/positionService";
 import positionLoader from "../components/loaders/positionLoader.vue";
+import BreadCrumb from "../components/BreadCrumb/BreadCrumb.vue";
 
 export default {
   components: {
@@ -269,6 +270,7 @@ export default {
     ViewButtonV,
     TablePagination,
     positionLoader,
+    BreadCrumb,
   },
   data() {
     return {

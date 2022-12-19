@@ -5,7 +5,6 @@ const interDateFormatter = function (time) {
 
 const outDateFormatter = function (time) {
   let newFormatDate = new Date(time).toLocaleDateString("en-CA");
-  console.log(newFormatDate);
   return newFormatDate;
 };
 

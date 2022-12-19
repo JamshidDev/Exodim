@@ -15,21 +15,8 @@
           <span class="text-lg font-semibold"
             ><span class="text-blue-500">{{ $route.params.name }} </span> ga
             tegishli korxonalar
-            <!-- <span class="text-base text-primary pl-2" v-show="totalItem > 0">
-                ( {{ totalItem }} )</span
-              > -->
           </span>
-          <!-- <Button
-              label="Yuklash"
-              @click="get_Skill_Exports()"
-              class="
-                p-button-raised p-button-success p-button-sm
-                absolute
-                right-0
-                mr-2
-              "
-              icon="pi pi-arrow-circle-down"
-            /> -->
+         
         </div>
       </div>
     </div>
@@ -37,79 +24,6 @@
     <!-- Header section -->
     <div class="col-12 py-0">
       <div class="grid">
-        <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3 p-fluid">
-          <Dropdown
-            v-model="qualification"
-            :options="qualificationList"
-            optionLabel="name"
-            placeholder="Tayorlov turini tanlang"
-            class="w-full p-inputtext-sm"
-            @change="changeQualification"
-          />
-        </div>
-
-        <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
-          <Dropdown
-            id="adressDistrict"
-            v-model="apparat"
-            :options="apparatList"
-            optionLabel="name"
-            :filter="true"
-            placeholder="Xo'jalikni tanlang"
-            class="w-full p-inputtext-sm"
-            @change="changeApparats"
-            emptyMessage="Hech narsa topilmadi"
-            emptyFilterMessage="Tizmda ma'lumot topilmadi..."
-          >
-            <template #value="slotProps">
-              <div
-                class="country-item country-item-value w-full"
-                v-if="slotProps.value"
-              >
-                <div>{{ slotProps.value.name }}</div>
-              </div>
-              <span v-else>
-                {{ slotProps.placeholder }}
-              </span>
-            </template>
-            <template #option="slotProps">
-              <div class="country-item w-full">
-                <div>{{ slotProps.option.name }}</div>
-              </div>
-            </template>
-          </Dropdown>
-        </div>
-        <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
-          <Dropdown
-            id="adressDistrict"
-            v-model="direction"
-            :options="DirectionList"
-            optionLabel="name"
-            :filter="true"
-            placeholder="Yo'nalishni tanlang"
-            class="w-full p-inputtext-sm"
-            @change="changeDirection"
-            emptyMessage="Hech narsa topilmadi"
-            emptyFilterMessage="Tizmda ma'lumot topilmadi..."
-          >
-            <template #value="slotProps">
-              <div
-                class="country-item country-item-value w-full"
-                v-if="slotProps.value"
-              >
-                <div>{{ slotProps.value.name }}</div>
-              </div>
-              <span v-else>
-                {{ slotProps.placeholder }}
-              </span>
-            </template>
-            <template #option="slotProps">
-              <div class="country-item w-full">
-                <div>{{ slotProps.option.name }}</div>
-              </div>
-            </template>
-          </Dropdown>
-        </div>
         <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
           <div class="grid p-0">
             <div class="col-7 p-fluid">
@@ -320,12 +234,8 @@ export default {
       params: {
         date_qual: "2022",
         search: null,
-        page: localStorage.getItem("page_8")
-          ? Number(localStorage.getItem("page_8"))
-          : 1,
-        per_page: localStorage.getItem("per_page_8")
-          ? Number(localStorage.getItem("per_page_8"))
-          : 10,
+        page: 1,
+        per_page: 10,
         apparat_id: null,
         training_direction_id: null,
       },
@@ -365,31 +275,8 @@ export default {
         }
       );
     },
-    get_Apparats() {
-      SkillService.get_Skill_Apparats({
-        params: {
-          page: 1,
-          per_page: 1000,
-          search: null,
-        },
-      }).then((res) => {
-        this.qualificationList = res.data.type_qualifications;
-        this.List = res.data.apparats.data;
-      });
-    },
-    get_Directions() {
-      SkillService.get_Skill_Direction({
-        params: {
-          page: 1,
-          per_page: 1000,
-          search: null,
-        },
-      }).then((res) => {
-        this.DirectionList = res.data.directions.data.filter(
-          (item) => item.apparat.id == this.apparat.id
-        );
-      });
-    },
+   
+   
     get_Skill_Exports() {
       SkillService.get_Skill_Export({ date_qual: this.params.date_qual }).then(
         (res) => {
@@ -434,32 +321,16 @@ export default {
       );
     },
     open_Modal(id, name) {
-      this.$refs.org_modal.get_Preview(id, this.params.date_qual, name);
+      this.$refs.org_modal.get_Preview(id,this.params.apparat_id,this.params.training_direction_id,this.params.date_qual , name);
     },
 
-    changeApparats() {
-      this.direction = null;
-      this.params.apparat_id = this.apparat.id;
-      this.get_Skill_Organization(this.$route.params.railway_id, true);
-      this.get_Directions();
-    },
-    changeDirection() {
-      this.params.training_direction_id = this.direction.id;
-      this.get_Skill_Organization(this.$route.params.railway_id, true);
-    },
-    changeQualification() {
-      this.apparat = null;
-      this.direction = null;
-      this.apparatList = this.List.filter(
-        (item) => item.type_qualification.id == this.qualification.id
-      );
-    },
+   
+   
+    
 
     changePagination(event) {
       this.params.page = event.page;
       this.params.per_page = event.per_page;
-      localStorage.setItem("page_8", event.page);
-      localStorage.setItem("per_page_8", event.per_page);
       this.get_Skill_Organization(this.$route.params.railway_id, true);
     },
     changeDate() {
@@ -469,16 +340,20 @@ export default {
 
     searchByName() {
       this.params.search = this.search_name;
-      this.get_Statistic(this.params, true);
+      this.get_Skill_Organization(this.$route.params.railway_id, true);
     },
     controlLoader(item) {
       this.loadingtable = item;
     },
   },
   created() {
+    this.date1 = this.$route.params.date_equal;
+    this.params.date_qual =this.$route.params.date_equal;
+    this.params.apparat_id =JSON.parse(this.$route.params.type_id);
+    this.params.training_direction_id =JSON.parse(this.$route.params.direction_id);
+    
     console.log(this.$route.params);
     this.get_Skill_Organization(this.$route.params.railway_id, true);
-    this.get_Apparats();
   },
 };
 </script>

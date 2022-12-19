@@ -4,18 +4,17 @@
     <div class="col-12">
       <div class="grid">
         <div class="col-12 pb-0">
-          <bread-crumb :breadCump="[{name:'Statistika', path:'/admin/statistic'}]"></bread-crumb>
+          <bread-crumb
+            :breadCump="[{ name: 'Statistika', path: '/admin/statistic' }]"
+          ></bread-crumb>
         </div>
         <div class="col-12 y-0 py-0">
-          <span class="text-2xl font-semibold"
-            >Statistika
-           
-          </span>
+          <span class="text-2xl font-semibold">Statistika </span>
         </div>
       </div>
     </div>
     <div class="col-12">
-      <div class="grid  py-2 px-2 border-round-md px-0">
+      <div class="grid py-2 px-2 border-round-md px-0">
         <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3 p-fluid px-0">
           <h6 class="mb-1 xl:text-base lg:text-base text-sm">
             Katta korxonalar -
@@ -130,12 +129,11 @@
           </Dropdown>
         </div>
         <div class="col-12 md:col-6 lg:col-3 xl:col-3 flex">
-           <Button
-              icon="pi pi-search"
-              label="Qidiruv"
-              class="p-button-secondary w-full mt-4"
-            />
-         
+          <Button
+            icon="pi pi-search"
+            label="Qidiruv"
+            class="p-button-secondary w-full mt-4"
+          />
         </div>
       </div>
     </div>
@@ -167,7 +165,7 @@
                     "
                   ></i> -->
                 </div>
-               
+
                 <h2
                   class="
                     text-center
@@ -201,7 +199,7 @@
                     "
                   ></i>
                 </div>
-               
+
                 <h2
                   class="
                     text-center
@@ -233,7 +231,7 @@
                     "
                   ></i>
                 </div>
-                
+
                 <h2
                   class="
                     text-center
@@ -267,7 +265,7 @@
                     "
                   ></i> -->
                 </div>
-               
+
                 <h2
                   class="
                     text-center
@@ -280,7 +278,7 @@
                     mb-0
                   "
                 >
-                  {{allPlan }}
+                  {{ allPlan }}
                 </h2>
                 <h6 class="text-center text-white mt-1">Shtat birligi</h6>
               </div>
@@ -288,7 +286,7 @@
           </div>
         </div>
 
-        <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
+        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-blue-600 text-sm uppercase font-semibold"
@@ -306,23 +304,59 @@
               ></i> -->
             </div>
             <Divider class="mt-2 mb-1" />
-            <div class="col-12 pb-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase  xl:text-base my-2 font-semibold">Erkakalar - <span class="font-bold text-lg text-blue-500">{{this.allManCadries}}</span> </h6>   <Tag class="px-2 text-sm" rounded :value="`${allManChart}%`"></Tag>
+            <div
+              class="
+                col-12
+                pb-0
+                flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">
+                Erkakalar -
+                <span class="font-bold text-lg text-blue-500">{{
+                  this.allManCadries
+                }}</span>
+              </h6>
+              <Tag
+                class="px-2 text-sm"
+                rounded
+                :value="`${allManChart}%`"
+              ></Tag>
             </div>
-            <div class="col-12 pt-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase  xl:text-base my-2 font-semibold">Ayollar - <span class="font-bold text-lg text-green-500">{{this.allWomanCadries}}</span> </h6>  <Tag class="px-2 text-sm" rounded severity="success" :value="`${allWomanChart}%`"></Tag>
+            <div
+              class="
+                col-12
+                pt-0
+                flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">
+                Ayollar -
+                <span class="font-bold text-lg text-green-500">{{
+                  this.allWomanCadries
+                }}</span>
+              </h6>
+              <Tag
+                class="px-2 text-sm"
+                rounded
+                severity="success"
+                :value="`${allWomanChart}%`"
+              ></Tag>
             </div>
-           
           </div>
         </div>
-        <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
+        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-blue-600 text-sm uppercase font-semibold"
                 >Nafaqa yoshidagi xodimlar</span
               >
             </div>
-            <div class="col-2 flex justify-content-end" @click="goList(4)" >
+            <div class="col-2 flex justify-content-end" @click="goList(4)">
               <i
                 class="
                   pi pi-eye
@@ -333,19 +367,55 @@
               ></i>
             </div>
             <Divider class="mt-2 mb-1" />
-            <div class="col-12 pb-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Erkaklar - <span class="font-bold text-lg text-blue-500">{{this.pensionsMan}}</span> </h6>   <Tag class="px-2 text-sm" rounded :value="`${pensionsManChart}%`"></Tag>
+            <div
+              class="
+                col-12
+                pb-0
+                flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">
+                Erkaklar -
+                <span class="font-bold text-lg text-blue-500">{{
+                  this.pensionsMan
+                }}</span>
+              </h6>
+              <Tag
+                class="px-2 text-sm"
+                rounded
+                :value="`${pensionsManChart}%`"
+              ></Tag>
             </div>
-            <div class="col-12 pt-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Ayollar - <span class="font-bold text-lg text-green-500">{{this.pensionWoman}}</span> </h6>  <Tag class="px-2 text-sm" rounded severity="success" :value="`${pensionWomanChart}%`"></Tag>
+            <div
+              class="
+                col-12
+                pt-0
+                flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">
+                Ayollar -
+                <span class="font-bold text-lg text-green-500">{{
+                  this.pensionWoman
+                }}</span>
+              </h6>
+              <Tag
+                class="px-2 text-sm"
+                rounded
+                severity="success"
+                :value="`${pensionWomanChart}%`"
+              ></Tag>
             </div>
-           
           </div>
         </div>
-        <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
+        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
-              <span class="text-blue-600  uppercase text-sm font-semibold"
+              <span class="text-blue-600 uppercase text-sm font-semibold"
                 >Kasanachilar</span
               >
             </div>
@@ -360,23 +430,43 @@
               ></i>
             </div>
             <Divider class="mt-2 mb-1" />
-            <div class="col-12 pb-0 flex justify-content-between align-items-start">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Kasanachi - <span class="font-bold text-lg text-blue-500">{{allContract}}</span> </h6>   
+            <div
+              class="col-12 pb-0 flex justify-content-between align-items-start"
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">
+                Kasanachi -
+                <span class="font-bold text-lg text-blue-500">{{
+                  allContract
+                }}</span>
+              </h6>
             </div>
-            <div class="col-12 pt-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${allContractChart}%`"></Tag>
+            <div
+              class="
+                col-12
+                pt-0
+                flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy</h6>
+              <Tag
+                class="px-2 text-sm"
+                rounded
+                severity="danger"
+                :value="`${allContractChart}%`"
+              ></Tag>
             </div>
-           
           </div>
         </div>
-        <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
+        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-blue-600 text-sm uppercase font-semibold"
                 >Tibbiy ko'rik ma'lumotlari</span
               >
             </div>
-            <div class="col-2 flex justify-content-end"  @click="goList(11)">
+            <div class="col-2 flex justify-content-end" @click="goList(11)">
               <i
                 class="
                   pi pi-eye
@@ -387,17 +477,54 @@
               ></i>
             </div>
             <Divider class="mt-2 mb-1" />
-            <div class="col-12 pb-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Muddati tugaganlar  - <span class="font-bold text-lg text-yellow-500">{{meds}}</span> </h6>   <Tag class="px-2 text-sm" rounded severity="warning" :value="`${medsChart}%`"></Tag>
+            <div
+              class="
+                col-12
+                pb-0
+                flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">
+                Muddati tugaganlar -
+                <span class="font-bold text-lg text-yellow-500">{{
+                  meds
+                }}</span>
+              </h6>
+              <Tag
+                class="px-2 text-sm"
+                rounded
+                severity="warning"
+                :value="`${medsChart}%`"
+              ></Tag>
             </div>
-            <div class="col-12 pt-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Kiritilmaganlar - <span class="font-bold text-lg text-red-500">{{mednotCount}}</span> </h6>  <Tag class="px-2 text-sm" rounded severity="danger" :value="`${mednotCountChart}%`"></Tag>
+            <div
+              class="
+                col-12
+                pt-0
+                flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">
+                Kiritilmaganlar -
+                <span class="font-bold text-lg text-red-500">{{
+                  mednotCount
+                }}</span>
+              </h6>
+              <Tag
+                class="px-2 text-sm"
+                rounded
+                severity="danger"
+                :value="`${mednotCountChart}%`"
+              ></Tag>
             </div>
-           
           </div>
         </div>
 
-        <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
+        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-blue-600 text-sm uppercase font-semibold"
@@ -415,16 +542,53 @@
               ></i>
             </div>
             <Divider class="mt-2 mb-1" />
-            <div class="col-12 pb-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Mehnat ta'tili - <span class="font-bold text-lg text-yellow-500">{{vacations}}</span> </h6>   <Tag class="px-2 text-sm" rounded severity="warning" :value="`${vacationsChart}%`"></Tag>
+            <div
+              class="
+                col-12
+                pb-0
+                flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">
+                Mehnat ta'tili -
+                <span class="font-bold text-lg text-yellow-500">{{
+                  vacations
+                }}</span>
+              </h6>
+              <Tag
+                class="px-2 text-sm"
+                rounded
+                severity="warning"
+                :value="`${vacationsChart}%`"
+              ></Tag>
             </div>
-            <div class="col-12 pt-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Bola parvarish ta'tili - <span class="font-bold text-lg text-red-500">{{vacations_Dec}}</span> </h6>  <Tag class="px-2 text-sm" rounded severity="danger" :value="`${vacations_DecChart}%`"></Tag>
+            <div
+              class="
+                col-12
+                pt-0
+                flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">
+                Bola parvarish ta'tili -
+                <span class="font-bold text-lg text-red-500">{{
+                  vacations_Dec
+                }}</span>
+              </h6>
+              <Tag
+                class="px-2 text-sm"
+                rounded
+                severity="danger"
+                :value="`${vacations_DecChart}%`"
+              ></Tag>
             </div>
-           
           </div>
         </div>
-        <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
+        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-blue-600 text-sm uppercase font-semibold"
@@ -442,17 +606,37 @@
               ></i>
             </div>
             <Divider class="mt-2 mb-1" />
-            <div class="col-12 pb-0 flex justify-content-between align-items-start">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Kiritilmaganlar - <span class="font-bold text-lg text-blue-500">{{not_staff_files}}</span> </h6>   
+            <div
+              class="col-12 pb-0 flex justify-content-between align-items-start"
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">
+                Kiritilmaganlar -
+                <span class="font-bold text-lg text-blue-500">{{
+                  not_staff_files
+                }}</span>
+              </h6>
             </div>
-            <div class="col-12 pt-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${not_staff_filesChart}%`"></Tag>
+            <div
+              class="
+                col-12
+                pt-0
+                flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy</h6>
+              <Tag
+                class="px-2 text-sm"
+                rounded
+                severity="danger"
+                :value="`${not_staff_filesChart}%`"
+              ></Tag>
             </div>
-           
           </div>
         </div>
 
-        <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
+        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-blue-600 text-sm uppercase font-semibold"
@@ -470,16 +654,36 @@
               ></i>
             </div>
             <Divider class="mt-2 mb-1" />
-            <div class="col-12 pb-0 flex justify-content-between align-items-start">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Kirirtilmaganlar - <span class="font-bold text-lg text-blue-500">{{careersCount}}</span> </h6>   
+            <div
+              class="col-12 pb-0 flex justify-content-between align-items-start"
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">
+                Kirirtilmaganlar -
+                <span class="font-bold text-lg text-blue-500">{{
+                  careersCount
+                }}</span>
+              </h6>
             </div>
-            <div class="col-12 pt-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${careersCountChart}%`"></Tag>
+            <div
+              class="
+                col-12
+                pt-0
+                flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy</h6>
+              <Tag
+                class="px-2 text-sm"
+                rounded
+                severity="danger"
+                :value="`${careersCountChart}%`"
+              ></Tag>
             </div>
-           
           </div>
         </div>
-        <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
+        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-blue-600 text-sm uppercase font-semibold"
@@ -497,17 +701,37 @@
               ></i>
             </div>
             <Divider class="mt-2 mb-1" />
-            <div class="col-12 pb-0 flex justify-content-between align-items-start">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Kirirtilmaganlar - <span class="font-bold text-lg text-blue-500">{{relativesCount}}</span> </h6>   
+            <div
+              class="col-12 pb-0 flex justify-content-between align-items-start"
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">
+                Kirirtilmaganlar -
+                <span class="font-bold text-lg text-blue-500">{{
+                  relativesCount
+                }}</span>
+              </h6>
             </div>
-            <div class="col-12 pt-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${relativesCountChart}%`"></Tag>
+            <div
+              class="
+                col-12
+                pt-0
+                flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy</h6>
+              <Tag
+                class="px-2 text-sm"
+                rounded
+                severity="danger"
+                :value="`${relativesCountChart}%`"
+              ></Tag>
             </div>
-           
           </div>
         </div>
 
-        <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
+        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-blue-600 text-sm uppercase font-semibold"
@@ -516,7 +740,6 @@
             </div>
             <div class="col-2 flex justify-content-end" @click="goList(2)">
               <i
-              
                 class="
                   pi pi-eye
                   text-lg text-blue-600
@@ -526,16 +749,36 @@
               ></i>
             </div>
             <Divider class="mt-2 mb-1" />
-            <div class="col-12 pb-0 flex justify-content-between align-items-start">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Xodimlar soni - <span class="font-bold text-lg text-blue-500">{{allBirthdayCadries}}</span> </h6>   
+            <div
+              class="col-12 pb-0 flex justify-content-between align-items-start"
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">
+                Xodimlar soni -
+                <span class="font-bold text-lg text-blue-500">{{
+                  allBirthdayCadries
+                }}</span>
+              </h6>
             </div>
-            <div class="col-12 pt-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${allBirthdayCadriesChart}%`"></Tag>
+            <div
+              class="
+                col-12
+                pt-0
+                flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy</h6>
+              <Tag
+                class="px-2 text-sm"
+                rounded
+                severity="danger"
+                :value="`${allBirthdayCadriesChart}%`"
+              ></Tag>
             </div>
-           
           </div>
         </div>
-        <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
+        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-green-500 text-sm uppercase font-semibold"
@@ -553,16 +796,36 @@
               ></i>
             </div>
             <Divider class="mt-2 mb-1" />
-            <div class="col-12 pb-0 flex justify-content-between align-items-start">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Xodimlar soni - <span class="font-bold text-lg text-blue-500">{{allNewCadries}}</span> </h6>   
+            <div
+              class="col-12 pb-0 flex justify-content-between align-items-start"
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">
+                Xodimlar soni -
+                <span class="font-bold text-lg text-blue-500">{{
+                  allNewCadries
+                }}</span>
+              </h6>
             </div>
-            <div class="col-12 pt-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${allNewCadriesChart}%`"></Tag>
+            <div
+              class="
+                col-12
+                pt-0
+                flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy</h6>
+              <Tag
+                class="px-2 text-sm"
+                rounded
+                severity="danger"
+                :value="`${allNewCadriesChart}%`"
+              ></Tag>
             </div>
-           
           </div>
         </div>
-        <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
+        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-red-600 text-sm uppercase font-semibold"
@@ -580,16 +843,36 @@
               ></i>
             </div>
             <Divider class="mt-2 mb-1" />
-            <div class="col-12 pb-0 flex justify-content-between align-items-start">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Xodimlar soni - <span class="font-bold text-lg text-blue-500">{{allDeleteCadries}}</span> </h6>   
+            <div
+              class="col-12 pb-0 flex justify-content-between align-items-start"
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">
+                Xodimlar soni -
+                <span class="font-bold text-lg text-blue-500">{{
+                  allDeleteCadries
+                }}</span>
+              </h6>
             </div>
-            <div class="col-12 pt-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${allDeleteCadriesChart}%`"></Tag>
+            <div
+              class="
+                col-12
+                pt-0
+                flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy</h6>
+              <Tag
+                class="px-2 text-sm"
+                rounded
+                severity="danger"
+                :value="`${allDeleteCadriesChart}%`"
+              ></Tag>
             </div>
-           
           </div>
         </div>
-        <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
+        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-600 text-sm uppercase font-semibold"
@@ -607,45 +890,76 @@
               ></i>
             </div>
             <Divider class="mt-2 mb-1" />
-            <div class="col-12 pb-0 flex justify-content-between align-items-start">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Xodimlar soni - <span class="font-bold text-blue-500">{{BlackList}}</span> </h6>   
+            <div
+              class="col-12 pb-0 flex justify-content-between align-items-start"
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">
+                Xodimlar soni -
+                <span class="font-bold text-blue-500">{{ BlackList }}</span>
+              </h6>
             </div>
-            <div class="col-12 pt-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${BlackListChart}%`"></Tag>
+            <div
+              class="
+                col-12
+                pt-0
+                flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy</h6>
+              <Tag
+                class="px-2 text-sm"
+                rounded
+                severity="danger"
+                :value="`${BlackListChart}%`"
+              ></Tag>
             </div>
-           
           </div>
         </div>
-        
-        
 
-
-
-
-
-
-
-        <div class="col-12  md:col-6 lg:col-6 xl:col-4">
+        <div class="col-12 md:col-6 lg:col-6 xl:col-4">
           <div class="card surface-0 shadow-1 border-round-md px-2">
-            <Chart type="bar" :data="multiAxisData" :options="multiAxisOptions" />
+            <Chart
+              type="bar"
+              :data="multiAxisData"
+              :options="multiAxisOptions"
+            />
           </div>
         </div>
-        <div class="col-12  md:col-6 lg:col-6 xl:col-4">
+        <div class="col-12 md:col-6 lg:col-6 xl:col-4">
           <div class="card surface-0 shadow-1 border-round-md px-2">
-            <Chart type="bar" :data="aducationForeign" :options="aducationForeignOption" />
+            <Chart
+              type="bar"
+              :data="aducationForeign"
+              :options="aducationForeignOption"
+            />
           </div>
         </div>
-        <div class="col-12  md:col-6 lg:col-6 xl:col-4">
+        <div class="col-12 md:col-6 lg:col-6 xl:col-4">
           <div class="card surface-0 shadow-1 border-round-md px-2">
-            <Chart type="bar" :data="govermentAcademy" :options="govermentAcademyOption" />
+            <Chart
+              type="bar"
+              :data="govermentAcademy"
+              :options="govermentAcademyOption"
+            />
           </div>
         </div>
-        <div class="col-12  md:col-6 lg:col-6 xl:col-4">
-          <div class="card surface-0 shadow-1 border-round-md px-2" >
+        <div class="col-12 md:col-6 lg:col-6 xl:col-4">
+          <div class="card surface-0 shadow-1 border-round-md px-2">
             <Chart type="bar" :data="stackedData" :options="stackedOptions" />
+          </div>
         </div>
-        </div>
-
+        <!-- <div class="col-12 md:col-6 lg:col-6 xl:col-4">
+          <div class="card surface-0 shadow-1 border-round-md px-2">
+            <apexchart
+              width="100%"
+              type="polarArea"
+              :options="options"
+              :series="series"
+            ></apexchart>
+          </div>
+        </div> -->
       </div>
     </div>
 
@@ -710,8 +1024,8 @@ export default {
       vacationsChart: 0,
       vacations_DecChart: 0,
       BlackList: 0,
-      not_staff_files:0,
-      not_staff_filesChart:0,
+      not_staff_files: 0,
+      not_staff_filesChart: 0,
 
       // Chart Details
       allManChart: 0,
@@ -722,19 +1036,17 @@ export default {
       allCadry3045Chart: 0,
       allCadry45Chart: 0,
       alleducation_oliyChart: 0,
-      allContractChart:0,
-      medsChart:0,
-      mednotCountChart:0,
-      careersCountChart:0,
-      relativesCountChart:0,
-      allBirthdayCadriesChart:0,
-      allNewCadriesChart:0,
-      allDeleteCadriesChart:0,
-      BlackListChart:0,
-      careersCount:0,
-      relativesCount:0,
-
-
+      allContractChart: 0,
+      medsChart: 0,
+      mednotCountChart: 0,
+      careersCountChart: 0,
+      relativesCountChart: 0,
+      allBirthdayCadriesChart: 0,
+      allNewCadriesChart: 0,
+      allDeleteCadriesChart: 0,
+      BlackListChart: 0,
+      careersCount: 0,
+      relativesCount: 0,
 
       items: [
         {
@@ -749,7 +1061,7 @@ export default {
       multiAxisOptions: {
         plugins: {
           legend: {
-            display: false
+            display: false,
           },
           title: {
             display: true,
@@ -778,7 +1090,7 @@ export default {
       aducationForeignOption: {
         plugins: {
           legend: {
-            display: false
+            display: false,
           },
           title: {
             display: true,
@@ -793,7 +1105,12 @@ export default {
         responsive: true,
       },
       aducationForeign: {
-        labels: ["Xorijda grant asosida", "Jamiyat mablag’i hisobidan o’qiganlar", "El-yurt  umid fondi stipendiyasi", "O’z hisobidan"],
+        labels: [
+          "Xorijda grant asosida",
+          "Jamiyat mablag’i hisobidan o’qiganlar",
+          "El-yurt  umid fondi stipendiyasi",
+          "O’z hisobidan",
+        ],
         datasets: [
           {
             label: "Xodimlar soni",
@@ -806,7 +1123,7 @@ export default {
       govermentAcademyOption: {
         plugins: {
           legend: {
-            display: false
+            display: false,
           },
           title: {
             display: true,
@@ -821,7 +1138,13 @@ export default {
         responsive: true,
       },
       govermentAcademy: {
-        labels: ["Davlat akademiyasi (1 yillik)", "Davlat akademiyasi (2 yillik)", "Davlat akademiyasi (3 yillik)", "Boshqarma akademiyasi", "Biznes va tadbirlkorlik akademiyasi"],
+        labels: [
+          "Davlat akademiyasi (1 yillik)",
+          "Davlat akademiyasi (2 yillik)",
+          "Davlat akademiyasi (3 yillik)",
+          "Boshqarma akademiyasi",
+          "Biznes va tadbirlkorlik akademiyasi",
+        ],
         datasets: [
           {
             label: "Xodimlar soni",
@@ -833,71 +1156,162 @@ export default {
       },
 
       stackedData: {
-                labels: ['Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'Iyun', 'Iyul', 'Avgust','Sentyabr','Oktyabr','Noyabr','Dekabr', ],
-                datasets: [{
-                    type: 'bar',
-                    label: 'Ishga olinganlar',
-                    backgroundColor: '#22C55E',
-                    data: [50,25,12,48,90,76,42, 24,75,37,65,34,]
-                }, {
-                    type: 'bar',
-                    label: 'Mehnat faoliyati yakunlanganlar',
-                    backgroundColor: '#EF4444',
-                    data: [21,84,24,75,37,65,34,24,75,37,65,34, ]
-                }]
-            },
-            stackedOptions: {
-                plugins: {
-                    tooltip: {
-                        mode: 'index',
-                        intersect: false
-                    },
-                    legend: {
-                        display: false
-                    },
-                    title: {
+        labels: [
+          "Yanvar",
+          "Fevral",
+          "Mart",
+          "Aprel",
+          "May",
+          "Iyun",
+          "Iyul",
+          "Avgust",
+          "Sentyabr",
+          "Oktyabr",
+          "Noyabr",
+          "Dekabr",
+        ],
+        datasets: [
+          {
+            type: "bar",
+            label: "Ishga olinganlar",
+            backgroundColor: "#22C55E",
+            data: [50, 25, 12, 48, 90, 76, 42, 24, 75, 37, 65, 34],
+          },
+          {
+            type: "bar",
+            label: "Mehnat faoliyati yakunlanganlar",
+            backgroundColor: "#EF4444",
+            data: [21, 84, 24, 75, 37, 65, 34, 24, 75, 37, 65, 34],
+          },
+        ],
+      },
+      stackedOptions: {
+        plugins: {
+          tooltip: {
+            mode: "index",
+            intersect: false,
+          },
+          legend: {
+            display: false,
+          },
+          title: {
             display: true,
             text: "Xodimlarni ishga olish va bo'shatish oylar ko'rinishida",
             color: "#42A5F5",
           },
-                },
-                scales: {
-                    x: {
-                        stacked: true,
-                        ticks: {
-                            color: '#495057'
-                        },
-                        grid: {
-                            color: '#ebedef'
-                        }
-                    },
-                    y: {
-                        stacked: true,
-                       
-                    }
-                }
-            }
-        
-    
+        },
+        scales: {
+          x: {
+            stacked: true,
+            ticks: {
+              color: "#495057",
+            },
+            grid: {
+              color: "#ebedef",
+            },
+          },
+          y: {
+            stacked: true,
+          },
+        },
+      },
+      options: {
+        series: [42, 47, 52],
+        chart: {
+          width: 380,
+          type: "polarArea",
+          zoom: {
+            type: "x",
+            enabled: true,
+            autoScaleYaxis: true,
+          },
+          toolbar: {
+            autoSelected: "zoom",
+          },
+        },
+        title: {
+          text: "Xodimlarning ma'lumoti bo'yicha",
+          align: "center",
+          style: {
+            fontSize: "14px",
+            fontWeight: "bold",
+            fontFamily: undefined,
+            color: "#2E93fA",
+          },
+        },
+        labels: ["Oliy", "O'rta", "O'rta maxsus"],
+        fill: {
+          opacity: 1,
+        },
+        stroke: {
+          width: 1,
+        },
+
+        yaxis: {
+          show: false,
+        },
+        legend: {
+          position: "top",
+        },
+        plotOptions: {
+          polarArea: {
+            rings: {
+              strokeWidth: 0.5,
+            },
+            spokes: {
+              strokeWidth: 0.5,
+            },
+          },
+        },
+        theme: {
+          mode: 'light', 
+      palette: 'palette10', 
+      monochrome: {
+          enabled: false,
+          color: '#fff',
+          shadeTo: 'light',
+          shadeIntensity: 0.2
+      },
+        },
+      },
+      series: [42, 47, 52],
     };
   },
-  computed:{
-    ...mapGetters(["get_bigOrganizationList","get_OrganizationList", "get_DepartmentList","get_bigOrgValue", "get_orgValue", "get_depValue", "get_adminPermissions" ])
+  computed: {
+    ...mapGetters([
+      "get_bigOrganizationList",
+      "get_OrganizationList",
+      "get_DepartmentList",
+      "get_bigOrgValue",
+      "get_orgValue",
+      "get_depValue",
+      "get_adminPermissions",
+    ]),
   },
   methods: {
-
-    ...mapActions(["set_bigOrganization","set_organization", "set_department", "set_bigOrgValue", "set_orgValue", "set_depValue"]),
+    ...mapActions([
+      "set_bigOrganization",
+      "set_organization",
+      "set_department",
+      "set_bigOrgValue",
+      "set_orgValue",
+      "set_depValue",
+    ]),
     controlLoader(item) {
       this.loading = item;
     },
 
-    
-
     get_Statistic(params) {
       this.controlLoader(true);
-      this.organization.organization_id = this.get_orgValue? this.get_orgValue.id : null;
-      this.organization.railway_id = this.get_bigOrgValue? this.get_bigOrgValue.id : null;
-      this.organization.department_id = this.get_depValue? this.get_depValue.id : null;
+      this.organization.organization_id = this.get_orgValue
+        ? this.get_orgValue.id
+        : null;
+      this.organization.railway_id = this.get_bigOrgValue
+        ? this.get_bigOrgValue.id
+        : null;
+      this.organization.department_id = this.get_depValue
+        ? this.get_depValue.id
+        : null;
       globalStatistic
         .get_globalStatistic(this.organization)
         .then((res) => {
@@ -922,9 +1336,9 @@ export default {
           this.relativesCount = res.data.relativesCount;
 
           // careersCount: 0,
-            // relativesCount:0,
+          // relativesCount:0,
 
-            (this.alleducation_oliy = res.data.highly_special_educations);
+          this.alleducation_oliy = res.data.highly_special_educations;
           this.multiAxisData.datasets[0].data[0] =
             res.data.highly_special_educations;
           this.multiAxisData.datasets[0].data[1] =
@@ -1001,7 +1415,7 @@ export default {
           this.meds = res.data.meds;
           this.mednotCount = res.data.mednotCount;
           this.not_staff_files = res.data.not_staff_files;
-          this.not_staff_filesChart =  Math.floor(
+          this.not_staff_filesChart = Math.floor(
             (res.data.not_staff_files / res.data.all_cadries_count) * 100
           );
 
@@ -1036,8 +1450,6 @@ export default {
             (res.data.black_list_cadries / res.data.all_cadries_count) * 100
           );
 
-          
-
           this.vacations = res.data.vacations;
           this.vacations_Dec = res.data.vacations_decret;
 
@@ -1052,7 +1464,6 @@ export default {
           this.allContractChart = Math.floor(
             (res.data.contract_cadries / res.data.all_cadries_count) * 100
           );
-
 
           this.BlackList = res.data.black_list_cadries;
 
@@ -1095,7 +1506,7 @@ export default {
               name: "Barchasi",
               id: null,
             });
-            this.set_bigOrganization(this.bigOrganizationList)
+            this.set_bigOrganization(this.bigOrganizationList);
           } else {
             this.bigOrganizationList = res.data;
           }
@@ -1115,7 +1526,7 @@ export default {
               name: "Barchasi",
               id: null,
             });
-            this.set_organization( this.organizations)
+            this.set_organization(this.organizations);
           } else {
             this.organizations = res.data;
           }
@@ -1136,7 +1547,7 @@ export default {
               name: "Barchasi",
               id: null,
             });
-            this.set_department( this.departmentList)
+            this.set_department(this.departmentList);
           } else {
             this.departmentList = res.data;
           }
@@ -1152,8 +1563,7 @@ export default {
       this.set_depValue(null);
       this.get_Statistic(this.organization);
       this.get_Organization(event.value.id);
-      this.set_department([])
-
+      this.set_department([]);
     },
 
     changeOrganization(event) {
@@ -1168,89 +1578,91 @@ export default {
       this.get_Statistic(this.organization);
     },
 
-    goList(id){
-      let permission = "pereview_statistics"
+    goList(id) {
+      let permission = "pereview_statistics";
       let global = 1;
-      if(id==1 && this.get_adminPermissions(permission)){
+      if (id == 1 && this.get_adminPermissions(permission)) {
         // Vacancy page
-        this.$router.push(`/admin/view/vacanc/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
-      } else if(id==2 && this.get_adminPermissions(permission)){
+        this.$router.push(
+          `/admin/view/vacanc/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`
+        );
+      } else if (id == 2 && this.get_adminPermissions(permission)) {
         // Birthday page
-        this.$router.push(`/admin/view/birthday/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
-      }
-      else if(id==3 && this.get_adminPermissions(permission)){
+        this.$router.push(
+          `/admin/view/birthday/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`
+        );
+      } else if (id == 3 && this.get_adminPermissions(permission)) {
         // Sverx Page
-        this.$router.push(`/admin/view/sverx/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
-      }
-      else if(id==4 && this.get_adminPermissions(permission)){
+        this.$router.push(
+          `/admin/view/sverx/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`
+        );
+      } else if (id == 4 && this.get_adminPermissions(permission)) {
         // Retired Page
-        this.$router.push(`/admin/view/retired/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
-      }
-      
-      else if(id==5 && this.get_adminPermissions(permission)){
+        this.$router.push(
+          `/admin/view/retired/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`
+        );
+      } else if (id == 5 && this.get_adminPermissions(permission)) {
         // Retired Page
-        this.$router.push(`/admin/view/newcadry/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
-      }
-      else if(id==6 && this.get_adminPermissions(permission)){
+        this.$router.push(
+          `/admin/view/newcadry/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`
+        );
+      } else if (id == 6 && this.get_adminPermissions(permission)) {
         // Retired Page
-        this.$router.push(`/admin/view/deletecadry/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
-      }
-      else if(id==7 && this.get_adminPermissions(permission)){
+        this.$router.push(
+          `/admin/view/deletecadry/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`
+        );
+      } else if (id == 7 && this.get_adminPermissions(permission)) {
         // Retired Page
-        this.$router.push(`/admin/view/contractcadry/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
-      }
-      else if(id==8 && this.get_adminPermissions(permission)){
+        this.$router.push(
+          `/admin/view/contractcadry/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`
+        );
+      } else if (id == 8 && this.get_adminPermissions(permission)) {
         // Retired Page
-        this.$router.push(`/admin/view/relativecadry/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
-      }
-      else if(id==9 && this.get_adminPermissions(permission)){
+        this.$router.push(
+          `/admin/view/relativecadry/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`
+        );
+      } else if (id == 9 && this.get_adminPermissions(permission)) {
         // Retired Page
-        this.$router.push(`/admin/view/careercadry/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
-      }
-      else if(id==10 && this.get_adminPermissions(permission)){
+        this.$router.push(
+          `/admin/view/careercadry/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`
+        );
+      } else if (id == 10 && this.get_adminPermissions(permission)) {
         // Retired Page
-        this.$router.push(`/admin/view/vacation/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
-      }
-      else if(id==11 && this.get_adminPermissions(permission)){
+        this.$router.push(
+          `/admin/view/vacation/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`
+        );
+      } else if (id == 11 && this.get_adminPermissions(permission)) {
         // Retired Page
-        this.$router.push(`/admin/view/med/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
-      }
-      else if(id==12 && this.get_adminPermissions(permission)){
+        this.$router.push(
+          `/admin/view/med/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`
+        );
+      } else if (id == 12 && this.get_adminPermissions(permission)) {
         // Retired Page
-        this.$router.push(`/admin/view/blacklist/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
-      } else if(id==13 && this.get_adminPermissions(permission)){
+        this.$router.push(
+          `/admin/view/blacklist/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`
+        );
+      } else if (id == 13 && this.get_adminPermissions(permission)) {
         // Retired Page
-        this.$router.push(`/admin/view/stuffs/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
-      }
-      
-      else{
+        this.$router.push(
+          `/admin/view/stuffs/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`
+        );
+      } else {
         this.$toast.add({
-            severity: "warn",
-            summary: "Ruhsat etilmagan",
-            detail: "Sizda bunday huquq mavjud emas",
-            life: 2000,
-          });
+          severity: "warn",
+          summary: "Ruhsat etilmagan",
+          detail: "Sizda bunday huquq mavjud emas",
+          life: 2000,
+        });
       }
-      
-      
-      
-      
-      
-      
-      
-     
     },
-
   },
   created() {
     this.controlLoader();
     this.get_Statistic(this.organization);
-    if(this.get_bigOrgValue){
-
-    }else{
+    if (this.get_bigOrgValue) {
+    } else {
       this.get_Railway();
     }
-    
   },
 };
 </script>

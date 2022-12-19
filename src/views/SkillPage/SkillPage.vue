@@ -285,6 +285,8 @@
           <table-pagination
             v-show="totalItem > 10"
             :total_page="totalItem"
+            :page="params.page"
+            :per_page="params.per_page"
             @pagination="changePagination($event)"
           ></table-pagination>
         </template>
@@ -329,7 +331,6 @@ export default {
       direction: null,
 
       selectItem: null,
-      amount:0,
 
       statisticList: [],
       totalItem: 0,
@@ -372,15 +373,15 @@ export default {
     get_Statistic(params, loader) {
       this.controlLoader(loader);
       SkillService.get_Skill_Statistic(params).then((res) => {
+        console.log(this.params);
         let number = (this.params.page - 1) * this.params.per_page;
         res.data.railways.data.forEach((item) => {
           number++;
           item.number = number;
-          this.amount = this.amount+ item.upgrades;
         });
         this.statisticList = res.data.railways.data;
         this.totalItem = res.data.railways.pagination.total;
-        console.log(this.amount);
+
         this.controlLoader(false);
       });
     },
@@ -404,7 +405,6 @@ export default {
           search: null,
         },
       }).then((res) => {
-        console.log(res.data.directions.data);
         this.DirectionList = res.data.directions.data.filter(
           (item) => item.apparat.id == this.apparat.id
         );
@@ -455,7 +455,7 @@ export default {
     },
 
     goOrganization(railway_id,name){
-      this.$router.push(`/admin/skill/organization/${this.qualification? this.qualification.id : null}/${this.apparat? this.apparat.id : null}/${this.direction? this.direction.id : null}/${this.params.date_qual}/${railway_id}/${name}`)
+      this.$router.push(`/admin/skill/organization/${this.apparat? this.apparat.id : null}/${this.direction? this.direction.id : null}/${this.params.date_qual}/${railway_id}/${name}`)
 
     },
 

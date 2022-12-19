@@ -339,7 +339,7 @@ const routes = [
         
       },
       {
-        path: "/admin/skill/organization/:aparat_id/:type_id/:direction_id/:date_equal/:railway_id/:name",
+        path: "/admin/skill/organization/:type_id/:direction_id/:date_equal/:railway_id/:name",
         name: "Skill-organization",
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route

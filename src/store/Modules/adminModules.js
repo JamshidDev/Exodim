@@ -2,6 +2,7 @@ const state ={
     adminPermissions: localStorage.getItem('Adminpermissions') ? localStorage.getItem('Adminpermissions') : [],
     adminRoles:[],
     adminDetails:[],
+    serverError:false,
 
 
 }
@@ -23,7 +24,11 @@ const getters = {
     },
     get_adminDetails(state){
         return state.adminDetails
-    }
+    },
+    get_serverError(state){
+        return state.serverError
+    },
+    
 }
 
 const actions ={
@@ -33,7 +38,9 @@ const actions ={
     set_adminDetails(ctx, payload){
         ctx.commit("update_adminDetails", payload)
     },
-    
+    set_serverError(ctx, payload){
+        ctx.commit("update_serverError", payload)
+    },
     
 }
 
@@ -43,7 +50,11 @@ const mutations = {
     },
     update_adminDetails(state, item){
         state.adminDetails = item
+    },
+    update_serverError(state, item){
+        state.serverError = item
     }
+
 }
 
 export default { state, actions, getters, mutations}

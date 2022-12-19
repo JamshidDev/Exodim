@@ -67,6 +67,7 @@
             <div class="col-12">
               <h6 class="mb-2">Familiya</h6>
               <InputText
+              id="new_cadry_lastname"
                 type="text"
                 class="w-full font-semibold"
                 placeholder="Kiriting"
@@ -80,7 +81,7 @@
                 type="text"
                 class="w-full font-semibold"
                 placeholder="Ismni kiriting"
-                id="lastName"
+                id="new_cadry_firstname"
                 v-model="v$.firstName.$model"
                 :class="{ 'p-invalid': v$.firstName.$invalid && submitted }"
               />
@@ -89,7 +90,7 @@
               <h6 class="mb-2">Sharif</h6>
               <InputText
                 type="text"
-                id="thirdName"
+                id="new_cadry_thirdName"
                 v-model="v$.thirdName.$model"
                 :class="{ 'p-invalid': v$.thirdName.$invalid && submitted }"
                 class="w-full font-semibold"
@@ -107,7 +108,7 @@
               <Calendar
                 class="w-full font-semibold"
                 :manualInput="true"
-                id="bornDate"
+                id="new_cadry_bornDate"
                 v-model="v$.bornDate.$model"
                 v-maska="'##/##/####'"
                 :class="{ 'p-invalid': v$.bornDate.$invalid && submitted }"
@@ -119,7 +120,7 @@
             <div class="col-12">
               <h6 class="mb-2">Tug'ilgan viloyati</h6>
               <Dropdown
-                id="bornRegion"
+                id="new_cadry_bornRegion"
                 v-model="v$.bornRegion.$model"
                 :class="{ 'p-invalid': v$.bornRegion.$invalid && submitted }"
                 :options="RegionsList"
@@ -132,7 +133,7 @@
             <div class="col-12 p-fluid">
               <h6 class="mb-2">Tug'ilgan tumani</h6>
               <Dropdown
-                id="bornDistric"
+                id="new_cadry_bornDistric"
                 v-model="v$.bornDistric.$model"
                 :class="{ 'p-invalid': v$.bornDistric.$invalid && submitted }"
                 :options="DistrictList"
@@ -168,7 +169,7 @@
             <div class="col-12 p-fluid">
               <h6 class="mb-2">Yashash viloyati</h6>
               <Dropdown
-                id="adressRegion"
+                id="new_cadry_adressRegion"
                 v-model="v$.adressRegion.$model"
                 :class="{ 'p-invalid': v$.adressRegion.$invalid && submitted }"
                 :options="RegionsList"
@@ -181,7 +182,7 @@
             <div class="col-12 p-fluid">
               <h6 class="mb-2">Yashash tumani</h6>
               <Dropdown
-                id="adressDistrict"
+                id="new_cadry_adressDistrict"
                 v-model="v$.adressDistrict.$model"
                 :class="{
                   'p-invalid': v$.adressDistrict.$invalid && submitted,
@@ -216,7 +217,7 @@
                 type="text"
                 class="w-full"
                 placeholder="Ko'cha va uy manzili"
-                id="adressStreet"
+                id="new_cadry_adressStreet"
                 v-model="v$.adressStreet.$model"
                 :class="{ 'p-invalid': v$.adressStreet.$invalid && submitted }"
               />
@@ -229,7 +230,7 @@
             <div class="col-12 p-fluid">
               <h6 class="mb-2 pl-2">Jinsi</h6>
               <Dropdown
-                id="employeeGender"
+                id="new_cadry_Gender"
                 v-model="v$.employeeGender.$model"
                 :class="{
                   'p-invalid': v$.employeeGender.$invalid && submitted,
@@ -247,7 +248,7 @@
                 type="text"
                 class="w-full"
                 placeholder="Raqamni kiriting"
-                id="employeePhone"
+                id="new_cadry_employeePhone"
                 v-model="v$.employeePhone.$model"
                 v-maska="'(##)-###-##-##'"
                 :class="{ 'p-invalid': v$.employeePhone.$invalid && submitted }"
@@ -256,7 +257,7 @@
             <div class="col-12">
               <h6 class="mb-2 pl-2">Millati</h6>
               <Dropdown
-                id="employeeNation"
+                id="new_cadry_employeeNation"
                 v-model="v$.employeeNation.$model"
                 :class="{
                   'p-invalid': v$.employeeNation.$invalid && submitted,
@@ -289,7 +290,7 @@
             type="text"
             class="w-full"
             placeholder="Seriyani kiriting"
-            id="passportSeriya"
+            id="new_cadry_passportSeriya"
             v-model="v$.passportSeriya.$model"
             v-maska="'AA #######'"
             :class="{ 'p-invalid': v$.passportSeriya.$invalid && submitted }"
@@ -302,7 +303,7 @@
             type="text"
             class="w-full"
             placeholder="JSHR raqami"
-            id="passportJSHR"
+            id="new_cadry_passportJSHR"
             v-model="v$.passportJSHR.$model"
             v-maska="'##############'"
             :class="{ 'p-invalid': v$.passportJSHR.$invalid && submitted }"
@@ -312,7 +313,7 @@
         <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
           <h6 class="mb-2 pl-2">Berilgan viloyat</h6>
           <Dropdown
-            id="passportRegion"
+            id="new_cadry_passportRegion"
             v-model="v$.passportRegion.$model"
             :class="{ 'p-invalid': v$.passportRegion.$invalid && submitted }"
             :options="RegionsList"
@@ -326,7 +327,7 @@
         <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
           <h6 class="mb-2 pl-2">Berilgan tuman</h6>
           <Dropdown
-            id="passportDistrict"
+            id="new_cadry_passportDistrict"
             v-model="v$.passportDistrict.$model"
             :class="{ 'p-invalid': v$.passportDistrict.$invalid && submitted }"
             :options="DistrictList"
@@ -359,7 +360,7 @@
           <Calendar
             class="w-full"
             :manualInput="true"
-            id="passportDate"
+            id="new_cadry_passportDate"
             v-model="v$.passportDate.$model"
             :class="{ 'p-invalid': v$.passportDate.$invalid && submitted }"
             v-maska="'##/##/####'"
@@ -384,7 +385,7 @@
           <Calendar
             class="w-full"
             :manualInput="true"
-            id="positionDate"
+            id="new_cadry_positionDate"
             v-model="v$.positionDate.$model"
             :class="{ 'p-invalid': v$.positionDate.$invalid && submitted }"
             v-maska="'##/##/####'"
@@ -397,7 +398,7 @@
         <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
           <h6 class="mb-2 pl-2">Bo'lim nomi</h6>
           <Dropdown
-            id="positionPart"
+            id="new_cadry_positionPart"
             v-model="v$.positionPart.$model"
             :class="{ 'p-invalid': v$.positionPart.$invalid && submitted }"
             :options="DepartmentList"
@@ -429,7 +430,7 @@
         <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
           <h6 class="mb-2 pl-2">Shtat lavozimi</h6>
           <Dropdown
-            id="positionName"
+            id="new_cadry_positionName"
             v-model="v$.positionName.$model"
             :class="{ 'p-invalid': v$.positionName.$invalid && submitted }"
             :options="StuffList"
@@ -462,7 +463,7 @@
           <Calendar
             class="w-full"
             :manualInput="true"
-            id="positionFirstDate"
+            id="new_cadry_positionFirstDate"
             v-model="v$.positionFirstDate.$model"
             :class="{ 'p-invalid': v$.positionFirstDate.$invalid && submitted }"
             dateFormat="dd/mm/yy"
@@ -474,7 +475,7 @@
         <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
           <h6 class="mb-2 pl-2">Xizmat darajasi</h6>
           <Dropdown
-            id="positionDegree"
+            id="new_cadry_positionDegree"
             v-model="v$.positionDegree.$model"
             :class="{ 'p-invalid': v$.positionDegree.$invalid && submitted }"
             :options="PositionDegreeList"
@@ -490,6 +491,7 @@
           <h6 class="mb-2 pl-2">Stavka</h6>
           <InputText
                 type="number"
+                id="new_cadry_stavka"
                 class="w-full"
                 placeholder="Kiriting"
                 v-model="v$.positionAmount.$model"
@@ -505,6 +507,7 @@
                 placeholder="Kiriting"
                 v-model="v$.command_number.$model"
                 :class="{ 'p-invalid': v$.command_number.$invalid && submitted }"
+                id="new_cadry_orderNumber"
               />
         </div>
 
@@ -515,6 +518,7 @@
                 class="w-full"
                 placeholder="Kiriting"
                 v-model="order"
+                id="new_cadry_cardNumber"
               />
         </div>
         <div class="col-12 sm:col-12 md:col-6 lg:col-3 xl:col-3">
@@ -524,6 +528,8 @@
                 class="w-full"
                 placeholder="Kiriting"
                 v-model="status_dec"
+                id="new_cadry_tabelNumber"
+
               />
         </div>
 
@@ -534,6 +540,8 @@
                 class="w-full"
                 placeholder="Kiriting"
                 v-model="comment"
+                id="new_cadry_comment"
+
               />
         </div>
 
@@ -554,7 +562,7 @@
             <div class="col-12">
               <h6 class="mb-2 pl-2">Malumoti</h6>
               <Dropdown
-                id="academic"
+                id="new_cadry_academic"
                 v-model="v$.academic.$model"
                 :class="{ 'p-invalid': v$.academic.$invalid && submitted }"
                 :options="EducationList"
@@ -567,7 +575,7 @@
             <div class="col-12">
               <h6 class="mb-2 pl-2">Ilmiy darajasi</h6>
               <Dropdown
-                id="academicDegree"
+                id="new_cadry_academicDegree"
                 v-model="v$.academicDegree.$model"
                 :class="{
                   'p-invalid': v$.academicDegree.$invalid && submitted,
@@ -583,7 +591,7 @@
             <div class="col-12">
               <h6 class="mb-2 pl-2">Ilmiy unvoni</h6>
               <Dropdown
-                id="academicTitle"
+                id="new_cadry_academicTitle"
                 v-model="v$.academicTitle.$model"
                 :class="{ 'p-invalid': v$.academicTitle.$invalid && submitted }"
                 :options="AcademicList"
@@ -614,7 +622,7 @@
             <div class="col-12">
               <h6 class="mb-2 pl-2">Partiyaviyligi</h6>
               <Dropdown
-                id="employeeParty"
+                id="new_cadry_employeeParty"
                 v-model="v$.employeeParty.$model"
                 :class="{ 'p-invalid': v$.employeeParty.$invalid && submitted }"
                 :options="PartList"
@@ -635,7 +643,7 @@
                 type="text"
                 class="w-full"
                 placeholder="Unvonni kiriting"
-                id="employeeMilitaryTitle"
+                id="new_cadry_employeeMilitaryTitle"
                 v-model="v$.employeeMilitaryTitle.$model"
                 :class="{
                   'p-invalid': v$.employeeMilitaryTitle.$invalid && submitted,
@@ -653,7 +661,7 @@
                 type="text"
                 class="w-full"
                 placeholder="Azoligini kiriting"
-                id="employeeSelectedOrgan"
+                id="new_cadry_employeeSelectedOrgan"
                 v-model="v$.employeeSelectedOrgan.$model"
                 :class="{
                   'p-invalid': v$.employeeSelectedOrgan.$invalid && submitted,

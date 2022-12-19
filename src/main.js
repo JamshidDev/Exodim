@@ -78,6 +78,7 @@ import TabView from 'primevue/tabview';
 import TabPanel from 'primevue/tabpanel';
 import Rating from 'primevue/rating';
 import ProgressBar from 'primevue/progressbar';
+import VueApexCharts from "vue3-apexcharts";
 
 
 
@@ -95,6 +96,8 @@ app.use(router)
 app.use(Maska)
 app.use(ConfirmationService)
 app.use(Vue3SimpleHtml2pdf);
+app.use(VueApexCharts);
+
 // app.use(Vuelidate)
 
 

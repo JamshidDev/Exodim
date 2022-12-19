@@ -255,7 +255,7 @@
           '640px': '90vw',
         }"
         :style="{ width: '50vw' }"
-        :modal="false"
+        :modal="true"
       >
         <template #header>
           <h6 class="uppercase text-lg text-blue-500 font-medium">
@@ -569,7 +569,6 @@ export default {
       medService
         .get_CadryMed(params)
         .then((res) => {
-          console.log(res.data.cadries.data);
           this.totalPage = res.data.cadries.pagination.total;
           let number = (this.params.page - 1) * this.params.per_page;
           res.data.cadries.data.forEach((item) => {

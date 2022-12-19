@@ -30,6 +30,7 @@
           class="mr-4"
           @click="toggle2"
         />
+       
         <Menu
           id="overlay_menu"
           ref="notefication"
@@ -104,6 +105,7 @@
       </template>
     </Toolbar>
   </div>
+
 </template>
 <script>
 import {mapGetters} from "vuex"
@@ -280,7 +282,10 @@ export default {
     },
     admin_avatar(){
       return localStorage.getItem("admin_avatar")? localStorage.getItem("admin_avatar") : 'https://railwaynok.uz/img/avatar_20.4e17c1b7.jpg'
-    }
+    },
+    ServerError_Dialog() {
+            this.server_Error = true;
+        }
   },
   watch:{
     get_darkTheme(dark){
@@ -297,6 +302,7 @@ export default {
       this.changeTheme("bootstrap4-dark-blue", true);
       this.isDark = true
     }
+    this.ServerError_Dialog()
     
   }
 };
