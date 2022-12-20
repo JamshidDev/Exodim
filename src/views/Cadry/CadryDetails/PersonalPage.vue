@@ -1287,7 +1287,10 @@ export default {
     changeDepartment() {
       let id = this.stuff_department.id;
       this.stuff_stuffList = [];
-      DepartmentStuffService.get_DepartmentStuff({ id }).then((res) => {
+      DepartmentStuffService.get_DepartmentStuff({ id,params:{
+        page:1,
+        per_page:100
+      }  }).then((res) => {
         this.stuff_stuff = null;
         this.stuff_stuffList = res.data.department.data;
       });
