@@ -38,8 +38,8 @@ const getRegions = (payload)=>{
     return axios.get(`/api/filter/regions`, {params:payload})
 }
 
-const getDistricts = ()=>{
-    return axios.get(`/api/filter/cities`)
+const getDistricts = (payload)=>{
+    return axios.get(`/api/filter/cities`, {params:payload})
 }
 
 

@@ -4,14 +4,14 @@
       <div class="grid">
         <div class="col-12 pb-0">
           <bread-crumb
-            :breadCump="[{ name: 'Xodimlar', path: '/admin/partemployee' }]"
+            :breadCump="[{ name: 'Ma\'sullar', path: '' }]"
           ></bread-crumb>
         </div>
         <div class="col-12 y-0 py-0">
           <span class="text-2xl font-semibold"
             >Ma'sullar
-            <span class="text-base text-primary pl-2" v-show="totalCadries > 0">
-              ({{ totalCadries }})</span
+            <span class="text-base text-primary pl-2" v-show="totalPage > 0">
+              ({{ totalPage }})</span
             >
           </span>
         </div>
@@ -197,8 +197,8 @@
           <template #body="slotProps">
             <div class="flex gap-2">
               <edit-button
-                :editItem="slotProps.data"
-                @editEvent="editStuff($event)"
+                :editItem="slotProps.data.id"
+                @editEvent="get_updateModal($event)"
               ></edit-button>
               <delete-button
                 :deleteItem="slotProps.data.id"
@@ -221,6 +221,7 @@
     </div>
     <div class="col-12">
       <Toast position="bottom-right" />
+      <edit-moadal ref="edmin_modal"></edit-moadal>
     </div>
   </div>
 </template>
@@ -232,6 +233,8 @@ import TablePagination from "@/components/Pagination/TablePagination";
 import MedLoader from "@/components/loaders/MedLoader";
 import formatter from "@/util/formatter";
 import AdminService from "@/service/servises/AdminService";
+import BreadCrumb from "../../components/BreadCrumb/BreadCrumb.vue";
+import EditMoadal from "./components/EditMoadal.vue";
 export default {
   components: {
     TextButton,
@@ -239,6 +242,8 @@ export default {
     MedLoader,
     DeleteButton,
     EditButton,
+    EditMoadal,
+    BreadCrumb,
   },
   data() {
     return {
@@ -275,9 +280,11 @@ export default {
           console.log(error);
         });
     },
+    get_updateModal(id){
+      this.$refs.edmin_modal.controllerModal(id)
+    },
 
     changePagination(event) {
-      console.log(event);
       this.params.page = event.page;
       this.params.per_page = event.per_page;
       this.get_AdminList(this.params, true);

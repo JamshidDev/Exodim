@@ -105,7 +105,7 @@
                 </h6>
               </div>
 
-              <div class="col-12">
+              <div class="col-6">
                 <div class="col-12">
                   <h6 class="text-sm mb-0">Lavozim {{ Stuffs.length }}</h6>
                 </div>
@@ -163,7 +163,7 @@
 
               <div class="col-6">
                 <div class="col-12">
-                  <h6 class="text-sm mb-0">Viloyat</h6>
+                  <h6 class="text-sm mb-0">Viloyat(Yashash)</h6>
                 </div>
                 <div class="w-full flex">
                   <div class="w-full">
@@ -176,6 +176,43 @@
                       @change="changeRegion"
                     />
                   </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="col-12">
+                  <h6 class="text-sm mb-0">Tuman(Yashash) {{ districtList.length }}</h6>
+                </div>
+                <div class="w-full flex">
+                  <Dropdown
+                  :loading ="districtLoading"
+                    v-model="districtVal"
+                    :options="districtList"
+                    optionLabel="name"
+                    :filter="true"
+                    placeholder="Tanlang"
+                    class="w-full p-inputtext-sm"
+                    emptyMessage="Hech narsa topilmadi"
+                    @change="changeDistrict"
+                    :disabled="districtList.length ==0"
+                    emptyFilterMessage="Tizmda ma'lumot topilmadi..."
+                  >
+                    <template #value="slotProps">
+                      <div
+                        class="country-item country-item-value w-full"
+                        v-if="slotProps.value"
+                      >
+                        <div>{{ slotProps.value.name }}</div>
+                      </div>
+                      <span v-else>
+                        {{ slotProps.placeholder }}
+                      </span>
+                    </template>
+                    <template #option="slotProps">
+                      <div class="country-item w-full">
+                        <div>{{ slotProps.option.name }}</div>
+                      </div>
+                    </template>
+                  </Dropdown>
                 </div>
               </div>
               <div class="col-6">
@@ -586,6 +623,7 @@ export default {
   },
   data() {
     return {
+      districtLoading:false,
       selectitem: [],
       isSelectAll: false,
       selectOptions: [],
@@ -613,6 +651,8 @@ export default {
       educationValue: null, //fake
       regionList: [],
       regionValue: null, //fake
+      districtList:[],
+      districtVal:null,
       vacationList: [],
       vacationValue: null, //fake
       genderList: [
@@ -654,6 +694,7 @@ export default {
         age_start: null,
         age_end: null,
         birth_region_id: null,
+        address_city_id:null,
       },
       downloadItems: [
         {
@@ -757,6 +798,18 @@ export default {
           console.log(error);
         });
     },
+    get_getDistrict(id) {
+      this.districtLoading =true
+      organizationsService
+        .getDistricts({region_id:id})
+        .then((res) => {
+          this.districtList = res.data;
+          this.districtLoading =false
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
 
     get_getVacations() {
       organizationsService
@@ -782,7 +835,13 @@ export default {
     },
     changeRegion(event) {
       this.organization.birth_region_id = event.value.id;
+      this.get_getDistrict(event.value.id)
+      this.districtVal = null;
     },
+    changeDistrict(event) {
+      this.organization.address_city_id = event.value.id;
+    },
+
 
     changeCadrAge(event) {
       this.organization.age_start = event[0];
