@@ -870,6 +870,7 @@ export default {
     // Cadry university Action
     get_universityList(){
       employeeService.get_universityList().then((res)=>{
+        console.log(res.data);
         this.UniversityList = res.data
       })
     },

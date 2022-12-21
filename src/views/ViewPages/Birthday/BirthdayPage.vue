@@ -32,7 +32,7 @@
             />
           </div>
           <div class="col-6 flex justify-content-end">
-             
+            <Calendar inputId="icon" @date-select="changeCalendar"  dateFormat="dd/mm/yy" v-model="today" class="p-inputtext-sm font-semibold" :manualInput="false" :showIcon="true" />
           </div>
         
         </div>
@@ -94,7 +94,7 @@
             </template>
           </Column>
           
-          <Column  style="min-width: 100px; width: 300px">
+          <Column  style="min-width: 100px; width: 500px">
             <template #header>
               <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
                 
@@ -110,12 +110,38 @@
                   lg:text-base
                   xl:text-base
                   font-medium
-                  hover:text-blue-500
                   cursor-pointer
                 "
               >
                 <div v-show="global">{{ slotProps.data.organization.name }}</div>
                 <div v-show="!global">{{ slotProps.data.staff.department_id.name }}</div>
+
+              </div>
+            </template>
+          </Column>
+          <Column  style="min-width: 100px; width: 130px">
+            <template #header>
+              <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
+                
+                Tug'ilgan sana
+              </div>
+            </template>
+            <template #body="slotProps">
+              <div
+                class="
+                  text-sm
+                  sm:text-sm
+                  md:text-sm
+                  lg:text-base
+                  xl:text-base
+                  cursor-pointer
+                  flex justify-content-center
+                "
+              >
+              <Chip
+                :label=" formatter.arrowDateFormat(slotProps.data.birth_date).toString()"
+                class="mr-2 mb-2 text-sm text-cyan-700 bg-cyan-100 font-semibold"
+              />
 
               </div>
             </template>
@@ -144,6 +170,7 @@
   import TablePagination from "../../../components/Pagination/TablePagination.vue";
   import NoDataComponent from "../../../components/EmptyComponent/NoDataComponent.vue";
   import BirthdayLoader from "../../../components/loaders/BrithdayLoader.vue"
+  import formatter from "../../../util/formatter";
   
   export default {
     components: {
@@ -156,6 +183,8 @@
       return {
         loading:false,
         global:true,
+        today:new Date(),
+        formatter,
         params: {
           railway_id:null,
           organization_id:null,
@@ -163,6 +192,7 @@
           page: 1,
           per_page: 10,
           search: null,
+          birth_date:null,
         },
         List:[],
         totalItem:0,
@@ -172,6 +202,7 @@
     methods:{
       get_List(params){
         this.controlLoaser(true)
+        this.params.birth_date = formatter.outDateFormatter(this.today);
           ViewService.get_ViewBirthday(params).then((res)=>{
               let number =
               (this.params.page - 1) * this.params.per_page;
@@ -184,6 +215,9 @@
   
               this.controlLoaser(false)
           })
+      },
+      changeCalendar(){
+        this.get_List(this.params)
       },
       searchBtn(){
         this.get_List(this.params)

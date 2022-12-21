@@ -32,7 +32,7 @@
             />
           </div>
           <div class="col-6 flex justify-content-end">
-            <Calendar inputId="range" @date-select="changeCalendar"  dateFormat="dd/mm/yy" v-model="rangeDate" selectionMode="range" class="p-inputtext-sm" :manualInput="false" />
+            <Calendar inputId="range" @date-select="changeCalendar"  dateFormat="dd/mm/yy" v-model="rangeDate" selectionMode="range" class="p-inputtext-sm" :showIcon="true" :manualInput="true" />
           </div>
         
         </div>

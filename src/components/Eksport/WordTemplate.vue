@@ -209,9 +209,11 @@
             ><span><br clear="all" style="page-break-before: always" /> </span
           ></b>
 
-          <b style="text-align: center; font-size: 12pt; margin-top: 0px"
-            >{{ cadry.fullName }}ning yaqin qarindoshlari haqida ma'lumot</b
+          <p style="text-align: center; margin-bottom: 0px; margin-top: 0px">
+            <b style="text-align: center; font-size: 12pt; margin-top: 0px; width: 100%;"
+            >{{ cadry.fullName }}ning yaqin qarindoshlari haqida</b
           >
+          </p>
 
           <p style="text-align: center; margin-bottom: 5px; margin-top: 0px">
             <b><span>MA'LUMOT</span></b>

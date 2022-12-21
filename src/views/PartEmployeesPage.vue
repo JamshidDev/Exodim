@@ -19,6 +19,125 @@
     </div>
     <div class="col-12 py-0">
       <div class="grid">
+        <!-- <div class="col-12 py-0">
+          <div class="grid p-0">
+            <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3 p-fluid">
+              <h6 class="mb-1 pl-2 text-sm">
+                Katta korxona -
+                {{
+                  departmentList.length
+                    ? departmentList.length - 1
+                    : departmentList.length
+                }}
+              </h6>
+              <Dropdown
+                id="adressDistrict"
+                v-model="departmentValue"
+                :options="departmentList"
+                optionLabel="name"
+                class="p-inputtext-sm"
+                :filter="true"
+                placeholder="Katta korxona"
+                emptyMessage="Hech narsa topilmadi"
+                emptyFilterMessage="Tizmda ma'lumot topilmadi..."
+                @change="changeDepartment"
+              >
+                <template #value="slotProps" class="custop_dropdown">
+                  <div class="max-w-100" v-if="slotProps.value">
+                    <div>{{ slotProps.value.name }}</div>
+                  </div>
+                  <span v-else>
+                    {{ slotProps.placeholder }}
+                  </span>
+                </template>
+                <template #option="slotProps">
+                  <div class="max-w-100">
+                    <div>{{ slotProps.option.name }}</div>
+                  </div>
+                </template>
+              </Dropdown>
+            </div>
+
+            <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3 p-fluid">
+              <h6 class="mb-1 pl-2 text-sm">
+                Korxona -
+                {{
+                  departmentList.length
+                    ? departmentList.length - 1
+                    : departmentList.length
+                }}
+              </h6>
+              <Dropdown
+                id="adressDistrict"
+                v-model="departmentValue"
+                :options="departmentList"
+                optionLabel="name"
+                class="p-inputtext-sm"
+                :filter="true"
+                placeholder="Korxona"
+                emptyMessage="Hech narsa topilmadi"
+                emptyFilterMessage="Tizmda ma'lumot topilmadi..."
+                @change="changeDepartment"
+              >
+                <template #value="slotProps" class="custop_dropdown">
+                  <div class="max-w-100" v-if="slotProps.value">
+                    <div>{{ slotProps.value.name }}</div>
+                  </div>
+                  <span v-else>
+                    {{ slotProps.placeholder }}
+                  </span>
+                </template>
+                <template #option="slotProps">
+                  <div class="max-w-100">
+                    <div>{{ slotProps.option.name }}</div>
+                  </div>
+                </template>
+              </Dropdown>
+            </div>
+
+            <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3 p-fluid">
+              <h6 class="mb-1 pl-2 text-sm">
+                Bo'lim va bekat -
+                {{
+                  departmentList.length
+                    ? departmentList.length - 1
+                    : departmentList.length
+                }}
+              </h6>
+              <Dropdown
+                id="adressDistrict"
+                v-model="departmentValue"
+                :options="departmentList"
+                optionLabel="name"
+                class="p-inputtext-sm"
+                :filter="true"
+                placeholder="Bo'lim va bekat"
+                emptyMessage="Hech narsa topilmadi"
+                emptyFilterMessage="Tizmda ma'lumot topilmadi..."
+                @change="changeDepartment"
+              >
+                <template #value="slotProps" class="custop_dropdown">
+                  <div class="max-w-100" v-if="slotProps.value">
+                    <div>{{ slotProps.value.name }}</div>
+                  </div>
+                  <span v-else>
+                    {{ slotProps.placeholder }}
+                  </span>
+                </template>
+                <template #option="slotProps">
+                  <div class="max-w-100">
+                    <div>{{ slotProps.option.name }}</div>
+                  </div>
+                </template>
+              </Dropdown>
+            </div>
+          </div>
+        </div> -->
+
+       
+
+      
+
         <div class="col-12 sm:col-6 md:col-6 lg:col-2 xl:col-2 p-fluid">
           <InputText
             type="text"
@@ -180,11 +299,13 @@
               </div>
               <div class="col-6">
                 <div class="col-12">
-                  <h6 class="text-sm mb-0">Tuman(Yashash) {{ districtList.length }}</h6>
+                  <h6 class="text-sm mb-0">
+                    Tuman(Yashash) {{ districtList.length }}
+                  </h6>
                 </div>
                 <div class="w-full flex">
                   <Dropdown
-                  :loading ="districtLoading"
+                    :loading="districtLoading"
                     v-model="districtVal"
                     :options="districtList"
                     optionLabel="name"
@@ -193,7 +314,7 @@
                     class="w-full p-inputtext-sm"
                     emptyMessage="Hech narsa topilmadi"
                     @change="changeDistrict"
-                    :disabled="districtList.length ==0"
+                    :disabled="districtList.length == 0"
                     emptyFilterMessage="Tizmda ma'lumot topilmadi..."
                   >
                     <template #value="slotProps">
@@ -585,7 +706,7 @@
           <div class="col-12 pt-2">
             <div class="flex justify-content-center">
               <Button
-              :loading="dowloadLoading"
+                :loading="dowloadLoading"
                 icon="pi pi-arrow-circle-down"
                 :label="downloadBtnText"
                 class="p-button-success p-button-sm font-bold"
@@ -623,7 +744,7 @@ export default {
   },
   data() {
     return {
-      districtLoading:false,
+      districtLoading: false,
       selectitem: [],
       isSelectAll: false,
       selectOptions: [],
@@ -632,10 +753,10 @@ export default {
       unSelectItemId: [],
       selectMode: false,
       selectionDialog: false,
-      file_name: 'Xodimlar ma\'lumotlari',
+      file_name: "Xodimlar ma'lumotlari",
       cadry_pasport: [],
-      dowloadLoading:false,
-      downloadBtnText:'Yuklashni boshlash',
+      dowloadLoading: false,
+      downloadBtnText: "Yuklashni boshlash",
 
       loadingtable: false,
       cadries: [],
@@ -651,8 +772,8 @@ export default {
       educationValue: null, //fake
       regionList: [],
       regionValue: null, //fake
-      districtList:[],
-      districtVal:null,
+      districtList: [],
+      districtVal: null,
       vacationList: [],
       vacationValue: null, //fake
       genderList: [
@@ -694,7 +815,7 @@ export default {
         age_start: null,
         age_end: null,
         birth_region_id: null,
-        address_city_id:null,
+        address_city_id: null,
       },
       downloadItems: [
         {
@@ -799,12 +920,12 @@ export default {
         });
     },
     get_getDistrict(id) {
-      this.districtLoading =true
+      this.districtLoading = true;
       organizationsService
-        .getDistricts({region_id:id})
+        .getDistricts({ region_id: id })
         .then((res) => {
           this.districtList = res.data;
-          this.districtLoading =false
+          this.districtLoading = false;
         })
         .catch((error) => {
           console.log(error);
@@ -835,13 +956,12 @@ export default {
     },
     changeRegion(event) {
       this.organization.birth_region_id = event.value.id;
-      this.get_getDistrict(event.value.id)
+      this.get_getDistrict(event.value.id);
       this.districtVal = null;
     },
     changeDistrict(event) {
       this.organization.address_city_id = event.value.id;
     },
-
 
     changeCadrAge(event) {
       this.organization.age_start = event[0];
@@ -879,12 +999,10 @@ export default {
     changeRowSelect(id) {
       if (this.selectOptions.includes(id) && this.isSelectAll) {
         console.log(this.unSelectItemId);
-        this.unSelectItemId = this.unSelectItemId.filter(
-          (item) => item !== id
-        );
+        this.unSelectItemId = this.unSelectItemId.filter((item) => item !== id);
       } else if (!this.selectOptions.includes(id) && this.isSelectAll) {
         console.log(this.unSelectItemId);
-        if(!this.unSelectItemId.includes(id)){
+        if (!this.unSelectItemId.includes(id)) {
           this.unSelectItemId.push(id);
         }
       } else if (this.selectOptions.includes(id) && !this.isSelectAll) {
@@ -897,36 +1015,37 @@ export default {
       if (this.selectMode) {
         this.controlSectionDialog(true);
         this.dowloadLoading = false;
-        this.downloadBtnText = 'Yuklashni boshlash'
-
+        this.downloadBtnText = "Yuklashni boshlash";
       } else {
         this.controlExportDialog(true);
       }
     },
     startDownloadZip() {
-      let params = {...this.organization};
+      let params = { ...this.organization };
       params.comment = this.file_name;
       params.passport_files = this.cadry_pasport.length > 0;
-      params.send_all = this.isSelectAll? 1 : 0 ;
+      params.send_all = this.isSelectAll ? 1 : 0;
       params.not_send_arr = this.unSelectItemId;
       params.send_arr = this.selectItemId;
 
-      this.dowloadLoading = true
-      this.downloadBtnText = 'Yuklanmoqda...'
-      EksportService.get_cadryZip(params).then((res)=>{
-        this.dowloadLoading = false;
-        this.downloadBtnText = 'Yuklashni boshlash'
-        this.$router.push('/admin/zipfiles')
-      }).catch((error)=>{
-        this.dowloadLoading = false;
-        this.downloadBtnText = 'Yuklashni boshlash'
-        this.$toast.add({
-        severity: "warn",
-        summary: "Ruxsat etilmadi",
-        detail: error.response.data.message,
-        life: 2000,
-      });
-      })
+      this.dowloadLoading = true;
+      this.downloadBtnText = "Yuklanmoqda...";
+      EksportService.get_cadryZip(params)
+        .then((res) => {
+          this.dowloadLoading = false;
+          this.downloadBtnText = "Yuklashni boshlash";
+          this.$router.push("/admin/zipfiles");
+        })
+        .catch((error) => {
+          this.dowloadLoading = false;
+          this.downloadBtnText = "Yuklashni boshlash";
+          this.$toast.add({
+            severity: "warn",
+            summary: "Ruxsat etilmadi",
+            detail: error.response.data.message,
+            life: 2000,
+          });
+        });
     },
 
     goPush(id) {

@@ -413,6 +413,7 @@ export default {
     get_Skill_Exports() {
       SkillService.get_Skill_Export({ date_qual: this.params.date_qual }).then(
         (res) => {
+          this.jsonData = [];
           res.data.data.forEach((item) => {
             item[0].directions.forEach((direct) => {
               this.jsonData.push({
