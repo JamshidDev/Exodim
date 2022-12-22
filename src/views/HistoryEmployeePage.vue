@@ -350,7 +350,7 @@ export default {
       this.get_departmentStuff(this.department.id);
     },
     get_departmentStuff(id) {
-      DepartmentStuffService.get_DepartmentStuff({ id }).then((res) => {
+      DepartmentStuffService.get_DepartmentStuff({ id, params:{page:1, per_page:100} }).then((res) => {
         console.log(res.data.department);
         this.stuffList = res.data.department.data;
       });

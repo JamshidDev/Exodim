@@ -11,9 +11,14 @@
         <div class="col-12 y-0 py-1 relative">
           <span class="text-2xl font-semibold"
             >Malaka oshirish
-            <span class="text-base text-primary pl-2" v-show="totalItem > 0">
+            <span class="text-base text-primary pl-2">
               ( {{ totalItem }} )</span
-            >
+              
+            > 
+            <Chip :label="allCadry.toString()" v-tooltip.bottom="'Joriy yil uchun barcha xodimlar'" icon="pi pi-users" class="ml-4 bg-blue-100 text-blue-500 text-sm font-semibold cursor-pointer" />
+            <Chip :label="allBedroom.toString()" v-tooltip.bottom="'Joriy yil uchun barcha yotoqxonaga zarurati yo\'q  xodimlar'" icon="pi pi-building" class="mx-2 bg-blue-100 text-blue-500 text-sm font-semibold cursor-pointer" />
+            
+           
           </span>
           <Button
             label="Yuklash"
@@ -35,8 +40,8 @@
       <div class="grid">
         <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3 p-fluid">
           <Dropdown
-            v-model="qualification"
-            :options="qualificationList"
+            v-model="get_qualification"
+            :options="get_qualificationList"
             optionLabel="name"
             placeholder="Tayorlov turini tanlang"
             class="w-full p-inputtext-sm"
@@ -47,8 +52,8 @@
         <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
           <Dropdown
             id="adressDistrict"
-            v-model="apparat"
-            :options="apparatList"
+            v-model="get_apparat"
+            :options="get_apparatList"
             optionLabel="name"
             :filter="true"
             placeholder="Xo'jalikni tanlang"
@@ -78,8 +83,8 @@
         <div class="col-12 sm:col-6 md:col-6 lg:col-3 xl:col-3">
           <Dropdown
             id="adressDistrict"
-            v-model="direction"
-            :options="DirectionList"
+            v-model="get_direction"
+            :options="get_directionList"
             optionLabel="name"
             :filter="true"
             placeholder="Yo'nalishni tanlang"
@@ -123,7 +128,7 @@
                 inputId="yearpicker"
                 class="p-inputtext-sm"
                 @date-select="changeDate"
-                v-model="date1"
+                v-model="get_data_qual"
                 view="year"
                 dateFormat="yy"
               />
@@ -300,7 +305,7 @@
       <download-excel
         :data="jsonData"
         :fields="json_fields"
-        :name="'Test'"
+        :name="'Malaka oshirish rejasi - '+ params.date_qual+ ` (${formatter.textDateFormat((new Date()))})` "
         ref="Skill_table"
       >
       </download-excel>
@@ -313,6 +318,8 @@ import SkillService from "@/service/servises/SkillService";
 import NoDataComponent from "@/components/EmptyComponent/NoDataComponent";
 import TablePagination from "@/components/Pagination/TablePagination";
 import SkillLoader from "@/components/loaders/SkillLoader";
+import formatter from "../../util/formatter";
+import { mapActions, mapGetters } from "vuex";
 export default {
   components: {
     BreadCrumb,
@@ -331,9 +338,12 @@ export default {
       direction: null,
 
       selectItem: null,
+      formatter,
 
       statisticList: [],
       totalItem: 0,
+      allCadry:0,
+      allBedroom:0,
       search_name: null,
       date1: "2022",
       loadingtable: false,
@@ -368,8 +378,12 @@ export default {
       },
     };
   },
+  computed:{
+    ...mapGetters(["get_qualificationList", "get_apparatList","get_directionList","get_qualification","get_apparat", "get_direction", "get_data_qual"   ])
+  },
 
   methods: {
+    ...mapActions(["set_qualificationList", "set_apparatList", "set_directionList","set_qualification","set_apparat","set_direction", "set_data_qual" ]),
     get_Statistic(params, loader) {
       this.controlLoader(loader);
       SkillService.get_Skill_Statistic(params).then((res) => {
@@ -380,6 +394,9 @@ export default {
           item.number = number;
         });
         this.statisticList = res.data.railways.data;
+        this.allCadry = res.data.upgrades_count;
+        this.allBedroom = res.data.upgrades_count_bedroom;
+
         this.totalItem = res.data.railways.pagination.total;
 
         this.controlLoader(false);
@@ -394,6 +411,7 @@ export default {
         },
       }).then((res) => {
         this.qualificationList = res.data.type_qualifications;
+        this.set_qualificationList(res.data.type_qualifications)
         this.List = res.data.apparats.data;
       });
     },
@@ -405,9 +423,9 @@ export default {
           search: null,
         },
       }).then((res) => {
-        this.DirectionList = res.data.directions.data.filter(
-          (item) => item.apparat.id == this.apparat.id
-        );
+        this.set_directionList( res.data.directions.data.filter(
+          (item) => item.apparat.id == this.get_apparat.id
+        ))
       });
     },
     get_Skill_Exports() {
@@ -460,22 +478,29 @@ export default {
 
     },
 
-    changeApparats() {
-      this.direction = null;
-      this.params.apparat_id = this.apparat.id;
+    changeApparats(event) {
+      this.params.apparat_id = event.value.id;
+      this.set_apparat(event.value);
+      this.set_direction(null);
+      this.set_directionList([])
       this.get_Statistic(this.params, true);
       this.get_Directions();
     },
-    changeDirection() {
-      this.params.training_direction_id = this.direction.id;
+    changeDirection(event) {
+      this.set_direction(event.value)
+      this.params.training_direction_id = event.value.id;
       this.get_Statistic(this.params, true);
     },
-    changeQualification() {
-      this.apparat = null;
-      this.direction = null;
-      this.apparatList = this.List.filter(
-        (item) => item.type_qualification.id == this.qualification.id
-      );
+    changeQualification(event) {
+      this.set_qualification(event.value)
+      this.set_apparat(null);
+      this.set_direction(null);
+      this.set_directionList([])
+      this.set_apparatList([])
+      this.set_apparatList( this.List.filter(
+        (item) => item.type_qualification.id == this.get_qualification.id
+      ));
+      this.get_Statistic(this.params, true);
     },
 
     changePagination(event) {
@@ -485,11 +510,12 @@ export default {
       localStorage.setItem("per_page_7", event.per_page);
       this.get_Statistic(this.params, true);
     },
-    changeDate() {
-      this.params.date_qual = new Date(this.date1).getFullYear();
+    changeDate(event) {
+      this.set_data_qual(event)
+      this.params.date_qual = new Date(this.get_data_qual).getFullYear();
+
       this.get_Statistic(this.params, true);
     },
-
     searchByName() {
       this.params.search = this.search_name;
       this.get_Statistic(this.params, true);
@@ -499,7 +525,16 @@ export default {
     },
   },
   created() {
-    this.get_Statistic(this.params, true);
+    if(this.get_qualification){
+      this.params.apparat_id = this.get_apparat? this.get_apparat.id : null;
+      this.params.training_direction_id = this.get_direction? this.get_direction.id : null;
+      this.params.date_qual = new Date(this.get_data_qual).getFullYear()
+      this.get_Statistic(this.params, true);
+      this.params
+    }else{
+      this.get_Statistic(this.params, true);
+    }
+    
     this.get_Apparats();
   },
 };

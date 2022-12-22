@@ -159,6 +159,29 @@ export default {
           ],
         },
         {
+          label: "Xatlar",
+          icon: "pi pi-comments",
+          visible: () =>
+            this.get_TitlePermission(["management_qualifications"]),
+
+          items: [
+            {
+              label: "Kiruvchi xatlar",
+              icon: "pi pi-comments",
+              visible: () =>
+                this.get_adminPermissions("management_qualifications"),
+              to: "/admin/types",
+            },
+            {
+              label: "Chiquvchi xatlar",
+              icon: "pi pi-comments",
+              visible: () =>
+                this.get_adminPermissions("management_qualifications"),
+              to: "/admin/direction",
+            },
+          ],
+        },
+        {
           label: "Xavsizlik",
           icon: "pi pi-shield",
           visible: () => this.get_adminPermissions("admin"),
