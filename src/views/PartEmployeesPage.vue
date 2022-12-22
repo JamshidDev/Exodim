@@ -963,7 +963,7 @@
               "
             >
               <span v-if="!get_adminPermissions('cadry_leader_cadries')"
-                >{{ slotProps.data.organization }}2</span
+                >{{ slotProps.data.department }}</span
               >
               <span
                 v-if="
