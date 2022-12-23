@@ -170,14 +170,14 @@ export default {
               icon: "pi pi-comments",
               visible: () =>
                 this.get_adminPermissions("management_qualifications"),
-              to: "/admin/types",
+              to: "/admin/message/incoming",
             },
             {
               label: "Chiquvchi xatlar",
               icon: "pi pi-comments",
               visible: () =>
                 this.get_adminPermissions("management_qualifications"),
-              to: "/admin/direction",
+              to: "/admin/message/outgoing",
             },
           ],
         },

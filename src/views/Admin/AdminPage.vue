@@ -44,7 +44,6 @@
                 label="Qo'shish"
                 class="p-button-info p-button-sm"
                 @click="addItemMed()"
-                v-tooltip.bottom="`Yangi tibbiy ko'rik qo'shish`"
               ></Button>
             </div>
           </div>
@@ -74,16 +73,14 @@
         </Column>
         <Column style="min-width: 16rem">
           <template #header>
-            <div class="text-800 font-semibold">F.I.SH</div>
+            <div class="text-800 text-sm">F.I.SH</div>
           </template>
           <template #body="slotProps">
             <div
               class="
                 text-sm
-                sm:text-sm
-                md:text-md
-                lg:text-lg
-                xl:text-lg
+                lg:text-base
+                xl:text-base
                 font-medium
               "
             >
@@ -91,7 +88,7 @@
             </div>
           </template>
         </Column>
-        <Column style="min-width: 200px; width: 250px">
+        <Column style="min-width:100px; width: 250px">
           <template #header>
             <div class="text-800 font-semibold">Korxona nomi</div>
           </template>
@@ -110,7 +107,7 @@
             </div>
           </template>
         </Column>
-        <Column style="min-width: 80px; width: 100px">
+        <Column style="min-width:60px; width:80px">
           <template #header>
             <div class="text-800 font-semibold">Status</div>
           </template>
@@ -127,8 +124,8 @@
             >
               <div class="w-full text-center text-red-500">
                 <Tag
-                  class="mr-2"
-                  icon="pi pi-info-circle"
+                  class="mr-2 bg-green-100 text-green-600 px-2"
+                  icon="pi pi-circle-fill"
                   severity="success"
                   value="Active"
                 ></Tag>
@@ -137,7 +134,7 @@
           </template>
         </Column>
 
-        <Column style="min-width: 100px; width: 150px">
+        <Column style="min-width: 50px; width: 100px">
           <template #header>
             <div class="text-800 font-semibold">Huquqlar</div>
           </template>
@@ -154,8 +151,8 @@
             >
               <div class="w-full text-center text-red-500">
                 <Tag
-                  class="mr-2"
-                  icon="pi pi-info-circle"
+                  class="bg-blue-100 text-blue-700 px-2 text-sm font-semibold"
+                  icon="pi pi-bookmark-fill"
                   severity="unfo"
                   :value="slotProps.data.roles.name"
                 ></Tag>
@@ -163,7 +160,7 @@
             </div>
           </template>
         </Column>
-        <Column style="min-width: 150px; width: 200px">
+        <Column style="min-width:50px; width:200px">
           <template #header>
             <div class="text-800 font-semibold">Login</div>
           </template>
@@ -190,20 +187,13 @@
           </template>
         </Column>
 
-        <Column style="min-width: 120px; width: 120px">
+        <Column style="min-width: 50px; width: 120px">
           <template #header>
             <div class="text-800 font-semibold">Amallar</div>
           </template>
           <template #body="slotProps">
             <div class="flex gap-2">
-              <edit-button
-                :editItem="slotProps.data.id"
-                @editEvent="get_updateModal($event)"
-              ></edit-button>
-              <delete-button
-                :deleteItem="slotProps.data.id"
-                @deleteAcceptEvent="deleteItemDepStuff($event)"
-              ></delete-button>
+              <Button @click="get_updateModal(slotProps.data.id)" label="Tahrirlash" icon="pi pi-user-edit" iconPos="right" class="p-button-success p-button-rounded p-button-sm text-sm py-2" />
             </div>
           </template>
         </Column>
@@ -221,7 +211,7 @@
     </div>
     <div class="col-12">
       <Toast position="bottom-right" />
-      <edit-moadal ref="edmin_modal"></edit-moadal>
+      <edit-moadal @success_update="success_alert()" ref="edmin_modal"></edit-moadal>
     </div>
   </div>
 </template>
@@ -302,6 +292,9 @@ export default {
         detail: "Nusxalandi",
         life: 2000,
       });
+    },
+    success_alert(){
+      this.get_AdminList(this.params, true);
     },
 
     searchByName() {

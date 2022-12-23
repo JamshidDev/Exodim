@@ -237,14 +237,26 @@ const routes = [
         },
       },
       {
-        path: "/admin/analitic",
-        name: "analitic",
+        path: "/admin/message/incoming",
+        name: "incoming-message",
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: function () {
           return import(
-            /* webpackChunkName: "about" */ "../views/AnalitikaPage.vue"
+            /* webpackChunkName: "about" */ "../views/Messages/EnterMessage.vue"
+          );
+        },
+      },
+      {
+        path: "/admin/message/outgoing",
+        name: "outgoing-message",
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: function () {
+          return import(
+            /* webpackChunkName: "about" */ "../views/Messages/OutputMessage.vue"
           );
         },
       },

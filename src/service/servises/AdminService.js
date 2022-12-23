@@ -10,7 +10,7 @@ const update_get_AdminDetails = (payload)=>{
 }
 
 const update_AdminDetails = (payload)=>{
-    return axios.post(`/api/administration/user/${payload.id}/update`)
+    return axios.post(`/api/administration/user/${payload.id}/update`,payload.data)
 }
 
 const create_get_Admin = (payload)=>{
