@@ -473,7 +473,71 @@
               >
             </div>
 
-           
+            <div class="field-checkbox">
+              <Checkbox :value="exporOption[30]" v-model="exportOptions" />
+              <label
+                class="font-medium"
+                :class="[
+                  elementNumber(exporOption[30].id) ? 'text-blue-500' : '',
+                ]"
+                >{{ exporOption[30].name }}
+                <span class="text-blue-600 ml-2">{{
+                  elementNumber(exporOption[30].id)
+                    ? `(${elementNumber(exporOption[30].id)})`
+                    : ""
+                }}</span></label
+              >
+            </div>
+
+            <div class="field-checkbox">
+              <Checkbox :value="exporOption[31]" v-model="exportOptions" />
+              <label
+                class="font-medium"
+                :class="[
+                  elementNumber(exporOption[31].id) ? 'text-blue-500' : '',
+                ]"
+                >{{ exporOption[31].name }}
+                <span class="text-blue-600 ml-2">{{
+                  elementNumber(exporOption[31].id)
+                    ? `(${elementNumber(exporOption[31].id)})`
+                    : ""
+                }}</span></label
+              >
+            </div>
+
+            <div class="field-checkbox">
+              <Checkbox :value="exporOption[32]" v-model="exportOptions" />
+              <label
+                class="font-medium"
+                :class="[
+                  elementNumber(exporOption[32].id) ? 'text-blue-500' : '',
+                ]"
+                >{{ exporOption[32].name }}
+                <span class="text-blue-600 ml-2">{{
+                  elementNumber(exporOption[32].id)
+                    ? `(${elementNumber(exporOption[32].id)})`
+                    : ""
+                }}</span></label
+              >
+            </div>
+
+
+            <div class="field-checkbox">
+              <Checkbox :value="exporOption[33]" v-model="exportOptions" />
+              <label
+                class="font-medium"
+                :class="[
+                  elementNumber(exporOption[33].id) ? 'text-blue-500' : '',
+                ]"
+                >{{ exporOption[33].name }}
+                <span class="text-blue-600 ml-2">{{
+                  elementNumber(exporOption[33].id)
+                    ? `(${elementNumber(exporOption[33].id)})`
+                    : ""
+                }}</span></label
+              >
+            </div>
+         
           </div>
         </div>
 
@@ -647,12 +711,12 @@ export default {
         },
         {
           id: 25,
-          name: "Shtat kategoriya",
+          name: "Personal toifasi",
           key: "category",
         },
         {
           id: 26,
-          name: "Oliygohlar",
+          name: "Ta'lim olgan muassasalari",
           key: "instituts",
         },
         {
@@ -665,11 +729,6 @@ export default {
           name: "Tibbiy ko'rik(Xulosa)",
           key: "med_result",
         },
-        // {
-        //   id: 30,
-        //   name: "Xodim id",
-        //   key: "id",
-        // },
         {
           id: 29,
           name: "Tibbiy ko'rik(Oxirgi sana)",
@@ -679,6 +738,27 @@ export default {
           id: 30,
           name: "Tibbiy ko'rik(Keyingi sana)",
           key: "med_date2",
+        },
+        {
+          id: 31,
+          name: "Lavozim sanasi",
+          key: "staff_date",
+        },
+        {
+          id: 32,
+          name: "Tugatgan Oligohi(yo'nalishi)",
+          key: "speciality",
+        },
+        {
+          id: 33,
+          name: "Oligohga kirgan yili",
+          key: "education_date1",
+        },
+
+        {
+          id: 34,
+          name: "Oligohni tugatgan yili",
+          key: "education_date2",
         },
       ],
     };
@@ -707,11 +787,16 @@ export default {
             deputy:item.deputy,
             languages:item.languages.map(a=> a.name).toString(),
             sex: item.sex,
-            position: item.department_and_staffs.map(a=> a.staff_full).toString(),
+            position: item.department_and_staffs.filter((b) => b.staff_status == 'Asosiy').map(a=> a.staff_full).toString(),
+            category:item.department_and_staffs.filter((b) => b.staff_status == 'Asosiy').map(a=> a.category).toString(),
+            staff_date:item.department_and_staffs.filter((b) => b.staff_status == 'Asosiy').map((a) => a.staff_date).toString(),
             department: item.department_and_staffs.map(a=> a.department).toString(),
             instituts:item.instituts? item.instituts.map(a=> a.name).toString() : '',
+            education_date1:item.instituts? item.instituts.map(a=> a.date1).toString() : '',
+            education_date2:item.instituts? item.instituts.map(a=> a.date2).toString() : '',
+            speciality:item.instituts? item.instituts.map(a=> a.speciality).toString() : '',
+
             rate:item.department_and_staffs.map(a=> a.rate).toString(),
-            category:item.department_and_staffs.map(a=> a.category).toString(),
             education: item.education,
             phone:item.phone,
             military_rank:item.military_rank,
