@@ -5,7 +5,7 @@
     </div>
   </div>
   <div class="grid card xl:p-4 lg:p-2 p-2" v-if="!barLoader">
-    <div class="col-12 p-2" v-show="!List_qualification.length > 0">
+    <div class="col-12 p-2">
       <add-button
         @click="addItemSkill()"
         :title="'Tayorlov'"

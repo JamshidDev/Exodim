@@ -343,7 +343,7 @@
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-blue-600 text-sm uppercase font-semibold"
-                >Nafaqa yoshidagi xodimlar</span
+                >Nafaqa yoshidagilar</span
               >
             </div>
             <div class="col-2 flex justify-content-end" @click="goList(4)">
@@ -453,7 +453,7 @@
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-blue-600 text-sm uppercase font-semibold"
-                >Tibbiy ko'rik ma'lumotlari</span
+                >Tibbiy ko'rik</span
               >
             </div>
             <div class="col-2 flex justify-content-end" @click="goList(11)">
@@ -472,7 +472,6 @@
                 col-12
                 pb-0
                 flex
-                justify-content-between
                 align-items-center
               "
             >
@@ -482,12 +481,7 @@
                   meds
                 }}</span>
               </h6>
-              <Tag
-                class="px-2 text-sm"
-                rounded
-                severity="warning"
-                :value="`${medsChart}%`"
-              ></Tag>
+             
             </div>
             <div
               class="
@@ -725,7 +719,7 @@
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-blue-600 text-sm uppercase font-semibold"
-                >Bugungi tu'gilgan kunlar</span
+                >Tu'gilgan kunlar</span
               >
             </div>
             <div class="col-2 flex justify-content-end" @click="goList(2)">
@@ -947,11 +941,13 @@
           </div>
         </div>
        
-        <div class="col-12 sm:col-6 md:col-6 lg:col-6 xl:col-3 p-3">
+        
+
+        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-blue-600 text-sm uppercase font-semibold"
-                >Malaka oshirish</span
+                >Malaka oshirish (2023)</span
               >
             </div>
             <div class="col-2 flex justify-content-end" @click="goList(20)">
@@ -966,25 +962,22 @@
             </div>
             <Divider class="mt-2 mb-1" />
             <div
-              class="
-                col-12
-                mb-4
-                flex
-                justify-content-between
-                align-items-center
-              "
+              class="col-12 pb-0 flex justify-content-between align-items-start"
             >
-              <img
-                style="width: 80px"
-                src="../../src/assets/picture/management.png"
-                alt=""
-              />
-              <div class="text-4xl my-2 font-bold text-center  flex flex-column">
-                <span class="block text-blue-700">{{ upgrades_count }}</span>
-                <span class="block text-green-700">{{ status_bedroom }}</span>
-
-              </div>
+              <h6 class="uppercase xl:text-base my-2 font-semibold">
+                Rejalashtirilgan -
+                <span class="font-bold text-blue-500">{{ upgrades_count }}</span>
+              </h6>
             </div>
+            <div
+              class="col-12 pb-0 flex justify-content-between align-items-start mb-6"
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">
+                Yotoqxona zar. yo'q -
+                <span class="font-bold text-blue-500">{{ status_bedroom }}</span>
+              </h6>
+            </div>
+            
           </div>
         </div>
 
@@ -1010,7 +1003,7 @@
                 text-base
               "
             >
-            <span class="text-600  text-base  block">Oliy</span>
+            <span class="text-700  text-base  block">Oliy</span>
             <span class="text-blue-600  text-base  block">{{ alleducation_oliy}} </span>
             </div>
 
@@ -1025,7 +1018,7 @@
                 text-base
               "
             >
-            <span class="text-600  text-base  block">O'rta maxsus</span>
+            <span class="text-700  text-base  block">O'rta maxsus</span>
             <span class="text-yellow-600  text-base  block">{{ alleducation_ortamaxsus}} </span>
             </div>
 
@@ -1033,7 +1026,7 @@
             <div
               class="
                 col-12
-                mb-4
+                mb-3
                 flex
                 justify-content-between
                 font-bold
@@ -1041,7 +1034,7 @@
                 text-base
               "
             >
-            <span class="text-600  text-base  block">O'rta</span>
+            <span class="text-700  text-base  block">O'rta</span>
             <span class="text-red-600  text-base  block">{{ alleducation_orta}} </span>
             </div>
           </div>
@@ -1092,7 +1085,7 @@
             <div
               class="
                 col-12
-                mb-4
+                mb-3
                 flex
                 justify-content-between
                 font-bold
@@ -1122,8 +1115,6 @@
              
             </Panel>
         </div>
-
-
         <div class="col-12 md:col-6 lg:col-6 xl:col-4">
           <Panel
               header="Davlat akademiyasi"
@@ -1139,7 +1130,6 @@
              
             </Panel>
         </div>
-
         <div class="col-12 md:col-6 lg:col-6 xl:col-4">
           <Panel
               header="Oylik hisobot"
