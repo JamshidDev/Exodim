@@ -156,14 +156,6 @@
                 "
               >
                 <div class="absolute">
-                  <!-- <i
-                    class="
-                      pi pi-eye
-                      text-2xl text-white
-                      cursor-pointer
-                      font-medium
-                    "
-                  ></i> -->
                 </div>
 
                 <h2
@@ -918,48 +910,251 @@
           </div>
         </div>
 
-        <div class="col-12 md:col-6 lg:col-6 xl:col-4">
-          <div class="card surface-0 shadow-1 border-round-md px-2">
-            <Chart
-              type="bar"
-              :data="multiAxisData"
-              :options="multiAxisOptions"
-            />
+        <div class="col-12 sm:col-6 md:col-6 lg:col-6 xl:col-3 p-3">
+          <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
+            <div class="col-10">
+              <span class="text-blue-600 text-sm uppercase font-semibold"
+                >Pasport</span
+              >
+            </div>
+            <div class="col-2 flex justify-content-end" @click="goList(20)">
+              <i
+                class="
+                  pi pi-eye
+                  text-lg text-blue-600
+                  cursor-pointer
+                  font-medium
+                "
+              ></i>
+            </div>
+            <Divider class="mt-2 mb-1" />
+            <div
+              class="
+                col-12
+                mb-5
+                flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <img
+                style="width: 80px"
+                src="../../src/assets/picture/passport.png"
+                alt=""
+              />
+              <div class="text-4xl my-2 font-bold text-center text-green-700">
+                {{ not_passport_files }}
+              </div>
+            </div>
           </div>
         </div>
+       
+        <div class="col-12 sm:col-6 md:col-6 lg:col-6 xl:col-3 p-3">
+          <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
+            <div class="col-10">
+              <span class="text-blue-600 text-sm uppercase font-semibold"
+                >Malaka oshirish</span
+              >
+            </div>
+            <div class="col-2 flex justify-content-end" @click="goList(20)">
+              <i
+                class="
+                  pi pi-eye
+                  text-lg text-blue-600
+                  cursor-pointer
+                  font-medium
+                "
+              ></i>
+            </div>
+            <Divider class="mt-2 mb-1" />
+            <div
+              class="
+                col-12
+                mb-4
+                flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <img
+                style="width: 80px"
+                src="../../src/assets/picture/management.png"
+                alt=""
+              />
+              <div class="text-4xl my-2 font-bold text-center  flex flex-column">
+                <span class="block text-blue-700">{{ upgrades_count }}</span>
+                <span class="block text-green-700">{{ status_bedroom }}</span>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 sm:col-6 md:col-6 lg:col-6 xl:col-3 p-3">
+          <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
+            <div class="col-10">
+              <span class="text-green-500 text-sm uppercase font-semibold"
+                >Ma'lumoti</span
+              >
+            </div>
+            <div class="col-2 flex justify-content-end" >
+              
+            </div>
+            <Divider class="mt-2 mb-1" />
+            <div
+              class="
+                col-12
+                mb-1
+                flex
+                justify-content-between
+                font-bold
+                uppercase
+                text-base
+              "
+            >
+            <span class="text-600  text-base  block">Oliy</span>
+            <span class="text-blue-600  text-base  block">{{ alleducation_oliy}} </span>
+            </div>
+
+            <div
+              class="
+                col-12
+                mb-1
+                flex
+                justify-content-between
+                font-bold
+                uppercase
+                text-base
+              "
+            >
+            <span class="text-600  text-base  block">O'rta maxsus</span>
+            <span class="text-yellow-600  text-base  block">{{ alleducation_ortamaxsus}} </span>
+            </div>
+
+
+            <div
+              class="
+                col-12
+                mb-4
+                flex
+                justify-content-between
+                font-bold
+                uppercase
+                text-base
+              "
+            >
+            <span class="text-600  text-base  block">O'rta</span>
+            <span class="text-red-600  text-base  block">{{ alleducation_orta}} </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 sm:col-6 md:col-6 lg:col-6 xl:col-3 p-3">
+          <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
+            <div class="col-10">
+              <span class="text-green-500 text-sm uppercase font-semibold"
+                >Yoshi bo'yicha</span
+              >
+            </div>
+            <div class="col-2 flex justify-content-end" >
+              
+            </div>
+            <Divider class="mt-2 mb-1" />
+            <div
+              class="
+                col-12
+                mb-1
+                flex
+                justify-content-between
+                font-bold
+                uppercase
+                text-base
+              "
+            >
+            <span class="text-600  text-base  block">30 dan kichik</span>
+            <span class="text-blue-600  text-base  block">{{ allCadry30}} </span>
+            </div>
+
+            <div
+              class="
+                col-12
+                mb-1
+                flex
+                justify-content-between
+                font-bold
+                uppercase
+                text-base
+              "
+            >
+            <span class="text-600  text-base  block">30 va 45</span>
+            <span class="text-yellow-600  text-base  block">{{allCadry3045}} </span>
+            </div>
+
+
+            <div
+              class="
+                col-12
+                mb-4
+                flex
+                justify-content-between
+                font-bold
+                uppercase
+                text-base
+              "
+            >
+            <span class="text-600  text-base  block">45 dan katta</span>
+            <span class="text-red-600  text-base  block">{{ allCadry45}} </span>
+            </div>
+          </div>
+        </div>
+
+
         <div class="col-12 md:col-6 lg:col-6 xl:col-4">
-          <div class="card surface-0 shadow-1 border-round-md px-2">
+          <Panel
+              header="Xorijda ta'lim olganlar"
+              class="card surface-0 shadow-1 border-round-md"
+              :toggleable="true"
+              :collapsed="true"
+            >
             <Chart
               type="bar"
               :data="aducationForeign"
               :options="aducationForeignOption"
             />
-          </div>
+             
+            </Panel>
         </div>
+
+
         <div class="col-12 md:col-6 lg:col-6 xl:col-4">
-          <div class="card surface-0 shadow-1 border-round-md px-2">
+          <Panel
+              header="Davlat akademiyasi"
+              class="card surface-0 shadow-1 border-round-md"
+              :toggleable="true"
+              :collapsed="true"
+            >
             <Chart
               type="bar"
               :data="govermentAcademy"
               :options="govermentAcademyOption"
             />
-          </div>
+             
+            </Panel>
         </div>
+
         <div class="col-12 md:col-6 lg:col-6 xl:col-4">
-          <div class="card surface-0 shadow-1 border-round-md px-2">
+          <Panel
+              header="Oylik hisobot"
+              class="card surface-0 shadow-1 border-round-md"
+              :toggleable="true"
+              :collapsed="true"
+            >
             <Chart type="bar" :data="stackedData" :options="stackedOptions" />
-          </div>
+             
+            </Panel>
         </div>
-        <!-- <div class="col-12 md:col-6 lg:col-6 xl:col-4">
-          <div class="card surface-0 shadow-1 border-round-md px-2">
-            <apexchart
-              width="100%"
-              type="polarArea"
-              :options="options"
-              :series="series"
-            ></apexchart>
-          </div>
-        </div> -->
+
+
       </div>
     </div>
 
@@ -983,6 +1178,7 @@ export default {
   data() {
     return {
       loading: false,
+      collapseds: false,
 
       bigOrganizationList: [],
       bigOrgValue: null, //fake
@@ -1017,6 +1213,8 @@ export default {
       allCadry3045: 0,
       allCadry45: 0,
       alleducation_oliy: 0,
+      alleducation_ortamaxsus: 0,
+      alleducation_orta: 0,
       meds: 0,
       mednotCount: 0,
       vacations: 0,
@@ -1026,6 +1224,10 @@ export default {
       BlackList: 0,
       not_staff_files: 0,
       not_staff_filesChart: 0,
+
+      not_passport_files: 0,
+      upgrades_count: 0,
+      status_bedroom: 0,
 
       // Chart Details
       allManChart: 0,
@@ -1048,44 +1250,6 @@ export default {
       careersCount: 0,
       relativesCount: 0,
 
-      items: [
-        {
-          label: "Ko'rish",
-          icon: "pi pi-eye",
-        },
-        {
-          label: "Yopish",
-          icon: "pi pi-eye-slash",
-        },
-      ],
-      multiAxisOptions: {
-        plugins: {
-          legend: {
-            display: false,
-          },
-          title: {
-            display: true,
-            text: "Xodimlarni ma'lumotiga ko'ra ",
-            color: "#42A5F5",
-          },
-          tooltip: {
-            mode: "index",
-            intersect: true,
-          },
-        },
-        responsive: true,
-      },
-      multiAxisData: {
-        labels: ["Oliy", "O'rta maxsus", "O'rta"],
-        datasets: [
-          {
-            label: "Xodimlar soni",
-            backgroundColor: ["#1c84ee", "#F59E0B", "#22C55E"],
-            data: [13900, 27215, 39178],
-          },
-        ],
-        borderWidth: 1,
-      },
 
       aducationForeignOption: {
         plugins: {
@@ -1215,66 +1379,6 @@ export default {
           },
         },
       },
-      options: {
-        series: [42, 47, 52],
-        chart: {
-          width: 380,
-          type: "polarArea",
-          zoom: {
-            type: "x",
-            enabled: true,
-            autoScaleYaxis: true,
-          },
-          toolbar: {
-            autoSelected: "zoom",
-          },
-        },
-        title: {
-          text: "Xodimlarning ma'lumoti bo'yicha",
-          align: "center",
-          style: {
-            fontSize: "14px",
-            fontWeight: "bold",
-            fontFamily: undefined,
-            color: "#2E93fA",
-          },
-        },
-        labels: ["Oliy", "O'rta", "O'rta maxsus"],
-        fill: {
-          opacity: 1,
-        },
-        stroke: {
-          width: 1,
-        },
-
-        yaxis: {
-          show: false,
-        },
-        legend: {
-          position: "top",
-        },
-        plotOptions: {
-          polarArea: {
-            rings: {
-              strokeWidth: 0.5,
-            },
-            spokes: {
-              strokeWidth: 0.5,
-            },
-          },
-        },
-        theme: {
-          mode: 'light', 
-      palette: 'palette10', 
-      monochrome: {
-          enabled: false,
-          color: '#fff',
-          shadeTo: 'light',
-          shadeIntensity: 0.2
-      },
-        },
-      },
-      series: [42, 47, 52],
     };
   },
   computed: {
@@ -1330,22 +1434,20 @@ export default {
           this.allDeleteCadries = res.data.delete_cadries;
           this.allBirthdayCadries = res.data.birthdays;
           this.allCadry30 = res.data.cadry30;
-          this.allCadry3045 = res.data.cadry45 - res.data.cadry30;
-          this.allCadry45 = res.data.all_cadries_count - res.data.cadry45;
+          this.allCadry3045 = res.data.cadry3045;
+          this.allCadry45 = res.data.cadry45;
           this.careersCount = res.data.careersCount;
           this.relativesCount = res.data.relativesCount;
 
           // careersCount: 0,
           // relativesCount:0,
+          this.not_passport_files = res.data.not_passport_files;
+          this.upgrades_count = res.data.upgrades_count;
+          this.status_bedroom = res.data.status_bedroom;
 
           this.alleducation_oliy = res.data.highly_special_educations;
-          this.multiAxisData.datasets[0].data[0] =
-            res.data.highly_special_educations;
-          this.multiAxisData.datasets[0].data[1] =
-            res.data.medium_special_cadries;
-          this.multiAxisData.datasets[0].data[2] =
-            res.data.secondary_special_cadries;
-
+          this.alleducation_ortamaxsus = res.data.medium_special_cadries;
+          this.alleducation_orta = res.data.secondary_special_cadries;
           this.aducationForeign.datasets[0].data[0] = res.data.abroads[0].count;
           this.aducationForeign.datasets[0].data[1] = res.data.abroads[1].count;
           this.aducationForeign.datasets[0].data[2] = res.data.abroads[2].count;
@@ -1477,18 +1579,7 @@ export default {
           this.pensionWomanChart = Math.floor(
             (res.data.retired_WoMan / res.data.all_cadries_count) * 100
           );
-          this.allCadry30Chart = Math.floor(
-            (res.data.cadry30 / res.data.all_cadries_count) * 100
-          );
-          this.allCadry3045Chart = Math.floor(
-            (this.allCadry3045 / res.data.all_cadries_count) * 100
-          );
-          this.allCadry45Chart = Math.floor(
-            (res.data.cadry45 / res.data.all_cadries_count) * 100
-          );
-          this.alleducation_oliyChart = Math.floor(
-            (res.data.education_oliy / res.data.all_cadries_count) * 100
-          );
+         
           this.controlLoader(false);
         })
         .catch((error) => {
@@ -1666,7 +1757,7 @@ export default {
   },
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .all_cadry_card {
   background-image: url("https://www.primefaces.org/avalon-vue/layout/images/dashboard/effect-1.svg");
   background-position: right;
@@ -1674,6 +1765,7 @@ export default {
   background-repeat: no-repeat;
   background-color: #0dcaf0 !important;
 }
+
 .all_vakant_card {
   background-image: url("https://www.primefaces.org/avalon-vue/layout/images/dashboard/effect-3.svg");
   background-position: right;

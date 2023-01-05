@@ -395,7 +395,7 @@
           <div class="col-12 xl:col-6 flex justify-content-end">
             <text-button
               class="w-16rem"
-              :text="'Yangi lavozimga tayinlash'"
+              :text="'O\'rindosh lavozimga Tayinlash'"
               @click="addItemStuff()"
             ></text-button>
           </div>
@@ -411,9 +411,9 @@
                     Sana
                   </td>
                   <td
-                    width="60%"
+                    width="50%"
                     class="uppercase text-base font-semibold"
-                    style="min-width: 60%"
+                    style="min-width: 50%"
                   >
                     Lavozim nomi
                   </td>
@@ -425,16 +425,16 @@
                     Stavka
                   </td>
                   <td
-                    width="10%"
+                    width="15%"
                     class="uppercase text-base font-semibold text-center"
-                    style="min-width: 10%"
+                    style="min-width:15%"
                   >
                     Faoliyat turi
                   </td>
                   <td
-                    width="10%"
-                    class="uppercase text-base font-semibold text-center"
-                    style="min-width: 10%"
+                    width="20%"
+                    class="uppercase text-base font-semibold text-center py-1 "
+                    style="min-width:20%"
                   ></td>
                 </tr>
                 <tbody class="pt-4">
@@ -443,22 +443,20 @@
                     :key="item.id"
                     class="border-1 border-300 my-1 w-full"
                   >
-                    <td class="text-lg font-semibold text-blue-600 text-center">
+                    <td class="text-sm font-semibold text-blue-600 text-center">
                       {{ formatter.arrowDateFormat(item.staff_date) }}
                     </td>
-                    <td class="text-lg font-semibold text-blue-600 text-left">
+                    <td class="text-base font-semibold text-blue-600 text-left">
                       {{ item.staff_full }}
                     </td>
-                    <td class="text-lg font-semibold text-blue-600 text-center">
+                    <td class="text-base font-semibold text-blue-600 text-center">
                       {{ item.rate }}
                     </td>
-                    <td class="text-lg font-semibold text-blue-600 text-center">
+                    <td class="text-base font-semibold text-blue-600 text-center">
                       {{ item.staff_status }}
                     </td>
                     <td class="flex gap-2">
-                      <edit-button
-                        @click="editItemStuff(item.id)"
-                      ></edit-button>
+                      <Button label="Lavozimni o'zgartirish"  @click="editItemStuff(item.id)" class="text-sm font-light py-2" icon="pi pi-user-edit" />
                       <delete-button
                         v-if="stuffList.length > 1"
                         :deleteItem="item.id"
@@ -663,12 +661,24 @@
             <h6 class="uppercase text-lg text-blue-500 font-medium">
               {{
                 stuffDialogType
-                  ? "Yangi lavozimga tayinlash"
+                  ? "O'rindosh lavozimga tayinlash"
                   : "Lavozimni o'zgartirish"
               }}
             </h6>
           </template>
           <div class="grid">
+
+            <div class="col-12" v-show="!stuffDialogType">
+              <Checkbox
+                inputId="binary"
+                v-model="status"
+                :binary="true"
+              />
+              <span class="pl-2 text-500">Lavozimni o'zgartirish</span>
+            </div>
+
+
+
             <div class="col-12 xl:col-6">
               <h6 class="mb-2 pl-2 text-500">
                 Bo'limni tanlang ({{ stuff_departmentList.length }})
@@ -756,11 +766,11 @@
                 type="number"
                 class="w-full font-semibold"
                 placeholder="Kiriting"
-                id="adressStreet"
+                id="stavka"
                 v-model="stuff_plan"
               />
             </div>
-            <div class="col-12" v-show="stuffDialogType">
+            <div class="col-12" v-show="stuffDialogType || status">
               <div class="grid py-0">
                 <div class="xl:col-4 lg:col-4 md:col-4 col-12 py-0">
                   <h6 class="mb-2 pl-2 text-500">Prikaz raqam</h6>
@@ -967,6 +977,7 @@ export default {
       stuff_status: null,
       stuff_plan: 0,
       stuff_date: "",
+      status:false,
       status_sverx: false,
       status_for_decret: false,
       status_decret: false,
@@ -1390,6 +1401,7 @@ export default {
         careerCheck: this.add_career,
         career_id: this.update_career,
         command_number: this.command_number,
+        status:this.status,
       };
       if (!this.stuff_department_Error) {
         if (this.stuffDialogType) {
@@ -1411,7 +1423,6 @@ export default {
               }
             });
         } else {
-          delete data.command_number;
           let id = this.cadry_stuff_id;
           employeeService
             .edit_CadryStuff({ id, data })

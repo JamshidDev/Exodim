@@ -72,11 +72,11 @@
         </div>
 
         <div class="col-12">
-          <h6 class="mb-1 font-normal pl-2 text-500">Biriktirilgan korxona</h6>
+          <h6 class="mb-1 font-normal pl-2 text-500">Katta korxona</h6>
           <Dropdown
             id="positionPart"
-            v-model="admin.organization"
-            :options="admin.OrganizationList"
+            v-model="railway_value"
+            :options="railway_List"
             optionLabel="name"
             :filter="true"
             placeholder="Tanlang"
@@ -101,6 +101,35 @@
         </div>
 
         <div class="col-12">
+          <h6 class="mb-1 font-normal pl-2 text-500">Biriktirilgan korxona</h6>
+          <Dropdown
+            id="positionPart"
+            v-model="organization_value"
+            :options="organization_List"
+            optionLabel="name"
+            :filter="true"
+            placeholder="Tanlang"
+            class="w-full"
+          >
+            <template #value="slotProps">
+              <div v-if="slotProps.value">
+                <div class="font-semibold text-green-500">
+                  {{ slotProps.value.name }}
+                </div>
+              </div>
+              <span v-else>
+                {{ slotProps.placeholder }}
+              </span>
+            </template>
+            <template #option="slotProps">
+              <div class="country-item">
+                <div>{{ slotProps.option.name }}</div>
+              </div>
+            </template>
+          </Dropdown>
+        </div>
+
+        <div class="col-12 xl:col-6 lg:col-6">
           <h6 class="mb-1 pl-2 text-500 font-normal">Login</h6>
           <InputText
             type="text"
@@ -111,7 +140,7 @@
             v-model.trim="admin.login"
           />
         </div>
-        <div class="col-12">
+        <div class="col-12 xl:col-6 lg:col-6">
           <h6 class="mb-1 pl-2 text-500 font-normal">Telefon</h6>
           <InputText
             type="text"
@@ -169,6 +198,7 @@
 <script>
 import ProgressBarLoader from "../../../components/loaders/ProgressBarLoader.vue";
 import AdminService from "@/service/servises/AdminService";
+import organizationsService from '@/service/servises/organizationsService'
 export default {
   components: {
     ProgressBarLoader,
@@ -183,13 +213,15 @@ export default {
       admin: {
         RoleList: [],
         role: null,
-        OrganizationList: [],
-        organization: null,
         fullName: null,
         phone: null,
         login: null,
         photo: "",
       },
+      railway_List:[],
+      railway_value:null,
+      organization_List:[],
+      organization_value:null,
     };
   },
   methods: {
@@ -201,14 +233,30 @@ export default {
         console.log(res.data.users);
         this.admin.role = res.data.users.roles;
         this.admin.RoleList = res.data.roles;
-        this.admin.OrganizationList = res.data.organizations;
-        this.admin.organization = res.data.users.organization;
+        this.organization_value= {
+          id :res.data.users.organization.id, 
+          name :res.data.users.organization.name, 
+          order :res.data.users.organization.order, 
+        };
+        this.railway_value = res.data.users.organization.railway;
         this.admin.fullName = res.data.users.name;
         this.admin.phone = res.data.users.phone;
         this.admin.login = res.data.users.email;
         this.admin.photo = res.data.users.photo;
         this.loading = false;
+
+        this.get_Organization(res.data.users.organization.railway.id)
       });
+    },
+    get_Railway(){
+      organizationsService.get_Railway().then((res) =>{
+        this.railway_List = res.data;
+      })
+    },
+    get_Organization(id){
+      organizationsService.get_Organization({railway_id:id}).then((res) =>{
+        this.organization_List = res.data;
+      })
     },
     update_admin_details(){
       this.dialog = false;
@@ -218,8 +266,10 @@ export default {
         email:this.admin.login,
         password:null,
         role_id:this.admin.role.id,
-        organization_id:this.admin.organization.id,
+        organization_id:this.organization_value.id,
+        railway_id:this.railway_value.id,
         phone:this.admin.phone,
+
       }
       AdminService.update_AdminDetails({id:this.admin_id , data:params}).then((res) =>{
         this.$emit('success_update')
@@ -234,14 +284,18 @@ export default {
         email:this.admin.login,
         password:'user123456',
         role_id:this.admin.role.id,
-        organization_id:this.admin.organization.id,
+        organization_id:this.organization_value.id,
+        railway_id:this.railway_value.id,
         phone:this.admin.phone,
       };
       AdminService.update_AdminDetails({id:this.admin_id , data:params}).then((res) =>{
         this.$toast.add({severity:'success', summary: "Admin parol", detail:"Parrol muvofaqiyatli oldingi holatiga qaytarildi", group: 'tl', life: 3000});
       })
-    }
+    },
   },
+  created(){
+    this.get_Railway()
+  }
 };
 </script>
 <style lang="scss">

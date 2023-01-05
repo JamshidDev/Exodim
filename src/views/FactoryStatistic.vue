@@ -154,16 +154,8 @@
                 "
               >
                 <div class="absolute">
-                  <!-- <i
-                    class="
-                      pi pi-eye
-                      text-2xl text-white
-                      cursor-pointer
-                      font-medium
-                    "
-                  ></i> -->
                 </div>
-               
+
                 <h2
                   class="
                     text-center
@@ -197,7 +189,7 @@
                     "
                   ></i>
                 </div>
-               
+
                 <h2
                   class="
                     text-center
@@ -229,7 +221,7 @@
                     "
                   ></i>
                 </div>
-                
+
                 <h2
                   class="
                     text-center
@@ -263,7 +255,7 @@
                     "
                   ></i> -->
                 </div>
-               
+
                 <h2
                   class="
                     text-center
@@ -276,7 +268,7 @@
                     mb-0
                   "
                 >
-                  {{allPlan }}
+                  {{ allPlan }}
                 </h2>
                 <h6 class="text-center text-white mt-1">Shtat birligi</h6>
               </div>
@@ -284,7 +276,7 @@
           </div>
         </div>
 
-        <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
+        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-blue-600 text-sm uppercase font-semibold"
@@ -302,23 +294,59 @@
               ></i> -->
             </div>
             <Divider class="mt-2 mb-1" />
-            <div class="col-12 pb-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase  xl:text-base my-2 font-semibold">Erkaklar - <span class="font-bold text-lg text-blue-500">{{this.allManCadries}}</span> </h6>   <Tag class="px-2 text-sm" rounded :value="`${allManChart}%`"></Tag>
+            <div
+              class="
+                col-12
+                pb-0
+                flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">
+                Erkakalar -
+                <span class="font-bold text-lg text-blue-500">{{
+                  this.allManCadries
+                }}</span>
+              </h6>
+              <Tag
+                class="px-2 text-sm"
+                rounded
+                :value="`${allManChart}%`"
+              ></Tag>
             </div>
-            <div class="col-12 pt-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase  xl:text-base my-2 font-semibold">Ayollar - <span class="font-bold text-lg text-green-500">{{this.allWomanCadries}}</span> </h6>  <Tag class="px-2 text-sm" rounded severity="success" :value="`${allWomanChart}%`"></Tag>
+            <div
+              class="
+                col-12
+                pt-0
+                flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">
+                Ayollar -
+                <span class="font-bold text-lg text-green-500">{{
+                  this.allWomanCadries
+                }}</span>
+              </h6>
+              <Tag
+                class="px-2 text-sm"
+                rounded
+                severity="success"
+                :value="`${allWomanChart}%`"
+              ></Tag>
             </div>
-           
           </div>
         </div>
-        <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
+        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-blue-600 text-sm uppercase font-semibold"
                 >Nafaqa yoshidagi xodimlar</span
               >
             </div>
-            <div class="col-2 flex justify-content-end" @click="goList(4)" >
+            <div class="col-2 flex justify-content-end" @click="goList(4)">
               <i
                 class="
                   pi pi-eye
@@ -329,19 +357,55 @@
               ></i>
             </div>
             <Divider class="mt-2 mb-1" />
-            <div class="col-12 pb-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Erkakalar - <span class="font-bold text-lg text-blue-500">{{this.pensionsMan}}</span> </h6>   <Tag class="px-2 text-sm" rounded :value="`${pensionsManChart}%`"></Tag>
+            <div
+              class="
+                col-12
+                pb-0
+                flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">
+                Erkaklar -
+                <span class="font-bold text-lg text-blue-500">{{
+                  this.pensionsMan
+                }}</span>
+              </h6>
+              <Tag
+                class="px-2 text-sm"
+                rounded
+                :value="`${pensionsManChart}%`"
+              ></Tag>
             </div>
-            <div class="col-12 pt-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Ayollar - <span class="font-bold text-lg text-green-500">{{this.pensionWoman}}</span> </h6>  <Tag class="px-2 text-sm" rounded severity="success" :value="`${pensionWomanChart}%`"></Tag>
+            <div
+              class="
+                col-12
+                pt-0
+                flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">
+                Ayollar -
+                <span class="font-bold text-lg text-green-500">{{
+                  this.pensionWoman
+                }}</span>
+              </h6>
+              <Tag
+                class="px-2 text-sm"
+                rounded
+                severity="success"
+                :value="`${pensionWomanChart}%`"
+              ></Tag>
             </div>
-           
           </div>
         </div>
-        <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
+        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
-              <span class="text-blue-600  uppercase text-sm font-semibold"
+              <span class="text-blue-600 uppercase text-sm font-semibold"
                 >Kasanachilar</span
               >
             </div>
@@ -356,23 +420,43 @@
               ></i>
             </div>
             <Divider class="mt-2 mb-1" />
-            <div class="col-12 pb-0 flex justify-content-between align-items-start">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Kasanachi - <span class="font-bold text-lg text-blue-500">{{allContract}}</span> </h6>   
+            <div
+              class="col-12 pb-0 flex justify-content-between align-items-start"
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">
+                Kasanachi -
+                <span class="font-bold text-lg text-blue-500">{{
+                  allContract
+                }}</span>
+              </h6>
             </div>
-            <div class="col-12 pt-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${allContractChart}%`"></Tag>
+            <div
+              class="
+                col-12
+                pt-0
+                flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy</h6>
+              <Tag
+                class="px-2 text-sm"
+                rounded
+                severity="danger"
+                :value="`${allContractChart}%`"
+              ></Tag>
             </div>
-           
           </div>
         </div>
-        <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
+        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-blue-600 text-sm uppercase font-semibold"
                 >Tibbiy ko'rik ma'lumotlari</span
               >
             </div>
-            <div class="col-2 flex justify-content-end"  @click="goList(11)">
+            <div class="col-2 flex justify-content-end" @click="goList(11)">
               <i
                 class="
                   pi pi-eye
@@ -383,17 +467,54 @@
               ></i>
             </div>
             <Divider class="mt-2 mb-1" />
-            <div class="col-12 pb-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Muddati tugaganlar  - <span class="font-bold text-lg text-yellow-500">{{meds}}</span> </h6>   <Tag class="px-2 text-sm" rounded severity="warning" :value="`${medsChart}%`"></Tag>
+            <div
+              class="
+                col-12
+                pb-0
+                flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">
+                Muddati tugaganlar -
+                <span class="font-bold text-lg text-yellow-500">{{
+                  meds
+                }}</span>
+              </h6>
+              <Tag
+                class="px-2 text-sm"
+                rounded
+                severity="warning"
+                :value="`${medsChart}%`"
+              ></Tag>
             </div>
-            <div class="col-12 pt-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Kiritilmaganlar - <span class="font-bold text-lg text-red-500">{{mednotCount}}</span> </h6>  <Tag class="px-2 text-sm" rounded severity="danger" :value="`${mednotCountChart}%`"></Tag>
+            <div
+              class="
+                col-12
+                pt-0
+                flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">
+                Kiritilmaganlar -
+                <span class="font-bold text-lg text-red-500">{{
+                  mednotCount
+                }}</span>
+              </h6>
+              <Tag
+                class="px-2 text-sm"
+                rounded
+                severity="danger"
+                :value="`${mednotCountChart}%`"
+              ></Tag>
             </div>
-           
           </div>
         </div>
 
-        <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
+        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-blue-600 text-sm uppercase font-semibold"
@@ -411,17 +532,53 @@
               ></i>
             </div>
             <Divider class="mt-2 mb-1" />
-            <div class="col-12 pb-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Mehnat ta'tili - <span class="font-bold text-lg text-yellow-500">{{vacations}}</span> </h6>   <Tag class="px-2 text-sm" rounded severity="warning" :value="`${vacationsChart}%`"></Tag>
+            <div
+              class="
+                col-12
+                pb-0
+                flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">
+                Mehnat ta'tili -
+                <span class="font-bold text-lg text-yellow-500">{{
+                  vacations
+                }}</span>
+              </h6>
+              <Tag
+                class="px-2 text-sm"
+                rounded
+                severity="warning"
+                :value="`${vacationsChart}%`"
+              ></Tag>
             </div>
-            <div class="col-12 pt-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Bola parvarish ta'tili - <span class="font-bold text-lg text-red-500">{{vacations_Dec}}</span> </h6>  <Tag class="px-2 text-sm" rounded severity="danger" :value="`${vacations_DecChart}%`"></Tag>
+            <div
+              class="
+                col-12
+                pt-0
+                flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">
+                Bola parvarish ta'tili -
+                <span class="font-bold text-lg text-red-500">{{
+                  vacations_Dec
+                }}</span>
+              </h6>
+              <Tag
+                class="px-2 text-sm"
+                rounded
+                severity="danger"
+                :value="`${vacations_DecChart}%`"
+              ></Tag>
             </div>
-           
           </div>
         </div>
-
-        <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
+        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-blue-600 text-sm uppercase font-semibold"
@@ -439,18 +596,37 @@
               ></i>
             </div>
             <Divider class="mt-2 mb-1" />
-            <div class="col-12 pb-0 flex justify-content-between align-items-start">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Kiritilmaganlar - <span class="font-bold text-lg text-blue-500">{{not_staff_files}}</span> </h6>   
+            <div
+              class="col-12 pb-0 flex justify-content-between align-items-start"
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">
+                Kiritilmaganlar -
+                <span class="font-bold text-lg text-blue-500">{{
+                  not_staff_files
+                }}</span>
+              </h6>
             </div>
-            <div class="col-12 pt-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${not_staff_filesChart}%`"></Tag>
+            <div
+              class="
+                col-12
+                pt-0
+                flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy</h6>
+              <Tag
+                class="px-2 text-sm"
+                rounded
+                severity="danger"
+                :value="`${not_staff_filesChart}%`"
+              ></Tag>
             </div>
-           
           </div>
         </div>
 
-
-        <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
+        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-blue-600 text-sm uppercase font-semibold"
@@ -468,18 +644,36 @@
               ></i>
             </div>
             <Divider class="mt-2 mb-1" />
-            <div class="col-12 pb-0 flex justify-content-between align-items-start">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Kirirtilmaganlar - <span class="font-bold text-lg text-blue-500">{{careersCount}}</span> </h6>   
+            <div
+              class="col-12 pb-0 flex justify-content-between align-items-start"
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">
+                Kirirtilmaganlar -
+                <span class="font-bold text-lg text-blue-500">{{
+                  careersCount
+                }}</span>
+              </h6>
             </div>
-            <div class="col-12 pt-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${careersCountChart}%`"></Tag>
+            <div
+              class="
+                col-12
+                pt-0
+                flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy</h6>
+              <Tag
+                class="px-2 text-sm"
+                rounded
+                severity="danger"
+                :value="`${careersCountChart}%`"
+              ></Tag>
             </div>
-           
           </div>
         </div>
-
-
-        <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
+        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-blue-600 text-sm uppercase font-semibold"
@@ -497,17 +691,37 @@
               ></i>
             </div>
             <Divider class="mt-2 mb-1" />
-            <div class="col-12 pb-0 flex justify-content-between align-items-start">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Kirirtilmaganlar - <span class="font-bold text-lg text-blue-500">{{relativesCount}}</span> </h6>   
+            <div
+              class="col-12 pb-0 flex justify-content-between align-items-start"
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">
+                Kirirtilmaganlar -
+                <span class="font-bold text-lg text-blue-500">{{
+                  relativesCount
+                }}</span>
+              </h6>
             </div>
-            <div class="col-12 pt-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${relativesCountChart}%`"></Tag>
+            <div
+              class="
+                col-12
+                pt-0
+                flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy</h6>
+              <Tag
+                class="px-2 text-sm"
+                rounded
+                severity="danger"
+                :value="`${relativesCountChart}%`"
+              ></Tag>
             </div>
-           
           </div>
         </div>
 
-        <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
+        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-blue-600 text-sm uppercase font-semibold"
@@ -516,7 +730,6 @@
             </div>
             <div class="col-2 flex justify-content-end" @click="goList(2)">
               <i
-              
                 class="
                   pi pi-eye
                   text-lg text-blue-600
@@ -526,16 +739,36 @@
               ></i>
             </div>
             <Divider class="mt-2 mb-1" />
-            <div class="col-12 pb-0 flex justify-content-between align-items-start">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Xodimlar soni - <span class="font-bold text-lg text-blue-500">{{allBirthdayCadries}}</span> </h6>   
+            <div
+              class="col-12 pb-0 flex justify-content-between align-items-start"
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">
+                Xodimlar soni -
+                <span class="font-bold text-lg text-blue-500">{{
+                  allBirthdayCadries
+                }}</span>
+              </h6>
             </div>
-            <div class="col-12 pt-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${allBirthdayCadriesChart}%`"></Tag>
+            <div
+              class="
+                col-12
+                pt-0
+                flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy</h6>
+              <Tag
+                class="px-2 text-sm"
+                rounded
+                severity="danger"
+                :value="`${allBirthdayCadriesChart}%`"
+              ></Tag>
             </div>
-           
           </div>
         </div>
-        <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
+        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-green-500 text-sm uppercase font-semibold"
@@ -553,16 +786,36 @@
               ></i>
             </div>
             <Divider class="mt-2 mb-1" />
-            <div class="col-12 pb-0 flex justify-content-between align-items-start">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Xodimlar soni - <span class="font-bold text-lg text-blue-500">{{allNewCadries}}</span> </h6>   
+            <div
+              class="col-12 pb-0 flex justify-content-between align-items-start"
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">
+                Xodimlar soni -
+                <span class="font-bold text-lg text-blue-500">{{
+                  allNewCadries
+                }}</span>
+              </h6>
             </div>
-            <div class="col-12 pt-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${allNewCadriesChart}%`"></Tag>
+            <div
+              class="
+                col-12
+                pt-0
+                flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy</h6>
+              <Tag
+                class="px-2 text-sm"
+                rounded
+                severity="danger"
+                :value="`${allNewCadriesChart}%`"
+              ></Tag>
             </div>
-           
           </div>
         </div>
-        <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
+        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-red-600 text-sm uppercase font-semibold"
@@ -580,16 +833,36 @@
               ></i>
             </div>
             <Divider class="mt-2 mb-1" />
-            <div class="col-12 pb-0 flex justify-content-between align-items-start">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Xodimlar soni - <span class="font-bold text-lg text-blue-500">{{allDeleteCadries}}</span> </h6>   
+            <div
+              class="col-12 pb-0 flex justify-content-between align-items-start"
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">
+                Xodimlar soni -
+                <span class="font-bold text-lg text-blue-500">{{
+                  allDeleteCadries
+                }}</span>
+              </h6>
             </div>
-            <div class="col-12 pt-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${allDeleteCadriesChart}%`"></Tag>
+            <div
+              class="
+                col-12
+                pt-0
+                flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy</h6>
+              <Tag
+                class="px-2 text-sm"
+                rounded
+                severity="danger"
+                :value="`${allDeleteCadriesChart}%`"
+              ></Tag>
             </div>
-           
           </div>
         </div>
-        <div class="col-12 sm:col-6  md:col-6 lg:col-4 xl:col-3 p-3">
+        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
               <span class="text-600 text-sm uppercase font-semibold"
@@ -607,53 +880,279 @@
               ></i>
             </div>
             <Divider class="mt-2 mb-1" />
-            <div class="col-12 pb-0 flex justify-content-between align-items-start">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Xodimlar soni - <span class="font-bold text-blue-500">{{BlackList}}</span> </h6>   
+            <div
+              class="col-12 pb-0 flex justify-content-between align-items-start"
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">
+                Xodimlar soni -
+                <span class="font-bold text-blue-500">{{ BlackList }}</span>
+              </h6>
             </div>
-            <div class="col-12 pt-0 flex justify-content-between align-items-center">
-              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy </h6>  <Tag class="px-2 text-sm " rounded severity="danger" :value="`${BlackListChart}%`"></Tag>
+            <div
+              class="
+                col-12
+                pt-0
+                flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <h6 class="uppercase xl:text-base my-2 font-semibold">Umumiy</h6>
+              <Tag
+                class="px-2 text-sm"
+                rounded
+                severity="danger"
+                :value="`${BlackListChart}%`"
+              ></Tag>
             </div>
-           
+          </div>
+        </div>
+
+        <div class="col-12 sm:col-6 md:col-6 lg:col-6 xl:col-3 p-3">
+          <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
+            <div class="col-10">
+              <span class="text-blue-600 text-sm uppercase font-semibold"
+                >Pasport</span
+              >
+            </div>
+            <div class="col-2 flex justify-content-end" @click="goList(20)">
+              <i
+                class="
+                  pi pi-eye
+                  text-lg text-blue-600
+                  cursor-pointer
+                  font-medium
+                "
+              ></i>
+            </div>
+            <Divider class="mt-2 mb-1" />
+            <div
+              class="
+                col-12
+                mb-5
+                flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <img
+                style="width: 80px"
+                src="../../src/assets/picture/passport.png"
+                alt=""
+              />
+              <div class="text-4xl my-2 font-bold text-center text-green-700">
+                {{ not_passport_files }}
+              </div>
+            </div>
+          </div>
+        </div>
+       
+        <div class="col-12 sm:col-6 md:col-6 lg:col-6 xl:col-3 p-3">
+          <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
+            <div class="col-10">
+              <span class="text-blue-600 text-sm uppercase font-semibold"
+                >Malaka oshirish</span
+              >
+            </div>
+            <div class="col-2 flex justify-content-end" @click="goList(20)">
+              <i
+                class="
+                  pi pi-eye
+                  text-lg text-blue-600
+                  cursor-pointer
+                  font-medium
+                "
+              ></i>
+            </div>
+            <Divider class="mt-2 mb-1" />
+            <div
+              class="
+                col-12
+                mb-4
+                flex
+                justify-content-between
+                align-items-center
+              "
+            >
+              <img
+                style="width: 80px"
+                src="../../src/assets/picture/management.png"
+                alt=""
+              />
+              <div class="text-4xl my-2 font-bold text-center  flex flex-column">
+                <span class="block text-blue-700">{{ upgrades_count }}</span>
+                <span class="block text-green-700">{{ status_bedroom }}</span>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 sm:col-6 md:col-6 lg:col-6 xl:col-3 p-3">
+          <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
+            <div class="col-10">
+              <span class="text-green-500 text-sm uppercase font-semibold"
+                >Ma'lumoti</span
+              >
+            </div>
+            <div class="col-2 flex justify-content-end" >
+              
+            </div>
+            <Divider class="mt-2 mb-1" />
+            <div
+              class="
+                col-12
+                mb-1
+                flex
+                justify-content-between
+                font-bold
+                uppercase
+                text-base
+              "
+            >
+            <span class="text-600  text-base  block">Oliy</span>
+            <span class="text-blue-600  text-base  block">{{ alleducation_oliy}} </span>
+            </div>
+
+            <div
+              class="
+                col-12
+                mb-1
+                flex
+                justify-content-between
+                font-bold
+                uppercase
+                text-base
+              "
+            >
+            <span class="text-600  text-base  block">O'rta maxsus</span>
+            <span class="text-yellow-600  text-base  block">{{ alleducation_ortamaxsus}} </span>
+            </div>
+
+
+            <div
+              class="
+                col-12
+                mb-4
+                flex
+                justify-content-between
+                font-bold
+                uppercase
+                text-base
+              "
+            >
+            <span class="text-600  text-base  block">O'rta</span>
+            <span class="text-red-600  text-base  block">{{ alleducation_orta}} </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 sm:col-6 md:col-6 lg:col-6 xl:col-3 p-3">
+          <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
+            <div class="col-10">
+              <span class="text-green-500 text-sm uppercase font-semibold"
+                >Yoshi bo'yicha</span
+              >
+            </div>
+            <div class="col-2 flex justify-content-end" >
+              
+            </div>
+            <Divider class="mt-2 mb-1" />
+            <div
+              class="
+                col-12
+                mb-1
+                flex
+                justify-content-between
+                font-bold
+                uppercase
+                text-base
+              "
+            >
+            <span class="text-600  text-base  block">30 dan kichik</span>
+            <span class="text-blue-600  text-base  block">{{ allCadry30}} </span>
+            </div>
+
+            <div
+              class="
+                col-12
+                mb-1
+                flex
+                justify-content-between
+                font-bold
+                uppercase
+                text-base
+              "
+            >
+            <span class="text-600  text-base  block">30 va 45</span>
+            <span class="text-yellow-600  text-base  block">{{allCadry3045}} </span>
+            </div>
+
+
+            <div
+              class="
+                col-12
+                mb-4
+                flex
+                justify-content-between
+                font-bold
+                uppercase
+                text-base
+              "
+            >
+            <span class="text-600  text-base  block">45 dan katta</span>
+            <span class="text-red-600  text-base  block">{{ allCadry45}} </span>
+            </div>
           </div>
         </div>
 
 
-
         <div class="col-12 md:col-6 lg:col-6 xl:col-4">
-          <div class="card surface-0 shadow-1 border-round-md px-2">
-            <Chart
-              type="bar"
-              :data="multiAxisData"
-              :options="multiAxisOptions"
-            />
-          </div>
-        </div>
-        <div class="col-12 md:col-6 lg:col-6 xl:col-4">
-          <div class="card surface-0 shadow-1 border-round-md px-2">
+          <Panel
+              header="Xorijda ta'lim olganlar"
+              class="card surface-0 shadow-1 border-round-md"
+              :toggleable="true"
+              :collapsed="true"
+            >
             <Chart
               type="bar"
               :data="aducationForeign"
               :options="aducationForeignOption"
             />
-          </div>
+             
+            </Panel>
         </div>
+
+
         <div class="col-12 md:col-6 lg:col-6 xl:col-4">
-          <div class="card surface-0 shadow-1 border-round-md px-2">
+          <Panel
+              header="Davlat akademiyasi"
+              class="card surface-0 shadow-1 border-round-md"
+              :toggleable="true"
+              :collapsed="true"
+            >
             <Chart
               type="bar"
               :data="govermentAcademy"
               :options="govermentAcademyOption"
             />
-          </div>
-        </div>
-        <div class="col-12 md:col-6 lg:col-6 xl:col-4">
-          <div class="card surface-0 shadow-1 border-round-md px-2">
-            <Chart type="bar" :data="stackedData" :options="stackedOptions" />
-          </div>
+             
+            </Panel>
         </div>
 
-        
-     
+        <div class="col-12 md:col-6 lg:col-6 xl:col-4">
+          <Panel
+              header="Oylik hisobot"
+              class="card surface-0 shadow-1 border-round-md"
+              :toggleable="true"
+              :collapsed="true"
+            >
+            <Chart type="bar" :data="stackedData" :options="stackedOptions" />
+             
+            </Panel>
+        </div>
+
+
       </div>
     </div>
     <div class="col-12" v-show="loading">
@@ -675,6 +1174,7 @@ export default {
   data() {
     return {
       loading: false,
+      collapseds: false,
 
       bigOrganizationList: [],
       bigOrgValue: null, //fake
@@ -709,6 +1209,8 @@ export default {
       allCadry3045: 0,
       allCadry45: 0,
       alleducation_oliy: 0,
+      alleducation_ortamaxsus: 0,
+      alleducation_orta: 0,
       meds: 0,
       mednotCount: 0,
       vacations: 0,
@@ -716,9 +1218,12 @@ export default {
       vacationsChart: 0,
       vacations_DecChart: 0,
       BlackList: 0,
-      not_staff_files:0,
-      not_staff_filesChart:0,
+      not_staff_files: 0,
+      not_staff_filesChart: 0,
 
+      not_passport_files: 0,
+      upgrades_count: 0,
+      status_bedroom: 0,
 
       // Chart Details
       allManChart: 0,
@@ -729,53 +1234,18 @@ export default {
       allCadry3045Chart: 0,
       allCadry45Chart: 0,
       alleducation_oliyChart: 0,
-      allContractChart:0,
-      medsChart:0,
-      mednotCountChart:0,
-      careersCountChart:0,
-      relativesCountChart:0,
-      allBirthdayCadriesChart:0,
-      allNewCadriesChart:0,
-      allDeleteCadriesChart:0,
-      BlackListChart:0,
-
-
-
-
-      selectedCountry: null,
-
+      allContractChart: 0,
+      medsChart: 0,
+      mednotCountChart: 0,
+      careersCountChart: 0,
+      relativesCountChart: 0,
+      allBirthdayCadriesChart: 0,
+      allNewCadriesChart: 0,
+      allDeleteCadriesChart: 0,
+      BlackListChart: 0,
       careersCount: 0,
       relativesCount: 0,
 
-      
-      multiAxisOptions: {
-        plugins: {
-          legend: {
-            display: false,
-          },
-          title: {
-            display: true,
-            text: "Xodimlarni ma'lumotiga ko'ra ",
-            color: "#42A5F5",
-          },
-          tooltip: {
-            mode: "index",
-            intersect: true,
-          },
-        },
-        responsive: true,
-      },
-      multiAxisData: {
-        labels: ["Oliy", "O'rta maxsus", "O'rta"],
-        datasets: [
-          {
-            label: "Xodimlar soni",
-            backgroundColor: ["#1c84ee", "#F59E0B", "#22C55E"],
-            data: [13900, 27215, 39178],
-          },
-        ],
-        borderWidth: 1,
-      },
 
       aducationForeignOption: {
         plugins: {
@@ -936,22 +1406,20 @@ export default {
           this.allDeleteCadries = res.data.delete_cadries;
           this.allBirthdayCadries = res.data.birthdays;
           this.allCadry30 = res.data.cadry30;
-          this.allCadry3045 = res.data.cadry45 - res.data.cadry30;
-          this.allCadry45 = res.data.all_cadries_count - res.data.cadry45;
+          this.allCadry3045 = res.data.cadry3045;
+          this.allCadry45 = res.data.cadry45;
           this.careersCount = res.data.careersCount;
           this.relativesCount = res.data.relativesCount;
 
-          careersCount: 0,
-            // relativesCount:0,
+          // careersCount: 0,
+          // relativesCount:0,
+          this.not_passport_files = res.data.not_passport_files;
+          this.upgrades_count = res.data.upgrades_count;
+          this.status_bedroom = res.data.status_bedroom;
 
-            (this.alleducation_oliy = res.data.highly_special_educations);
-          this.multiAxisData.datasets[0].data[0] =
-            res.data.highly_special_educations;
-          this.multiAxisData.datasets[0].data[1] =
-            res.data.medium_special_cadries;
-          this.multiAxisData.datasets[0].data[2] =
-            res.data.secondary_special_cadries;
-
+          this.alleducation_oliy = res.data.highly_special_educations;
+          this.alleducation_ortamaxsus = res.data.medium_special_cadries;
+          this.alleducation_orta = res.data.secondary_special_cadries;
           this.aducationForeign.datasets[0].data[0] = res.data.abroads[0].count;
           this.aducationForeign.datasets[0].data[1] = res.data.abroads[1].count;
           this.aducationForeign.datasets[0].data[2] = res.data.abroads[2].count;
@@ -1021,7 +1489,7 @@ export default {
           this.meds = res.data.meds;
           this.mednotCount = res.data.mednotCount;
           this.not_staff_files = res.data.not_staff_files;
-          this.not_staff_filesChart =  Math.floor(
+          this.not_staff_filesChart = Math.floor(
             (res.data.not_staff_files / res.data.all_cadries_count) * 100
           );
 
@@ -1056,8 +1524,6 @@ export default {
             (res.data.black_list_cadries / res.data.all_cadries_count) * 100
           );
 
-          
-
           this.vacations = res.data.vacations;
           this.vacations_Dec = res.data.vacations_decret;
 
@@ -1073,7 +1539,6 @@ export default {
             (res.data.contract_cadries / res.data.all_cadries_count) * 100
           );
 
-
           this.BlackList = res.data.black_list_cadries;
 
           this.allManChart = Math.floor(
@@ -1086,24 +1551,11 @@ export default {
           this.pensionWomanChart = Math.floor(
             (res.data.retired_WoMan / res.data.all_cadries_count) * 100
           );
-          this.allCadry30Chart = Math.floor(
-            (res.data.cadry30 / res.data.all_cadries_count) * 100
-          );
-          this.allCadry3045Chart = Math.floor(
-            (this.allCadry3045 / res.data.all_cadries_count) * 100
-          );
-          this.allCadry45Chart = Math.floor(
-            (res.data.cadry45 / res.data.all_cadries_count) * 100
-          );
-          this.alleducation_oliyChart = Math.floor(
-            (res.data.education_oliy / res.data.all_cadries_count) * 100
-          );
-
+         
           this.controlLoader(false);
         })
         .catch((error) => {
           console.log(error);
-          this.controlLoader(false);
         });
     },
 
@@ -1122,28 +1574,26 @@ export default {
           this.allIronNote = 0;
           this.allManCadries = res.data.all_man_cadries;
           this.allWomanCadries = res.data.all_woman_cadries;
-          this.pensionWoman = res.data.retired_Woman;
+          this.pensionWoman = res.data.retired_WoMan;
           this.pensionsMan = res.data.retired_Man;
           this.allNewCadries = res.data.newcadries;
           this.allDeleteCadries = res.data.delete_cadries;
           this.allBirthdayCadries = res.data.birthdays;
           this.allCadry30 = res.data.cadry30;
-          this.allCadry3045 = res.data.cadry45 - res.data.cadry30;
-          this.allCadry45 = res.data.all_cadries_count - res.data.cadry45;
+          this.allCadry3045 = res.data.cadry3045;
+          this.allCadry45 = res.data.cadry45;
           this.careersCount = res.data.careersCount;
           this.relativesCount = res.data.relativesCount;
 
-          careersCount: 0,
-            // relativesCount:0,
+          // careersCount: 0,
+          // relativesCount:0,
+          this.not_passport_files = res.data.not_passport_files;
+          this.upgrades_count = res.data.upgrades_count;
+          this.status_bedroom = res.data.status_bedroom;
 
-            (this.alleducation_oliy = res.data.highly_special_educations);
-          this.multiAxisData.datasets[0].data[0] =
-            res.data.highly_special_educations;
-          this.multiAxisData.datasets[0].data[1] =
-            res.data.medium_special_cadries;
-          this.multiAxisData.datasets[0].data[2] =
-            res.data.secondary_special_cadries;
-
+          this.alleducation_oliy = res.data.highly_special_educations;
+          this.alleducation_ortamaxsus = res.data.medium_special_cadries;
+          this.alleducation_orta = res.data.secondary_special_cadries;
           this.aducationForeign.datasets[0].data[0] = res.data.abroads[0].count;
           this.aducationForeign.datasets[0].data[1] = res.data.abroads[1].count;
           this.aducationForeign.datasets[0].data[2] = res.data.abroads[2].count;
@@ -1212,6 +1662,10 @@ export default {
 
           this.meds = res.data.meds;
           this.mednotCount = res.data.mednotCount;
+          this.not_staff_files = res.data.not_staff_files;
+          this.not_staff_filesChart = Math.floor(
+            (res.data.not_staff_files / res.data.all_cadries_count) * 100
+          );
 
           this.medsChart = Math.floor(
             (res.data.meds / res.data.all_cadries_count) * 100
@@ -1244,8 +1698,6 @@ export default {
             (res.data.black_list_cadries / res.data.all_cadries_count) * 100
           );
 
-          
-
           this.vacations = res.data.vacations;
           this.vacations_Dec = res.data.vacations_decret;
 
@@ -1261,7 +1713,6 @@ export default {
             (res.data.contract_cadries / res.data.all_cadries_count) * 100
           );
 
-
           this.BlackList = res.data.black_list_cadries;
 
           this.allManChart = Math.floor(
@@ -1272,27 +1723,13 @@ export default {
             (res.data.retired_Man / res.data.all_cadries_count) * 100
           );
           this.pensionWomanChart = Math.floor(
-            (res.data.retired_Woman / res.data.all_cadries_count) * 100
+            (res.data.retired_WoMan / res.data.all_cadries_count) * 100
           );
-          this.allCadry30Chart = Math.floor(
-            (res.data.cadry30 / res.data.all_cadries_count) * 100
-          );
-          this.allCadry3045Chart = Math.floor(
-            (this.allCadry3045 / res.data.all_cadries_count) * 100
-          );
-          this.allCadry45Chart = Math.floor(
-            (res.data.cadry45 / res.data.all_cadries_count) * 100
-          );
-          this.alleducation_oliyChart = Math.floor(
-            (res.data.education_oliy / res.data.all_cadries_count) * 100
-          );
-
-
+         
           this.controlLoader(false);
         })
         .catch((error) => {
           console.log(error);
-          this.controlLoader(false);
         });
     },
 
