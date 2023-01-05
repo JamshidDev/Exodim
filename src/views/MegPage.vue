@@ -472,7 +472,7 @@ export default {
       search: {
         search: "",
         page: 1,
-        per_page: 1000,
+        per_page: 10000,
       },
 
       jsonData: [],

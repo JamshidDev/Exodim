@@ -662,7 +662,7 @@
               {{
                 stuffDialogType
                   ? "O'rindosh lavozimga tayinlash"
-                  : "Lavozimni o'zgartirish"
+                  : " Lavozimni o'zgartirish"
               }}
             </h6>
           </template>
@@ -674,7 +674,21 @@
                 v-model="status"
                 :binary="true"
               />
-              <span class="pl-2 text-500">Lavozimni o'zgartirish</span>
+              <span class="pl-2 text-blue-500 font-semibold">Yangi lavozimga tayinlash</span>
+            </div>
+            <div class="col-12" v-show="stuffDialogType || status">
+              <div class="grid py-0">
+                <div class="xl:col-4 lg:col-4 md:col-4 col-12 py-0">
+                  <h6 class="mb-2 pl-2 text-500">Prikaz raqam</h6>
+                  <InputText
+                    type="text"
+                    class="w-full font-semibold"
+                    placeholder="Kiriting"
+                    id="command_number"
+                    v-model="command_number"
+                  />
+                </div>
+              </div>
             </div>
 
 
@@ -770,20 +784,7 @@
                 v-model="stuff_plan"
               />
             </div>
-            <div class="col-12" v-show="stuffDialogType || status">
-              <div class="grid py-0">
-                <div class="xl:col-4 lg:col-4 md:col-4 col-12 py-0">
-                  <h6 class="mb-2 pl-2 text-500">Prikaz raqam</h6>
-                  <InputText
-                    type="text"
-                    class="w-full font-semibold"
-                    placeholder="Kiriting"
-                    id="adressStreet"
-                    v-model="command_number"
-                  />
-                </div>
-              </div>
-            </div>
+           
             <div class="xl:col-4 lg:col-4 md:col-4 col-12">
               <Checkbox
                 inputId="binary"
