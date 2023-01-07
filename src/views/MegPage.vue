@@ -152,7 +152,7 @@
                 class="w-full text-center text-red-500"
               >
                 <Chip
-                label="Tugagan"
+                :label="`Tugagan \n ${Math.abs(slotProps.data.days)} kun oldin`"
                 class="mr-2 mb-2 text-sm text-red-700 bg-red-100 font-bold"
               />
               </div>

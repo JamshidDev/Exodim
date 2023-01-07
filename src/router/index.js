@@ -380,6 +380,36 @@ const routes = [
           return import(/* webpackChunkName: "about" */ "../views/SkillPage/DirectionPage.vue");
         },
       },
+      {
+        path: "/admin/dual",
+        name: "SkillDual",
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: function () {
+          return import(/* webpackChunkName: "about" */ "../views/SkillPage/DualPage.vue");
+        },
+      },
+      {
+        path: "/admin/profession",
+        name: "SkillProfession",
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: function () {
+          return import(/* webpackChunkName: "about" */ "../views/SkillPage/ProfessionPage.vue");
+        },
+      },
+      {
+        path: "/admin/specialties",
+        name: "SkillSpecialties",
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: function () {
+          return import(/* webpackChunkName: "about" */ "../views/SkillPage/SpecialtiesPage.vue");
+        },
+      },
       
       {
         path: "/admin/superadmin",

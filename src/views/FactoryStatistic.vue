@@ -276,6 +276,7 @@
           </div>
         </div>
 
+        <!-- All cadry amount -->
         <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
@@ -284,14 +285,6 @@
               >
             </div>
             <div class="col-2 flex justify-content-end">
-              <!-- <i
-                class="
-                  pi pi-eye
-                  text-lg text-blue-600
-                  cursor-pointer
-                  font-medium
-                "
-              ></i> -->
             </div>
             <Divider class="mt-2 mb-1" />
             <div
@@ -339,6 +332,8 @@
             </div>
           </div>
         </div>
+
+        <!-- Pension cadry amount -->
         <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
@@ -402,6 +397,8 @@
             </div>
           </div>
         </div>
+
+          <!-- Homemaker -->
         <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
@@ -449,6 +446,7 @@
             </div>
           </div>
         </div>
+        <!-- Medical examination -->
         <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
@@ -508,6 +506,7 @@
           </div>
         </div>
 
+        <!-- Cadry vacation -->
         <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
@@ -572,6 +571,8 @@
             </div>
           </div>
         </div>
+
+        <!-- Job description -->
         <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
@@ -620,6 +621,7 @@
           </div>
         </div>
 
+        <!-- Labor activity -->
         <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
@@ -667,6 +669,8 @@
             </div>
           </div>
         </div>
+
+        <!-- Relative  -->
         <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
@@ -715,6 +719,7 @@
           </div>
         </div>
 
+        <!-- Birthday -->
         <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
@@ -762,6 +767,8 @@
             </div>
           </div>
         </div>
+
+        <!-- New cadry -->
         <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
@@ -809,6 +816,8 @@
             </div>
           </div>
         </div>
+
+        <!-- Quit job -->
         <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
@@ -856,6 +865,8 @@
             </div>
           </div>
         </div>
+
+        <!-- Blacklist -->
         <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
@@ -902,10 +913,11 @@
           </div>
         </div>
 
-        <div class="col-12 sm:col-6 md:col-6 lg:col-6 xl:col-3 p-3">
+        <!-- Passport -->
+        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
-              <span class="text-blue-600 text-sm uppercase font-semibold"
+              <span class="text-green-500 text-sm uppercase font-semibold"
                 >Pasport</span
               >
             </div>
@@ -921,28 +933,22 @@
             </div>
             <Divider class="mt-2 mb-1" />
             <div
-              class="
-                col-12
-                mb-5
-                flex
-                justify-content-between
-                align-items-center
-              "
+              class="col-12 pb-2 mb-8  flex align-items-start"
             >
-              <img
-                style="width: 80px"
-                src="../../src/assets/picture/passport.png"
-                alt=""
-              />
-              <div class="text-4xl my-2 font-bold text-center text-green-700">
-                {{ not_passport_files }}
-              </div>
+              <h6 class="uppercase xl:text-base my-2 font-semibold">
+                Yuklanmaganlar soni-
+                <span class="font-bold text-lg text-blue-500">{{
+                  not_passport_files
+                }}</span>
+              </h6>
             </div>
+          
           </div>
         </div>
+
        
         
-
+        <!-- Upgrade -->
         <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
@@ -981,6 +987,7 @@
           </div>
         </div>
 
+          <!-- Education -->
         <div class="col-12 sm:col-6 md:col-6 lg:col-6 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
@@ -1040,6 +1047,7 @@
           </div>
         </div>
 
+        <!-- Cadry by age -->
         <div class="col-12 sm:col-6 md:col-6 lg:col-6 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
@@ -1115,6 +1123,7 @@
              
             </Panel>
         </div>
+
         <div class="col-12 md:col-6 lg:col-6 xl:col-4">
           <Panel
               header="Davlat akademiyasi"

@@ -156,28 +156,26 @@ export default {
                 this.get_adminPermissions("management_qualifications"),
               to: "/admin/skill",
             },
-          ],
-        },
-        {
-          label: "Xatlar",
-          icon: "pi pi-comments",
-          visible: () =>
-            this.get_TitlePermission(["management_qualifications"]),
-
-          items: [
             {
-              label: "Kiruvchi xatlar",
-              icon: "pi pi-comments",
+              label: "Texnikumlar",
+              icon: "pi pi-stop",
               visible: () =>
                 this.get_adminPermissions("management_qualifications"),
-              to: "/admin/message/incoming",
+              to: "/admin/dual",
             },
             {
-              label: "Chiquvchi xatlar",
-              icon: "pi pi-comments",
+              label: "Kasblar",
+              icon: "pi pi-stop",
               visible: () =>
                 this.get_adminPermissions("management_qualifications"),
-              to: "/admin/message/outgoing",
+              to: "/admin/profession",
+            },
+            {
+              label: "Kvalifikatsiyalar",
+              icon: "pi pi-stop",
+              visible: () =>
+                this.get_adminPermissions("management_qualifications"),
+              to: "/admin/specialties",
             },
           ],
         },
@@ -264,19 +262,12 @@ export default {
   background: #0b0d11 !important;
   border-radius: 10px !important;
   cursor: pointer !important;
-
 }
 
-.sidebar_box::-webkit-scrollbar{
+.sidebar_box::-webkit-scrollbar {
   width: 10px;
   border-radius: 10px !important;
 }
-
-
-
-
-
-
 
 .sidebar_menu {
   min-height: calc(100vh - 58px);

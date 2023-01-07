@@ -130,9 +130,11 @@
         </div>
         <div class="col-12 md:col-6 lg:col-3 xl:col-3 flex">
           <Button
-            icon="pi pi-search"
-            label="Qidiruv"
-            class="p-button-secondary w-full mt-4"
+            icon="pi pi-sync"
+            label="Yangilash"
+            class="p-button-success w-full mt-4"
+            :loading="loading"
+            @click="update_Statistic()"
           />
         </div>
       </div>
@@ -278,6 +280,7 @@
           </div>
         </div>
 
+        <!-- All cadry amount -->
         <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
@@ -286,14 +289,6 @@
               >
             </div>
             <div class="col-2 flex justify-content-end">
-              <!-- <i
-                class="
-                  pi pi-eye
-                  text-lg text-blue-600
-                  cursor-pointer
-                  font-medium
-                "
-              ></i> -->
             </div>
             <Divider class="mt-2 mb-1" />
             <div
@@ -341,6 +336,8 @@
             </div>
           </div>
         </div>
+
+        <!-- Pension cadry amount -->
         <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
@@ -404,6 +401,8 @@
             </div>
           </div>
         </div>
+
+          <!-- Homemaker -->
         <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
@@ -451,6 +450,7 @@
             </div>
           </div>
         </div>
+        <!-- Medical examination -->
         <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
@@ -510,6 +510,7 @@
           </div>
         </div>
 
+        <!-- Cadry vacation -->
         <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
@@ -574,6 +575,8 @@
             </div>
           </div>
         </div>
+
+        <!-- Job description -->
         <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
@@ -622,6 +625,7 @@
           </div>
         </div>
 
+        <!-- Labor activity -->
         <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
@@ -669,6 +673,8 @@
             </div>
           </div>
         </div>
+
+        <!-- Relative  -->
         <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
@@ -717,6 +723,7 @@
           </div>
         </div>
 
+        <!-- Birthday -->
         <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
@@ -764,6 +771,8 @@
             </div>
           </div>
         </div>
+
+        <!-- New cadry -->
         <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
@@ -811,6 +820,8 @@
             </div>
           </div>
         </div>
+
+        <!-- Quit job -->
         <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
@@ -858,6 +869,8 @@
             </div>
           </div>
         </div>
+
+        <!-- Blacklist -->
         <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
@@ -904,10 +917,11 @@
           </div>
         </div>
 
-        <div class="col-12 sm:col-6 md:col-6 lg:col-6 xl:col-3 p-3">
+        <!-- Passport -->
+        <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
-              <span class="text-blue-600 text-sm uppercase font-semibold"
+              <span class="text-green-500 text-sm uppercase font-semibold"
                 >Pasport</span
               >
             </div>
@@ -923,28 +937,22 @@
             </div>
             <Divider class="mt-2 mb-1" />
             <div
-              class="
-                col-12
-                mb-5
-                flex
-                justify-content-between
-                align-items-center
-              "
+              class="col-12 pb-2 mb-8  flex align-items-start"
             >
-              <img
-                style="width: 80px"
-                src="../../src/assets/picture/passport.png"
-                alt=""
-              />
-              <div class="text-4xl my-2 font-bold text-center text-green-700">
-                {{ not_passport_files }}
-              </div>
+              <h6 class="uppercase xl:text-base my-2 font-semibold">
+                Yuklanmaganlar soni-
+                <span class="font-bold text-lg text-blue-500">{{
+                  not_passport_files
+                }}</span>
+              </h6>
             </div>
+          
           </div>
         </div>
+
        
         
-
+        <!-- Upgrade -->
         <div class="col-12 sm:col-6 md:col-6 lg:col-4 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
@@ -983,6 +991,7 @@
           </div>
         </div>
 
+          <!-- Education -->
         <div class="col-12 sm:col-6 md:col-6 lg:col-6 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
@@ -1042,6 +1051,7 @@
           </div>
         </div>
 
+        <!-- Cadry by age -->
         <div class="col-12 sm:col-6 md:col-6 lg:col-6 xl:col-3 p-3">
           <div class="grid card surface-0 shadow-6 px-2 pt-2 border-round-md">
             <div class="col-10">
@@ -1117,6 +1127,7 @@
              
             </Panel>
         </div>
+
         <div class="col-12 md:col-6 lg:col-6 xl:col-4">
           <Panel
               header="Davlat akademiyasi"
@@ -1380,6 +1391,7 @@ export default {
       "get_orgValue",
       "get_depValue",
       "get_adminPermissions",
+      "get_statistic",
     ]),
   },
   methods: {
@@ -1390,13 +1402,22 @@ export default {
       "set_bigOrgValue",
       "set_orgValue",
       "set_depValue",
+      "set_statistic",
     ]),
     controlLoader(item) {
       this.loading = item;
     },
 
     get_Statistic(params) {
-      this.controlLoader(true);
+      if(this.get_statistic){
+        this.cashe_statistic()
+      }else{
+       this.update_Statistic()
+      }
+     
+    },
+
+    update_Statistic(){
       this.organization.organization_id = this.get_orgValue
         ? this.get_orgValue.id
         : null;
@@ -1406,170 +1427,14 @@ export default {
       this.organization.department_id = this.get_depValue
         ? this.get_depValue.id
         : null;
-      globalStatistic
+
+      this.controlLoader(true);
+        globalStatistic
         .get_globalStatistic(this.organization)
         .then((res) => {
-          console.log(res.data);
-          this.allCadries = res.data.all_cadries_count;
-          this.allVakant = res.data.vakant;
-          this.allSverx = res.data.sverx;
-          this.allPlan = res.data.plan;
-          this.allContract = res.data.contract_cadries;
-          this.allIronNote = 0;
-          this.allManCadries = res.data.all_man_cadries;
-          this.allWomanCadries = res.data.all_woman_cadries;
-          this.pensionWoman = res.data.retired_WoMan;
-          this.pensionsMan = res.data.retired_Man;
-          this.allNewCadries = res.data.newcadries;
-          this.allDeleteCadries = res.data.delete_cadries;
-          this.allBirthdayCadries = res.data.birthdays;
-          this.allCadry30 = res.data.cadry30;
-          this.allCadry3045 = res.data.cadry3045;
-          this.allCadry45 = res.data.cadry45;
-          this.careersCount = res.data.careersCount;
-          this.relativesCount = res.data.relativesCount;
 
-          // careersCount: 0,
-          // relativesCount:0,
-          this.not_passport_files = res.data.not_passport_files;
-          this.upgrades_count = res.data.upgrades_count;
-          this.status_bedroom = res.data.status_bedroom;
-
-          this.alleducation_oliy = res.data.highly_special_educations;
-          this.alleducation_ortamaxsus = res.data.medium_special_cadries;
-          this.alleducation_orta = res.data.secondary_special_cadries;
-          this.aducationForeign.datasets[0].data[0] = res.data.abroads[0].count;
-          this.aducationForeign.datasets[0].data[1] = res.data.abroads[1].count;
-          this.aducationForeign.datasets[0].data[2] = res.data.abroads[2].count;
-          this.aducationForeign.datasets[0].data[3] = res.data.abroads[3].count;
-
-          this.govermentAcademy.datasets[0].data[0] =
-            res.data.academics[0].count;
-          this.govermentAcademy.datasets[0].data[1] =
-            res.data.academics[1].count;
-          this.govermentAcademy.datasets[0].data[2] =
-            res.data.academics[2].count;
-          this.govermentAcademy.datasets[0].data[3] =
-            res.data.academics[3].count;
-          this.govermentAcademy.datasets[0].data[4] =
-            res.data.academics[4].count;
-
-          this.stackedData.datasets[0].data[0] =
-            res.data.new_caries_year[0].count;
-          this.stackedData.datasets[0].data[1] =
-            res.data.new_caries_year[1].count;
-          this.stackedData.datasets[0].data[2] =
-            res.data.new_caries_year[2].count;
-          this.stackedData.datasets[0].data[3] =
-            res.data.new_caries_year[3].count;
-          this.stackedData.datasets[0].data[4] =
-            res.data.new_caries_year[4].count;
-          this.stackedData.datasets[0].data[5] =
-            res.data.new_caries_year[5].count;
-          this.stackedData.datasets[0].data[6] =
-            res.data.new_caries_year[6].count;
-          this.stackedData.datasets[0].data[7] =
-            res.data.new_caries_year[7].count;
-          this.stackedData.datasets[0].data[8] =
-            res.data.new_caries_year[8].count;
-          this.stackedData.datasets[0].data[9] =
-            res.data.new_caries_year[9].count;
-          this.stackedData.datasets[0].data[10] =
-            res.data.new_caries_year[10].count;
-          this.stackedData.datasets[0].data[11] =
-            res.data.new_caries_year[11].count;
-
-          this.stackedData.datasets[1].data[0] =
-            res.data.delete_cadries_year[0].count;
-          this.stackedData.datasets[1].data[1] =
-            res.data.delete_cadries_year[1].count;
-          this.stackedData.datasets[1].data[2] =
-            res.data.delete_cadries_year[2].count;
-          this.stackedData.datasets[1].data[3] =
-            res.data.delete_cadries_year[3].count;
-          this.stackedData.datasets[1].data[4] =
-            res.data.delete_cadries_year[4].count;
-          this.stackedData.datasets[1].data[5] =
-            res.data.delete_cadries_year[5].count;
-          this.stackedData.datasets[1].data[6] =
-            res.data.delete_cadries_year[6].count;
-          this.stackedData.datasets[1].data[7] =
-            res.data.delete_cadries_year[7].count;
-          this.stackedData.datasets[1].data[8] =
-            res.data.delete_cadries_year[8].count;
-          this.stackedData.datasets[1].data[9] =
-            res.data.delete_cadries_year[9].count;
-          this.stackedData.datasets[1].data[10] =
-            res.data.delete_cadries_year[10].count;
-          this.stackedData.datasets[1].data[11] =
-            res.data.delete_cadries_year[11].count;
-
-          this.meds = res.data.meds;
-          this.mednotCount = res.data.mednotCount;
-          this.not_staff_files = res.data.not_staff_files;
-          this.not_staff_filesChart = Math.floor(
-            (res.data.not_staff_files / res.data.all_cadries_count) * 100
-          );
-
-          this.medsChart = Math.floor(
-            (res.data.meds / res.data.all_cadries_count) * 100
-          );
-          this.mednotCountChart = Math.floor(
-            (res.data.mednotCount / res.data.all_cadries_count) * 100
-          );
-
-          this.careersCountChart = Math.floor(
-            (res.data.careersCount / res.data.all_cadries_count) * 100
-          );
-
-          this.relativesCountChart = Math.floor(
-            (res.data.relativesCount / res.data.all_cadries_count) * 100
-          );
-
-          this.allBirthdayCadriesChart = Math.floor(
-            (res.data.birthdays / res.data.all_cadries_count) * 100
-          );
-
-          this.allNewCadriesChart = Math.floor(
-            (res.data.newcadries / res.data.all_cadries_count) * 100
-          );
-
-          this.allDeleteCadriesChart = Math.floor(
-            (res.data.delete_cadries / res.data.all_cadries_count) * 100
-          );
-
-          this.BlackListChart = Math.floor(
-            (res.data.black_list_cadries / res.data.all_cadries_count) * 100
-          );
-
-          this.vacations = res.data.vacations;
-          this.vacations_Dec = res.data.vacations_decret;
-
-          this.vacationsChart = Math.floor(
-            (res.data.vacations / res.data.all_cadries_count) * 100
-          );
-
-          this.vacations_DecChart = Math.floor(
-            (res.data.vacations_decret / res.data.all_cadries_count) * 100
-          );
-
-          this.allContractChart = Math.floor(
-            (res.data.contract_cadries / res.data.all_cadries_count) * 100
-          );
-
-          this.BlackList = res.data.black_list_cadries;
-
-          this.allManChart = Math.floor(
-            (res.data.all_man_cadries / res.data.all_cadries_count) * 100
-          );
-          this.allWomanChart = 100 - this.allManChart;
-          this.pensionsManChart = Math.floor(
-            (res.data.retired_Man / res.data.all_cadries_count) * 100
-          );
-          this.pensionWomanChart = Math.floor(
-            (res.data.retired_WoMan / res.data.all_cadries_count) * 100
-          );
-         
+          this.set_statistic(res.data)
+          this.cashe_statistic()
           this.controlLoader(false);
         })
         .catch((error) => {
@@ -1642,7 +1507,7 @@ export default {
       this.set_bigOrgValue(event.value);
       this.set_orgValue(null);
       this.set_depValue(null);
-      this.get_Statistic(this.organization);
+      this.update_Statistic()
       this.get_Organization(event.value.id);
       this.set_department([]);
     },
@@ -1650,13 +1515,13 @@ export default {
     changeOrganization(event) {
       this.set_orgValue(event.value);
       this.set_depValue(null);
-      this.get_Statistic(this.organization);
+      this.update_Statistic()
       this.get_Department(event.value.id);
     },
 
     changeDepartment(event) {
       this.set_depValue(event.value);
-      this.get_Statistic(this.organization);
+      this.update_Statistic()
     },
 
     goList(id) {
@@ -1727,7 +1592,17 @@ export default {
         this.$router.push(
           `/admin/view/stuffs/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`
         );
-      } else {
+      } else if (id == 20 && this.get_adminPermissions(permission)) {
+        // Retired Page
+        this.$toast.add({
+          severity: "warn",
+          summary: "Tez orada",
+          detail: "Bu funksiya tez orada ishga tushadi",
+          life: 2000,
+        });
+      }
+      
+      else {
         this.$toast.add({
           severity: "warn",
           summary: "Ruhsat etilmagan",
@@ -1736,6 +1611,169 @@ export default {
         });
       }
     },
+
+    cashe_statistic(){
+      this.allCadries = this.get_statistic.all_cadries_count;
+          this.allVakant = this.get_statistic.vakant;
+          this.allSverx = this.get_statistic.sverx;
+          this.allPlan = this.get_statistic.plan;
+          this.allContract = this.get_statistic.contract_cadries;
+          this.allIronNote = 0;
+          this.allManCadries = this.get_statistic.all_man_cadries;
+          this.allWomanCadries =this.get_statistic.all_woman_cadries;
+          this.pensionWoman = this.get_statistic.retired_WoMan;
+          this.pensionsMan = this.get_statistic.retired_Man;
+          this.allNewCadries = this.get_statistic.newcadries;
+          this.allDeleteCadries = this.get_statistic.delete_cadries;
+          this.allBirthdayCadries = this.get_statistic.birthdays;
+          this.allCadry30 = this.get_statistic.cadry30;
+          this.allCadry3045 = this.get_statistic.cadry3045;
+          this.allCadry45 = this.get_statistic.cadry45;
+          this.careersCount = this.get_statistic.careersCount;
+          this.relativesCount = this.get_statistic.relativesCount;
+
+          // careersCount: 0,
+          // relativesCount:0,
+          this.not_passport_files =this.get_statistic.not_passport_files;
+          this.upgrades_count = this.get_statistic.upgrades_count;
+          this.status_bedroom = this.get_statistic.status_bedroom;
+
+          this.alleducation_oliy = this.get_statistic.highly_special_educations;
+          this.alleducation_ortamaxsus = this.get_statistic.medium_special_cadries;
+          this.alleducation_orta = this.get_statistic.secondary_special_cadries;
+          this.aducationForeign.datasets[0].data[0] =this.get_statistic.abroads[0].count;
+          this.aducationForeign.datasets[0].data[1] = this.get_statistic.abroads[1].count;
+          this.aducationForeign.datasets[0].data[2] = this.get_statistic.abroads[2].count;
+          this.aducationForeign.datasets[0].data[3] = this.get_statistic.abroads[3].count;
+
+          this.govermentAcademy.datasets[0].data[0] =
+          this.get_statistic.academics[0].count;
+          this.govermentAcademy.datasets[0].data[1] =
+          this.get_statistic.academics[1].count;
+          this.govermentAcademy.datasets[0].data[2] =
+          this.get_statistic.academics[2].count;
+          this.govermentAcademy.datasets[0].data[3] =
+          this.get_statistic.academics[3].count;
+          this.govermentAcademy.datasets[0].data[4] =
+          this.get_statistic.academics[4].count;
+
+          this.stackedData.datasets[0].data[0] =
+          this.get_statistic.new_caries_year[0].count;
+          this.stackedData.datasets[0].data[1] =
+          this.get_statistic.new_caries_year[1].count;
+          this.stackedData.datasets[0].data[2] =
+          this.get_statistic.new_caries_year[2].count;
+          this.stackedData.datasets[0].data[3] =
+          this.get_statistic.new_caries_year[3].count;
+          this.stackedData.datasets[0].data[4] =
+          this.get_statistic.new_caries_year[4].count;
+          this.stackedData.datasets[0].data[5] =
+          this.get_statistic.new_caries_year[5].count;
+          this.stackedData.datasets[0].data[6] =
+          this.get_statistic.new_caries_year[6].count;
+          this.stackedData.datasets[0].data[7] =
+          this.get_statistic.new_caries_year[7].count;
+          this.stackedData.datasets[0].data[8] =
+          this.get_statistic.new_caries_year[8].count;
+          this.stackedData.datasets[0].data[9] =
+          this.get_statistic.new_caries_year[9].count;
+          this.stackedData.datasets[0].data[10] =
+          this.get_statistic.new_caries_year[10].count;
+          this.stackedData.datasets[0].data[11] =
+          this.get_statistic.new_caries_year[11].count;
+
+          this.stackedData.datasets[1].data[0] =
+          this.get_statistic.delete_cadries_year[0].count;
+          this.stackedData.datasets[1].data[1] =
+          this.get_statistic.delete_cadries_year[1].count;
+          this.stackedData.datasets[1].data[2] =
+          this.get_statistic.delete_cadries_year[2].count;
+          this.stackedData.datasets[1].data[3] =
+          this.get_statistic.delete_cadries_year[3].count;
+          this.stackedData.datasets[1].data[4] =
+          this.get_statistic.delete_cadries_year[4].count;
+          this.stackedData.datasets[1].data[5] =
+          this.get_statistic.delete_cadries_year[5].count;
+          this.stackedData.datasets[1].data[6] =
+          this.get_statistic.delete_cadries_year[6].count;
+          this.stackedData.datasets[1].data[7] =
+          this.get_statistic.delete_cadries_year[7].count;
+          this.stackedData.datasets[1].data[8] =
+          this.get_statistic.delete_cadries_year[8].count;
+          this.stackedData.datasets[1].data[9] =
+          this.get_statistic.delete_cadries_year[9].count;
+          this.stackedData.datasets[1].data[10] =
+          this.get_statistic.delete_cadries_year[10].count;
+          this.stackedData.datasets[1].data[11] =
+          this.get_statistic.delete_cadries_year[11].count;
+
+          this.meds = this.get_statistic.meds;
+          this.mednotCount = this.get_statistic.mednotCount;
+          this.not_staff_files = this.get_statistic.not_staff_files;
+          this.not_staff_filesChart = Math.floor(
+            (this.get_statistic.not_staff_files /this.get_statistic.all_cadries_count) * 100
+          );
+
+          this.medsChart = Math.floor(
+            (this.get_statistic.meds / this.get_statistic.all_cadries_count) * 100
+          );
+          this.mednotCountChart = Math.floor(
+            (this.get_statistic.mednotCount / this.get_statistic.all_cadries_count) * 100
+          );
+
+          this.careersCountChart = Math.floor(
+            (this.get_statistic.careersCount / this.get_statistic.all_cadries_count) * 100
+          );
+
+          this.relativesCountChart = Math.floor(
+            (this.get_statistic.relativesCount / this.get_statistic.all_cadries_count) * 100
+          );
+
+          this.allBirthdayCadriesChart = Math.floor(
+            (this.get_statistic.birthdays / this.get_statistic.all_cadries_count) * 100
+          );
+
+          this.allNewCadriesChart = Math.floor(
+            (this.get_statistic.newcadries /this.get_statistic.all_cadries_count) * 100
+          );
+
+          this.allDeleteCadriesChart = Math.floor(
+            (this.get_statistic.delete_cadries / this.get_statistic.all_cadries_count) * 100
+          );
+
+          this.BlackListChart = Math.floor(
+            (this.get_statistic.black_list_cadries / this.get_statistic.all_cadries_count) * 100
+          );
+
+          this.vacations = this.get_statistic.vacations;
+          this.vacations_Dec = this.get_statistic.vacations_decret;
+
+          this.vacationsChart = Math.floor(
+            (this.get_statistic.vacations / this.get_statistic.all_cadries_count) * 100
+          );
+
+          this.vacations_DecChart = Math.floor(
+            (this.get_statistic.vacations_decret / this.get_statistic.all_cadries_count) * 100
+          );
+
+          this.allContractChart = Math.floor(
+            (this.get_statistic.contract_cadries / this.get_statistic.all_cadries_count) * 100
+          );
+
+          this.BlackList = this.get_statistic.black_list_cadries;
+
+          this.allManChart = Math.floor(
+            (this.get_statistic.all_man_cadries /this.get_statistic.all_cadries_count) * 100
+          );
+          this.allWomanChart = 100 - this.allManChart;
+          this.pensionsManChart = Math.floor(
+            (this.get_statistic.retired_Man / this.get_statistic.all_cadries_count) * 100
+          );
+          this.pensionWomanChart = Math.floor(
+            (this.get_statistic.retired_WoMan / this.get_statistic.all_cadries_count) * 100
+          );
+         
+    }
   },
   created() {
     this.controlLoader();

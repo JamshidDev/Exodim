@@ -315,7 +315,7 @@
               :options="search_cadryList"
               optionLabel="fullname"
               :filter="true"
-              @filter="search_Cadry"
+              @filter="true"
               placeholder="Tanlang"
               class="w-full"
             >
@@ -477,7 +477,7 @@ export default {
 
       search_params: {
         page: 1,
-        per_page: 50,
+        per_page: 10000,
         search: "A",
       },
       totalPage: 0,
@@ -551,7 +551,6 @@ export default {
             cadrList.push(item);
           });
           this.vacation_cadryList = res.data.cadries.data;
-          console.log(res.data.cadries.data);
           this.controlLoader(false);
         })
         .catch((error) => {

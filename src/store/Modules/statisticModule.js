@@ -5,6 +5,7 @@ const state = {
   bigOrgValue: null,
   orgValue: null,
   depValue: null,
+  statistic:null,
 };
 
 const getters = {
@@ -25,6 +26,9 @@ const getters = {
   },
   get_depValue(state) {
     return state.depValue;
+  },
+  get_statistic(state) {
+    return state.statistic;
   },
 };
 
@@ -47,6 +51,9 @@ const actions = {
   set_depValue(ctx, payload) {
     ctx.commit("update_depValue", payload);
   },
+  set_statistic(ctx, payload) {
+    ctx.commit("update_statistic", payload);
+  },
 };
 
 const mutations = {
@@ -67,6 +74,9 @@ const mutations = {
   },
   update_depValue(state, item) {
     state.depValue = item;
+  },
+  update_statistic(state, item) {
+    state.statistic = item;
   },
 };
 
