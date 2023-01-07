@@ -112,6 +112,19 @@
         </Column>
       </DataTable>
     </div>
+    <div class="col-12 p-2">
+      <add-button
+      class="mb-2"
+        @click="openDualModal()"
+        :title="'Dual ta\'lim'"
+        :text="false"
+      ></add-button>
+      
+    </div>
+    <div class="col-12 p-2">
+     
+    <dual-component ref="dual_component"></dual-component>
+    </div>
 
     <div class="col-12 p-0">
       <Dialog
@@ -297,6 +310,7 @@ import formatter from "../../util/formatter";
 import DeleteButton from "../buttons/DeleteButton.vue";
 import EditButton from "../buttons/EditButton.vue";
 import ProgressBarLoader from "../loaders/ProgressBarLoader.vue";
+import DualComponent from '@/views/Cadry/Components/DualComponent'
 
 export default {
   components: {
@@ -304,6 +318,7 @@ export default {
     DeleteButton,
     EditButton,
     ProgressBarLoader,
+    DualComponent,
   },
 
   data() {
@@ -342,7 +357,6 @@ export default {
       this.controlLoader(loader)
       SkillService.get_Cadry_Qualification({ id: this.$route.params.id }).then(
         (res) => {
-          console.log(res.data.cadries);
           this.List_qualification = res.data.cadries;
           this.controlLoader(false)
         }
@@ -437,6 +451,10 @@ export default {
           });
         }
       }
+    },
+
+    openDualModal(){
+      this.$refs.dual_component.openDialog()
     },
 
     deleteItemSkill(id) {

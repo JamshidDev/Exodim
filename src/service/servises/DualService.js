@@ -54,6 +54,20 @@ const delete_Specialties = (payload)=>{
     return axios.delete(`/api/dual/specialty/${payload.specialty_id}/delete`)
 }
 
+// Cadry
+const get_Duals = (payload)=>{
+    return axios.get(`/api/dual/${payload.cadry_id}/duals`, {params:payload})
+}
+const create_Duals = (payload)=>{
+    return axios.post(`/api/dual/${payload.cadry_id}/add-dual`, payload.data)
+}
+const update_Duals  = (payload)=>{
+    return axios.put(`/api/dual/${payload.dual_id}/update-dual`, payload.data)
+}
+
+const delete_Duals  = (payload)=>{
+    return axios.delete(`/api/dual/${payload.dual_id}/delete-dual`)
+}
 
 
 
@@ -61,4 +75,5 @@ const delete_Specialties = (payload)=>{
 
 
 
-export default {get_Technical, create_Technical, update_Technical,delete_Technical,get_Professions, create_Professions, update_Professions, delete_Professions, get_Specialties, create_Specialties, update_Specialties, delete_Specialties }
+
+export default {get_Technical, create_Technical, update_Technical,delete_Technical,get_Professions, create_Professions, update_Professions, delete_Professions, get_Specialties, create_Specialties, update_Specialties, delete_Specialties, get_Duals, create_Duals, update_Duals,delete_Duals }
