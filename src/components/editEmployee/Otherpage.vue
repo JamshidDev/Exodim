@@ -113,15 +113,6 @@
       </DataTable>
     </div>
     <div class="col-12 p-2">
-      <add-button
-      class="mb-2"
-        @click="openDualModal()"
-        :title="'Dual ta\'lim'"
-        :text="false"
-      ></add-button>
-      
-    </div>
-    <div class="col-12 p-2">
      
     <dual-component ref="dual_component"></dual-component>
     </div>

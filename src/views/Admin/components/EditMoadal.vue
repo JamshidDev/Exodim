@@ -22,13 +22,17 @@
         </h6>
       </template>
       <div class="grid pt-2" v-show="!loading">
-        <div class="col-12 flex justify-content-center">
+        <div class="col-12 flex justify-content-center" v-if="!isupload">
           <Avatar
             :image="admin.photo"
             class="mr-2"
             size="xlarge"
             shape="circle"
           />
+        </div>
+        <div class="col-12 flex justify-content-center" v-if="isupload">
+         <Button :label="upload_btn_label" @click="$refs.avatar_upload.click()" class="p-button-text p-button-secondary font-light" icon="pi pi-cloud-upload" />
+         <input type="file" @change="uploadImage" ref="avatar_upload" v-show="false"  accept="image/png, image/jpeg"/>
         </div>
         <div class="col-6">
           <h6 class="mb-1 pl-2 text-500 font-normal">F.I.SH</h6>
@@ -39,6 +43,7 @@
             name="admin_fullName"
             placeholder="Kiriting"
             v-model.trim="admin.fullName"
+
           />
         </div>
 
@@ -81,6 +86,7 @@
             :filter="true"
             placeholder="Tanlang"
             class="w-full"
+            @change="changeRailway"
           >
             <template #value="slotProps">
               <div v-if="slotProps.value">
@@ -110,6 +116,8 @@
             :filter="true"
             placeholder="Tanlang"
             class="w-full"
+            :loading="org_loading"
+            
           >
             <template #value="slotProps">
               <div v-if="slotProps.value">
@@ -186,7 +194,7 @@
               label="Saqlash"
               icon="pi pi-save"
               class="p-button-success p-button-sm"
-              @click="update_admin_details()"
+              @click="EditAndAdd()"
             />
           </div>
         </div>
@@ -209,9 +217,17 @@ export default {
   data() {
     return {
       DialogType: false,
-      loading: false,
       dialog: false,
+      loading: false,
+      org_loading:false,
+      isupload:true,
+      upload_btn_label:'Rasm yuklash',
+    
+
+
+
       admin_id:null,
+
       admin: {
         RoleList: [],
         role: null,
@@ -229,11 +245,11 @@ export default {
   },
   methods: {
     controllerModal(id) {
+      this.isupload = false;
       this.dialog = true;
       this.loading = true;
       this.admin_id = id;
       AdminService.update_get_AdminDetails({ id }).then((res) => {
-        console.log(res.data.users);
         this.admin.role = res.data.users.roles;
         this.admin.RoleList = res.data.roles;
         this.organization_value= {
@@ -253,15 +269,45 @@ export default {
         this.get_Organization(res.data.users.organization.railway.id)
       });
     },
+    controllerNewModal(id){
+      this.isupload = true;
+      this.dialog = true;
+      this.loading = true;
+      AdminService.create_get_Admin().then((res) =>{
+        this.admin.RoleList = res.data.roles;
+        this.loading = false;
+      })
+    },
     get_Railway(){
       organizationsService.get_Railway().then((res) =>{
         this.railway_List = res.data;
       })
     },
     get_Organization(id){
+      
+      this.org_loading = true;
       organizationsService.get_Organization({railway_id:id}).then((res) =>{
         this.organization_List = res.data;
+        this.org_loading = false;
       })
+    },
+    changeRailway(){
+      this.organization_value = null;
+      this.get_Organization(this.railway_value.id)
+    },
+    uploadImage(event) {
+      const { files } = event.target;
+      console.log(files);
+      this.upload_btn_label = files[0].name;
+      this.admin.photo = files[0];
+    },
+
+    EditAndAdd(){
+      if(this.isupload){
+        this.add_newAdmin()
+      }else{
+        this.update_admin_details()
+      }
     },
     update_admin_details(){
       this.dialog = false;
@@ -281,6 +327,19 @@ export default {
         this.$toast.add({severity:'success', summary: "Admin ma'lumotlari", detail:"Ma'lumotlar muvofaqiyatli tahrirlandi", group: 'tl', life: 3000});
       })
     },
+    add_newAdmin(){
+      let dataForm = new FormData();
+      dataForm.append('name', this.admin.fullName);
+      dataForm.append('email', this.admin.login);
+      dataForm.append('password', this.admin.password);
+      dataForm.append('role_id', this.admin.role.id);
+      dataForm.append('organization_id', this.organization_value.id);
+      dataForm.append('phone', this.admin.phone);
+      dataForm.append('photo', this.admin.photo);
+      AdminService.create_Admin({data:dataForm}).then((res) =>{
+        console.log(res.data);
+      })
+    }
   },
   created(){
     this.get_Railway()

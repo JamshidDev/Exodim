@@ -310,7 +310,7 @@
     methods: {
       get_List(loader) {
         this.controlLoading(loader);
-        DualService.get_Specialties().then((res) => {
+        DualService.get_Specialties(this.params).then((res) => {
           let number = (this.params.page - 1) * this.params.per_page;
           res.data.specialties.forEach((item) => {
             number++;
@@ -391,6 +391,13 @@
             console.log(error.response);
           });
       },
+
+      changePagination(event) {
+      this.params.page = event.page;
+      this.params.per_page = event.per_page;
+      this.get_List(true);
+    },
+
       controlDialog(item) {
         this.dialog = item;
       },

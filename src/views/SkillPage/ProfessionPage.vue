@@ -52,7 +52,7 @@
         dataKey="id"
         responsiveLayout="scroll"
         showGridlines
-        v-show="totalItem > 0"
+        v-show="totalItem>0"
         class="p-datatable-sm"
         v-model:selection="selectItem"
       >
@@ -275,7 +275,7 @@ export default {
   methods: {
     get_Technical(loader) {
       this.controlLoading(loader);
-      DualService.get_Professions().then((res) => {
+      DualService.get_Professions(this.params).then((res) => {
         let number = (this.params.page - 1) * this.params.per_page;
         res.data.professions.forEach((item) => {
           number++;
@@ -357,6 +357,12 @@ export default {
           console.log(error.response);
         });
     },
+    changePagination(event) {
+      this.params.page = event.page;
+      this.params.per_page = event.per_page;
+      this.get_Technical(true);
+    },
+
     controlDialog(item) {
       this.dialog = item;
     },

@@ -33,7 +33,7 @@
               <InputText
                 type="text"
                 v-model="searchCadryName"
-                placeholder="Login yoki Id qidiruv"
+                placeholder="Login yoki F.I.O qidiruv"
                 class="p-inputtext-sm"
                 @keyup.enter="searchByName()"
               />
@@ -43,7 +43,7 @@
                 icon="pi pi-plus"
                 label="Qo'shish"
                 class="p-button-info p-button-sm"
-                @click="addItemMed()"
+                @click="addItem()"
               ></Button>
             </div>
           </div>
@@ -154,7 +154,7 @@
                   class="bg-blue-100 text-blue-700 px-2 text-sm font-semibold"
                   icon="pi pi-bookmark-fill"
                   severity="unfo"
-                  :value="slotProps.data.roles.name"
+                  :value="slotProps.data.roles?.name"
                 ></Tag>
               </div>
             </div>
@@ -272,6 +272,9 @@ export default {
     },
     get_updateModal(id){
       this.$refs.edmin_modal.controllerModal(id)
+    },
+    addItem(){
+      this.$refs.edmin_modal.controllerNewModal()
     },
 
     changePagination(event) {

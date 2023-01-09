@@ -79,6 +79,7 @@ import TabPanel from 'primevue/tabpanel';
 import Rating from 'primevue/rating';
 import ProgressBar from 'primevue/progressbar';
 import VueApexCharts from "vue3-apexcharts";
+import FileUpload from 'primevue/fileupload';
 
 
 
@@ -188,6 +189,7 @@ app.component("TabPanel", TabPanel);
 app.component("TabMenu", TabMenu);
 app.component("Rating", Rating);
 app.component("ProgressBar", ProgressBar);
+app.component("FileUpload", FileUpload);
 
 
 
