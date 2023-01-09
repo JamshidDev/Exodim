@@ -925,7 +925,7 @@
                 >Pasport</span
               >
             </div>
-            <div class="col-2 flex justify-content-end" @click="goList(20)">
+            <div class="col-2 flex justify-content-end" @click="goList(14)">
               <i
                 class="
                   pi pi-eye
@@ -1526,6 +1526,9 @@ export default {
 
     goList(id) {
       let permission = "pereview_statistics";
+      this.organization.railway_id = this.get_bigOrgValue? this.get_bigOrgValue.id : null;
+      this.organization.organization_id = this.get_orgValue? this.get_orgValue.id : null;
+      this.organization.department_id = this.get_depValue? this.get_depValue.id : null;
       let global = 1;
       if (id == 1 && this.get_adminPermissions(permission)) {
         // Vacancy page
@@ -1592,7 +1595,13 @@ export default {
         this.$router.push(
           `/admin/view/stuffs/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`
         );
-      } else if (id == 20 && this.get_adminPermissions(permission)) {
+      }else if (id == 14 && this.get_adminPermissions(permission)) {
+        // Retired Page
+        this.$router.push(
+          `/admin/view/passport/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`
+        );
+      } 
+      else if (id == 20 && this.get_adminPermissions(permission)) {
         // Retired Page
         this.$toast.add({
           severity: "warn",

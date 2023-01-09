@@ -180,6 +180,15 @@ const routes = [
               );
             },
           },
+          {
+            path: "/admin/view/passport/:railway_id/:organization_id/:department_id/:global",
+            name: "cadry-passport",
+            component: function () {
+              return import(
+                /* webpackChunkName: "about" */ "../views/ViewPages/Passport/PassportPage.vue"
+              );
+            },
+          },
         ],
       },
       {

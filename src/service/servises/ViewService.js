@@ -60,6 +60,9 @@ const get_ViewNotStuffCadry= (payload)=>{
     return axios.get(`/api/pereview/statistics/stafffiles`, {params:payload})
 }
 
+const get_ViewNotPassportCadry= (payload)=>{
+    return axios.get(`/api/pereview/statistics/passports`, {params:payload})
+}
 
 
 
@@ -67,4 +70,5 @@ const get_ViewNotStuffCadry= (payload)=>{
 
 
 
-export default {get_ViewVacanc, get_ViewBirthday, get_ViewSverx,get_ViewRetired,get_ViewNewCadry, get_ViewDeleteCadry,get_ViewContractCadry, get_ViewRelativeCadry,get_ViewCareerCadry, get_ViewVacationCadry,get_ViewExpireMedCadry, get_ViewNotMedCadry, get_ViewBlackCadry, get_ViewNotStuffCadry}
+
+export default {get_ViewVacanc, get_ViewBirthday, get_ViewSverx,get_ViewRetired,get_ViewNewCadry, get_ViewDeleteCadry,get_ViewContractCadry, get_ViewRelativeCadry,get_ViewCareerCadry, get_ViewVacationCadry,get_ViewExpireMedCadry, get_ViewNotMedCadry, get_ViewBlackCadry, get_ViewNotStuffCadry, get_ViewNotPassportCadry}

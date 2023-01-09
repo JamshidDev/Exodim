@@ -58,6 +58,7 @@
         stripedRows
         v-model:selection="selectitem"
         selectionMode="single"
+        style="min-width:950px"
       >
         <Column header="" style="min-width: 30px; width: 36px">
           <template #header>
@@ -137,7 +138,7 @@
           </template>
         </Column>
 
-        <Column style="min-width: 130px; width: 130px">
+        <Column style="min-width: 130px; width: 200px">
           <template #header>
             <div class="text-800 text-sm lg:text-base xl:text-base font-medium">
               Status

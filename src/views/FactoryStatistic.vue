@@ -921,7 +921,7 @@
                 >Pasport</span
               >
             </div>
-            <div class="col-2 flex justify-content-end" @click="goList(20)">
+            <div class="col-2 flex justify-content-end" @click="goList(14)">
               <i
                 class="
                   pi pi-eye
@@ -1888,6 +1888,12 @@ export default {
         // Retired Page
         this.$router.push(`/admin/view/stuffs/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`)
       }
+      else if (id == 14 && this.get_adminPermissions(permission)) {
+        // Retired Page
+        this.$router.push(
+          `/admin/view/passport/${this.organization.railway_id}/${this.organization.organization_id}/${this.organization.department_id}/${global}`
+        );
+      } 
       
       else{
         this.$toast.add({

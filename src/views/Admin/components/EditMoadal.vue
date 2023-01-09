@@ -30,7 +30,7 @@
             shape="circle"
           />
         </div>
-        <div class="col-12">
+        <div class="col-6">
           <h6 class="mb-1 pl-2 text-500 font-normal">F.I.SH</h6>
           <InputText
             type="text"
@@ -42,7 +42,7 @@
           />
         </div>
 
-        <div class="col-12">
+        <div class="col-6">
           <h6 class="mb-1 pl-2 text-500 font-normal">Role</h6>
           <Dropdown
             id="positionPart"
@@ -162,13 +162,15 @@
             />
             </div>
            
-            <div class="col-6 flex justify-content-end">
-              <Button
-                label="Parol"
-                icon="pi pi-key"
-                class="p-button-danger p-button-sm"
-                @click="reset_admin_password()"
-              />
+            <div class="col-6 ">
+          <InputText
+            type="text"
+            class="w-full font-semibold"
+            id="admin_pssword"
+            name="admin_pssword"
+            placeholder="Yangilash uchun parol"
+            v-model.trim="admin.password"
+          />
             </div>
           </div>
         </div>
@@ -217,6 +219,7 @@ export default {
         phone: null,
         login: null,
         photo: "",
+        password:null,
       },
       railway_List:[],
       railway_value:null,
@@ -243,6 +246,8 @@ export default {
         this.admin.phone = res.data.users.phone;
         this.admin.login = res.data.users.email;
         this.admin.photo = res.data.users.photo;
+        this.admin.password = null;
+
         this.loading = false;
 
         this.get_Organization(res.data.users.organization.railway.id)
@@ -264,7 +269,7 @@ export default {
         photo:null,
         name:this.admin.fullName,
         email:this.admin.login,
-        password:null,
+        password:this.admin.password,
         role_id:this.admin.role.id,
         organization_id:this.organization_value.id,
         railway_id:this.railway_value.id,
@@ -274,22 +279,6 @@ export default {
       AdminService.update_AdminDetails({id:this.admin_id , data:params}).then((res) =>{
         this.$emit('success_update')
         this.$toast.add({severity:'success', summary: "Admin ma'lumotlari", detail:"Ma'lumotlar muvofaqiyatli tahrirlandi", group: 'tl', life: 3000});
-      })
-    },
-    reset_admin_password(){
-      this.dialog = false;
-      let params ={
-        photo:null,
-        name:this.admin.fullName,
-        email:this.admin.login,
-        password:'user123456',
-        role_id:this.admin.role.id,
-        organization_id:this.organization_value.id,
-        railway_id:this.railway_value.id,
-        phone:this.admin.phone,
-      };
-      AdminService.update_AdminDetails({id:this.admin_id , data:params}).then((res) =>{
-        this.$toast.add({severity:'success', summary: "Admin parol", detail:"Parrol muvofaqiyatli oldingi holatiga qaytarildi", group: 'tl', life: 3000});
       })
     },
   },
