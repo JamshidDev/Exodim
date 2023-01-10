@@ -95,6 +95,7 @@
           @click="toggle"
           class="
             mr-2
+            cursor-pointer
            scalein
             animation-duration-200
             animation-iteration-count:

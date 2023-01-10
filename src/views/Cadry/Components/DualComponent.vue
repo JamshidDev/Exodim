@@ -247,6 +247,7 @@ export default {
       loading: false,
       professions_List: [],
       professionsVal: null,
+      profession_id:null,
       technicals_List: [],
       technicalsVal: null,
       specialties_List: [],
@@ -340,11 +341,26 @@ export default {
       });
     },
     openDialog() {
-      this.dialog = true;
       this.dialogType = true;
+      this.dialog = true;
+     
     },
     EditItem(event) {
+      console.log(event);
       this.dialogType = false;
+      this.dialog = true;
+      this.profession_id = event.id;
+      this.professionsVal = event.profession;
+      this.specialties_List = this.professions_List.filter(
+        (item) => item.id == this.professionsVal.id
+      )[0].specialties;
+      this.technicals_List = this.professions_List.filter(
+        (item) => item.id == this.professionsVal.id
+      )[0].technicals;
+      this.technicalsVal = event.technical;
+      this.specialtiesVal = event.specialty
+      
+
     },
   },
   created() {
